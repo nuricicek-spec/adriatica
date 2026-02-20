@@ -57,7 +57,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#0B3B5C]/10 to-transparent rounded-full blur-3xl" />
                 <img 
                   src="/logo.svg" 
-                  alt="Aequor Symbol" 
+                  alt="AdriaticA Doo Symbol" 
                   className="w-full h-auto drop-shadow-2xl"
                 />
               </div>
@@ -137,7 +137,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <SectionHeading 
-                title="The Aequor Standard" 
+                title="The AdriaticA Standard" 
                 subtitle="Philosophy"
                 light={true}
                 className="mb-8"
