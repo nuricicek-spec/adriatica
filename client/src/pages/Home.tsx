@@ -5,6 +5,8 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { Footer } from "@/components/Footer";
 import { ArrowDown } from "lucide-react";
 
+const COMMISSIONS_TEXT = "We are currently accepting commissions for Q3 2025.";
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-background font-body selection:bg-primary/20">
@@ -26,7 +28,7 @@ export default function Home() {
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
               <h2 className="text-primary font-medium tracking-[0.2em] uppercase mb-4">
-                Est. 1984
+                Est. 2025
               </h2>
               <h1 className="font-display text-5xl md:text-7xl font-bold text-[#0B3B5C] leading-[1.1] mb-8">
                 Wisdom in <br />
@@ -198,7 +200,7 @@ export default function Home() {
             Begin Your Voyage
           </h2>
           <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto">
-            Discuss your marine engineering requirements with our principal architects. We are currently accepting commissions for Q3 2025.
+            Discuss your marine engineering requirements with our principal architects. {COMMISSIONS_TEXT}
           </p>
           
           <form className="max-w-md mx-auto space-y-4 text-left" onSubmit={(e) => e.preventDefault()}>

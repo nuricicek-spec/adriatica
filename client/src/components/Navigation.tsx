@@ -40,7 +40,7 @@ export function Navigation() {
               className="h-10 w-auto transition-transform duration-500 group-hover:scale-105" 
             />
             <span className="font-display font-bold text-xl tracking-widest text-primary uppercase">
-              AdriaticA Doo
+              ADRIATICA D.O.O.
             </span>
           </Link>
 

@@ -10,7 +10,7 @@ export function Footer() {
             <Link href="/" className="flex items-center space-x-3 mb-6">
               <img src="/logo.svg" alt="Logo" className="h-12 w-auto brightness-0 invert" />
               <span className="font-display font-bold text-2xl tracking-widest uppercase">
-                AdriaticA Doo
+                ADRIATICA D.O.O.
               </span>
             </Link>
             <p className="text-white/60 leading-relaxed mb-8 max-w-sm">
@@ -59,12 +59,9 @@ export function Footer() {
         </div>
 
         <div className="pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-white/40">
-          <p>© 2024 AdriaticA Doo Marine Engineering. All rights reserved.</p>
+          <p>© 2026 ADRIATICA D.O.O. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-             <span>London</span>
-             <span>Singapore</span>
-             <span>Rotterdam</span>
-             <span>Houston</span>
+             <span>Podgorica, Montenegro</span>
           </div>
         </div>
       </div>
