@@ -16,10 +16,9 @@ export function Navigation() {
   }, []);
 
   const navLinks = [
-    { name: "Expertise", href: "#expertise" },
-    { name: "Fleet", href: "#fleet" },
+    { name: "Expertise", href: "/#expertise" },
     { name: "Sustainability", href: "#sustainability" },
-    { name: "Contact", href: "#contact" },
+    { name: "Contact", href: "/#contact" },
   ];
 
   return (

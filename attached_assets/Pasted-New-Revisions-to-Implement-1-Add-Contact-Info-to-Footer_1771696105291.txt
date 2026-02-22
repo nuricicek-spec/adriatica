@@ -1,0 +1,154 @@
+New Revisions to Implement
+1. Add Contact Info to Footer
+In src/components/Footer.tsx, immediately below the paragraph that starts with "Pioneering marine engineering solutions...", add the following lines. Ensure there is proper spacing (margin-top) from the paragraph.
+
+tsx
+<div className="mt-4 space-y-1 text-white/60 text-sm">
+  <p>info@adriatica.me (mock)</p>
+  <p>+382 59 123 456 (mock)</p>
+</div>
+2. Create "Careers" Page and Update Footer Link
+Create a new page file: src/pages/Careers.tsx with the following content:
+
+tsx
+import { Navigation } from "@/components/Navigation";
+import { Footer } from "@/components/Footer";
+
+export default function Careers() {
+  return (
+    <div className="min-h-screen bg-background">
+      <Navigation />
+      <div className="max-w-4xl mx-auto px-4 py-24">
+        <h1 className="font-display text-4xl font-bold mb-8">Join Our Team</h1>
+        <p className="text-lg text-muted-foreground mb-6">
+          We are always looking for passionate marine engineers, naval architects, and technical consultants to join our growing team in Montenegro.
+        </p>
+        <p className="text-lg text-muted-foreground mb-6">
+          If you share our values of independence, practicality, and technical excellence, please send your CV and cover letter to:
+        </p>
+        <p className="text-xl font-medium text-primary">careers@adriatica.me (mock)</p>
+        <p className="text-sm text-muted-foreground mt-8">(We will respond to suitable candidates within two weeks.)</p>
+      </div>
+      <Footer />
+    </div>
+  );
+}
+Add the route: In src/App.tsx, import the new page and add a route for it.
+
+tsx
+import Careers from "./pages/Careers";
+
+// Inside the <Switch> component, add:
+<Route path="/careers" component={Careers} />
+Update the footer link: In src/components/Footer.tsx, replace the existing "Careers" link (which is likely an <a> tag) with a <Link> component from "wouter".
+
+tsx
+<Link href="/careers" className="text-white/60 hover:text-white transition-colors text-sm">
+  Careers
+</Link>
+3. Remove "Fleet" Link from Both Footer and Nav Menu
+From Footer: In src/components/Footer.tsx, within the "Explore" list, remove the list item for "Fleet".
+
+From Nav Menu: In src/components/Navigation.tsx, remove the "Fleet" object from the navLinks array. The updated array should look like this:
+
+tsx
+const navLinks = [
+  { name: "Expertise", href: "#expertise" },
+  { name: "Sustainability", href: "/sustainability" }, // If this link exists and points to the new page
+  { name: "Contact", href: "#contact" },
+];
+(Note: If the "Sustainability" link is not yet pointing to the new page, we will handle that in a separate step. For now, just remove "Fleet".)
+
+4. Create "News" Page with Mock Articles and Update Footer Link
+Create a new page file: src/pages/News.tsx with the following content:
+
+tsx
+import { Navigation } from "@/components/Navigation";
+import { Footer } from "@/components/Footer";
+
+export default function News() {
+  const newsItems = [
+    {
+      date: "15 March 2025",
+      title: "Adriatica D.O.O. opens new office in Porto Montenegro",
+      excerpt: "We are excited to announce the opening of our new technical consultancy office in Tivat, bringing expert marine engineering services closer to superyacht owners in the Adriatic."
+    },
+    {
+      date: "10 February 2025",
+      title: "Successfully completed IHM certification for 50m motor yacht",
+      excerpt: "Our team conducted a full Inventory of Hazardous Materials (IHM) for a luxury yacht, ensuring full compliance with EU Ship Recycling Regulation."
+    },
+    {
+      date: "5 January 2025",
+      title: "Adriatica joins the Montenegrin Marine Industry Association",
+      excerpt: "We are proud to become a member of the local marine industry network, strengthening our commitment to the Adriatic maritime community."
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Navigation />
+      <div className="max-w-4xl mx-auto px-4 py-24">
+        <h1 className="font-display text-4xl font-bold mb-4">Latest News</h1>
+        <p className="text-muted-foreground mb-12">Updates from Adriatica D.O.O. – stay tuned for our latest projects and announcements.</p>
+        
+        <div className="space-y-8">
+          {newsItems.map((item, index) => (
+            <div key={index} className="border-b border-border/10 pb-6 last:border-0">
+              <p className="text-sm text-primary/60 mb-2">{item.date}</p>
+              <h2 className="text-2xl font-display font-semibold mb-2">{item.title}</h2>
+              <p className="text-muted-foreground">{item.excerpt}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-12 p-6 bg-primary/5 border border-primary/10 rounded-sm">
+          <p className="text-sm italic">
+            For media inquiries or interview requests, please contact us at <span className="font-medium">press@adriatica.me (mock)</span>
+          </p>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
+}
+Add the route: In src/App.tsx, import and add a route for the News page.
+
+tsx
+import News from "./pages/News";
+
+// Inside the <Switch> component:
+<Route path="/news" component={News} />
+Update the footer link: In src/components/Footer.tsx, replace the existing "News" link with a <Link> component.
+
+tsx
+<Link href="/news" className="text-white/60 hover:text-white transition-colors text-sm">
+  News
+</Link>
+🔗 Additional Footer Link Updates
+Please ensure that all links in the footer are now using the <Link> component from "wouter" with the correct href paths, as previously outlined. This includes:
+
+"Expertise" -> /#expertise
+
+"Sustainability" -> /sustainability (once that page is created)
+
+"About Us" -> /#about (once the About section ID is added to the homepage)
+
+"Contact" -> /#contact
+
+"Privacy Policy" -> /privacy-policy
+
+"Terms of Service" -> /terms-of-service
+
+"Cookie Policy" -> /cookie-policy
+
+If any of these target pages do not yet exist, you may create placeholder pages with basic content.
+
+🎨 Consistency Check
+All new pages must use the same background (bg-background), font families (font-display for headings, font-body for text), and color scheme as the existing homepage.
+
+The navigation bar and footer must be present on all pages.
+
+Maintain responsiveness for mobile devices.
+
+Please apply all these changes and ensure the project runs without errors. After implementation, I will review and request further tweaks if necessary.

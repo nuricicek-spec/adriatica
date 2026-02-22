@@ -30,20 +30,20 @@ export default function Home() {
               <h2 className="text-primary font-medium tracking-[0.2em] uppercase mb-4">
                 Est. 2025
               </h2>
-              <h1 className="font-display text-5xl md:text-7xl font-bold text-[#0B3B5C] leading-[1.1] mb-8">
-                Wisdom in <br />
-                <span className="text-[#3A74A0]">Structure</span>
+              <h1 className="font-display text-5xl md:text-7xl font-bold text-[#0B3B5C] leading-[1.1] mb-8 uppercase">
+                WISDOM IN <br />
+                <span className="text-[#3A74A0]">ENGINEERING</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl mb-10 border-l-2 border-primary/20 pl-6">
-                Engineered for the deepest challenges. We combine ancient structural principles with cutting-edge marine technology to build vessels that endure.
+                Engineered for the deepest challenges. We combine timeless principles with cutting-edge marine technology to create engineering that endures.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
                 <button className="px-8 py-4 bg-[#0B3B5C] text-white font-medium rounded-sm shadow-lg shadow-[#0B3B5C]/20 hover:shadow-xl hover:bg-[#1A4B7A] transition-all duration-300 uppercase tracking-wide text-sm">
-                  Discover Our Fleet
+                  Request a Quote
                 </button>
                 <button className="px-8 py-4 bg-transparent border border-[#0B3B5C] text-[#0B3B5C] font-medium rounded-sm hover:bg-[#0B3B5C]/5 transition-all duration-300 uppercase tracking-wide text-sm">
-                  View Projects
+                  Explore Services
                 </button>
               </div>
             </motion.div>
@@ -139,30 +139,30 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <SectionHeading 
-                title="The AdriaticA Standard" 
+                title="ADRIATICA D.O.O. STANDARD" 
                 subtitle="Philosophy"
                 light={true}
                 className="mb-8"
               />
               <p className="text-lg text-white/80 leading-relaxed mb-6">
-                Just as the Sumerian pinecone symbolized the seed of life and wisdom, we view every engineering challenge as an opportunity to cultivate lasting value.
+                Just as the Sumerian pinecone symbolized wisdom and resilience, we approach every engineering challenge as an opportunity to create lasting value.
               </p>
               <p className="text-lg text-white/80 leading-relaxed mb-8">
-                Our approach is reductive: we remove the unnecessary to reveal the essential structure. This architectural discipline results in marine vessels that are not only functional but resilient and timeless.
+                Our approach is reductive: we remove the unnecessary to reveal the essential structure. This discipline results in engineering that is not only functional but resilient and timeless.
               </p>
               
               <div className="grid grid-cols-2 gap-8 mt-12">
                 <div>
-                  <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">40+</div>
+                  <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">20+</div>
                   <div className="text-sm uppercase tracking-wider text-white/60">Years Experience</div>
                 </div>
                 <div>
-                  <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">120</div>
-                  <div className="text-sm uppercase tracking-wider text-white/60">Vessels Delivered</div>
+                  <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">150+</div>
+                  <div className="text-sm uppercase tracking-wider text-white/60">Clients Worldwide</div>
                 </div>
                 <div>
-                  <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">$2B</div>
-                  <div className="text-sm uppercase tracking-wider text-white/60">Project Value</div>
+                  <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">15+</div>
+                  <div className="text-sm uppercase tracking-wider text-white/60">Countries</div>
                 </div>
                 <div>
                   <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">0</div>
@@ -186,7 +186,7 @@ export default function Home() {
               {/* Floating detail card */}
               <div className="absolute -bottom-8 -left-8 bg-white text-[#0B3B5C] p-6 shadow-xl max-w-xs hidden md:block">
                 <p className="font-display font-bold text-lg mb-2">Precision Engineering</p>
-                <p className="text-sm leading-relaxed text-muted-foreground">Every component is tested to withstand pressures 3x greater than operational maximums.</p>
+                <p className="text-sm leading-relaxed text-muted-foreground">Every project is executed with uncompromising attention to detail, ensuring safety and compliance beyond standards.</p>
               </div>
             </div>
           </div>
