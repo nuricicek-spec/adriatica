@@ -13,7 +13,7 @@ export default function Home() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative h-screen min-h-[800px] flex items-center overflow-hidden">
+      <section className="relative h-screen min-h-[800px] flex items-center overflow-hidden pt-24 md:pt-20">
         {/* Abstract Background Elements */}
         <div className="absolute inset-0 z-0">
           <div className="absolute top-0 right-0 w-2/3 h-full bg-[#1A4B7A]/5 -skew-x-12 transform origin-top" />
@@ -89,38 +89,38 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             <FeatureCard 
               number="01" 
-              title="Naval Architecture" 
-              description="Designing hull forms that optimize hydrodynamic efficiency while maximizing stability in extreme sea states."
+              title="Engineering Plans" 
+              description="Comprehensive as-built drawing sets, general arrangement plans, and structural drawings – your vessel's complete technical memory."
               delay={0.1}
             />
             <FeatureCard 
               number="02" 
-              title="Structural Integrity" 
-              description="Advanced material analysis ensures our vessels withstand the rigorous demands of deep-sea operations."
+              title="Engineering Documentation" 
+              description="P&ID diagrams, electrical load analysis (EAB), fuel management booklets, and system manuals for technical reference."
               delay={0.2}
             />
             <FeatureCard 
               number="03" 
-              title="Propulsion Systems" 
-              description="Integrating next-generation hybrid propulsion for reduced emissions without compromising power."
+              title="Structural Integrity" 
+              description="Hull condition analysis, life extension studies, and modification consultancy for superyachts and commercial vessels."
               delay={0.3}
             />
             <FeatureCard 
               number="04" 
-              title="Offshore Logistics" 
-              description="Comprehensive supply chain solutions for complex offshore installations and maintenance projects."
+              title="Sustainable Tech" 
+              description="Biofouling Management Plans (IMO MEPC.378(80)), IHM, and eco-friendly coating advisory for environmental compliance."
               delay={0.4}
             />
             <FeatureCard 
               number="05" 
-              title="Sustainable Tech" 
-              description="Pioneering the use of biodegradable lubricants and non-toxic hull coatings for ecosystem preservation."
+              title="Regulatory Compliance" 
+              description="Fire & Safety Plans, BWMP, SoPEP, SEEMP, and Garbage Management Plans – fully compliant with IMO and Flag State requirements."
               delay={0.5}
             />
             <FeatureCard 
               number="06" 
               title="Project Management" 
-              description="End-to-end oversight from initial concept and dry-dock construction to final sea trials."
+              description="Owner's representation, dry-docking supervision, and refit management – your independent advocate at the shipyard."
               delay={0.6}
             />
           </div>
@@ -157,7 +157,7 @@ export default function Home() {
                   <div className="text-sm uppercase tracking-wider text-white/60">Years Experience</div>
                 </div>
                 <div>
-                  <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">150+</div>
+                  <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">50+</div>
                   <div className="text-sm uppercase tracking-wider text-white/60">Clients Worldwide</div>
                 </div>
                 <div>
@@ -172,19 +172,38 @@ export default function Home() {
             </div>
 
             <div className="relative">
-              {/* Unsplash image of ocean/structure */}
-              {/* dark ocean waves abstract */}
-              <div className="aspect-[4/5] bg-neutral-900 rounded-sm overflow-hidden relative shadow-2xl">
-                 <img 
-                   src="https://images.unsplash.com/photo-1468581264429-2548ef9eb732?q=80&w=1200&auto=format&fit=crop" 
-                   alt="Ocean texture" 
-                   className="object-cover w-full h-full opacity-60 mix-blend-overlay hover:scale-105 transition-transform duration-1000"
-                 />
-                 <div className="absolute inset-0 border border-white/10 m-4 pointer-events-none" />
+              {/* Custom Geometry Visual */}
+              <div className="w-[450px] h-[580px] bg-gradient-to-br from-[#0f192d]/95 to-[#0a1128]/98 relative overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.6),0_0_1px_1px_rgba(212,175,55,0.2),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-[10px] group mx-auto">
+                {/* Gold pyrite border effect */}
+                <div className="absolute inset-0 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity duration-500 before:absolute before:inset-0 before:p-[2px] before:bg-gradient-to-br before:from-[#d4af37]/40 before:via-[#c9a961]/20 before:via-[#1b3a6b]/30 before:to-[#d4af37]/40 before:[mask-image:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:[mask-composite:xor]" />
+                
+                {/* Labels */}
+                <div className="absolute top-6 left-6 px-[14px] py-2 bg-gradient-to-br from-[#0a1128]/85 to-[#0f192d]/90 backdrop-blur-[12px] text-[#e8e4d9] text-[11px] font-['Cinzel'] tracking-[2px] uppercase opacity-75 group-hover:opacity-100 transition-all duration-400 shadow-[0_4px_12px_rgba(0,0,0,0.3)] z-10">
+                  WISDOM
+                </div>
+                <div className="absolute top-6 right-6 px-[14px] py-2 bg-gradient-to-br from-[#0a1128]/85 to-[#0f192d]/90 backdrop-blur-[12px] text-[#e8e4d9] text-[11px] font-['Cinzel'] tracking-[2px] uppercase opacity-75 group-hover:opacity-100 transition-all duration-400 shadow-[0_4px_12px_rgba(0,0,0,0.3)] z-10">
+                  STRUCTURE
+                </div>
+                <div className="absolute bottom-[90px] left-6 px-[14px] py-2 bg-gradient-to-br from-[#0a1128]/85 to-[#0f192d]/90 backdrop-blur-[12px] text-[#e8e4d9] text-[11px] font-['Cinzel'] tracking-[2px] uppercase opacity-75 group-hover:opacity-100 transition-all duration-400 shadow-[0_4px_12px_rgba(0,0,0,0.3)] z-10">
+                  RESILIENCE
+                </div>
+                <div className="absolute bottom-[90px] right-6 px-[14px] py-2 bg-gradient-to-br from-[#0a1128]/85 to-[#0f192d]/90 backdrop-blur-[12px] text-[#e8e4d9] text-[11px] font-['Cinzel'] tracking-[2px] uppercase opacity-75 group-hover:opacity-100 transition-all duration-400 shadow-[0_4px_12px_rgba(0,0,0,0.3)] z-10">
+                  PURITY
+                </div>
+
+                {/* Main Pinecone Logo Integration */}
+                <div className="absolute inset-0 flex items-center justify-center p-[2%] transition-all duration-700 group-hover:scale-[1.04]">
+                  <svg className="w-full h-full drop-shadow-[0_0_20px_rgba(42,95,138,0.4)] group-hover:drop-shadow-[0_0_30px_rgba(42,95,138,0.6)]" viewBox="0 0 400 500">
+                    <polygon points="200,50 250,100 200,150 150,100" fill="#0B3B5C" />
+                    <polygon points="250,100 300,150 250,200 200,150" fill="#3A74A0" />
+                    <polygon points="200,150 250,200 200,250 150,200" fill="#2A5F8A" />
+                    <polygon points="150,100 200,150 150,200 100,150" fill="#1A4B7A" />
+                  </svg>
+                </div>
               </div>
               
               {/* Floating detail card */}
-              <div className="absolute -bottom-8 -left-8 bg-white text-[#0B3B5C] p-6 shadow-xl max-w-xs hidden md:block">
+              <div className="absolute bottom-20 -left-8 bg-white text-[#0B3B5C] p-6 shadow-xl max-w-xs hidden md:block z-20">
                 <p className="font-display font-bold text-lg mb-2">Precision Engineering</p>
                 <p className="text-sm leading-relaxed text-muted-foreground">Every project is executed with uncompromising attention to detail, ensuring safety and compliance beyond standards.</p>
               </div>

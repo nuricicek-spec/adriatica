@@ -17,7 +17,8 @@ export function Navigation() {
 
   const navLinks = [
     { name: "Expertise", href: "/#expertise" },
-    { name: "Sustainability", href: "#sustainability" },
+    { name: "Sustainability", href: "/sustainability" },
+    { name: "About Us", href: "/#about" },
     { name: "Contact", href: "/#contact" },
   ];
 

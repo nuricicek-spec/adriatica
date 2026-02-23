@@ -4,17 +4,7 @@ import { motion } from "framer-motion";
 
 const newsItems = [
   {
-    date: "15 March 2025",
-    title: "Adriatica D.O.O. opens new office in Porto Montenegro",
-    excerpt: "We are excited to announce the opening of our new technical consultancy office in Tivat, bringing expert marine engineering services closer to superyacht owners in the Adriatic."
-  },
-  {
-    date: "10 February 2025",
-    title: "Successfully completed IHM certification for 50m motor yacht",
-    excerpt: "Our team conducted a full Inventory of Hazardous Materials (IHM) for a luxury yacht, ensuring full compliance with EU Ship Recycling Regulation."
-  },
-  {
-    date: "5 January 2025",
+    date: "30 June 2025",
     title: "Adriatica joins the Montenegrin Marine Industry Association",
     excerpt: "We are proud to become a member of the local marine industry network, strengthening our commitment to the Adriatic maritime community."
   }
@@ -55,7 +45,7 @@ export default function News() {
 
           <div className="mt-16 p-8 bg-neutral-50 border border-border/50 rounded-sm">
             <p className="text-center text-muted-foreground">
-              For media inquiries or interview requests, please contact us at <span className="text-[#0B3B5C] font-medium">press@adriatica.me (mock)</span>
+              For media inquiries or interview requests, please contact us at <span className="text-[#0B3B5C] font-medium">info@adriatica.me (mock)</span>
             </p>
           </div>
         </motion.div>
