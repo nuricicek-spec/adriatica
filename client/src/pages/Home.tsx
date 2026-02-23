@@ -145,7 +145,7 @@ export default function Home() {
                 className="mb-8"
               />
               <p className="text-lg text-white/80 leading-relaxed mb-6">
-                Just as the Sumerian pinecone symbolized wisdom and resilience, we approach every engineering challenge as an opportunity to create lasting value.
+                Our logo, the Sumerian pinecone, symbolizes wisdom and resilience. We approach every engineering challenge as an opportunity to create lasting value.
               </p>
               <p className="text-lg text-white/80 leading-relaxed mb-8">
                 Our approach is reductive: we remove the unnecessary to reveal the essential structure. This discipline results in engineering that is not only functional but resilient and timeless.

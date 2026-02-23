@@ -18,19 +18,21 @@ export function Footer() {
               Pioneering marine engineering solutions inspired by ancient wisdom and driven by modern innovation.
             </p>
             <div className="text-white/60 text-sm space-y-1 mb-6">
-              <p>info@adriatica.me (mock)</p>
               <p>📍 Serving the Montenegro Bay & Adriatic Coast</p>
+              <p>info@adriatica.me (mock)</p>
               <p>+382 59 123 456 (mock)</p>
             </div>
             <div className="flex space-x-4">
-              <a href="#" className="text-white/40 hover:text-white transition-colors">
-                <Instagram size={20} />
+              <a href="#" className="text-[#E4405F] hover:opacity-80 transition-opacity">
+                <div className="bg-white rounded-md p-0.5">
+                  <Instagram size={20} />
+                </div>
               </a>
-              <a href="#" className="text-white/40 hover:text-white transition-colors">
-                <Facebook size={20} />
+              <a href="#" className="text-[#1877F2] hover:opacity-80 transition-opacity">
+                <Facebook size={20} fill="#1877F2" />
               </a>
-              <a href="#" className="text-white/40 hover:text-white transition-colors">
-                <Linkedin size={20} />
+              <a href="#" className="text-[#0A66C2] hover:opacity-80 transition-opacity">
+                <Linkedin size={20} fill="#0A66C2" />
               </a>
             </div>
           </div>
