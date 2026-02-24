@@ -13,7 +13,7 @@ export default function Home() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative h-screen min-h-[800px] flex items-center overflow-hidden pt-24 md:pt-20">
+      <section className="relative h-screen min-h-[800px] flex items-center overflow-hidden pt-28 md:pt-20">
         {/* Abstract Background Elements */}
         <div className="absolute inset-0 z-0">
           <div className="absolute top-0 right-0 w-2/3 h-full bg-[#1A4B7A]/5 -skew-x-12 transform origin-top" />
@@ -151,6 +151,10 @@ export default function Home() {
                 Our approach is reductive: we remove the unnecessary to reveal the essential structure. This discipline results in engineering that is not only functional but resilient and timeless.
               </p>
               
+              <p className="text-lg text-white/80 leading-relaxed mb-6">
+                Precision is not just a method—it is our philosophy. Every project is executed with uncompromising attention to detail, ensuring safety and compliance beyond standards.
+              </p>
+              
               <div className="grid grid-cols-2 gap-8 mt-12">
                 <div>
                   <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">20+</div>
@@ -200,12 +204,6 @@ export default function Home() {
                     <polygon points="150,100 200,150 150,200 100,150" fill="#1A4B7A" />
                   </svg>
                 </div>
-              </div>
-              
-              {/* Floating detail card */}
-              <div className="absolute bottom-20 -left-8 bg-white text-[#0B3B5C] p-6 shadow-xl max-w-xs hidden md:block z-20">
-                <p className="font-display font-bold text-lg mb-2">Precision Engineering</p>
-                <p className="text-sm leading-relaxed text-muted-foreground">Every project is executed with uncompromising attention to detail, ensuring safety and compliance beyond standards.</p>
               </div>
             </div>
           </div>

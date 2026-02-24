@@ -22,17 +22,15 @@ export function Footer() {
               <p>info@adriatica.me (mock)</p>
               <p>+382 59 123 456 (mock)</p>
             </div>
-            <div className="flex space-x-4">
-              <a href="#" className="text-[#E4405F] hover:opacity-80 transition-opacity">
-                <div className="bg-white rounded-md p-0.5">
-                  <Instagram size={20} />
-                </div>
+            <div className="flex gap-4 items-center">
+              <a href="#" className="text-[#e8e4d9] hover:text-[#1877F2] transition-all duration-300 hover:-translate-y-1">
+                <Facebook size={20} />
               </a>
-              <a href="#" className="text-[#1877F2] hover:opacity-80 transition-opacity">
-                <Facebook size={20} fill="#1877F2" />
+              <a href="#" className="text-[#e8e4d9] hover:text-[#E1306C] transition-all duration-300 hover:-translate-y-1">
+                <Instagram size={20} />
               </a>
-              <a href="#" className="text-[#0A66C2] hover:opacity-80 transition-opacity">
-                <Linkedin size={20} fill="#0A66C2" />
+              <a href="#" className="text-[#e8e4d9] hover:text-[#0077b5] transition-all duration-300 hover:-translate-y-1">
+                <Linkedin size={20} />
               </a>
             </div>
           </div>
@@ -43,7 +41,7 @@ export function Footer() {
               {[
                 { name: 'Home', href: '/' },
                 { name: 'Expertise', href: '/#expertise' },
-                { name: 'Sustainability', href: '#sustainability' }
+                { name: 'Insights', href: '/insights' }
               ].map(item => (
                 <li key={item.name}>
                   <Link href={item.href} className="text-white/60 hover:text-white transition-colors text-sm">

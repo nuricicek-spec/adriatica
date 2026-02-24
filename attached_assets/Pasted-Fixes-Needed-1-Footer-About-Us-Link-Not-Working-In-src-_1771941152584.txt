@@ -1,0 +1,103 @@
+Fixes Needed
+
+1. Footer "About Us" Link – Not Working
+In src/components/Footer.tsx, under the "Company" list, change the "About Us" link to <Link href="/#about">About Us</Link> so it scrolls to the Philosophy section on the homepage.
+
+2. Footer "Expertise" Link – Not Working
+In src/components/Footer.tsx, under the "Explore" list, change the "Expertise" link to <Link href="/#expertise">Expertise</Link> so it scrolls to the Core Competencies section.
+
+3. Nav Menu "About Us" Link – Not Working
+In src/components/Navigation.tsx, ensure the "About Us" link points to /#about (it should scroll to the Philosophy section).
+
+4. Social Media Icons – Replace with Correct Icons (Revised)
+
+In src/components/Footer.tsx, replace the current Instagram, Facebook, and LinkedIn icons with Font Awesome 6 icons (or equivalent).
+Default icon color: #e8e4d9 (light gray) – for better visibility on the dark footer background.
+
+Hover colors:
+
+Instagram: #E1306C
+LinkedIn: #0077b5
+Facebook: #1877F2
+
+Add a hover effect with transform: translateY(-5px) and a smooth transition.
+Icons should be wrapped in <a href="#"> (mock links).
+
+Example structure:
+
+<div className="flex gap-4 items-center">
+    <a href="#" className="text-[#e8e4d9] hover:text-[#1877F2] transition-all duration-300 hover:-translate-y-1">
+        <i className="fa-brands fa-facebook-f text-xl"></i>
+    </a>
+    <a href="#" className="text-[#e8e4d9] hover:text-[#E1306C] transition-all duration-300 hover:-translate-y-1">
+        <i className="fa-brands fa-instagram text-xl"></i>
+    </a>
+    <a href="#" className="text-[#e8e4d9] hover:text-[#0077b5] transition-all duration-300 hover:-translate-y-1">
+        <i className="fa-brands fa-linkedin text-xl"></i>
+    </a>
+</div>
+
+5. Remove "Precision Engineering" Floating Card and Add Text as Third Paragraph
+
+In src/pages/Home.tsx, locate the floating card with the text "Precision Engineering" (probably a <div> with absolute positioning) and remove it completely.
+Then, in the same Philosophy section (under the two existing paragraphs), add a third paragraph with the following text:
+
+"Precision is not just a method—it is our philosophy. Every project is executed with uncompromising attention to detail, ensuring safety and compliance beyond standards."
+
+Ensure the new paragraph has the same styling as the other two (e.g., text-lg text-white/80 leading-relaxed mb-6 or similar).
+
+6. Mobile View – Hero Section Overlaps Navbar
+
+On mobile devices (screen width less than 768px), the hero section content (starting with "Est. 2025" and "WISDOM IN ENGINEERING") overlaps the fixed navigation bar.
+
+Adjust the top padding or margin of the hero section so that all content begins below the navbar.
+Increase the top padding for mobile (e.g., from pt-20 to pt-24 or pt-28) while keeping desktop layout unchanged.
+Use responsive Tailwind classes like pt-24 md:pt-20 to apply different padding values.
+After the fix, the hero text should be fully visible below the navbar on all mobile devices.
+
+7. Add "Insights" Page (Similar to News) and Update Menus
+
+Create a new page src/pages/Insights.tsx with the same layout and style as the existing News page.
+
+The page should contain:
+Heading: "Insights"
+Subheading: "Technical articles and updates from Adriatica D.O.O."
+Two mock articles (similar to News format) with date, title, and excerpt:
+
+Date: "28 February 2026"
+Title: "Technical Case Study: Biofouling Compliance – Preparing for the IMO 2026 Transition"
+Excerpt: "Discover how Adriatica D.O.O. applies a structured compliance framework to meet the upcoming IMO 2026 biofouling regulations. Through a real-world superyacht case study, we demonstrate proactive documentation, niche area risk management, and operational efficiency for seamless Mediterranean cruising."
+Date: "10 January 2026"
+Title: "The Role of Independent Owner's Representation in Refit Projects"
+Excerpt: "How having an independent technical advisor during dry-docking can reduce costs, avoid delays, and ensure quality."
+A PDF download link (opens in a new tab) at the bottom:
+
+
+<a href="/files/technical-bulletin-01.pdf" target="_blank" rel="noopener noreferrer" class="...">
+  📄 Download Technical Bulletin (PDF)
+</a>
+(The PDF file does not exist yet; the link can be a placeholder for now.)
+
+Update navigation menus:
+
+In src/components/Navigation.tsx, add "Insights" to the navLinks array after "Expertise". The order should be: Expertise, Insights, About Us, Contact.
+
+tsx
+{ name: "Insights", href: "/insights" }
+In src/components/Footer.tsx, under the "Explore" list, add "Insights" directly after "Expertise". Use <Link href="/insights">Insights</Link>.
+
+Remove "Sustainability" from all menus (if still present).
+
+Add route in src/App.tsx:
+
+tsx
+import Insights from "./pages/Insights";
+// inside Switch:
+<Route path="/insights" component={Insights} />
+Keep the same styling as News page (background, fonts, spacing). Ensure responsiveness.
+
+This adds a valuable content section for SEO and positions Adriatica as a thought leader, while keeping menus clean.
+
+Additional Notes
+All other content and styles should remain unchanged.
+After applying, verify that links work correctly and the new paragraph is properly formatted.
