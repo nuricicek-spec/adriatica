@@ -41,22 +41,17 @@ export default function Insights() {
                 <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-2 mb-4">
                   {item.title}
                 </h2>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed mb-4">
                   {item.excerpt}
                 </p>
+                <a 
+                  href={`/pdfs/Technical_Insight_00${index + 1}.pdf`} 
+                  className="text-primary hover:underline inline-flex items-center gap-1 font-medium"
+                >
+                  📄 View Technical Insight (PDF)
+                </a>
               </article>
             ))}
-          </div>
-
-          <div className="mt-16 pt-8 border-t border-border/50">
-            <a 
-              href="/files/technical-bulletin-01.pdf" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="inline-flex items-center text-[#0B3B5C] font-medium hover:text-[#3A74A0] transition-colors"
-            >
-              <span className="mr-2">📄</span> Download Technical Bulletin (PDF)
-            </a>
           </div>
 
           <div className="mt-16 p-8 bg-neutral-50 border border-border/50 rounded-sm">
