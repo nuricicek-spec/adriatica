@@ -32,12 +32,8 @@ export function FeatureCard({ number, title, description, items, delay = 0 }: Fe
           {title}
         </h3>
         
-        <p className="text-muted-foreground leading-relaxed mb-6">
-          {description}
-        </p>
-
         {items && items.length > 0 && (
-          <ul className="space-y-2 mb-6">
+          <ul className="space-y-2 mb-0">
             {items.map((item, idx) => (
               <li key={idx} className="flex items-start text-sm text-muted-foreground/80">
                 <span className="mr-2 text-primary/40 mt-1.5">•</span>

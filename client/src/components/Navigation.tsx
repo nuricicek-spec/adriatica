@@ -19,8 +19,15 @@ export function Navigation() {
     { name: "Expertise", href: "/#expertise" },
     { name: "Insights", href: "/insights" },
     { name: "About Us", href: "/#about" },
-    { name: "Contact", href: "/#contact" },
+    { name: "Contact", href: "/#begin-voyage" },
   ];
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <nav
@@ -51,12 +58,21 @@ export function Navigation() {
                 key={link.name}
                 href={link.href}
                 className="text-sm font-medium tracking-wide hover:text-primary/70 transition-colors uppercase"
+                onClick={(e) => {
+                  if (link.href.startsWith('/#')) {
+                    const id = link.href.split('#')[1];
+                    if (window.location.pathname === '/') {
+                      e.preventDefault();
+                      scrollToSection(id);
+                    }
+                  }
+                }}
               >
                 {link.name}
               </a>
             ))}
             <button
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => scrollToSection('begin-voyage')}
               className="bg-primary text-primary-foreground px-6 py-2.5 rounded-sm font-medium text-sm tracking-wide hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl"
             >
               Inquire

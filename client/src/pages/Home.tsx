@@ -39,10 +39,16 @@ export default function Home() {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="px-8 py-4 bg-[#0B3B5C] text-white font-medium rounded-sm shadow-lg shadow-[#0B3B5C]/20 hover:shadow-xl hover:bg-[#1A4B7A] transition-all duration-300 uppercase tracking-wide text-sm">
+                <button 
+                  onClick={() => document.getElementById('begin-voyage')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="px-8 py-4 bg-[#0B3B5C] text-white font-medium rounded-sm shadow-lg shadow-[#0B3B5C]/20 hover:shadow-xl hover:bg-[#1A4B7A] transition-all duration-300 uppercase tracking-wide text-sm"
+                >
                   Request a Quote
                 </button>
-                <button className="px-8 py-4 bg-transparent border border-[#0B3B5C] text-[#0B3B5C] font-medium rounded-sm hover:bg-[#0B3B5C]/5 transition-all duration-300 uppercase tracking-wide text-sm">
+                <button 
+                  onClick={() => document.getElementById('core-competencies')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="px-8 py-4 bg-transparent border border-[#0B3B5C] text-[#0B3B5C] font-medium rounded-sm hover:bg-[#0B3B5C]/5 transition-all duration-300 uppercase tracking-wide text-sm"
+                >
                   Explore Services
                 </button>
               </div>
@@ -79,7 +85,7 @@ export default function Home() {
       </section>
 
       {/* Expertise Grid */}
-      <section id="expertise" className="py-24 md:py-32 bg-white relative">
+      <section id="core-competencies" className="py-24 md:py-32 bg-white relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading 
             title="Marine Engineering" 
@@ -90,7 +96,7 @@ export default function Home() {
             <FeatureCard 
               number="01" 
               title="Engineering Plans" 
-              description="Comprehensive as-built drawing sets, general arrangement plans, and structural drawings – your vessel's complete technical memory."
+              description=""
               items={[
                 "Structural Drawings",
                 "As-Built Drawing Sets",
@@ -102,7 +108,7 @@ export default function Home() {
             <FeatureCard 
               number="02" 
               title="Engineering Documentation" 
-              description="P&ID diagrams, electrical load analysis (EAB), fuel management booklets, and system manuals for technical reference."
+              description=""
               items={[
                 "As-Built P&ID / System Manuals",
                 "Electrical Load Analysis (EAB)",
@@ -114,7 +120,7 @@ export default function Home() {
             <FeatureCard 
               number="03" 
               title="Structural Integrity" 
-              description="Hull condition analysis, life extension studies, and modification consultancy for superyachts and commercial vessels."
+              description=""
               items={[
                 "Structural Integrity & Life Extension Studies",
                 "Hull Condition Analysis",
@@ -126,7 +132,7 @@ export default function Home() {
             <FeatureCard 
               number="04" 
               title="Sustainable Tech" 
-              description="Biofouling Management Plans (IMO MEPC.378(80)), IHM, and eco-friendly coating advisory for environmental compliance."
+              description=""
               items={[
                 "Biofouling Management Plan (IMO MEPC.378(80))",
                 "Eco-friendly Coating Advisory",
@@ -137,7 +143,7 @@ export default function Home() {
             <FeatureCard 
               number="05" 
               title="Regulatory Compliance" 
-              description="Fire & Safety Plans, BWMP, SoPEP, SEEMP, and Garbage Management Plans – fully compliant with IMO and Flag State requirements."
+              description=""
               items={[
                 "Ballast Water Management Plan (BWMP)",
                 "Shipboard Oil Pollution Emergency Plan (SoPEP)",
@@ -150,7 +156,7 @@ export default function Home() {
             <FeatureCard 
               number="06" 
               title="Project Management" 
-              description="Owner's representation, dry-docking supervision, and refit management – your independent advocate at the shipyard."
+              description=""
               items={[
                 "Owner's Rep & Refit Supervision",
                 "Dry-Docking Specification & Management",

@@ -59,7 +59,7 @@ export function Footer() {
                 { name: 'About Us', href: '/#about' },
                 { name: 'Careers', href: '/careers' },
                 { name: 'News', href: '/news' },
-                { name: 'Contact', href: '/#contact' }
+                { name: 'Contact', href: '/#begin-voyage' }
               ].map(item => (
                 <li key={item.name}>
                   <Link href={item.href} className="text-white/60 hover:text-white transition-colors text-sm">
