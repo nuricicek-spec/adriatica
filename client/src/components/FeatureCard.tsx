@@ -5,10 +5,11 @@ interface FeatureCardProps {
   number: string;
   title: string;
   description: string;
+  items?: string[];
   delay?: number;
 }
 
-export function FeatureCard({ number, title, description, delay = 0 }: FeatureCardProps) {
+export function FeatureCard({ number, title, description, items, delay = 0 }: FeatureCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -31,13 +32,20 @@ export function FeatureCard({ number, title, description, delay = 0 }: FeatureCa
           {title}
         </h3>
         
-        <p className="text-muted-foreground leading-relaxed mb-6 flex-grow">
+        <p className="text-muted-foreground leading-relaxed mb-6">
           {description}
         </p>
 
-        <div className="flex items-center text-sm font-medium text-primary uppercase tracking-wider group-hover:translate-x-2 transition-transform duration-300">
-          Explore <ArrowRight className="ml-2 h-4 w-4" />
-        </div>
+        {items && items.length > 0 && (
+          <ul className="space-y-2 mb-6">
+            {items.map((item, idx) => (
+              <li key={idx} className="flex items-start text-sm text-muted-foreground/80">
+                <span className="mr-2 text-primary/40 mt-1.5">•</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
       
       <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary/0 via-primary/50 to-primary/0 scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />

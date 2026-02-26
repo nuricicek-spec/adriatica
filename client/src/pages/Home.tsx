@@ -91,36 +91,71 @@ export default function Home() {
               number="01" 
               title="Engineering Plans" 
               description="Comprehensive as-built drawing sets, general arrangement plans, and structural drawings – your vessel's complete technical memory."
+              items={[
+                "Structural Drawings",
+                "As-Built Drawing Sets",
+                "Arrangement Plans",
+                "Fire & Safety Plans"
+              ]}
               delay={0.1}
             />
             <FeatureCard 
               number="02" 
               title="Engineering Documentation" 
               description="P&ID diagrams, electrical load analysis (EAB), fuel management booklets, and system manuals for technical reference."
+              items={[
+                "As-Built P&ID / System Manuals",
+                "Electrical Load Analysis (EAB)",
+                "Fuel Management & Quality Booklet",
+                "IHM (Inventory of Hazardous Materials)"
+              ]}
               delay={0.2}
             />
             <FeatureCard 
               number="03" 
               title="Structural Integrity" 
               description="Hull condition analysis, life extension studies, and modification consultancy for superyachts and commercial vessels."
+              items={[
+                "Structural Integrity & Life Extension Studies",
+                "Hull Condition Analysis",
+                "Modification Consultancy",
+                "Vibration & Noise Diagnostic"
+              ]}
               delay={0.3}
             />
             <FeatureCard 
               number="04" 
               title="Sustainable Tech" 
               description="Biofouling Management Plans (IMO MEPC.378(80)), IHM, and eco-friendly coating advisory for environmental compliance."
+              items={[
+                "Biofouling Management Plan (IMO MEPC.378(80))",
+                "Eco-friendly Coating Advisory",
+                "Energy Audit & Efficiency Surveys"
+              ]}
               delay={0.4}
             />
             <FeatureCard 
               number="05" 
               title="Regulatory Compliance" 
               description="Fire & Safety Plans, BWMP, SoPEP, SEEMP, and Garbage Management Plans – fully compliant with IMO and Flag State requirements."
+              items={[
+                "Ballast Water Management Plan (BWMP)",
+                "Shipboard Oil Pollution Emergency Plan (SoPEP)",
+                "Ship Energy Efficiency Management Plan (SEEMP)",
+                "Garbage Management Plan",
+                "Emergency Response Manuals"
+              ]}
               delay={0.5}
             />
             <FeatureCard 
               number="06" 
               title="Project Management" 
               description="Owner's representation, dry-docking supervision, and refit management – your independent advocate at the shipyard."
+              items={[
+                "Owner's Rep & Refit Supervision",
+                "Dry-Docking Specification & Management",
+                "On-site Technical Troubleshooting"
+              ]}
               delay={0.6}
             />
           </div>
