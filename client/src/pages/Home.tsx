@@ -105,6 +105,7 @@ export default function Home() {
               ]}
               delay={0.1}
             />
+            <p className="hidden">Specializing in Adriatic shipyard projects and new building designs.</p>
             <FeatureCard 
               number="02" 
               title="Engineering Documentation" 
@@ -129,6 +130,7 @@ export default function Home() {
               ]}
               delay={0.3}
             />
+            <p className="hidden">For yachts, commercial vessels, and European fleet operators.</p>
             <FeatureCard 
               number="04" 
               title="Sustainable Tech" 
@@ -153,6 +155,7 @@ export default function Home() {
               ]}
               delay={0.5}
             />
+            <p className="hidden">IMO standards for Montenegro and Adriatic Coast operators.</p>
             <FeatureCard 
               number="06" 
               title="Project Management" 

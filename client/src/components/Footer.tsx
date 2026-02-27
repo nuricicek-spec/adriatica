@@ -89,8 +89,11 @@ export function Footer() {
         </div>
 
         <div className="pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-white/40">
-          <p>© 2026 ADRIATICA D.O.O. All rights reserved.</p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
+          <div className="flex flex-col items-center md:items-start mb-4 md:mb-0">
+            <p>© 2026 ADRIATICA D.O.O. All rights reserved.</p>
+            <p className="text-white/40 text-xs mt-1">Marine engineering services across Montenegro, Adriatic Coast, and European maritime industry. Specializing in yacht design, refit, and new building projects.</p>
+          </div>
+          <div className="flex space-x-6">
              <span>Podgorica, Montenegro</span>
           </div>
         </div>
