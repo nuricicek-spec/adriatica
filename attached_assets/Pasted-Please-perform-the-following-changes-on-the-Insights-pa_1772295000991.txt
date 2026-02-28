@@ -1,0 +1,37 @@
+Please perform the following changes on the Insights page:
+
+Swap the publication dates of the two technical articles:
+
+The article titled "Technical Case Study: Biofouling Compliance – Preparing for the IMO 2026 Transition" should now be dated 28 February 2026.
+
+The article titled "Engineering Management for European Coastal Yacht Compliance" should now be dated 10 January 2026.
+
+Update the PDF download links for both articles to match the new file names:
+
+For the Biofouling Compliance article, set the PDF link to:
+/pdfs/Adriatica_Technical_Insight_001_Biofouling_Compliance.pdf
+
+For the European Coastal Compliance article, set the PDF link to:
+/pdfs/Adriatica_Technical_Insight_002_European_Coastal_Compliance.pdf
+
+Keep all article titles and descriptions exactly as they are:
+
+28 February 2026 article:
+Title: "Technical Case Study: Biofouling Compliance – Preparing for the IMO 2026 Transition"
+Description: "Discover how Adriatica D.O.O. applies a structured compliance framework to meet the upcoming IMO 2026 biofouling regulations. Through a real-world superyacht case study, we demonstrate proactive documentation, niche area risk management, and operational efficiency for seamless Mediterranean cruising."
+
+10 January 2026 article:
+Title: "Engineering Management for European Coastal Yacht Compliance"
+Description: "Detailed technical insights into managing in-water cleaning operations for vessels 25m+ and 50m+, ensuring compliance with Paris MoU expectations. This article covers the strategic shift from voluntary guidelines to mandatory oversight, including a comparative economic analysis between managed cleaning and unscheduled dry-docking."
+
+Ensure that the PDF files are placed in the /public/pdfs/ folder with the exact file names mentioned above.
+
+After making these changes, please test the page to confirm:
+
+The dates are displayed correctly (28 Feb 2026 for the first article, 10 Jan 2026 for the second).
+
+Both PDF links open the correct documents.
+
+The layout and styling remain consistent.
+
+Thank you!

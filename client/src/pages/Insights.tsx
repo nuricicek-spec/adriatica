@@ -6,12 +6,14 @@ const insightItems = [
   {
     date: "28 February 2026",
     title: "Technical Case Study: Biofouling Compliance – Preparing for the IMO 2026 Transition",
-    excerpt: "Discover how Adriatica D.O.O. applies a structured compliance framework to meet the upcoming IMO 2026 biofouling regulations. Through a real-world superyacht case study, we demonstrate proactive documentation, niche area risk management, and operational efficiency for seamless Mediterranean cruising."
+    excerpt: "Discover how Adriatica D.O.O. applies a structured compliance framework to meet the upcoming IMO 2026 biofouling regulations. Through a real-world superyacht case study, we demonstrate proactive documentation, niche area risk management, and operational efficiency for seamless Mediterranean cruising.",
+    pdf: "/pdfs/Adriatica_Technical_Insight_001_Biofouling_Compliance.pdf"
   },
   {
     date: "10 January 2026",
-    title: "The Role of Independent Owner's Representation in Refit Projects",
-    excerpt: "How having an independent technical advisor during dry-docking can reduce costs, avoid delays, and ensure quality."
+    title: "Engineering Management for European Coastal Yacht Compliance",
+    excerpt: "Detailed technical insights into managing in-water cleaning operations for vessels 25m+ and 50m+, ensuring compliance with Paris MoU expectations. This article covers the strategic shift from voluntary guidelines to mandatory oversight, including a comparative economic analysis between managed cleaning and unscheduled dry-docking.",
+    pdf: "/pdfs/Adriatica_Technical_Insight_002_European_Coastal_Compliance.pdf"
   }
 ];
 
@@ -45,7 +47,7 @@ export default function Insights() {
                   {item.excerpt}
                 </p>
                 <a 
-                  href={`/pdfs/Technical_Insight_00${index + 1}.pdf`} 
+                  href={item.pdf} 
                   className="text-primary hover:underline inline-flex items-center gap-1 font-medium"
                 >
                   📄 View Technical Insight (PDF)
