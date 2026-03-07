@@ -58,7 +58,7 @@ export default function Insights() {
 
           <div className="mt-16 p-8 bg-neutral-50 border border-border/50 rounded-sm">
             <p className="text-center text-muted-foreground">
-              For technical inquiries or consultation, please contact us at <span className="text-[#0B3B5C] font-medium">info@adriatica.me (mock)</span>
+              For technical inquiries or consultation, please contact us at <span className="text-[#0B3B5C] font-medium">info@adriaticadoo.me (mock)</span>
             </p>
           </div>
         </motion.div>

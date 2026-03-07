@@ -78,19 +78,19 @@ import { Helmet } from "react-helmet-async";
 ## 5. Create public/sitemap.xml:
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://www.adriatica.me/</loc><priority>1.0</priority></url>
-  <url><loc>https://www.adriatica.me/careers</loc><priority>0.8</priority></url>
-  <url><loc>https://www.adriatica.me/news</loc><priority>0.8</priority></url>
-  <url><loc>https://www.adriatica.me/insights</loc><priority>0.9</priority></url>
-  <url><loc>https://www.adriatica.me/privacy-policy</loc><priority>0.5</priority></url>
-  <url><loc>https://www.adriatica.me/terms-of-service</loc><priority>0.5</priority></url>
-  <url><loc>https://www.adriatica.me/cookie-policy</loc><priority>0.5</priority></url>
+  <url><loc>https://www.adriaticadoo.me/</loc><priority>1.0</priority></url>
+  <url><loc>https://www.adriaticadoo.me/careers</loc><priority>0.8</priority></url>
+  <url><loc>https://www.adriaticadoo.me/news</loc><priority>0.8</priority></url>
+  <url><loc>https://www.adriaticadoo.me/insights</loc><priority>0.9</priority></url>
+  <url><loc>https://www.adriaticadoo.me/privacy-policy</loc><priority>0.5</priority></url>
+  <url><loc>https://www.adriaticadoo.me/terms-of-service</loc><priority>0.5</priority></url>
+  <url><loc>https://www.adriaticadoo.me/cookie-policy</loc><priority>0.5</priority></url>
 </urlset>
 
 ## 6. Create public/robots.txt:
 User-agent: *
 Allow: /
-Sitemap: https://www.adriatica.me/sitemap.xml
+Sitemap: https://www.adriaticadoo.me/sitemap.xml
 
 ## 7. Add core competencies context (Home.tsx):
 Keywords already appear naturally in FeatureCard items. Optionally add small notes:
@@ -105,7 +105,7 @@ Keywords already appear naturally in FeatureCard items. Optionally add small not
 ---
 
 ⚠️ NOTES:
-- Replace domain (adriatica.me) with your actual domain.
+- Replace domain (adriaticadoo.me) with your actual domain.
 - Add real social media profiles to Facebook, Instagram, LinkedIn links.
 - Update contact info (email, phone) with real details.
 - Legal pages have "noindex" tag to keep them out of search results.

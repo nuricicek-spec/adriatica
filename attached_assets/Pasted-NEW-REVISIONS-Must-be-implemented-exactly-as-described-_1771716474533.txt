@@ -44,7 +44,7 @@ Every project is executed with uncompromising attention to detail, ensuring safe
 3. Footer – Add Contact Info
 In src/components/Footer.tsx, immediately below the paragraph that starts with "Pioneering marine engineering solutions...", add the following two lines with proper spacing (margin-top):
 
-info@adriatica.me (mock)
+info@adriaticadoo.me (mock)
 
 +382 59 123 456 (mock)
 
@@ -62,7 +62,7 @@ First paragraph: "We are always looking for passionate marine engineers, naval a
 
 Second paragraph: "If you share our values of independence, practicality, and technical excellence, please send your CV and cover letter to:"
 
-Email: "careers@adriatica.me (mock)"
+Email: "careers@adriaticadoo.me (mock)"
 
 Closing line: "(We will respond to suitable candidates within two weeks.)"
 
@@ -91,7 +91,7 @@ Excerpt: "We are proud to become a member of the local marine industry network, 
 Below the news list, add a box with the following text:
 
 text
-For media inquiries or interview requests, please contact us at press@adriatica.me (mock)
+For media inquiries or interview requests, please contact us at press@adriaticadoo.me (mock)
 In src/App.tsx, import this new page and add a route: <Route path="/news" component={News} />.
 
 In src/components/Footer.tsx, replace the existing "News" link with a <Link> component pointing to /news.

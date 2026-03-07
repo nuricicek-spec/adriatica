@@ -23,7 +23,7 @@ export default function Careers() {
               If you share our values of independence, practicality, and technical excellence, please send your CV and cover letter to:
             </p>
             <p className="font-bold text-[#0B3B5C]">
-              careers@adriatica.me (mock)
+              careers@adriaticadoo.me (mock)
             </p>
             <p className="text-sm italic">
               (We will respond to suitable candidates within two weeks.)

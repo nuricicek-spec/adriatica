@@ -4,7 +4,7 @@ In src/components/Footer.tsx, immediately below the paragraph that starts with "
 
 tsx
 <div className="mt-4 space-y-1 text-white/60 text-sm">
-  <p>info@adriatica.me (mock)</p>
+  <p>info@adriaticadoo.me (mock)</p>
   <p>+382 59 123 456 (mock)</p>
 </div>
 2. Create "Careers" Page and Update Footer Link
@@ -26,7 +26,7 @@ export default function Careers() {
         <p className="text-lg text-muted-foreground mb-6">
           If you share our values of independence, practicality, and technical excellence, please send your CV and cover letter to:
         </p>
-        <p className="text-xl font-medium text-primary">careers@adriatica.me (mock)</p>
+        <p className="text-xl font-medium text-primary">careers@adriaticadoo.me (mock)</p>
         <p className="text-sm text-muted-foreground mt-8">(We will respond to suitable candidates within two weeks.)</p>
       </div>
       <Footer />
@@ -104,7 +104,7 @@ export default function News() {
 
         <div className="mt-12 p-6 bg-primary/5 border border-primary/10 rounded-sm">
           <p className="text-sm italic">
-            For media inquiries or interview requests, please contact us at <span className="font-medium">press@adriatica.me (mock)</span>
+            For media inquiries or interview requests, please contact us at <span className="font-medium">press@adriaticadoo.me (mock)</span>
           </p>
         </div>
       </div>

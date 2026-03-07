@@ -14,7 +14,7 @@ Please apply the following changes to my project exactly as described. Preserve 
    - In `src/pages/News.tsx`:
      - Remove the news items dated "15 March 2025" and "10 February 2025". Keep only the item dated "5 January 2025".
      - Change the date of that remaining item from "5 January 2025" to **"30 June 2025"** . Keep its title and excerpt exactly as they are.
-     - At the bottom of the page, change the media contact email from `press@adriatica.me` to **`info@adriatica.me`** .
+     - At the bottom of the page, change the media contact email from `press@adriaticadoo.me` to **`info@adriaticadoo.me`** .
 
 #### 4. Add Social Media Icons to Footer (Mock Links)
    - In `src/components/Footer.tsx`, near the phone number (or in a new row), add icons for **Instagram, Facebook, and LinkedIn**.
@@ -23,7 +23,7 @@ Please apply the following changes to my project exactly as described. Preserve 
    - Add appropriate spacing and hover effects (like `hover:opacity-100`) to match the footer style.
 
 #### 5. Add Location Text to Footer
-   - In `src/components/Footer.tsx`, below the line `info@adriatica.me (mock)`, add a new line with: **`📍 Serving the Montenegro Bay & Adriatic Coast`** .
+   - In `src/components/Footer.tsx`, below the line `info@adriaticadoo.me (mock)`, add a new line with: **`📍 Serving the Montenegro Bay & Adriatic Coast`** .
    - Use a subtle text color like `text-white/60` and a small text size (`text-sm`).
 
 #### 6. Fix "About Us" Footer Link – Scroll to Philosophy Section
