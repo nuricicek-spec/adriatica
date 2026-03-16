@@ -138,7 +138,8 @@ export default function Home() {
               items={[
                 "Biofouling Management Plan (IMO MEPC.378(80))",
                 "Eco-friendly Coating Advisory",
-                "Energy Audit & Efficiency Surveys"
+                "Energy Audit & Efficiency Surveys",
+                "MRV Monitoring Plan (EU MRV Regulation)"
               ]}
               delay={0.4}
             />
