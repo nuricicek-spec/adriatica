@@ -1,7 +1,7 @@
 $readmeContent = @"
-# Adriatica D.O.O. – Corporate Website
+# ⚓ Adriatica D.O.O. - Marine Engineering & Consultancy
 
-Modern, responsive corporate website for **Adriatica D.O.O.** , a marine engineering and technical consultancy based in Montenegro.
+This repository contains the web application and technical documentation framework for Adriatica D.O.O., focusing on maritime compliance and engineering solutions in the Adriatic and EU regions.
 
 Built with **React**, **TypeScript**, **Vite** and **Tailwind CSS**.  
 The site features a clean, professional design, smooth hash‑based navigation, and full mobile responsiveness.
@@ -65,33 +65,40 @@ adriatica/
 ```
 ## 🚀 Quick Start
 
-# Clone the repository
-git clone https://github.com/nuricicek-spec/adriatica.git
-cd adriatica
+1. Clone the repository:
+   git clone https://github.com/nuricicek-spec/adriatica.git
+   cd adriatica
 
-# Install dependencies
-npm install
+2. Install dependencies:
+   npm install
 
-# Start development server
-npm run dev
+3. Start development server:
+   npm run dev
 
-Then open [http://localhost:5173](http://localhost:5173) in your browser.
+4. Access the site:
+   Then open http://localhost:5173 in your browser.
 
 ## 🌐 Deployment
 
 ### Netlify (recommended)
 
 1. Push the code to your GitHub repository.
-2. Log in to [Netlify](https://netlify.com).
-3. Click **"Add new site"** → **"Import an existing project"**.
+2. Log in to Netlify (https://netlify.com).
+3. Click "Add new site" -> "Import an existing project".
 4. Select your GitHub repository.
 5. Build settings:
-   - **Build command:** `npm run build`
-   - **Publish directory:** `dist`
-6. Click **"Deploy site"**.
+   - Build command: npm run build
+   - Publish directory: dist
+6. Click "Deploy site".
 
 Your site will be live in seconds.
 
 ## 📄 License
 
 Free to use and modify for personal or commercial projects. No warranty provided.
+
+## 🛠️ Technical Focus
+- EU MRV / IMO DCS Compliance
+- Biofouling Management Plans
+- Maritime Technical Consultancy
+- Adriatic Coastal Compliance
