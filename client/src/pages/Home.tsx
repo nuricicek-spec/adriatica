@@ -5,7 +5,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { Footer } from "@/components/Footer";
 import { ArrowDown } from "lucide-react";
 
-const COMMISSIONS_TEXT = "We are currently accepting commissions for Q3 2025.";
+const COMMISSIONS_TEXT = "We are currently accepting commissions for Q2 2026.";
 
 export default function Home() {
   return (

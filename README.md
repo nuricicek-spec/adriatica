@@ -35,32 +35,34 @@ The site features a clean, professional design, smooth hash‑based navigation, 
 ---
 
 ## 📁 Project Structure (simplified)
+
+```
 adriatica/
-├── client/ # Frontend source
-│ ├── public/ # Static assets (favicon, logo)
-│ └── src/
-│ ├── components/ # Reusable UI components
-│ │ ├── Navigation.tsx
-│ │ ├── Footer.tsx
-│ │ ├── HashLink.tsx
-│ │ ├── FeatureCard.tsx
-│ │ └── ...
-│ ├── pages/ # Page components
-│ │ ├── Home.tsx
-│ │ ├── Insights.tsx
-│ │ ├── Careers.tsx
-│ │ ├── News.tsx
-│ │ └── legal/*.tsx
-│ ├── hooks/ # Custom React hooks
-│ ├── lib/ # Utilities & config
-│ └── App.tsx # Main router
-├── public/ # Public root (pdfs, sitemap, robots)
-│ └── pdfs/ # Technical insight PDFs
+├── client/                 # Frontend source
+│   ├── public/             # Static assets (favicon, logo)
+│   └── src/
+│       ├── components/     # Reusable UI components
+│       │   ├── Navigation.tsx
+│       │   ├── Footer.tsx
+│       │   ├── HashLink.tsx
+│       │   ├── FeatureCard.tsx
+│       │   └── ...
+│       ├── pages/          # Page components
+│       │   ├── Home.tsx
+│       │   ├── Insights.tsx
+│       │   ├── Careers.tsx
+│       │   ├── News.tsx
+│       │   └── legal/*.tsx
+│       ├── hooks/          # Custom React hooks
+│       ├── lib/            # Utilities & config
+│       └── App.tsx         # Main router
+├── public/                 # Public root (pdfs, sitemap, robots)
+│   └── pdfs/               # Technical insight PDFs
 ├── package.json
 ├── vite.config.ts
 ├── tailwind.config.ts
 └── README.md
-
+```
 ## 🚀 Quick Start
 
 # Clone the repository
