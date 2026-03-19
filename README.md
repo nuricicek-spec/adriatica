@@ -73,8 +73,7 @@ npm install
 # Start development server
 npm run dev
 
-## Then open [http://localhost:5173](http://localhost:5173) in your browser.
-
+Then open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ## 🌐 Deployment
 
@@ -90,8 +89,6 @@ npm run dev
 6. Click **"Deploy site"**.
 
 Your site will be live in seconds.
-
----
 
 ## 📄 License
 
