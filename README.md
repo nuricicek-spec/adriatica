@@ -1,3 +1,4 @@
+$readmeContent = @"
 # Adriatica D.O.O. – Corporate Website
 
 Modern, responsive corporate website for **Adriatica D.O.O.** , a marine engineering and technical consultancy based in Montenegro.
@@ -7,7 +8,7 @@ The site features a clean, professional design, smooth hash‑based navigation, 
 
 ---
 
-## ✨ Key Features
+## ✨ Key Feature
 
 - ⚡ **Fast & modern** – React + Vite + TypeScript stack.
 - 📱 **Fully responsive** – Optimised for mobile, tablet and desktop.
@@ -62,7 +63,6 @@ adriatica/
 
 ## 🚀 Quick Start
 
-```bash
 # Clone the repository
 git clone https://github.com/nuricicek-spec/adriatica.git
 cd adriatica
@@ -73,27 +73,26 @@ npm install
 # Start development server
 npm run dev
 
-Then open http://localhost:5173 in your browser.
+## Then open [http://localhost:5173](http://localhost:5173) in your browser.
 
-🌐 Deployment
-Netlify (recommended)
-Push the code to your GitHub repository.
 
-Log in to Netlify.
+## 🌐 Deployment
 
-Click "Add new site" → "Import an existing project".
+### Netlify (recommended)
 
-Select your GitHub repository.
-
-Build settings:
-
-Build command: npm run build
-
-Publish directory: dist
-
-Click "Deploy site".
+1. Push the code to your GitHub repository.
+2. Log in to [Netlify](https://netlify.com).
+3. Click **"Add new site"** → **"Import an existing project"**.
+4. Select your GitHub repository.
+5. Build settings:
+   - **Build command:** `npm run build`
+   - **Publish directory:** `dist`
+6. Click **"Deploy site"**.
 
 Your site will be live in seconds.
 
-📄 License
+---
+
+## 📄 License
+
 Free to use and modify for personal or commercial projects. No warranty provided.
