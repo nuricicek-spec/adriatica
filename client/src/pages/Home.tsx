@@ -5,7 +5,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { Footer } from "@/components/Footer";
 import { ArrowDown } from "lucide-react";
 
-const COMMISSIONS_TEXT = "We are currently accepting commissions for Q3 2025.";
+const COMMISSIONS_TEXT = "We are currently accepting commissions for Q2 2026.";
 
 export default function Home() {
   return (
@@ -13,14 +13,14 @@ export default function Home() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative h-screen min-h-[800px] flex items-center overflow-hidden pt-28 md:pt-20">
+      <section className="relative h-screen min-h-[800px] flex overflow-hidden pt-32 md:pt-24">
         {/* Abstract Background Elements */}
         <div className="absolute inset-0 z-0">
           <div className="absolute top-0 right-0 w-2/3 h-full bg-[#1A4B7A]/5 -skew-x-12 transform origin-top" />
           <div className="absolute bottom-0 left-0 w-1/3 h-2/3 bg-[#0B3B5C]/5 skew-x-12 transform origin-bottom" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full pt-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
