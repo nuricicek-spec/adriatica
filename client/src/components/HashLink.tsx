@@ -12,6 +12,7 @@ export function HashLink({ href, children, className, onClick }: HashLinkProps) 
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
+
     const [path, hash] = href.split('#');
     const targetPath = path || '/';
     const currentPath = location || '/';
@@ -20,6 +21,9 @@ export function HashLink({ href, children, className, onClick }: HashLinkProps) 
       if (hash) {
         const el = document.getElementById(hash);
         if (el) el.scrollIntoView({ behavior: 'smooth' });
+      } else if (href === '/') {
+        // Logo tıklandığında ve ana sayfadaysak en tepeye kaydır
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     } else {
       setLocation(targetPath + (hash ? `#${hash}` : ''));
@@ -30,8 +34,13 @@ export function HashLink({ href, children, className, onClick }: HashLinkProps) 
         }
       }, 150);
     }
+
     onClick?.();
   };
 
-  return <a href={href} onClick={handleClick} className={className}>{children}</a>;
+  return (
+    <a href={href} onClick={handleClick} className={className}>
+      {children}
+    </a>
+  );
 }

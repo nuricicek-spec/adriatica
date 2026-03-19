@@ -1,19 +1,19 @@
-import { Link } from "wouter";
+import { HashLink } from "@/components/HashLink";
 import { Instagram, Facebook, Linkedin } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="bg-[#0B3B5C] text-white pt-24 pb-12">
+    <footer id="footer" className="bg-[#0B3B5C] text-white pt-24 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 border-b border-white/10 pb-16">
           
           <div className="md:col-span-4">
-            <Link href="/" className="flex items-center space-x-3 mb-6">
+            <HashLink href="/" className="flex items-center space-x-3 mb-6">
               <img src="/logo.svg" alt="Logo" className="h-12 w-auto brightness-0 invert" />
               <span className="font-display font-bold text-2xl tracking-widest uppercase">
                 ADRIATICA D.O.O.
               </span>
-            </Link>
+            </HashLink>
             <p className="text-white/60 leading-relaxed mb-4 max-w-sm">
               Pioneering marine engineering solutions inspired by ancient wisdom and driven by modern innovation.
             </p>
@@ -40,13 +40,13 @@ export function Footer() {
             <ul className="space-y-4">
               {[
                 { name: 'Home', href: '/' },
-                { name: 'Expertise', href: '/#expertise' },
+                { name: 'Expertise', href: '/#core-competencies' },
                 { name: 'Insights', href: '/insights' }
               ].map(item => (
                 <li key={item.name}>
-                  <Link href={item.href} className="text-white/60 hover:text-white transition-colors text-sm">
+                  <HashLink href={item.href} className="text-white/60 hover:text-white transition-colors text-sm">
                     {item.name}
-                  </Link>
+                  </HashLink>
                 </li>
               ))}
             </ul>
@@ -56,15 +56,15 @@ export function Footer() {
             <h4 className="font-display font-bold text-lg mb-6">Company</h4>
             <ul className="space-y-4">
               {[
-                { name: 'About Us', href: '/#about' },
+                { name: 'About Us', href: '/#philosophy' },
                 { name: 'Careers', href: '/careers' },
                 { name: 'News', href: '/news' },
-                { name: 'Contact', href: '/#begin-voyage' }
+                { name: 'Contact', href: '/#footer' }
               ].map(item => (
                 <li key={item.name}>
-                  <Link href={item.href} className="text-white/60 hover:text-white transition-colors text-sm">
+                  <HashLink href={item.href} className="text-white/60 hover:text-white transition-colors text-sm">
                     {item.name}
-                  </Link>
+                  </HashLink>
                 </li>
               ))}
             </ul>
@@ -79,9 +79,9 @@ export function Footer() {
                 { name: 'Cookie Policy', href: '/cookie-policy' }
               ].map(item => (
                 <li key={item.name}>
-                  <Link href={item.href} className="text-white/60 hover:text-white transition-colors text-sm">
+                  <HashLink href={item.href} className="text-white/60 hover:text-white transition-colors text-sm">
                     {item.name}
-                  </Link>
+                  </HashLink>
                 </li>
               ))}
             </ul>

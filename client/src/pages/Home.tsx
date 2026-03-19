@@ -65,7 +65,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#0B3B5C]/10 to-transparent rounded-full blur-3xl" />
                 <img 
                   src="/logo.svg" 
-                  alt="AdriaticA Doo Symbol" 
+                  alt="Adriatica D.O.O. Symbol" 
                   className="w-full h-auto drop-shadow-2xl"
                 />
               </div>
@@ -173,7 +173,7 @@ export default function Home() {
       </section>
 
       {/* Image / Vision Section */}
-      <section className="py-24 bg-[#0B3B5C] text-white overflow-hidden relative">
+      <section id="philosophy" className="py-24 bg-[#0B3B5C] text-white overflow-hidden relative">
         <div className="absolute inset-0 opacity-10">
           <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
              <path d="M0 100 L100 0 L100 100 Z" fill="white" />
@@ -557,7 +557,7 @@ export default function Home() {
       </section>
 
       {/* Contact CTA */}
-      <section id="contact" className="py-24 bg-neutral-50 border-t border-border/10">
+      <section id="begin-voyage" className="py-24 bg-neutral-50 border-t border-border/10">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="font-display text-4xl md:text-5xl font-bold text-[#0B3B5C] mb-6">
             Begin Your Voyage

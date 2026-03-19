@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import { Link } from "wouter";
+import { useLocation } from "wouter";
+import { HashLink } from "@/components/HashLink";
 import { cn } from "@/lib/utils";
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [location, setLocation] = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,16 +18,20 @@ export function Navigation() {
   }, []);
 
   const navLinks = [
-    { name: "Expertise", href: "/#expertise" },
+    { name: "Expertise", href: "/#core-competencies" },
     { name: "Insights", href: "/insights" },
-    { name: "About Us", href: "/#about" },
-    { name: "Contact", href: "/#begin-voyage" },
+    { name: "About Us", href: "/#philosophy" },
+    { name: "Contact", href: "/#footer" },
   ];
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  const handleInquireClick = () => {
+    if (location === "/") {
+      document.getElementById("begin-voyage")?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      setLocation("/#begin-voyage");
+      setTimeout(() => {
+        document.getElementById("begin-voyage")?.scrollIntoView({ behavior: "smooth" });
+      }, 150);
     }
   };
 
@@ -40,39 +46,30 @@ export function Navigation() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          <Link href="/" className="flex items-center space-x-3 group">
-            <img 
-              src="/logo.svg" 
-              alt="Logo" 
-              className="h-10 w-auto transition-transform duration-500 group-hover:scale-105" 
+          <HashLink href="/" className="flex items-center space-x-3 group">
+            <img
+              src="/logo.svg"
+              alt="Logo"
+              className="h-10 w-auto transition-transform duration-500 group-hover:scale-105"
             />
             <span className="font-display font-bold text-xl tracking-widest text-primary uppercase">
               ADRIATICA D.O.O.
             </span>
-          </Link>
+          </HashLink>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
-              <a
+              <HashLink
                 key={link.name}
                 href={link.href}
                 className="text-sm font-medium tracking-wide hover:text-primary/70 transition-colors uppercase"
-                onClick={(e) => {
-                  if (link.href.startsWith('/#')) {
-                    const id = link.href.split('#')[1];
-                    if (window.location.pathname === '/') {
-                      e.preventDefault();
-                      scrollToSection(id);
-                    }
-                  }
-                }}
               >
                 {link.name}
-              </a>
+              </HashLink>
             ))}
             <button
-              onClick={() => scrollToSection('begin-voyage')}
+              onClick={handleInquireClick}
               className="bg-primary text-primary-foreground px-6 py-2.5 rounded-sm font-medium text-sm tracking-wide hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl"
             >
               Inquire
@@ -95,16 +92,22 @@ export function Navigation() {
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-background border-b border-border/10 shadow-xl py-4 px-4 flex flex-col space-y-4">
           {navLinks.map((link) => (
-            <a
+            <HashLink
               key={link.name}
               href={link.href}
               className="text-lg font-medium py-2 border-b border-border/5"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {link.name}
-            </a>
+            </HashLink>
           ))}
-          <button className="w-full bg-primary text-primary-foreground px-6 py-3 rounded-sm font-medium mt-4">
+          <button
+            onClick={() => {
+              handleInquireClick();
+              setIsMobileMenuOpen(false);
+            }}
+            className="w-full bg-primary text-primary-foreground px-6 py-3 rounded-sm font-medium mt-4"
+          >
             Inquire Now
           </button>
         </div>
