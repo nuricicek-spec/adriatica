@@ -98,7 +98,6 @@ Your site will be live in seconds.
 Free to use and modify for personal or commercial projects. No warranty provided.
 
 ## 🛠️ Technical Focus
-- EU MRV / IMO DCS Compliance
-- Biofouling Management Plans
-- Maritime Technical Consultancy
-- Adriatic Coastal Compliance
+- Marine Engineering
+- Marine Consultancy
+- IMO Regulatory Compliance
