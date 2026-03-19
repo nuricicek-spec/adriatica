@@ -5,7 +5,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { Footer } from "@/components/Footer";
 import { ArrowDown } from "lucide-react";
 
-const COMMISSIONS_TEXT = "We are currently accepting commissions for Q2 2026.";
+const COMMISSIONS_TEXT = "We are currently accepting commissions for Q3 2025.";
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative h-screen min-h-[800px] flex overflow-hidden pt-32 md:pt-24">
+      <section className="relative h-screen min-h-[800px] flex overflow-hidden pt-36 md:pt-24">
         {/* Abstract Background Elements */}
         <div className="absolute inset-0 z-0">
           <div className="absolute top-0 right-0 w-2/3 h-full bg-[#1A4B7A]/5 -skew-x-12 transform origin-top" />
@@ -96,7 +96,6 @@ export default function Home() {
             <FeatureCard 
               number="01" 
               title="Engineering Plans" 
-              description=""
               items={[
                 "Structural Drawings",
                 "As-Built Drawing Sets",
@@ -109,7 +108,6 @@ export default function Home() {
             <FeatureCard 
               number="02" 
               title="Engineering Documentation" 
-              description=""
               items={[
                 "As-Built P&ID / System Manuals",
                 "Electrical Load Analysis (EAB)",
@@ -121,7 +119,6 @@ export default function Home() {
             <FeatureCard 
               number="03" 
               title="Structural Integrity" 
-              description=""
               items={[
                 "Structural Integrity & Life Extension Studies",
                 "Hull Condition Analysis",
@@ -134,7 +131,6 @@ export default function Home() {
             <FeatureCard 
               number="04" 
               title="Sustainable Tech" 
-              description=""
               items={[
                 "Biofouling Management Plan (IMO MEPC.378(80))",
                 "Eco-friendly Coating Advisory",
@@ -146,7 +142,6 @@ export default function Home() {
             <FeatureCard 
               number="05" 
               title="Regulatory Compliance" 
-              description=""
               items={[
                 "Ballast Water Management Plan (BWMP)",
                 "Shipboard Oil Pollution Emergency Plan (SoPEP)",
@@ -160,7 +155,6 @@ export default function Home() {
             <FeatureCard 
               number="06" 
               title="Project Management" 
-              description=""
               items={[
                 "Owner's Rep & Refit Supervision",
                 "Dry-Docking Specification & Management",

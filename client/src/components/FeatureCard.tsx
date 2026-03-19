@@ -1,15 +1,13 @@
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
 
 interface FeatureCardProps {
   number: string;
   title: string;
-  description: string;
   items?: string[];
   delay?: number;
 }
 
-export function FeatureCard({ number, title, description, items, delay = 0 }: FeatureCardProps) {
+export function FeatureCard({ number, title, items, delay = 0 }: FeatureCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -24,7 +22,6 @@ export function FeatureCard({ number, title, description, items, delay = 0 }: Fe
       
       <div className="relative z-10 h-full flex flex-col">
         <div className="h-12 w-12 mb-6 bg-primary/5 flex items-center justify-center rounded-sm text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-           {/* Icon placeholder or dynamic icon could go here */}
            <div className="w-1.5 h-1.5 bg-current rounded-full" />
         </div>
 
