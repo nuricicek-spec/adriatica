@@ -1,4 +1,4 @@
-$readmeContent = @"
+
 # ⚓ Adriatica D.O.O. - Marine Engineering & Consultancy
 
 This repository contains the web application and technical documentation framework for Adriatica D.O.O., focusing on maritime compliance and engineering solutions in the Adriatic and EU regions.
