@@ -1,6 +1,7 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { motion } from "framer-motion";
+import { SEO } from "@/components/SEO";
 
 const insightItems = [
   {
@@ -19,51 +20,58 @@ const insightItems = [
 
 export default function Insights() {
   return (
-    <div className="min-h-screen bg-background font-body">
-      <Navigation />
-      <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-[#0B3B5C] mb-4">
-            Insights
-          </h1>
-          <p className="text-xl text-muted-foreground mb-12">
-            Technical articles and updates from Adriatica D.O.O.
-          </p>
-
-          <div className="space-y-12">
-            {insightItems.map((item, index) => (
-              <article key={index} className="border-l-2 border-primary/20 pl-6">
-                <time className="text-sm text-primary uppercase tracking-widest font-medium">
-                  {item.date}
-                </time>
-                <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-2 mb-4">
-                  {item.title}
-                </h2>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  {item.excerpt}
-                </p>
-                <a 
-                  href={item.pdf} 
-                  className="text-primary hover:underline inline-flex items-center gap-1 font-medium"
-                >
-                  📄 View Technical Insight (PDF)
-                </a>
-              </article>
-            ))}
-          </div>
-
-          <div className="mt-16 p-8 bg-neutral-50 border border-border/50 rounded-sm">
-            <p className="text-center text-muted-foreground">
-              For technical inquiries or consultation, please contact us at <span className="text-[#0B3B5C] font-medium">info@adriaticadoo.me (mock)</span>
+    <>
+      <SEO
+        title="Insights"
+        description="Technical articles and updates from Adriatica D.O.O. – biofouling compliance, European coastal yacht compliance, and marine engineering insights."
+        canonical="https://www.adriaticadoo.me/insights"
+      />
+      <div className="min-h-screen bg-background font-body">
+        <Navigation />
+        <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h1 className="font-display text-4xl md:text-5xl font-bold text-[#0B3B5C] mb-4">
+              Insights
+            </h1>
+            <p className="text-xl text-muted-foreground mb-12">
+              Technical articles and updates from Adriatica D.O.O.
             </p>
-          </div>
-        </motion.div>
-      </main>
-      <Footer />
-    </div>
+
+            <div className="space-y-12">
+              {insightItems.map((item, index) => (
+                <article key={index} className="border-l-2 border-primary/20 pl-6">
+                  <time className="text-sm text-primary uppercase tracking-widest font-medium">
+                    {item.date}
+                  </time>
+                  <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-2 mb-4">
+                    {item.title}
+                  </h2>
+                  <p className="text-muted-foreground leading-relaxed mb-4">
+                    {item.excerpt}
+                  </p>
+                  <a 
+                    href={item.pdf} 
+                    className="text-primary hover:underline inline-flex items-center gap-1 font-medium"
+                  >
+                    📄 View Technical Insight (PDF)
+                  </a>
+                </article>
+              ))}
+            </div>
+
+            <div className="mt-16 p-8 bg-neutral-50 border border-border/50 rounded-sm">
+              <p className="text-center text-muted-foreground">
+                For technical inquiries or consultation, please contact us at <span className="text-[#0B3B5C] font-medium">info@adriaticadoo.me </span>
+              </p>
+            </div>
+          </motion.div>
+        </main>
+        <Footer />
+      </div>
+    </>
   );
 }

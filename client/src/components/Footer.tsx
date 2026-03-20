@@ -19,7 +19,7 @@ export function Footer() {
             </p>
             <div className="text-white/60 text-sm space-y-1 mb-6">
               <p>📍 Serving the Montenegro Bay & Adriatic Coast</p>
-              <p>info@adriaticadoo.me (mock)</p>
+              <p>info@adriaticadoo.me</p>
               <p>+382 59 123 456 (mock)</p>
             </div>
             <div className="flex gap-4 items-center">
