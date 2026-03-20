@@ -231,11 +231,11 @@ export default function Home() {
                     <div className="text-sm uppercase tracking-wider text-white/60">Years Experience</div>
                   </div>
                   <div>
-                    <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">50+</div>
+                    <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">40+</div>
                     <div className="text-sm uppercase tracking-wider text-white/60">Clients Worldwide</div>
                   </div>
                   <div>
-                    <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">15+</div>
+                    <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">5+</div>
                     <div className="text-sm uppercase tracking-wider text-white/60">Countries</div>
                   </div>
                   <div>
