@@ -16,43 +16,44 @@ export default function Home() {
         title="Home"
         description="Adriatica D.O.O. - Marine engineering consultancy specializing in structural integrity, regulatory compliance, and sustainable technologies. Serving Montenegro, Adriatic Coast, and European maritime industry."
         canonical="https://www.adriaticadoo.me/"
-        ogImage="/og-image-home.png" // Varsa özel görsel, yoksa varsayılan kullanılır
+        ogImage="/og-image-default.png" // Varsa özel görsel, yoksa varsayılan kullanılır
       />
 
       {/* Yapılandırılmış veri (JSON-LD) – Geliştirilmiş */}
-      <Helmet>
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "ProfessionalService",
-            "name": "Adriatica D.O.O.",
-            "image": "https://www.adriaticadoo.me/og-image-default.png",
-            "url": "https://www.adriaticadoo.me",
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": "Budva",          // Fiziksel kayıtlı adres
-              "addressCountry": "ME"
-            },
-            "serviceType": [
-              "Marine Engineering",
-              "Regulatory Compliance",
-              "MRV Reporting",
-              "Biofouling Management",
-              "Structural Integrity"
-            ],
-            "description": "Marine engineering consultancy specializing in EU MRV, IMO DCS, and Biofouling compliance.",
-            "areaServed": [
-              "Bar",
-              "Budva",
-              "Kotor",
-              "Tivat",
-              "Montenegro",
-              "Adriatic Coast",
-              "Europe"
-            ]
-          })}
-        </script>
-      </Helmet>
+<Helmet>
+  <script type="application/ld+json">
+    {JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Adriatica D.O.O.",
+      "image": "https://www.adriaticadoo.me/og-image-default.png",
+      "url": "https://www.adriaticadoo.me",
+      "taxID": "03612807",          // PIB (Tax Identification Number)
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Budva",
+        "addressCountry": "ME"
+      },
+      "serviceType": [
+        "Marine Engineering",
+        "Regulatory Compliance",
+        "MRV Reporting",
+        "Biofouling Management",
+        "Structural Integrity"
+      ],
+      "description": "Marine engineering consultancy specializing in EU MRV, IMO DCS, and Biofouling compliance.",
+      "areaServed": [
+        "Bar",
+        "Budva",
+        "Kotor",
+        "Tivat",
+        "Montenegro",
+        "Adriatic Coast",
+        "Europe"
+      ]
+    })}
+  </script>
+</Helmet>
 
       <div className="min-h-screen bg-background font-body selection:bg-primary/20">
         <Navigation />
