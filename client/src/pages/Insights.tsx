@@ -1,6 +1,7 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 import { SEO } from "@/components/SEO";
 
 const insightItems = [
@@ -19,6 +20,21 @@ const insightItems = [
 ];
 
 export default function Insights() {
+  // --- Yapılandırılmış veri (görünmez) ---
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Adriatica D.O.O. Technical Insights",
+    "description": "Technical maritime engineering documents and compliance studies.",
+    "mainEntity": insightItems.map(item => ({
+      "@type": "Article",
+      "headline": item.title,
+      "datePublished": new Date(item.date).toISOString().split('T')[0],
+      "description": item.excerpt,
+      "author": { "@type": "Organization", "name": "Adriatica D.O.O." }
+    }))
+  };
+
   return (
     <>
       <SEO
@@ -26,6 +42,14 @@ export default function Insights() {
         description="Technical articles and updates from Adriatica D.O.O. – biofouling compliance, European coastal yacht compliance, and marine engineering insights."
         canonical="https://www.adriaticadoo.me/insights"
       />
+
+      {/* Yapılandırılmış veri (JSON-LD) – Görünmez, sadece botlar için */}
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      </Helmet>
+
       <div className="min-h-screen bg-background font-body">
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
