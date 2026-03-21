@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Helmet } from "react-helmet-async"; // JSON-LD için eklendi
+import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { FeatureCard } from "@/components/FeatureCard";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -16,26 +16,40 @@ export default function Home() {
         title="Home"
         description="Adriatica D.O.O. - Marine engineering consultancy specializing in structural integrity, regulatory compliance, and sustainable technologies. Serving Montenegro, Adriatic Coast, and European maritime industry."
         canonical="https://www.adriaticadoo.me/"
-        ogImage="/og-image-home.jpg" // varsa özel görsel, yoksa varsayılan kullanılır
+        ogImage="/og-image-home.png" // Varsa özel görsel, yoksa varsayılan kullanılır
       />
 
-      {/* Yapılandırılmış veri (JSON-LD) */}
+      {/* Yapılandırılmış veri (JSON-LD) – Geliştirilmiş */}
       <Helmet>
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "Organization",
+            "@type": "ProfessionalService",
             "name": "Adriatica D.O.O.",
+            "image": "https://www.adriaticadoo.me/og-image-default.png",
             "url": "https://www.adriaticadoo.me",
-            "logo": "https://www.adriaticadoo.me/logo.svg",
-            "sameAs": [], // LinkedIn vb. eklenebilir
             "address": {
               "@type": "PostalAddress",
-              "addressLocality": "Montenegro",
+              "addressLocality": "Budva",          // Fiziksel kayıtlı adres
               "addressCountry": "ME"
             },
-            "description": "Marine engineering consultancy specializing in structural integrity, regulatory compliance, and sustainable technologies.",
-            "areaServed": ["Montenegro", "Adriatic Coast", "Europe"]
+            "serviceType": [
+              "Marine Engineering",
+              "Regulatory Compliance",
+              "MRV Reporting",
+              "Biofouling Management",
+              "Structural Integrity"
+            ],
+            "description": "Marine engineering consultancy specializing in EU MRV, IMO DCS, and Biofouling compliance.",
+            "areaServed": [
+              "Bar",
+              "Budva",
+              "Kotor",
+              "Tivat",
+              "Montenegro",
+              "Adriatic Coast",
+              "Europe"
+            ]
           })}
         </script>
       </Helmet>
@@ -231,11 +245,11 @@ export default function Home() {
                     <div className="text-sm uppercase tracking-wider text-white/60">Years Experience</div>
                   </div>
                   <div>
-                    <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">40+</div>
+                    <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">50+</div>
                     <div className="text-sm uppercase tracking-wider text-white/60">Clients Worldwide</div>
                   </div>
                   <div>
-                    <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">5+</div>
+                    <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">15+</div>
                     <div className="text-sm uppercase tracking-wider text-white/60">Countries</div>
                   </div>
                   <div>
