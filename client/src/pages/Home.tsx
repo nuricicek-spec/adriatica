@@ -20,40 +20,40 @@ export default function Home() {
       />
 
       {/* Yapılandırılmış veri (JSON-LD) – Geliştirilmiş */}
-<Helmet>
-  <script type="application/ld+json">
-    {JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "name": "Adriatica D.O.O.",
-      "image": "https://www.adriaticadoo.me/og-image-default.png",
-      "url": "https://www.adriaticadoo.me",
-      "taxID": "03612807",          // PIB (Tax Identification Number)
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Budva",
-        "addressCountry": "ME"
-      },
-      "serviceType": [
-        "Marine Engineering",
-        "Regulatory Compliance",
-        "MRV Reporting",
-        "Biofouling Management",
-        "Structural Integrity"
-      ],
-      "description": "Marine engineering consultancy specializing in EU MRV, IMO DCS, and Biofouling compliance.",
-      "areaServed": [
-        "Bar",
-        "Budva",
-        "Kotor",
-        "Tivat",
-        "Montenegro",
-        "Adriatic Coast",
-        "Europe"
-      ]
-    })}
-  </script>
-</Helmet>
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ProfessionalService",
+            "name": "Adriatica D.O.O.",
+            "image": "https://www.adriaticadoo.me/og-image-default.png",
+            "url": "https://www.adriaticadoo.me",
+            "taxID": "03612807",          // PIB (Tax Identification Number)
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Budva",
+              "addressCountry": "ME"
+            },
+            "serviceType": [
+              "Marine Engineering",
+              "Regulatory Compliance",
+              "MRV Reporting",
+              "Biofouling Management",
+              "Structural Integrity"
+            ],
+            "description": "Marine engineering consultancy specializing in EU MRV, IMO DCS, and Biofouling compliance.",
+            "areaServed": [
+              "Bar",
+              "Budva",
+              "Kotor",
+              "Tivat",
+              "Montenegro",
+              "Adriatic Coast",
+              "Europe"
+            ]
+          })}
+        </script>
+      </Helmet>
 
       <div className="min-h-screen bg-background font-body selection:bg-primary/20">
         <Navigation />
@@ -606,17 +606,32 @@ export default function Home() {
               Discuss your marine engineering requirements with our principal architects. {COMMISSIONS_TEXT}
             </p>
             
-            <form className="max-w-md mx-auto space-y-4 text-left" onSubmit={(e) => e.preventDefault()}>
+            <form
+              name="consultation"
+              method="POST"
+              data-netlify="true"
+              data-netlify-honeypot="bot-field"
+              className="max-w-md mx-auto space-y-4 text-left"
+            >
+              <input type="hidden" name="form-name" value="consultation" />
+              <div hidden>
+                <input name="bot-field" />
+              </div>
               <div>
                 <label htmlFor="email" className="sr-only">Email address</label>
-                <input 
-                  type="email" 
+                <input
+                  type="email"
+                  name="email"
                   id="email"
-                  placeholder="Enter your email address" 
+                  placeholder="Enter your email address"
                   className="w-full px-6 py-4 bg-white border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  required
                 />
               </div>
-              <button className="w-full py-4 bg-[#0B3B5C] text-white font-medium hover:bg-[#1A4B7A] transition-colors shadow-lg">
+              <button
+                type="submit"
+                className="w-full py-4 bg-[#0B3B5C] text-white font-medium hover:bg-[#1A4B7A] transition-colors shadow-lg"
+              >
                 Request Consultation
               </button>
             </form>
