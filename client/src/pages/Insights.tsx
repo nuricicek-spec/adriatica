@@ -6,21 +6,26 @@ import { SEO } from "@/components/SEO";
 
 const insightItems = [
   {
-    date: "28 February 2026",
-    title: "Technical Case Study: Biofouling Compliance – Preparing for the IMO 2026 Transition",
-    excerpt: "Discover how Adriatica D.O.O. applies a structured compliance framework to meet the upcoming IMO 2026 biofouling regulations. Through a real-world superyacht case study, we demonstrate proactive documentation, niche area risk management, and operational efficiency for seamless Mediterranean cruising.",
-    pdf: "/pdfs/Adriatica_Technical_Insight_001_Biofouling_Compliance.pdf"
+    date: "20 January 2026",
+    title: "Biofouling Compliance: Preparing for the IMO 2026 Transition",
+    excerpt: "A real-world superyacht case study on proactive biofouling management, featuring quantified risk assessment, Biofouling Management Plan (BFMP) development, and Biofouling Record Book (BFRB) integration to ensure seamless Mediterranean entry and regulatory readiness.",
+    pdf: "/pdfs/ADRI-TIS-001.pdf"
   },
   {
-    date: "10 January 2026",
-    title: "Engineering Management for European Coastal Yacht Compliance",
-    excerpt: "Detailed technical insights into managing in-water cleaning operations for vessels 25m+ and 50m+, ensuring compliance with Paris MoU expectations. This article covers the strategic shift from voluntary guidelines to mandatory oversight, including a comparative economic analysis between managed cleaning and unscheduled dry-docking.",
-    pdf: "/pdfs/Adriatica_Technical_Insight_002_European_Coastal_Compliance.pdf"
+    date: "20 February 2026",
+    title: "Sustainable In-Water Cleaning: Engineering Management for European Coastal Yacht Compliance",
+    excerpt: "A technical guidance document on managing in-water cleaning operations for vessels 25m+ and 50m+. Covers regulatory alignment, environmental control, and a direct cost comparison between unscheduled dry-docking and managed in-water cleaning.",
+    pdf: "/pdfs/ADRI-TIS-002.pdf"
+  },
+  {
+    date: "20 March 2026",
+    title: "Technical Operations in Montenegro: Navigating Local Regulations and Shipyard Excellence",
+    excerpt: "An examination of Montenegro's maritime landscape, focusing on the synergy between UPSUL regulations and local shipyard capabilities. Demonstrates how direct technical presence delivers timeline optimisation, cost containment, and regulatory shielding.",
+    pdf: "/pdfs/ADRI-TIS-003.pdf"
   }
 ];
 
 export default function Insights() {
-  // --- Yapılandırılmış veri (görünmez) ---
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -42,8 +47,6 @@ export default function Insights() {
         description="Technical articles and updates from Adriatica D.O.O. – biofouling compliance, European coastal yacht compliance, and marine engineering insights."
         canonical="https://www.adriaticadoo.me/insights"
       />
-
-      {/* Yapılandırılmış veri (JSON-LD) – Görünmez, sadece botlar için */}
       <Helmet>
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
@@ -89,7 +92,10 @@ export default function Insights() {
 
             <div className="mt-16 p-8 bg-neutral-50 border border-border/50 rounded-sm">
               <p className="text-center text-muted-foreground">
-                For technical inquiries or consultation, please contact us at <span className="text-[#0B3B5C] font-medium">info@adriaticadoo.me </span>
+                For technical inquiries or consultation, please contact us at{' '}
+                <a href="mailto:info@adriaticadoo.me" className="text-[#0B3B5C] font-medium hover:underline">
+                  info@adriaticadoo.me
+                </a>
               </p>
             </div>
           </motion.div>
