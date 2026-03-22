@@ -16,7 +16,7 @@ export default function Home() {
         title="Home"
         description="Adriatica D.O.O. - Marine engineering consultancy specializing in structural integrity, regulatory compliance, and sustainable technologies. Serving Montenegro, Adriatic Coast, and European maritime industry."
         canonical="https://www.adriaticadoo.me/"
-        ogImage="/og-image-default.png" // Varsa özel görsel, yoksa varsayılan kullanılır
+        ogImage="/og-image-default.png"
       />
 
       {/* Yapılandırılmış veri (JSON-LD) – Geliştirilmiş */}
@@ -246,11 +246,11 @@ export default function Home() {
                     <div className="text-sm uppercase tracking-wider text-white/60">Years Experience</div>
                   </div>
                   <div>
-                    <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">50+</div>
+                    <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">25+</div>
                     <div className="text-sm uppercase tracking-wider text-white/60">Clients Worldwide</div>
                   </div>
                   <div>
-                    <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">15+</div>
+                    <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">8+</div>
                     <div className="text-sm uppercase tracking-wider text-white/60">Countries</div>
                   </div>
                   <div>
