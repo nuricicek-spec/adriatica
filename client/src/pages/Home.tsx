@@ -28,7 +28,7 @@ export default function Home() {
             "name": "Adriatica D.O.O.",
             "image": "https://www.adriaticadoo.me/og-image-default.png",
             "url": "https://www.adriaticadoo.me",
-            "taxID": "03612807",          // PIB (Tax Identification Number)
+            "taxID": "03612807",
             "address": {
               "@type": "PostalAddress",
               "addressLocality": "Budva",
@@ -106,7 +106,6 @@ export default function Home() {
                 transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
                 className="relative flex justify-center items-center"
               >
-                {/* Logo centered as hero graphic */}
                 <div className="relative w-full max-w-md aspect-square flex items-center justify-center">
                   <div className="absolute inset-0 bg-gradient-to-tr from-[#0B3B5C]/10 to-transparent rounded-full blur-3xl" />
                   <img 
@@ -607,16 +606,10 @@ export default function Home() {
             </p>
             
             <form
-              name="consultation"
+              action="https://formspree.io/f/myknqjbz"
               method="POST"
-              data-netlify="true"
-              data-netlify-honeypot="bot-field"
               className="max-w-md mx-auto space-y-4 text-left"
             >
-              <input type="hidden" name="form-name" value="consultation" />
-              <div hidden>
-                <input name="bot-field" />
-              </div>
               <div>
                 <label htmlFor="email" className="sr-only">Email address</label>
                 <input
