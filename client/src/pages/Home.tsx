@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
@@ -10,6 +11,36 @@ import { SEO } from "@/components/SEO";
 const COMMISSIONS_TEXT = "We are currently accepting commissions for Q2 2026.";
 
 export default function Home() {
+  // Form durumu: 'idle', 'submitting', 'success', 'error'
+  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFormStatus('submitting');
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          Accept: 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        setFormStatus('success');
+        form.reset(); // Formu temizle
+      } else {
+        setFormStatus('error');
+      }
+    } catch (error) {
+      setFormStatus('error');
+    }
+  };
+
   return (
     <>
       <SEO 
@@ -604,30 +635,51 @@ export default function Home() {
             <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto">
               Discuss your marine engineering requirements with our principal architects. {COMMISSIONS_TEXT}
             </p>
-            
-            <form
-              action="https://formspree.io/f/myknqjbz"
-              method="POST"
-              className="max-w-md mx-auto space-y-4 text-left"
-            >
-              <div>
-                <label htmlFor="email" className="sr-only">Email address</label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="Enter your email address"
-                  className="w-full px-6 py-4 bg-white border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
-                  required
-                />
+
+            {formStatus === 'success' ? (
+              <div className="max-w-md mx-auto p-8 bg-white border border-green-200 rounded-sm shadow-sm">
+                <p className="text-green-800 text-lg font-medium mb-2">Thank you!</p>
+                <p className="text-muted-foreground">Your consultation request has been received. We'll be in touch shortly.</p>
+                <button 
+                  onClick={() => setFormStatus('idle')}
+                  className="mt-6 text-primary hover:underline text-sm"
+                >
+                  Send another request →
+                </button>
               </div>
-              <button
-                type="submit"
-                className="w-full py-4 bg-[#0B3B5C] text-white font-medium hover:bg-[#1A4B7A] transition-colors shadow-lg"
+            ) : (
+              <form
+                action="https://formspree.io/f/myknqjbz"
+                method="POST"
+                onSubmit={handleSubmit}
+                className="max-w-md mx-auto space-y-4 text-left"
               >
-                Request Consultation
-              </button>
-            </form>
+                <div>
+                  <label htmlFor="email" className="sr-only">Email address</label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Enter your email address"
+                    className="w-full px-6 py-4 bg-white border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                    required
+                    disabled={formStatus === 'submitting'}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={formStatus === 'submitting'}
+                  className="w-full py-4 bg-[#0B3B5C] text-white font-medium hover:bg-[#1A4B7A] transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {formStatus === 'submitting' ? 'Sending...' : 'Request Consultation'}
+                </button>
+                {formStatus === 'error' && (
+                  <p className="text-red-600 text-sm text-center mt-2">
+                    Something went wrong. Please try again or contact us directly.
+                  </p>
+                )}
+              </form>
+            )}
           </div>
         </section>
 
