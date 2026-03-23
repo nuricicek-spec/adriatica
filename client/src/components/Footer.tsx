@@ -58,9 +58,9 @@ export function Footer() {
             <ul className="space-y-4">
               {[
                 { name: 'About', href: '/#philosophy' },
-                { name: 'Contact', href: '/#begin-voyage' },
                 { name: 'Careers', href: '/careers' },
-                { name: 'News', href: '/news' }
+                { name: 'News', href: '/news' },
+                { name: 'Contact', href: '/#begin-voyage' }
               ].map(item => (
                 <li key={item.name}>
                   <HashLink href={item.href} className="text-white/60 hover:text-white transition-colors text-sm">

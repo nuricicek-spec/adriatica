@@ -6,40 +6,78 @@ import { SEO } from "@/components/SEO";
 
 const services = [
   {
-    title: "Biofouling Management & Compliance",
+    title: "Engineering Plans",
     description:
-      "Adriatica provides technical consultancy for biofouling management planning in accordance with IMO MEPC.378(80) Guidelines. Services include vessel risk assessment, development of Biofouling Management Plans (BFMP), and implementation of Biofouling Record Books (BFRB) aligned with classification society expectations.",
-    refs: "IMO, Paris MoU, RINA / BV / DNV",
+      "Detailed engineering drawings and plan sets for new constructions, conversions, and refits. We produce documentation in accordance with classification society rules and flag state requirements, supporting both regulatory approval and operational safety. Our deliverables are suitable for yachts, commercial vessels, and fishing boats.",
+    deliverables: [
+      "Structural Drawings",
+      "As‑Built Drawing Sets",
+      "Arrangement Plans",
+      "Fire & Safety Plans",
+      "General Arrangement (optional)",
+    ],
+    references: "Class society rules (RINA, BV, DNV), flag state regulations",
   },
   {
-    title: "In-Water Cleaning Management",
+    title: "Engineering Documentation",
     description:
-      "Adriatica designs and manages in-water cleaning operations for superyachts operating in the Adriatic and Mediterranean regions. Our role focuses on engineering supervision, regulatory compliance verification, and coordination of certified underwater service providers with debris capture systems.",
-    refs: "IMO MEPC.378(80), HELCOM, Paris MoU",
+      "Development of vessel‑specific technical manuals and analyses, ensuring completeness and alignment with IMO conventions, EU MRV, and class requirements. We prepare documents to facilitate crew training, maintenance planning, and port state control inspections.",
+    deliverables: [
+      "As‑Built P&ID / System Manuals",
+      "Electrical Load Analysis (EAB)",
+      "Fuel Management & Quality Booklet",
+      "Inventory of Hazardous Materials (IHM)",
+    ],
+    references: "IMO, EU MRV, MARPOL",
   },
   {
-    title: "Superyacht Technical Consultancy",
+    title: "Structural Integrity",
     description:
-      "Independent technical advisory services for superyacht operators including hull performance assessment, maintenance strategy development, and operational compliance with international maritime environmental regulations (EU MRV, IMO DCS, CII).",
-    refs: "EU MRV, IMO DCS, CII",
+      "Comprehensive hull condition assessments, life extension studies, modification consultancy, and vibration/noise diagnostics. Using advanced engineering methods and IACS unified requirements, we evaluate structural performance and recommend targeted repairs or reinforcements.",
+    deliverables: [
+      "Structural Integrity & Life Extension Studies",
+      "Hull Condition Analysis",
+      "Modification Consultancy",
+      "Vibration & Noise Diagnostic",
+    ],
+    references: "IACS UR Z10, classification societies",
   },
   {
-    title: "Drydock & Refit Technical Supervision",
+    title: "Sustainable Technologies & Compliance",
     description:
-      "Technical oversight and coordination of shipyard works including coating inspection, hull maintenance planning, and engineering documentation during drydock and refit operations. On‑site presence ensures quality control and timeline optimisation.",
-    refs: "IACS UR Z10, UPSUL, Paris MoU",
+      "Advisory and planning services to help vessels meet environmental regulations while improving efficiency. We work with operators to implement practical, cost‑effective solutions that reduce emissions and biosecurity risks.",
+    deliverables: [
+      "Biofouling Management Plan (IMO MEPC.378(80))",
+      "Eco‑friendly Coating Advisory",
+      "Energy Audit & Efficiency Surveys",
+      "MRV Monitoring Plan (EU MRV Regulation)",
+    ],
+    references: "IMO, EU MRV, Paris MoU",
   },
   {
-    title: "Regulatory Documentation & Compliance",
+    title: "Regulatory Compliance",
     description:
-      "Preparation of vessel‑specific plans and manuals: Ballast Water Management Plan (BWMP), Shipboard Oil Pollution Emergency Plan (SoPEP), Ship Energy Efficiency Management Plan (SEEMP), Garbage Management Plan, and Emergency Response Manuals.",
-    refs: "IMO, MARPOL, EU MRV",
+      "Preparation and periodic updating of mandatory shipboard plans and manuals, tailored to the vessel’s configuration and operational profile. We ensure documents meet the latest IMO, MARPOL, and flag state requirements.",
+    deliverables: [
+      "Ballast Water Management Plan (BWMP)",
+      "Shipboard Oil Pollution Emergency Plan (SoPEP)",
+      "Ship Energy Efficiency Management Plan (SEEMP)",
+      "Garbage Management Plan",
+      "Emergency Response Manuals",
+    ],
+    references: "IMO, MARPOL, flag state administrations",
   },
   {
     title: "Project Management & Owner’s Representation",
     description:
-      "Full project management during refits, dry‑dockings, and technical modifications. Acting as Owner’s Technical Representative to ensure engineering specifications are met and projects are delivered on time and within budget.",
-    refs: "Industry best practices",
+      "Full technical management of dry‑dockings, refits, and complex modifications. Acting as Owner’s Technical Representative, we coordinate with shipyards, supervise works, and ensure quality control, delivering projects on schedule with complete engineering documentation.",
+    deliverables: [
+      "Owner's Rep & Refit Supervision",
+      "Dry‑Docking Specification & Management",
+      "On‑site Technical Troubleshooting",
+      "Cost & Schedule Control",
+    ],
+    references: "Industry best practices, IACS UR Z10",
   },
 ];
 
@@ -48,7 +86,7 @@ export default function Services() {
     <>
       <SEO
         title="Services"
-        description="Adriatica D.O.O. provides marine engineering services: biofouling management, in-water cleaning coordination, superyacht technical consultancy, drydock supervision, and regulatory compliance."
+        description="Adriatica D.O.O. provides marine engineering services: engineering plans, documentation, structural integrity, sustainable technologies, regulatory compliance, and project management for all vessel types."
         canonical="https://www.adriaticadoo.me/services"
       />
       <div className="min-h-screen bg-background font-body">
@@ -56,7 +94,7 @@ export default function Services() {
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <SectionHeading
             title="Engineering Services"
-            subtitle="Yacht Compliance & Maintenance"
+            subtitle="Marine Engineering & Consultancy"
           />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
             {services.map((service, idx) => (
@@ -64,11 +102,16 @@ export default function Services() {
                 <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-3">
                   {service.title}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed mb-2">
+                <p className="text-muted-foreground leading-relaxed mb-3">
                   {service.description}
                 </p>
-                <p className="text-sm text-primary/70 font-mono">
-                  References: {service.refs}
+                <ul className="list-disc pl-5 mb-2 text-muted-foreground space-y-1">
+                  {service.deliverables.map((item, i) => (
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
+                <p className="text-sm text-primary/70 font-mono mt-2">
+                  References: {service.references}
                 </p>
               </div>
             ))}
