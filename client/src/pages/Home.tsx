@@ -11,7 +11,6 @@ import { SEO } from "@/components/SEO";
 const COMMISSIONS_TEXT = "We are currently accepting commissions for Q2 2026.";
 
 export default function Home() {
-  // Form durumu: 'idle', 'submitting', 'success', 'error'
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -32,7 +31,7 @@ export default function Home() {
 
       if (response.ok) {
         setFormStatus('success');
-        form.reset(); // Formu temizle
+        form.reset();
       } else {
         setFormStatus('error');
       }
@@ -158,6 +157,32 @@ export default function Home() {
             <span className="text-xs uppercase tracking-widest mb-2">Scroll</span>
             <ArrowDown className="animate-bounce w-5 h-5" />
           </motion.div>
+        </section>
+
+        {/* Operational Region Section */}
+        <section className="py-20 bg-neutral-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Text Column */}
+              <div>
+                <h2 className="font-display text-3xl md:text-4xl font-bold text-[#0B3B5C] mb-4">
+                  Operational Region
+                </h2>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Adriatica provides engineering management and technical advisory services for superyachts operating in the <strong>Adriatic Sea</strong>, <strong>Mediterranean Basin</strong>, and <strong>European coastal waters</strong>.
+                </p>
+              </div>
+
+              {/* SVG Column */}
+              <div className="flex justify-center">
+                <img
+                  src="/map.svg"
+                  alt="Adriatic and Mediterranean region outline"
+                  className="w-full max-w-[300px] h-auto"
+                />
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Expertise Grid */}
