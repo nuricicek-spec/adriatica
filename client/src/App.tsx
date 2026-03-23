@@ -8,6 +8,8 @@ import Home from "@/pages/Home";
 import Careers from "@/pages/Careers";
 import News from "@/pages/News";
 import Insights from "@/pages/Insights";
+import Services from "@/pages/Services";
+import CaseStudies from "@/pages/CaseStudies";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import TermsOfService from "@/pages/TermsOfService";
 import CookiePolicy from "@/pages/CookiePolicy";
@@ -20,6 +22,8 @@ function Router() {
       <Route path="/careers" component={Careers} />
       <Route path="/news" component={News} />
       <Route path="/insights" component={Insights} />
+      <Route path="/services" component={Services} />
+      <Route path="/case-studies" component={CaseStudies} />
       <Route path="/privacy-policy" component={PrivacyPolicy} />
       <Route path="/terms-of-service" component={TermsOfService} />
       <Route path="/cookie-policy" component={CookiePolicy} />

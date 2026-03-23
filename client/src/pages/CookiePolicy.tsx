@@ -23,6 +23,18 @@ export default function CookiePolicy() {
             <h1 className="font-display text-4xl md:text-5xl font-bold text-[#0B3B5C] mb-8">
               Cookie Policy
             </h1>
+
+            {/* Company Information */}
+            <div className="bg-neutral-50 border-l-4 border-primary p-6 mb-8 rounded-sm">
+              <h2 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Company Information</h2>
+              <div className="space-y-1 text-muted-foreground">
+                <p><strong>Adriatica D.O.O.</strong></p>
+                <p>Podgorica, Montenegro</p>
+                <p>Tax ID (PIB): 03612807</p>
+                <p>Email: info@adriaticadoo.me</p>
+              </div>
+            </div>
+
             <div className="space-y-6 text-muted-foreground leading-relaxed">
               <p>
                 This Cookie Policy explains how Adriatica D.O.O. uses cookies and similar technologies to recognize you when you visit our website.

@@ -18,10 +18,11 @@ export function Navigation() {
   }, []);
 
   const navLinks = [
-    { name: "Expertise", href: "/#core-competencies" },
+    { name: "Services", href: "/services" },
     { name: "Insights", href: "/insights" },
+    { name: "Case Studies", href: "/case-studies" },
     { name: "About Us", href: "/#philosophy" },
-    { name: "Contact", href: "/#footer" },
+    { name: "Contact", href: "/#begin-voyage" },
   ];
 
   const handleInquireClick = () => {

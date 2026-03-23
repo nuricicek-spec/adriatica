@@ -40,8 +40,9 @@ export function Footer() {
             <ul className="space-y-4">
               {[
                 { name: 'Home', href: '/' },
-                { name: 'Expertise', href: '/#core-competencies' },
-                { name: 'Insights', href: '/insights' }
+                { name: 'Services', href: '/services' },
+                { name: 'Insights', href: '/insights' },
+                { name: 'Case Studies', href: '/case-studies' }
               ].map(item => (
                 <li key={item.name}>
                   <HashLink href={item.href} className="text-white/60 hover:text-white transition-colors text-sm">
@@ -56,10 +57,10 @@ export function Footer() {
             <h4 className="font-display font-bold text-lg mb-6">Company</h4>
             <ul className="space-y-4">
               {[
-                { name: 'About Us', href: '/#philosophy' },
+                { name: 'About', href: '/#philosophy' },
+                { name: 'Contact', href: '/#begin-voyage' },
                 { name: 'Careers', href: '/careers' },
-                { name: 'News', href: '/news' },
-                { name: 'Contact', href: '/#footer' }
+                { name: 'News', href: '/news' }
               ].map(item => (
                 <li key={item.name}>
                   <HashLink href={item.href} className="text-white/60 hover:text-white transition-colors text-sm">
