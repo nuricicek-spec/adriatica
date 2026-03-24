@@ -99,7 +99,6 @@ export default function Services() {
       <div className="min-h-screen bg-background font-body">
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          
           {/* Main heading */}
           <SectionHeading
             title="Engineering Services"
@@ -109,13 +108,11 @@ export default function Services() {
           {/* Interactive Process Wheel */}
           <ProcessWheel />
 
-          {/* DÜZELTİLMİŞ BÖLÜM: Marine Engineering & Consultancy */}
-          {/* Boşluğu daraltmak için negatif margin ve sıkıştırılmış yapı kullanıldı */}
-          <div className="mt-12 -mb-8"> 
-            <SectionHeading
-              title="&nbsp;"
-              subtitle="Marine Engineering & Consultancy"
-            />
+          {/* Second subtitle – plain HTML, exactly matching the first subtitle's style */}
+          <div className="mb-6">
+            <p className="text-xs uppercase tracking-wider text-muted-foreground font-medium">
+              Marine Engineering & Consultancy
+            </p>
           </div>
 
           {/* Service cards grid */}
