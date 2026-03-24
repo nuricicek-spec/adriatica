@@ -99,26 +99,29 @@ export default function Services() {
       <div className="min-h-screen bg-background font-body">
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          {/* Main heading with new subtitle */}
+          
+          {/* Bölüm 1: Engineering Management */}
           <SectionHeading
             title="Engineering Services"
             subtitle="Engineering Management"
           />
 
-          {/* Interactive Process Wheel */}
+          {/* İnteraktif Çark */}
           <ProcessWheel />
 
-          {/* Second subtitle – identical to the first */}
-          <div className="mb-6">
-            <p className="text-xs uppercase tracking-wider text-muted-foreground font-medium">
-              Marine Engineering & Consultancy
-            </p>
+          {/* Bölüm 2: Marine Engineering & Consultancy */}
+          {/* Çizgi ve fontun diğeriyle birebir aynı olması için SectionHeading yapısını koruduk */}
+          <div className="mt-16 mb-12">
+            <SectionHeading
+              title=""
+              subtitle="Marine Engineering & Consultancy"
+            />
           </div>
 
-          {/* Service cards grid */}
+          {/* Servis Kartları */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {services.map((service, idx) => (
-              <div key={idx} className="border-l-2 border-primary/20 pl-6">
+              <div key={idx} className="border-l-2 border-primary/20 pl-6 hover:border-primary/50 transition-colors">
                 <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-3">
                   {service.title}
                 </h3>
