@@ -43,6 +43,18 @@ export default function About() {
               supporting vessels calling at ports such as Tivat, Dubrovnik, Monaco, and other major yacht destinations.
             </p>
 
+            <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Regulatory Alignment</h2>
+            <p>
+              Our services are developed in accordance with international and regional maritime frameworks:
+            </p>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>IMO MEPC.378(80) – Biofouling Guidelines</li>
+              <li>Paris Memorandum of Understanding (Paris MoU) – Port State Control inspection frameworks</li>
+              <li>Classification society rules (DNV, BV, RINA)</li>
+              <li>EU MRV Regulation & IMO DCS</li>
+              <li>Montenegrin Maritime Safety Administration (UPSUL)</li>
+            </ul>
+
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Our Approach</h2>
             <p>
               Our logo, the Sumerian pinecone, symbolises wisdom and resilience. We approach every engineering
