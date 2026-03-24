@@ -22,13 +22,14 @@ export default function About() {
           />
 
           <div className="prose prose-lg max-w-none text-muted-foreground">
+            {/* Narrative intro with Montenegro */}
             <p className="mb-6">
-              Adriatica is a specialised maritime engineering consultancy providing engineering management,
-              regulatory compliance, and technical advisory services for vessels operating in the Adriatic
-              and Mediterranean regions.
+              Adriatica was founded in Montenegro to bridge the gap between complex maritime regulations and practical vessel management. We don’t just consult – we engineer compliance, performance, and peace of mind for vessel operators across the Adriatic and Mediterranean.
             </p>
 
+            {/* Expertise – with intro and representative note */}
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Expertise</h2>
+            <p className="mb-2">Our core expertise includes:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Biofouling Management Planning (IMO MEPC.378(80))</li>
               <li>In‑Water Cleaning Coordination & Supervision</li>
@@ -36,36 +37,58 @@ export default function About() {
               <li>Drydock & Refit Technical Supervision</li>
               <li>Regulatory Compliance (EU MRV, IMO DCS, MARPOL)</li>
             </ul>
+            <p className="mt-2 text-sm text-muted-foreground">This is a representative selection; we also support related engineering and compliance needs.</p>
 
+            {/* Operational Region */}
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Operational Region</h2>
             <p>
               We operate primarily in the <strong>Adriatic Sea</strong> and the <strong>Mediterranean Basin</strong>,
               supporting vessels calling at ports such as Tivat, Dubrovnik, Monaco, and other major yacht destinations.
             </p>
 
+            {/* Why Choose Adriatica – benefit cards + link to homepage philosophy */}
+            <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Why Choose Adriatica</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+              <div className="border-l-2 border-primary/20 pl-4">
+                <h3 className="font-bold text-[#0B3B5C] mb-2">Risk‑Based Approach</h3>
+                <p className="text-sm">We prioritise what matters – focusing on niche areas, coating condition, and operational profile to deliver targeted, cost‑effective solutions.</p>
+              </div>
+              <div className="border-l-2 border-primary/20 pl-4">
+                <h3 className="font-bold text-[#0B3B5C] mb-2">Regional Expertise</h3>
+                <p className="text-sm">We understand Port State Control expectations in the Adriatic and Mediterranean, ensuring your vessel stays compliant and disruption‑free.</p>
+              </div>
+              <div className="border-l-2 border-primary/20 pl-4">
+                <h3 className="font-bold text-[#0B3B5C] mb-2">Engineering Depth</h3>
+                <p className="text-sm">We don’t just advise – we manage, certify, and document. Every project is backed by thorough engineering analysis and inspection‑ready records.</p>
+              </div>
+            </div>
+            <p className="mb-2">
+              Our philosophy is rooted in timeless principles – wisdom, resilience, and reduction to the essential.
+            </p>
+            <HashLink
+              href="/#philosophy"
+              className="inline-block text-primary hover:underline text-sm mb-6"
+            >
+              → Discover our Philosophy
+            </HashLink>
+
+            {/* Regulatory Alignment – simplified list */}
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Regulatory Alignment</h2>
-            <p>
-              Our services are developed in accordance with international and regional maritime frameworks:
+            <p className="mb-4">
+              Our work is aligned with international and regional maritime frameworks, including:
             </p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>IMO MEPC.378(80) – Biofouling Guidelines</li>
-              <li>Paris Memorandum of Understanding (Paris MoU) – Port State Control inspection frameworks</li>
-              <li>Classification society rules (DNV, BV, RINA)</li>
-              <li>EU MRV Regulation & IMO DCS</li>
-              <li>Montenegrin Maritime Safety Administration (UPSUL)</li>
-            </ul>
+            <div className="flex flex-wrap gap-3 text-sm text-muted-foreground border-t border-border/20 pt-4 mt-2">
+              <span className="bg-neutral-100 px-3 py-1 rounded-full">Classification society rules (DNV, BV, RINA)</span>
+              <span className="bg-neutral-100 px-3 py-1 rounded-full">IMO Guidelines (biofouling, MARPOL, etc.)</span>
+              <span className="bg-neutral-100 px-3 py-1 rounded-full">Paris Memorandum of Understanding (Paris MoU)</span>
+              <span className="bg-neutral-100 px-3 py-1 rounded-full">EMSA – European Maritime Safety Agency</span>
+              <span className="bg-neutral-100 px-3 py-1 rounded-full">UPSUL – Montenegrin Maritime Safety Administration</span>
+            </div>
 
-            <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Our Approach</h2>
-            <p>
-              Our logo, the Sumerian pinecone, symbolises wisdom and resilience. We approach every engineering
-              challenge as an opportunity to create lasting value. Our work is reductive: we remove the unnecessary
-              to reveal the essential structure, delivering engineering that is not only functional but resilient
-              and timeless.
-            </p>
-
-            <div className="mt-12 p-8 bg-neutral-50 border-l-4 border-primary">
+            {/* CTA */}
+            <div className="mt-12 p-8 bg-neutral-50 border-l-4 border-primary text-center">
               <p className="text-lg font-medium text-[#0B3B5C] mb-2">
-                Ready to discuss your vessel’s technical requirements?
+                Ready to align your vessel with the latest compliance expectations?
               </p>
               <HashLink
                 href="/#begin-voyage"
