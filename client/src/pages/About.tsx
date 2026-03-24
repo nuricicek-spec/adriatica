@@ -22,9 +22,9 @@ export default function About() {
           />
 
           <div className="prose prose-lg max-w-none text-muted-foreground">
-            {/* Narrative intro with Montenegro */}
+            {/* Opening – Montenegro origin + global reach */}
             <p className="mb-6">
-              Adriatica was founded in Montenegro to bridge the gap between complex maritime regulations and practical vessel management. We don’t just consult – we engineer compliance, performance, and peace of mind for vessel operators across the Adriatic and Mediterranean.
+              Adriatica was founded in Montenegro to bridge the gap between complex maritime regulations and practical vessel management. We don’t just consult – we engineer compliance, performance, and peace of mind for vessel operators around the world, with a strong focus on the Adriatic and Mediterranean.
             </p>
 
             {/* Expertise – with intro and representative note */}
@@ -39,11 +39,10 @@ export default function About() {
             </ul>
             <p className="mt-2 text-sm text-muted-foreground">This is a representative selection; we also support related engineering and compliance needs.</p>
 
-            {/* Operational Region */}
+            {/* Operational Region – broader ports + global hint */}
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Operational Region</h2>
             <p>
-              We operate primarily in the <strong>Adriatic Sea</strong> and the <strong>Mediterranean Basin</strong>,
-              supporting vessels calling at ports such as Tivat, Dubrovnik, Monaco, and other major yacht destinations.
+              We operate across the Adriatic Sea and the Mediterranean Basin, supporting both yachts and commercial vessels at key maritime hubs. Our regional presence includes ports such as Bar (Montenegro), Durrës (Albania), Rijeka, Split, Ploče (Croatia), as well as renowned yacht destinations like Tivat, Dubrovnik, Monaco, and others. Beyond the region, we provide engineering management and technical advisory services globally, ensuring compliance and operational excellence wherever your vessel operates.
             </p>
 
             {/* Why Choose Adriatica – benefit cards + link to homepage philosophy */}
@@ -72,7 +71,7 @@ export default function About() {
               → Discover our Philosophy
             </HashLink>
 
-            {/* Regulatory Alignment – simplified list */}
+            {/* Regulatory Alignment – simplified badges */}
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Regulatory Alignment</h2>
             <p className="mb-4">
               Our work is aligned with international and regional maritime frameworks, including:
