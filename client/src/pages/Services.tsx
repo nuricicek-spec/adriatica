@@ -109,9 +109,9 @@ export default function Services() {
           <ProcessWheel />
 
           {/* New section heading for the detailed services */}
-          <h3 className="text-xs uppercase tracking-wider text-muted-foreground font-medium mb-6">
-           Marine Engineering & Consultancy
-          </h3>
+<p className="text-xs uppercase tracking-wider text-muted-foreground font-medium mb-6">
+  Marine Engineering & Consultancy
+</p>
 
           {/* Service cards grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
