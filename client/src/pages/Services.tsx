@@ -108,11 +108,12 @@ export default function Services() {
           {/* Interactive Process Wheel */}
           <ProcessWheel />
 
-          {/* Second subtitle – plain HTML, exactly matching the first subtitle's style */}
-          <div className="mb-6">
-            <p className="text-xs uppercase tracking-wider text-muted-foreground font-medium">
-              Marine Engineering & Consultancy
-            </p>
+          {/* Second subtitle – using the same component for identical styling */}
+          <div className="mt-8">
+            <SectionHeading
+              title=""
+              subtitle="Marine Engineering & Consultancy"
+            />
           </div>
 
           {/* Service cards grid */}
