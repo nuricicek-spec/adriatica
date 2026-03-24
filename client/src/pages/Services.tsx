@@ -100,43 +100,43 @@ export default function Services() {
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           
-          {/* Bölüm 1: Engineering Management */}
+          {/* Main heading */}
           <SectionHeading
             title="Engineering Services"
             subtitle="Engineering Management"
           />
 
-          {/* İnteraktif Çark */}
+          {/* Interactive Process Wheel */}
           <ProcessWheel />
 
-          {/* Bölüm 2: Marine Engineering & Consultancy */}
-          {/* Çizgi ve fontun diğeriyle birebir aynı olması için SectionHeading yapısını koruduk */}
-          <div className="mt-8 mb-6">
+          {/* DÜZELTİLMİŞ BÖLÜM: Marine Engineering & Consultancy */}
+          {/* Boşluğu daraltmak için negatif margin ve sıkıştırılmış yapı kullanıldı */}
+          <div className="mt-12 -mb-8"> 
             <SectionHeading
-              title=""
+              title="&nbsp;"
               subtitle="Marine Engineering & Consultancy"
             />
           </div>
 
-          {/* Servis Kartları */}
+          {/* Service cards grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {services.map((service, idx) => (
-              <div key={idx} className="border-l-2 border-primary/20 pl-6 hover:border-primary/50 transition-colors">
-                <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-3">
+              <div key={idx} className="border-l-2 border-primary/20 pl-6 py-2">
+                <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-2">
                   {service.title}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed mb-3">
                   {service.description}
                 </p>
-                <ul className="list-disc pl-5 mb-2 text-muted-foreground space-y-1">
+                <ul className="list-disc pl-5 mb-2 text-muted-foreground space-y-1 text-sm">
                   {service.deliverables.map((item, i) => (
                     <li key={i}>{item}</li>
                   ))}
                 </ul>
-                <p className="text-sm text-primary font-medium mt-2">
+                <p className="text-sm text-primary font-medium mt-3">
                   Outcome: {service.outcome}
                 </p>
-                <p className="text-sm text-primary/70 font-mono mt-1">
+                <p className="text-sm text-primary/70 font-mono mt-1 italic">
                   References: {service.references}
                 </p>
               </div>
