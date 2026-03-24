@@ -89,34 +89,66 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom row: copyright | logos | location */}
-        <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/40">
+        {/* Bottom row: copyright | logos with label | location */}
+        <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-white/40">
           <div>
             <p>© 2026 ADRIATICA D.O.O. All rights reserved.</p>
           </div>
-          <div className="flex flex-wrap justify-center items-center gap-6">
-            <img
-              src="/logos/imo_logo.png"
-              alt="IMO"
-              className="h-8 w-auto bg-white/10 rounded-sm p-0.5"
-              style={{ backgroundColor: '#ffffff10' }}
-            />
-            <img
-              src="/logos/parismou-logo.png"
-              alt="Paris MoU"
-              className="h-8 w-auto"
-            />
-            <img
-              src="/logos/me-flag-round-circle-icon.svg"
-              alt="Montenegro"
-              className="h-8 w-8"
-            />
-            <img
-              src="/logos/eu-union-flag-round-circle-icon.svg"
-              alt="EU"
-              className="h-8 w-8"
-            />
+
+          <div className="text-center">
+            <p className="text-white/40 text-xs mb-2">Regulatory framework</p>
+            <div className="flex flex-wrap justify-center items-center gap-6">
+              <a
+                href="https://www.imo.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-80 hover:scale-105 transition-transform duration-200"
+              >
+                <img
+                  src="/logos/imo_logo.png"
+                  alt="IMO"
+                  className="h-8 w-auto bg-white/10 rounded-sm p-0.5"
+                />
+              </a>
+              <a
+                href="https://www.parismou.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-80 hover:scale-105 transition-transform duration-200"
+              >
+                <img
+                  src="/logos/parismou-logo.png"
+                  alt="Paris MoU"
+                  className="h-8 w-auto"
+                />
+              </a>
+              <a
+                href="https://www.gov.me/uprava-pomorske-sigurnosti"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-80 hover:scale-105 transition-transform duration-200"
+              >
+                <img
+                  src="/logos/me-flag-round-circle-icon.svg"
+                  alt="Montenegro Maritime Authority"
+                  className="h-8 w-8"
+                />
+              </a>
+              <a
+                href="https://www.emsa.europa.eu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-80 hover:scale-105 transition-transform duration-200"
+              >
+                <img
+                  src="/logos/eu-union-flag-round-circle-icon.svg"
+                  alt="European Union"
+                  className="h-8 w-8"
+                />
+              </a>
+            </div>
           </div>
+
           <div>
             <span>Podgorica, Montenegro</span>
           </div>
