@@ -190,20 +190,7 @@ export default function ProcessWheel() {
   // ─── Render ───────────────────────────────────────────────────────────────
   return (
     <section className="w-full pt-0 pb-8 px-6">
-      {/* Section header – no more "Engineering Management" eyebrow */}
-      <div className="text-center max-w-xl mx-auto mb-8">
-        <h2
-          className="text-2xl md:text-3xl font-semibold text-[#0B3B5C] mb-4 leading-snug"
-          style={{ fontFamily: "'Playfair Display', serif" }}
-        >
-          A Continuous, Iterative Process
-        </h2>
-        <p className="text-sm text-[#4A6070] leading-relaxed font-light">
-          Our engineering management follows a closed-loop cycle — each completed
-          phase informs the next, ensuring continuous compliance readiness and
-          operational excellence.
-        </p>
-      </div>
+      {/* Header removed – no more "A Continuous, Iterative Process" */}
 
       {/* Two-column layout */}
       <div className="flex flex-col md:flex-row items-center gap-16 max-w-5xl mx-auto">
