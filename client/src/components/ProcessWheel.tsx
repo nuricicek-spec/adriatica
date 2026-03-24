@@ -294,20 +294,15 @@ export default function ProcessWheel() {
               filter="url(#seg-shadow)" />
             <circle cx={CX} cy={CY} r={R_IN - 4} fill="#F8FAFB" />
 
-            <text x={CX} y={CY - 14} textAnchor="middle"
-              fill="#8FA8BC" style={{ fontFamily:"'Inter',sans-serif",
-              fontSize:"8px", fontWeight:500, letterSpacing:"2px" }}>
-              ENGINEERING
+            <text x={CX} y={CY - 8} textAnchor="middle"
+                fill="#0B3B5C" style={{ fontFamily:"'Playfair Display',serif",
+                fontSize:"13px", fontWeight:600 }}>
+                ADRIATICA
             </text>
-            <text x={CX} y={CY + 2} textAnchor="middle"
-              fill="#0B3B5C" style={{ fontFamily:"'Playfair Display',serif",
-              fontSize:"13px", fontWeight:600 }}>
-              MANAGEMENT
-            </text>
-            <text x={CX} y={CY + 17} textAnchor="middle"
-              fill="#8FA8BC" style={{ fontFamily:"'Inter',sans-serif",
-              fontSize:"8px", fontWeight:300, letterSpacing:"1.5px" }}>
-              CYCLE
+            <text x={CX} y={CY + 10} textAnchor="middle"
+                fill="#8FA8BC" style={{ fontFamily:"'Inter',sans-serif",
+                fontSize:"9px", fontWeight:500, letterSpacing:"1px" }}>
+                D.O.O.
             </text>
           </svg>
         </div>
