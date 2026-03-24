@@ -108,12 +108,12 @@ export default function Services() {
           {/* Interactive Process Wheel */}
           <ProcessWheel />
 
-          {/* New section heading for the detailed services */}
-<div className="text-center mb-6">
-  <p className="text-xs uppercase tracking-wider text-muted-foreground font-medium">
-    Marine Engineering & Consultancy
-  </p>
-</div>
+          {/* Second subtitle – identical to the first */}
+          <div className="mb-6">
+            <p className="text-xs uppercase tracking-wider text-muted-foreground font-medium">
+              Marine Engineering & Consultancy
+            </p>
+          </div>
 
           {/* Service cards grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
