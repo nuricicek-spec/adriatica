@@ -18,7 +18,7 @@ export default function About() {
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
           <SectionHeading
             title="About Adriatica"
-            subtitle="Maritime Engineering Consultancy"
+            subtitle="Marine Engineering and Consultancy"
           />
 
           <div className="prose prose-lg max-w-none text-muted-foreground">
