@@ -277,8 +277,12 @@ export default function Home() {
         </section>
 
         {/* Mid‑page CTA (new) */}
-        <section className="py-16 bg-white">
+        {/* Mid‑page CTA (new) */}
+        <section className="py-16 bg-neutral-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
+              Have a specific technical challenge? Our team is ready to assist.
+            </p>
             <button 
               onClick={() => document.getElementById('begin-voyage')?.scrollIntoView({ behavior: 'smooth' })}
               className="px-8 py-4 bg-[#0B3B5C] text-white font-medium rounded-sm shadow-lg shadow-[#0B3B5C]/20 hover:shadow-xl hover:bg-[#1A4B7A] transition-all duration-300 uppercase tracking-wide text-sm"
