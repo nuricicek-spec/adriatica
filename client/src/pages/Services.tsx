@@ -111,7 +111,7 @@ export default function Services() {
 
           {/* Bölüm 2: Marine Engineering & Consultancy */}
           {/* Çizgi ve fontun diğeriyle birebir aynı olması için SectionHeading yapısını koruduk */}
-          <div className="mt-16 mb-12">
+          <div className="mt-8 mb-6">
             <SectionHeading
               title=""
               subtitle="Marine Engineering & Consultancy"
