@@ -110,6 +110,13 @@ export default function Home() {
                   WISDOM IN <br />
                   <span className="text-[#3A74A0]">ENGINEERING</span>
                 </h1>
+
+                {/* New value proposition */}
+                <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-xl mx-auto lg:mx-0 mb-6">
+                  Engineering management, regulatory compliance, and technical advisory for vessels of all types – from superyachts to commercial fleets – across the Adriatic and Mediterranean.
+                </p>
+
+                {/* Existing philosophical paragraph */}
                 <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-xl mx-auto lg:mx-0 mb-10 border-l-2 border-primary/20 pl-6">
                   Engineered for the deepest challenges. We combine timeless principles with cutting-edge marine technology to create engineering that endures.
                 </p>
