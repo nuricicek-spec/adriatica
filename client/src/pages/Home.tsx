@@ -175,7 +175,7 @@ export default function Home() {
                   Operational Region
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  Adriatica provides engineering management and technical advisory services for superyachts operating in the <strong>Adriatic Sea</strong>, <strong>Mediterranean Basin</strong>, and <strong>European coastal waters</strong>.
+                  Adriatica provides engineering management and technical advisory services for a wide range of vessels – including superyachts, commercial vessels, and fishing boats – operating in the <strong>Adriatic Sea</strong>, <strong>Mediterranean Basin</strong>, and <strong>European coastal waters</strong>.
                 </p>
               </div>
               <div className="flex justify-center">
