@@ -3,6 +3,7 @@ import { Footer } from "@/components/Footer";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Helmet } from "react-helmet-async";
 import { SEO } from "@/components/SEO";
+import ProcessWheel from "@/components/ProcessWheel";  // <-- new import
 
 const services = [
   {
@@ -125,6 +126,9 @@ export default function Services() {
               </div>
             ))}
           </div>
+
+          {/* Interactive Process Wheel */}
+          <ProcessWheel />
         </main>
         <Footer />
       </div>
