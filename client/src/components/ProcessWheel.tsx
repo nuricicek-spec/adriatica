@@ -296,12 +296,12 @@ export default function ProcessWheel() {
 
             <text x={CX} y={CY - 8} textAnchor="middle"
                 fill="#0B3B5C" style={{ fontFamily:"'Playfair Display',serif",
-                fontSize:"13px", fontWeight:600 }}>
+                fontSize:"13px", fontWeight:700 }}>
                 ADRIATICA
             </text>
             <text x={CX} y={CY + 10} textAnchor="middle"
-                fill="#8FA8BC" style={{ fontFamily:"'Inter',sans-serif",
-                fontSize:"9px", fontWeight:500, letterSpacing:"1px" }}>
+                fill="#0B3B5C" style={{ fontFamily:"'Playfair Display',sans-serif",
+                fontSize:"13px", fontWeight:700, letterSpacing:"1px" }}>
                 D.O.O.
             </text>
           </svg>
