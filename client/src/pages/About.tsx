@@ -27,7 +27,7 @@ export default function About() {
               Adriatica was founded in Montenegro to bridge the gap between complex maritime regulations and practical vessel management. We don’t just consult – we engineer compliance, performance, and peace of mind for vessel operators around the world, with a strong focus on the Adriatic and Mediterranean.
             </p>
 
-            {/* Expertise – with intro and representative note */}
+            {/* Expertise – with intro, representative note, and link to Services */}
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Expertise</h2>
             <p className="mb-2">Our core expertise includes:</p>
             <ul className="list-disc pl-6 space-y-2">
@@ -37,7 +37,13 @@ export default function About() {
               <li>Drydock & Refit Technical Supervision</li>
               <li>Regulatory Compliance (EU MRV, IMO DCS, MARPOL)</li>
             </ul>
-            <p className="mt-2 text-sm text-muted-foreground">This is a representative selection; we also support related engineering and compliance needs.</p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              This is a representative selection; we also support related engineering and compliance needs.
+              <br />
+              <HashLink href="/services" className="text-primary hover:underline inline-flex items-center gap-1 mt-1">
+                For a complete overview of our technical services, visit our Services page →
+              </HashLink>
+            </p>
 
             {/* Operational Region – broader ports + global hint */}
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Operational Region</h2>
