@@ -5,6 +5,7 @@ export function Footer() {
   return (
     <footer id="footer" className="bg-[#0B3B5C] text-white pt-24 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Main grid - unchanged */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 border-b border-white/10 pb-16">
           
           <div className="md:col-span-4">
@@ -89,6 +90,39 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Authority Logos Row */}
+        <div className="py-8 border-b border-white/10">
+          <p className="text-center text-white/60 text-sm mb-4">Operating in accordance with</p>
+          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+            {/* IMO logo – PNG with black background */}
+            <img
+              src="/logos/imo_logo.png"
+              alt="International Maritime Organization"
+              className="h-10 w-auto bg-white/10 rounded-sm p-1"
+              style={{ backgroundColor: '#ffffff10' }}
+            />
+            {/* Paris MoU logo – PNG */}
+            <img
+              src="/logos/parismou-logo.png"
+              alt="Paris Memorandum of Understanding"
+              className="h-10 w-auto"
+            />
+            {/* Montenegro flag – round SVG */}
+            <img
+              src="/logos/me-flag-round-circle-icon.svg"
+              alt="Montenegro Maritime Authority"
+              className="h-10 w-10"
+            />
+            {/* EU flag – round SVG */}
+            <img
+              src="/logos/eu-union-flag-round-circle-icon.svg"
+              alt="European Union"
+              className="h-10 w-10"
+            />
+          </div>
+        </div>
+
+        {/* Bottom row with copyright and location */}
         <div className="pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-white/40">
           <div className="flex flex-col items-center md:items-start mb-4 md:mb-0">
             <p>© 2026 ADRIATICA D.O.O. All rights reserved.</p>
