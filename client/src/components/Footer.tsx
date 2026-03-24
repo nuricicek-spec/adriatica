@@ -119,6 +119,18 @@ export function Footer() {
               />
             </a>
             <a
+              href="https://helcom.fi"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:opacity-80 hover:scale-105 transition-transform duration-200"
+            >
+              <img
+                src="/logos/helcom_logo.png"
+                alt="HELCOM – Baltic Marine Environment Protection Commission"
+                className="h-10 w-auto"
+              />
+            </a>
+            <a
               href="https://www.gov.me/uprava-pomorske-sigurnosti"
               target="_blank"
               rel="noopener noreferrer"
