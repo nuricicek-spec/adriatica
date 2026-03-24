@@ -21,7 +21,7 @@ export function Navigation() {
     { name: "Services", href: "/services" },
     { name: "Insights", href: "/insights" },
     { name: "Case Studies", href: "/case-studies" },
-    { name: "About", href: "/#philosophy" },
+    { name: "About", href: "/about" },
     { name: "Contact", href: "/#begin-voyage" },
   ];
 

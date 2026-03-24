@@ -126,7 +126,7 @@ export default function Home() {
                     onClick={() => document.getElementById('begin-voyage')?.scrollIntoView({ behavior: 'smooth' })}
                     className="px-8 py-4 bg-[#0B3B5C] text-white font-medium rounded-sm shadow-lg shadow-[#0B3B5C]/20 hover:shadow-xl hover:bg-[#1A4B7A] transition-all duration-300 uppercase tracking-wide text-sm"
                   >
-                    Request a Quote
+                    Request Technical Consultation
                   </button>
                   <button 
                     onClick={() => document.getElementById('core-competencies')?.scrollIntoView({ behavior: 'smooth' })}
@@ -170,7 +170,6 @@ export default function Home() {
         <section className="py-20 bg-neutral-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              {/* Text Column */}
               <div>
                 <h2 className="font-display text-3xl md:text-4xl font-bold text-[#0B3B5C] mb-4">
                   Operational Region
@@ -179,8 +178,6 @@ export default function Home() {
                   Adriatica provides engineering management and technical advisory services for superyachts operating in the <strong>Adriatic Sea</strong>, <strong>Mediterranean Basin</strong>, and <strong>European coastal waters</strong>.
                 </p>
               </div>
-
-              {/* SVG Column */}
               <div className="flex justify-center">
                 <img
                   src="/map.svg"
@@ -622,33 +619,22 @@ export default function Home() {
                         <polygon points="50,127 59,140 50,153 41,140" />
                       </svg>
                     </div>
-
                     <div className="label-custom top-left">Wisdom</div>
                     <div className="label-custom top-right">Resilience</div>
                     <div className="label-custom bottom-left">Renewal</div>
                     <div className="label-custom bottom-right">Seed of Life</div>
-
                     <div className="diamond diamond-wisdom">
-                      <svg viewBox="0 0 18 26">
-                        <polygon points="9,0 18,13 9,26 0,13" fill="#0B3B5C" />
-                      </svg>
+                      <svg viewBox="0 0 18 26"><polygon points="9,0 18,13 9,26 0,13" fill="#0B3B5C" /></svg>
                     </div>
                     <div className="diamond diamond-resilience">
-                      <svg viewBox="0 0 18 26">
-                        <polygon points="9,0 18,13 9,26 0,13" fill="url(#goldGradientCustom)" />
-                      </svg>
+                      <svg viewBox="0 0 18 26"><polygon points="9,0 18,13 9,26 0,13" fill="url(#goldGradientCustom)" /></svg>
                     </div>
                     <div className="diamond diamond-renewal">
-                      <svg viewBox="0 0 18 26">
-                        <polygon points="9,0 18,13 9,26 0,13" fill="url(#goldGradientCustom)" />
-                      </svg>
+                      <svg viewBox="0 0 18 26"><polygon points="9,0 18,13 9,26 0,13" fill="url(#goldGradientCustom)" /></svg>
                     </div>
                     <div className="diamond diamond-seed">
-                      <svg viewBox="0 0 18 26">
-                        <polygon points="9,0 18,13 9,26 0,13" fill="#1A4B7A" />
-                      </svg>
+                      <svg viewBox="0 0 18 26"><polygon points="9,0 18,13 9,26 0,13" fill="#1A4B7A" /></svg>
                     </div>
-
                     <div className="bottom-text">SUMERIAN PINECONE</div>
                     <div className="border-overlay"></div>
                   </div>

@@ -10,6 +10,7 @@ import News from "@/pages/News";
 import Insights from "@/pages/Insights";
 import Services from "@/pages/Services";
 import CaseStudies from "@/pages/CaseStudies";
+import About from "@/pages/About";                 // <-- new import
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import TermsOfService from "@/pages/TermsOfService";
 import CookiePolicy from "@/pages/CookiePolicy";
@@ -24,6 +25,7 @@ function Router() {
       <Route path="/insights" component={Insights} />
       <Route path="/services" component={Services} />
       <Route path="/case-studies" component={CaseStudies} />
+      <Route path="/about" component={About} />    {/* <-- new route */}
       <Route path="/privacy-policy" component={PrivacyPolicy} />
       <Route path="/terms-of-service" component={TermsOfService} />
       <Route path="/cookie-policy" component={CookiePolicy} />

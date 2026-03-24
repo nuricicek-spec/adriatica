@@ -16,6 +16,7 @@ const services = [
       "Fire & Safety Plans",
       "General Arrangement (optional)",
     ],
+    outcome: "Class‑approved plan sets, reduced approval delays, and a clear basis for construction or modification.",
     references: "Class society rules (RINA, BV, DNV), flag state regulations",
   },
   {
@@ -28,6 +29,7 @@ const services = [
       "Fuel Management & Quality Booklet",
       "Inventory of Hazardous Materials (IHM)",
     ],
+    outcome: "Audit‑ready documentation, improved crew familiarity, and smoother port state control inspections.",
     references: "IMO, EU MRV, MARPOL",
   },
   {
@@ -40,6 +42,7 @@ const services = [
       "Modification Consultancy",
       "Vibration & Noise Diagnostic",
     ],
+    outcome: "Clear repair priorities, extended operational life, and classification society acceptance.",
     references: "IACS UR Z10, classification societies",
   },
   {
@@ -52,6 +55,7 @@ const services = [
       "Energy Audit & Efficiency Surveys",
       "MRV Monitoring Plan (EU MRV Regulation)",
     ],
+    outcome: "IMO‑compliant plans, reduced fuel consumption, and lower environmental risk.",
     references: "IMO, EU MRV, Paris MoU",
   },
   {
@@ -65,6 +69,7 @@ const services = [
       "Garbage Management Plan",
       "Emergency Response Manuals",
     ],
+    outcome: "PSC‑ready documentation, reduced inspection risk, and full compliance with current regulations.",
     references: "IMO, MARPOL, flag state administrations",
   },
   {
@@ -77,6 +82,7 @@ const services = [
       "On‑site Technical Troubleshooting",
       "Cost & Schedule Control",
     ],
+    outcome: "On‑time, on‑budget project delivery with verified quality and complete as‑built records.",
     references: "Industry best practices, IACS UR Z10",
   },
 ];
@@ -110,7 +116,10 @@ export default function Services() {
                     <li key={i}>{item}</li>
                   ))}
                 </ul>
-                <p className="text-sm text-primary/70 font-mono mt-2">
+                <p className="text-sm text-primary font-medium mt-2">
+                  Outcome: {service.outcome}
+                </p>
+                <p className="text-sm text-primary/70 font-mono mt-1">
                   References: {service.references}
                 </p>
               </div>
