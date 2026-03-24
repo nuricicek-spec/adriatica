@@ -111,12 +111,17 @@ export default function Home() {
                   <span className="text-[#3A74A0]">ENGINEERING</span>
                 </h1>
 
-                {/* New value proposition */}
+                {/* Value proposition */}
                 <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-xl mx-auto lg:mx-0 mb-6">
                   Engineering management, regulatory compliance, and technical advisory for vessels of all types – from superyachts to commercial fleets – across the Adriatic and Mediterranean.
                 </p>
 
-                {/* Existing philosophical paragraph */}
+                {/* Benefit line (new) */}
+                <p className="text-base md:text-lg lg:text-xl font-medium text-primary leading-relaxed max-w-xl mx-auto lg:mx-0 mb-6">
+                  Avoid drydock delays. Stay PSC‑ready. Maintain your charter schedule.
+                </p>
+
+                {/* Philosophical paragraph */}
                 <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-xl mx-auto lg:mx-0 mb-10 border-l-2 border-primary/20 pl-6">
                   Engineered for the deepest challenges. We combine timeless principles with cutting-edge marine technology to create engineering that endures.
                 </p>
@@ -268,6 +273,18 @@ export default function Home() {
                 delay={0.6}
               />
             </div>
+          </div>
+        </section>
+
+        {/* Mid‑page CTA (new) */}
+        <section className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <button 
+              onClick={() => document.getElementById('begin-voyage')?.scrollIntoView({ behavior: 'smooth' })}
+              className="px-8 py-4 bg-[#0B3B5C] text-white font-medium rounded-sm shadow-lg shadow-[#0B3B5C]/20 hover:shadow-xl hover:bg-[#1A4B7A] transition-all duration-300 uppercase tracking-wide text-sm"
+            >
+              Request Technical Consultation
+            </button>
           </div>
         </section>
 
