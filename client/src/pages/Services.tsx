@@ -3,7 +3,7 @@ import { Footer } from "@/components/Footer";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Helmet } from "react-helmet-async";
 import { SEO } from "@/components/SEO";
-import ProcessWheel from "@/components/ProcessWheel";  // <-- new import
+import ProcessWheel from "@/components/ProcessWheel";
 
 const services = [
   {
@@ -99,11 +99,22 @@ export default function Services() {
       <div className="min-h-screen bg-background font-body">
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          {/* Main heading with new subtitle */}
           <SectionHeading
             title="Engineering Services"
-            subtitle="Marine Engineering & Consultancy"
+            subtitle="Engineering Management"
           />
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
+
+          {/* Interactive Process Wheel */}
+          <ProcessWheel />
+
+          {/* New section heading for the detailed services */}
+          <h2 className="font-display text-2xl font-bold text-[#0B3B5C] border-l-2 border-primary/20 pl-6 mt-12 mb-6">
+            Marine Engineering & Consultancy
+          </h2>
+
+          {/* Service cards grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {services.map((service, idx) => (
               <div key={idx} className="border-l-2 border-primary/20 pl-6">
                 <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-3">
@@ -126,9 +137,6 @@ export default function Services() {
               </div>
             ))}
           </div>
-
-          {/* Interactive Process Wheel */}
-          <ProcessWheel />
         </main>
         <Footer />
       </div>

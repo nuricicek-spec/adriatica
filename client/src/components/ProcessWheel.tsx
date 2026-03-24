@@ -189,12 +189,9 @@ export default function ProcessWheel() {
 
   // ─── Render ───────────────────────────────────────────────────────────────
   return (
-    <section className="w-full bg-white py-20 px-6">
-      {/* Section header */}
+    <section className="w-full py-8 px-6">   {/* bg-white removed, py-20 → py-8 */}
+      {/* Section header – no more "Engineering Management" eyebrow */}
       <div className="text-center max-w-xl mx-auto mb-14">
-        <p className="text-xs tracking-[3px] uppercase text-[#3A74A0] font-medium mb-3">
-          Engineering Management
-        </p>
         <h2
           className="text-2xl md:text-3xl font-semibold text-[#0B3B5C] mb-4 leading-snug"
           style={{ fontFamily: "'Playfair Display', serif" }}
