@@ -196,7 +196,7 @@ export default function ProcessWheel() {
       <div className="flex flex-col md:flex-row items-center gap-16 max-w-5xl mx-auto">
 
         {/* ── Wheel ──────────────────────────────────────────────────────── */}
-        <div className="flex-shrink-0 w-[280px] md:w-[360px]">
+        <div className="flex-shrink-0 w-[336px] md:w-[432px]">
           <svg
             viewBox="0 0 400 400"
             xmlns="http://www.w3.org/2000/svg"
@@ -245,7 +245,7 @@ export default function ProcessWheel() {
                     textAnchor="middle"
                     fill="rgba(255,255,255,0.92)"
                     fontFamily="var(--font-body, 'Inter', sans-serif)"
-                    fontSize="9.5"
+                    fontSize="11"
                     fontWeight="600"
                     letterSpacing="1.8"
                     style={{ pointerEvents: "none", textTransform: "uppercase" }}
@@ -273,24 +273,12 @@ export default function ProcessWheel() {
               style={{ filter: "drop-shadow(0 2px 5px rgba(11,59,92,0.18))" }} />
             <circle cx={CX} cy={CY} r={R_IN - 4} fill="#F8FAFB" />
 
-            {/* Centre text – same font-family vars as the rest of the site */}
-            <text x={CX} y={CY - 14} textAnchor="middle"
-              fill="#8FA8BC"
-              fontFamily="var(--font-body, 'Inter', sans-serif)"
-              fontSize="8" fontWeight="500" letterSpacing="2">
-              ENGINEERING
-            </text>
-            <text x={CX} y={CY + 3} textAnchor="middle"
+            {/* Centre text – single word, larger and vertically centred */}
+            <text x={CX} y={CY + 6} textAnchor="middle"
               fill="#0B3B5C"
               fontFamily="var(--font-display, 'Playfair Display', serif)"
-              fontSize="13" fontWeight="600">
+              fontSize="17" fontWeight="600">
               MANAGEMENT
-            </text>
-            <text x={CX} y={CY + 18} textAnchor="middle"
-              fill="#8FA8BC"
-              fontFamily="var(--font-body, 'Inter', sans-serif)"
-              fontSize="8" fontWeight="300" letterSpacing="1.5">
-              CYCLE
             </text>
           </svg>
         </div>
