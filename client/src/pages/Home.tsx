@@ -138,7 +138,7 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
 <button 
   onClick={() => document.getElementById('begin-voyage')?.scrollIntoView({ behavior: 'smooth' })}
-  className="px-8 py-4 bg-[#D4AF37] text-[#0B3B5C] font-medium rounded-sm shadow-lg shadow-[#D4AF37]/20 hover:bg-[#C9A961] transition-all duration-300 uppercase tracking-wide text-sm"
+  className="px-8 py-4 bg-[#D4AF37] text-white font-medium rounded-sm shadow-lg shadow-[#D4AF37]/20 hover:bg-[#C9A961] transition-all duration-300 uppercase tracking-wide text-sm"
 >
   Request Compliance Assessment
 </button>

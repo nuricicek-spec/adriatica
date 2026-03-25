@@ -56,7 +56,7 @@ export function Footer() {
             <h4 className="font-display font-bold text-lg mb-6">Company</h4>
             <ul className="space-y-4">
               {[
-                { name: 'About', href: '/#philosophy' },
+                { name: 'About', href: '/about' },
                 { name: 'Careers', href: '/careers' },
                 { name: 'News', href: '/news' },
                 { name: 'Contact', href: '/#begin-voyage' }
@@ -103,7 +103,7 @@ export function Footer() {
               <img
                 src="/logos/imo_logo.png"
                 alt="IMO"
-                className="h-10 w-auto bg-white/10 rounded-sm p-0.5"
+                className="h-10 w-auto bg-white/10 rounded-sm p-0.5 grayscale hover:grayscale-0 transition-all duration-200"
               />
             </a>
             <a
@@ -115,7 +115,7 @@ export function Footer() {
               <img
                 src="/logos/parismou-logo.png"
                 alt="Paris MoU"
-                className="h-10 w-auto"
+                className="h-10 w-auto grayscale hover:grayscale-0 transition-all duration-200"
               />
             </a>
             <a
@@ -127,7 +127,7 @@ export function Footer() {
               <img
                 src="/logos/helcom_logo.png"
                 alt="HELCOM – Baltic Marine Environment Protection Commission"
-                className="h-10 w-auto"
+                className="h-10 w-auto grayscale hover:grayscale-0 transition-all duration-200"
               />
             </a>
             <a
@@ -139,7 +139,7 @@ export function Footer() {
               <img
                 src="/logos/me-flag-round-circle-icon.svg"
                 alt="Montenegro Maritime Authority"
-                className="h-10 w-10"
+                className="h-10 w-10 grayscale hover:grayscale-0 transition-all duration-200"
               />
             </a>
             <a
@@ -151,7 +151,7 @@ export function Footer() {
               <img
                 src="/logos/eu-union-flag-round-circle-icon.svg"
                 alt="European Union"
-                className="h-10 w-10"
+                className="h-10 w-10 grayscale hover:grayscale-0 transition-all duration-200"
               />
             </a>
           </div>
