@@ -111,14 +111,9 @@ export default function Home() {
                   <span className="text-[#3A74A0]">ENGINEERING</span>
                 </h1>
 
-                {/* New: Engineering Management & Compliance Solutions */}
-                <p className="text-base md:text-lg lg:text-xl text-primary font-semibold mb-4">
+                {/* New broad descriptor */}
+                <p className="text-base md:text-lg lg:text-xl text-primary font-semibold mb-6">
                   Engineering Management & Compliance Solutions for Marine Operations
-                </p>
-
-                {/* Value proposition */}
-                <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-xl mx-auto lg:mx-0 mb-6">
-                  Engineering management, regulatory compliance, and technical advisory for vessels of all types – from superyachts to commercial fleets – across the Adriatic and Mediterranean.
                 </p>
 
                 {/* Benefit line */}
@@ -205,15 +200,6 @@ export default function Home() {
                 />
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* New: What We Do – bridging statement */}
-        <section className="py-12 bg-white">
-          <div className="max-w-4xl mx-auto px-4 text-center">
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Adriatica provides engineering management and compliance support for marine operations, bridging technical execution with regulatory requirements.
-            </p>
           </div>
         </section>
 
@@ -362,7 +348,6 @@ export default function Home() {
 
         {/* Image / Vision Section */}
         <section id="philosophy" className="py-24 bg-[#0B3B5C] text-white overflow-hidden relative">
-          {/* (unchanged – too long to repeat, but identical to previous) */}
           <div className="absolute inset-0 opacity-10">
             <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
                <path d="M0 100 L100 0 L100 100 Z" fill="white" />
