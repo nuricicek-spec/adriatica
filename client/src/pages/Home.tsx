@@ -111,6 +111,11 @@ export default function Home() {
                   <span className="text-[#3A74A0]">ENGINEERING</span>
                 </h1>
 
+                {/* New: Engineering Management & Compliance Solutions */}
+                <p className="text-base md:text-lg lg:text-xl text-primary font-semibold mb-4">
+                  Engineering Management & Compliance Solutions for Marine Operations
+                </p>
+
                 {/* Value proposition */}
                 <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-xl mx-auto lg:mx-0 mb-6">
                   Engineering management, regulatory compliance, and technical advisory for vessels of all types – from superyachts to commercial fleets – across the Adriatic and Mediterranean.
@@ -140,7 +145,7 @@ export default function Home() {
                     onClick={() => document.getElementById('begin-voyage')?.scrollIntoView({ behavior: 'smooth' })}
                     className="px-8 py-4 bg-[#D4AF37] text-white font-medium rounded-sm shadow-lg shadow-[#D4AF37]/20 hover:bg-[#C9A961] transition-all duration-300 uppercase tracking-wide text-sm"
                   >
-                    Request Compliance Assessment
+                    Request Technical Assessment
                   </button>
                   <button 
                     onClick={() => document.getElementById('core-competencies')?.scrollIntoView({ behavior: 'smooth' })}
@@ -178,6 +183,38 @@ export default function Home() {
             <span className="text-xs uppercase tracking-widest mb-2">Scroll</span>
             <ArrowDown className="animate-bounce w-5 h-5" />
           </motion.div>
+        </section>
+
+        {/* Operational Region Section */}
+        <section className="py-20 bg-neutral-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="font-display text-3xl md:text-4xl font-bold text-[#0B3B5C] mb-4">
+                  Operational Region
+                </h2>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Adriatica provides engineering management and technical advisory services for a wide range of vessels – including superyachts, commercial vessels, and fishing boats – operating in the <strong>Adriatic Sea</strong>, <strong>Mediterranean Basin</strong>, and <strong>European coastal waters</strong>.
+                </p>
+              </div>
+              <div className="flex justify-center">
+                <img
+                  src="/map.svg"
+                  alt="Adriatic and Mediterranean region outline"
+                  className="w-full max-w-[300px] h-auto"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* New: What We Do – bridging statement */}
+        <section className="py-12 bg-white">
+          <div className="max-w-4xl mx-auto px-4 text-center">
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Adriatica provides engineering management and compliance support for marine operations, bridging technical execution with regulatory requirements.
+            </p>
+          </div>
         </section>
 
         {/* Value Proposition Section */}
@@ -221,29 +258,6 @@ export default function Home() {
                 <p className="text-muted-foreground">
                   We act as your technical eyes and ears in shipyards, ensuring quality control and budget adherence.
                 </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Operational Region Section */}
-        <section className="py-20 bg-neutral-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <h2 className="font-display text-3xl md:text-4xl font-bold text-[#0B3B5C] mb-4">
-                  Operational Region
-                </h2>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  Adriatica provides engineering management and technical advisory services for a wide range of vessels – including superyachts, commercial vessels, and fishing boats – operating in the <strong>Adriatic Sea</strong>, <strong>Mediterranean Basin</strong>, and <strong>European coastal waters</strong>.
-                </p>
-              </div>
-              <div className="flex justify-center">
-                <img
-                  src="/map.svg"
-                  alt="Adriatic and Mediterranean region outline"
-                  className="w-full max-w-[300px] h-auto"
-                />
               </div>
             </div>
           </div>
@@ -341,13 +355,14 @@ export default function Home() {
               onClick={() => document.getElementById('begin-voyage')?.scrollIntoView({ behavior: 'smooth' })}
               className="px-8 py-4 bg-[#0B3B5C] text-white font-medium rounded-sm shadow-lg shadow-[#0B3B5C]/20 hover:shadow-xl hover:bg-[#1A4B7A] transition-all duration-300 uppercase tracking-wide text-sm"
             >
-              Submit Vessel for Evaluation
+              Submit Project Inquiry
             </button>
           </div>
         </section>
 
         {/* Image / Vision Section */}
         <section id="philosophy" className="py-24 bg-[#0B3B5C] text-white overflow-hidden relative">
+          {/* (unchanged – too long to repeat, but identical to previous) */}
           <div className="absolute inset-0 opacity-10">
             <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
                <path d="M0 100 L100 0 L100 100 Z" fill="white" />

@@ -14,7 +14,7 @@ export function Footer() {
               </span>
             </HashLink>
             <p className="text-white/60 leading-relaxed mb-4 max-w-sm">
-              Pioneering marine engineering solutions inspired by ancient wisdom and driven by modern innovation.
+              Supporting yacht and commercial vessel operations across engineering, compliance, and technical project management.
             </p>
             <div className="text-white/60 text-sm space-y-1 mb-6">
               <p>📍 Serving the Montenegro Bay & Adriatic Coast</p>
