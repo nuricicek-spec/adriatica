@@ -112,9 +112,14 @@ export default function Services() {
 
           {/* ========== NEW: Specific deliverables for biofouling / in-water cleaning ========== */}
           <div className="mt-12 bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
-            <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">
-              For Biofouling & In‑Water Cleaning Engagements
-            </h3>
+            <div className="flex flex-wrap items-center gap-3 mb-3">
+              <h3 className="font-display text-xl font-bold text-[#0B3B5C]">
+                For Biofouling & In‑Water Cleaning Engagements
+              </h3>
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                IMO 2026 Priority
+              </span>
+            </div>
             <p className="text-muted-foreground mb-3">
               When you work with us on biofouling management, you receive a complete compliance package:
             </p>
