@@ -287,7 +287,7 @@ export default function Home() {
               onClick={() => document.getElementById('begin-voyage')?.scrollIntoView({ behavior: 'smooth' })}
               className="px-8 py-4 bg-[#0B3B5C] text-white font-medium rounded-sm shadow-lg shadow-[#0B3B5C]/20 hover:shadow-xl hover:bg-[#1A4B7A] transition-all duration-300 uppercase tracking-wide text-sm"
             >
-              Request Technical Consultation
+              Submit Vessel for Evaluation
             </button>
           </div>
         </section>

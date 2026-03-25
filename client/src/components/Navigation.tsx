@@ -73,7 +73,7 @@ export function Navigation() {
               onClick={handleInquireClick}
               className="bg-primary text-primary-foreground px-6 py-2.5 rounded-sm font-medium text-sm tracking-wide hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl"
             >
-              Inquire
+              Request Consultation
             </button>
           </div>
 
