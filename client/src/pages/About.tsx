@@ -90,6 +90,17 @@ export default function About() {
               <span className="bg-neutral-100 px-3 py-1 rounded-full">UPSUL – Montenegrin Maritime Safety Administration</span>
             </div>
 
+            {/* Company Information Block */}
+            <div className="mt-8 p-6 bg-neutral-50 border-l-4 border-primary rounded-sm">
+              <h3 className="font-display text-lg font-bold text-[#0B3B5C] mb-2">Company Information</h3>
+              <div className="space-y-1 text-sm text-muted-foreground">
+                <p><strong>Adriatica D.O.O.</strong></p>
+                <p>Podgorica, Montenegro</p>
+                <p>Tax ID (PIB): 03612807</p>
+                <p>Email: info@adriaticadoo.me</p>
+              </div>
+            </div>
+
             {/* CTA */}
             <div className="mt-12 p-8 bg-neutral-50 border-l-4 border-primary text-center">
               <p className="text-lg font-medium text-[#0B3B5C] mb-2">
@@ -99,7 +110,7 @@ export default function About() {
                 href="/#begin-voyage"
                 className="inline-block mt-2 bg-[#0B3B5C] text-white px-6 py-3 rounded-sm font-medium hover:bg-[#1A4B7A] transition-colors"
               >
-                Request Technical Consultation
+                Request Compliance Assessment
               </HashLink>
             </div>
           </div>
