@@ -110,7 +110,26 @@ export default function Services() {
           {/* Interactive process diagram */}
           <ProcessWheel />
 
-          {/* ========== NEW SECTION: What you get + How we work + Positioning ========== */}
+          {/* ========== NEW: Specific deliverables for biofouling / in-water cleaning ========== */}
+          <div className="mt-12 bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+            <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">
+              For Biofouling & In‑Water Cleaning Engagements
+            </h3>
+            <p className="text-muted-foreground mb-3">
+              When you work with us on biofouling management, you receive a complete compliance package:
+            </p>
+            <ul className="list-disc pl-5 text-muted-foreground space-y-2">
+              <li>Vessel‑specific biofouling assessment (coating condition, niche areas)</li>
+              <li>Cleaning execution plan with method selection (non‑abrasive, vacuum‑supported)</li>
+              <li>Certified diver coordination & operation management</li>
+              <li>Environmental compliance verification (debris containment, local regulations)</li>
+              <li>Before/after photographic evidence and inspection records</li>
+              <li>Biofouling Record Book (BFRB) entry support</li>
+              <li>Post‑operation technical summary with compliance status</li>
+            </ul>
+          </div>
+
+          {/* ========== Generic deliverables + How we work + Positioning ========== */}
           <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* What you get (Deliverables) */}
             <div className="border-l-2 border-primary/20 pl-6">
