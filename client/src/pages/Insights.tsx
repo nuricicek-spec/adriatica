@@ -7,6 +7,13 @@ import { HashLink } from "@/components/HashLink";
 
 const insightItems = [
   {
+    date: "26 March 2026",
+    title: "The Case for a 'Zero-Emission Zone': Why is Boka Kotorska Not Protected Yet?",
+    excerpt: "A strategic policy paper comparing Boka Kotorska with UNESCO‑protected sites that have implemented Zero‑Emission Zones (ZEZ). The paper analyses global benchmarks, outlines the bay's structural sensitivity, and proposes a phased roadmap for Montenegro to protect this World Heritage site through an EU‑backed innovation ecosystem.",
+    pdf: "/pdfs/ADRI-TIS-004.pdf",
+    category: "Strategic Outlook",
+  },
+  {
     date: "20 January 2026",
     title: "Biofouling Compliance: Preparing for the IMO 2026 Transition",
     excerpt: "A real-world superyacht case study on proactive biofouling management, featuring quantified risk assessment, Biofouling Management Plan (BFMP) development, and Biofouling Record Book (BFRB) integration to ensure seamless Mediterranean entry and regulatory readiness.",
@@ -38,6 +45,8 @@ const categoryColor = (cat: string) => {
       return "bg-green-100 text-green-800";
     case "Case Insight":
       return "bg-purple-100 text-purple-800";
+    case "Strategic Outlook":
+      return "bg-amber-100 text-amber-800";
     default:
       return "bg-gray-100 text-gray-800";
   }

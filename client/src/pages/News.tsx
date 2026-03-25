@@ -6,13 +6,6 @@ import { HashLink } from "@/components/HashLink";
 
 const newsItems = [
   {
-    date: "26 March 2026",
-    title: "The Case for a 'Zero-Emission Zone': Why is Boka Kotorska Not Protected Yet?",
-    excerpt: "Adriatica releases a strategic policy paper comparing Boka Kotorska with UNESCO‑protected sites that have implemented Zero‑Emission Zones (ZEZ). The paper analyses global benchmarks, outlines the bay's structural sensitivity, and proposes a phased roadmap for Montenegro to protect this World Heritage site through an EU‑backed innovation ecosystem.",
-    showCta: true,
-    pdf: "/pdfs/ADRI-TIS-004.pdf",
-  },
-  {
     date: "25 March 2026",
     title: "Adriatica Launches IMO‑Aligned Biofouling Management Plans",
     excerpt: "As Port State Control regimes intensify scrutiny on biofouling documentation, Adriatica D.O.O. now offers vessel‑specific Biofouling Management Plans (BFMP) fully aligned with IMO MEPC.378(80) guidelines. These plans include quantified risk assessments, niche‑area identification, and a structured Biofouling Record Book (BFRB) – providing operators with PSC‑ready documentation and a clear pathway to compliance. With the 2026 enforcement convergence approaching, Adriatica stands ready to assist vessel operators in the Adriatic and Mediterranean to stay ahead of regulatory requirements.",
@@ -22,7 +15,7 @@ const newsItems = [
     date: "30 June 2025",
     title: "Adriatica joins the Montenegrin Marine Industry Association",
     excerpt: "We are proud to become a member of the local marine industry network, strengthening our commitment to the Adriatic maritime community.",
-    showCta: true,
+    showCta: true,   // <-- added CTA for this news item
   },
 ];
 
@@ -61,24 +54,14 @@ export default function News() {
                   <p className="text-muted-foreground leading-relaxed mb-4">
                     {item.excerpt}
                   </p>
-                  <div className="flex flex-wrap items-center gap-4">
-                    {item.showCta && (
-                      <HashLink
-                        href="/#begin-voyage"
-                        className="inline-flex items-center gap-1 text-primary hover:underline text-sm font-medium"
-                      >
-                        Need support? → Request consultation
-                      </HashLink>
-                    )}
-                    {item.pdf && (
-                      <a
-                        href={item.pdf}
-                        className="inline-flex items-center gap-1 text-primary hover:underline text-sm font-medium"
-                      >
-                        📄 Read the full paper →
-                      </a>
-                    )}
-                  </div>
+                  {item.showCta && (
+                    <HashLink
+                      href="/#begin-voyage"
+                      className="inline-flex items-center gap-1 text-primary hover:underline text-sm font-medium"
+                    >
+                      Need support? → Request consultation
+                    </HashLink>
+                  )}
                 </article>
               ))}
             </div>
