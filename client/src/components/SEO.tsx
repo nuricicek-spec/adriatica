@@ -28,7 +28,7 @@ export function SEO({
   const metaKeywords = keywords || defaultKeywords;
   const metaOgImage = ogImage || defaultOgImage;
 
-  // Dinamik canonical: prop yoksa tarayıcıdaki URL'yi kullan, yoksa siteUrl
+  // Dynamically set canonical URL (prefer prop, else current path, else siteUrl)
   const currentUrl = typeof window !== 'undefined' 
     ? window.location.origin + window.location.pathname 
     : siteUrl;
@@ -39,8 +39,10 @@ export function SEO({
       <title>{pageTitle}</title>
       <meta name="description" content={metaDescription} />
       <meta name="keywords" content={metaKeywords} />
-      {noindex && <meta name="robots" content="noindex, nofollow" />}
       <link rel="canonical" href={canonicalUrl} />
+
+      {/* Robots meta – only one, based on noindex */}
+      <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
 
       <meta property="og:type" content="website" />
       <meta property="og:url" content={canonicalUrl} />
@@ -48,6 +50,7 @@ export function SEO({
       <meta property="og:description" content={metaDescription} />
       <meta property="og:image" content={metaOgImage} />
       <meta property="og:site_name" content="Adriatica D.O.O." />
+      <meta property="og:locale" content="en_GB" />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={pageTitle} />
@@ -57,7 +60,6 @@ export function SEO({
       <meta name="author" content="Adriatica D.O.O." />
       <meta name="geo.region" content="ME" />
       <meta name="geo.placename" content="Montenegro" />
-      <meta name="robots" content="index, follow" />
     </Helmet>
   );
 }
