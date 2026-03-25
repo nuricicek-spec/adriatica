@@ -116,22 +116,24 @@ export default function Home() {
                   Engineering management, regulatory compliance, and technical advisory for vessels of all types – from superyachts to commercial fleets – across the Adriatic and Mediterranean.
                 </p>
 
-                {/* Context line (new) – clickable to News page */}
-                <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-xl mx-auto lg:mx-0 mb-2">
-<a href="/news" className="hover:underline hover:text-primary transition-colors">
-  With increasing PSC scrutiny across Europe, unmanaged biofouling is becoming an operational and regulatory risk. The 2026 IMO enforcement timeline accelerates the need for action.
-</a>
-                </p>
-
                 {/* Benefit line */}
                 <p className="text-base md:text-lg lg:text-xl font-medium text-primary leading-relaxed max-w-xl mx-auto lg:mx-0 mb-6">
                   Avoid drydock delays. Stay PSC‑ready. Maintain your charter schedule.
                 </p>
 
-                {/* Philosophical paragraph */}
-                <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-xl mx-auto lg:mx-0 mb-10 border-l-2 border-primary/20 pl-6">
-                  Engineered for the deepest challenges. We combine timeless principles with cutting-edge marine technology to create engineering that endures.
-                </p>
+                {/* Context block with badge and left border */}
+                <div className="border-l-2 border-primary pl-6 mb-10">
+                  <div className="flex flex-wrap items-center gap-3 mb-2">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                      IMO 2026 Priority
+                    </span>
+                  </div>
+                  <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-xl mx-auto lg:mx-0">
+                    <a href="/news" className="hover:underline hover:text-primary transition-colors">
+                      With increasing PSC scrutiny across Europe, unmanaged biofouling is becoming an operational and regulatory risk. The 2026 IMO enforcement timeline accelerates the need for action.
+                    </a>
+                  </p>
+                </div>
                 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                   <button 
