@@ -116,7 +116,17 @@ export default function Home() {
                   Engineering management, regulatory compliance, and technical advisory for vessels of all types – from superyachts to commercial fleets – across the Adriatic and Mediterranean.
                 </p>
 
-                {/* Benefit line (new) */}
+                {/* Context line (new) – clickable to News page */}
+                <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-xl mx-auto lg:mx-0 mb-2">
+                  <a
+                    href="/news"
+                    className="hover:underline hover:text-primary transition-colors"
+                  >
+                    With 2026 IMO enforcement convergence approaching, vessel compliance is no longer optional.
+                  </a>
+                </p>
+
+                {/* Benefit line */}
                 <p className="text-base md:text-lg lg:text-xl font-medium text-primary leading-relaxed max-w-xl mx-auto lg:mx-0 mb-6">
                   Avoid drydock delays. Stay PSC‑ready. Maintain your charter schedule.
                 </p>
@@ -131,7 +141,7 @@ export default function Home() {
                     onClick={() => document.getElementById('begin-voyage')?.scrollIntoView({ behavior: 'smooth' })}
                     className="px-8 py-4 bg-[#0B3B5C] text-white font-medium rounded-sm shadow-lg shadow-[#0B3B5C]/20 hover:shadow-xl hover:bg-[#1A4B7A] transition-all duration-300 uppercase tracking-wide text-sm"
                   >
-                    Request Technical Consultation
+                    Request Compliance Assessment
                   </button>
                   <button 
                     onClick={() => document.getElementById('core-competencies')?.scrollIntoView({ behavior: 'smooth' })}
@@ -276,8 +286,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Mid‑page CTA (new) */}
-        {/* Mid‑page CTA (new) */}
+        {/* Mid‑page CTA */}
         <section className="py-16 bg-neutral-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">

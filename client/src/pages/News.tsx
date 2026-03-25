@@ -15,7 +15,7 @@ const newsItems = [
     date: "30 June 2025",
     title: "Adriatica joins the Montenegrin Marine Industry Association",
     excerpt: "We are proud to become a member of the local marine industry network, strengthening our commitment to the Adriatic maritime community.",
-    showCta: false,
+    showCta: true,   // <-- added CTA for this news item
   },
 ];
 
