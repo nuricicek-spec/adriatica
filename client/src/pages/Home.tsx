@@ -5,7 +5,7 @@ import { Navigation } from "@/components/Navigation";
 import { FeatureCard } from "@/components/FeatureCard";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Footer } from "@/components/Footer";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, ShieldCheck, Gauge, Handshake } from "lucide-react";
 import { SEO } from "@/components/SEO";
 
 const COMMISSIONS_TEXT = "We are currently accepting commissions for Q2 2026.";
@@ -136,12 +136,12 @@ export default function Home() {
                 </div>
                 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-<button 
-  onClick={() => document.getElementById('begin-voyage')?.scrollIntoView({ behavior: 'smooth' })}
-  className="px-8 py-4 bg-[#D4AF37] text-white font-medium rounded-sm shadow-lg shadow-[#D4AF37]/20 hover:bg-[#C9A961] transition-all duration-300 uppercase tracking-wide text-sm"
->
-  Request Compliance Assessment
-</button>
+                  <button 
+                    onClick={() => document.getElementById('begin-voyage')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="px-8 py-4 bg-[#D4AF37] text-white font-medium rounded-sm shadow-lg shadow-[#D4AF37]/20 hover:bg-[#C9A961] transition-all duration-300 uppercase tracking-wide text-sm"
+                  >
+                    Request Compliance Assessment
+                  </button>
                   <button 
                     onClick={() => document.getElementById('core-competencies')?.scrollIntoView({ behavior: 'smooth' })}
                     className="px-8 py-4 bg-transparent border border-[#0B3B5C] text-[#0B3B5C] font-medium rounded-sm hover:bg-[#0B3B5C]/5 transition-all duration-300 uppercase tracking-wide text-sm"
@@ -178,6 +178,52 @@ export default function Home() {
             <span className="text-xs uppercase tracking-widest mb-2">Scroll</span>
             <ArrowDown className="animate-bounce w-5 h-5" />
           </motion.div>
+        </section>
+
+        {/* Value Proposition Section */}
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-[#0B3B5C] mb-3">
+                Why Choose Adriatica
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Engineering management that delivers compliance, efficiency, and peace of mind.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* 1. Technical Excellence & Compliance */}
+              <div className="text-center p-6 border-l-2 border-primary/20">
+                <ShieldCheck className="h-12 w-12 text-primary mx-auto mb-4" />
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-2">
+                  Technical Excellence & Compliance
+                </h3>
+                <p className="text-muted-foreground">
+                  All projects are managed in full alignment with IMO, MARPOL, and IACS standards. We aim for zero PSC risk.
+                </p>
+              </div>
+              {/* 2. Operational Efficiency */}
+              <div className="text-center p-6 border-l-2 border-primary/20">
+                <Gauge className="h-12 w-12 text-primary mx-auto mb-4" />
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-2">
+                  Operational Efficiency
+                </h3>
+                <p className="text-muted-foreground">
+                  Smart planning and digital documentation minimise dry‑dock time and improve fuel performance.
+                </p>
+              </div>
+              {/* 3. Owner’s Trusted Representative */}
+              <div className="text-center p-6 border-l-2 border-primary/20">
+                <Handshake className="h-12 w-12 text-primary mx-auto mb-4" />
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-2">
+                  Owner’s Trusted Representative
+                </h3>
+                <p className="text-muted-foreground">
+                  We act as your technical eyes and ears in shipyards, ensuring quality control and budget adherence.
+                </p>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Operational Region Section */}
