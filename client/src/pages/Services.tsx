@@ -110,7 +110,7 @@ export default function Services() {
           {/* Interactive process diagram */}
           <ProcessWheel />
 
-          {/* ========== NEW: Specific deliverables for biofouling / in-water cleaning ========== */}
+          {/* ========== Enhanced biofouling / in-water cleaning block ========== */}
           <div className="mt-12 bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
             <div className="flex flex-wrap items-center gap-3 mb-3">
               <h3 className="font-display text-xl font-bold text-[#0B3B5C]">
@@ -120,9 +120,21 @@ export default function Services() {
                 IMO 2026 Priority
               </span>
             </div>
+
+            {/* We don't clean statement */}
+            <p className="text-muted-foreground mb-2">
+              Adriatica does not perform physical cleaning operations. We provide independent engineering management, coordination, and compliance oversight.
+            </p>
+
+            {/* Risk → Solution */}
+            <p className="text-muted-foreground mb-3">
+              Without proper management, in-water cleaning can lead to non‑compliance with port regulations, environmental penalties, and coating damage. Adriatica ensures controlled, compliant, and documented operations.
+            </p>
+
             <p className="text-muted-foreground mb-3">
               When you work with us on biofouling management, you receive a complete compliance package:
             </p>
+
             <ul className="list-disc pl-5 text-muted-foreground space-y-2">
               <li>Vessel‑specific biofouling assessment (coating condition, niche areas)</li>
               <li>Cleaning execution plan with method selection (non‑abrasive, vacuum‑supported)</li>
@@ -132,6 +144,11 @@ export default function Services() {
               <li>Biofouling Record Book (BFRB) entry support</li>
               <li>Post‑operation technical summary with compliance status</li>
             </ul>
+
+            {/* Outcome sentence */}
+            <p className="mt-4 text-primary font-medium">
+              Typical outcome: A structured, compliance‑ready documentation package and fully managed in‑water cleaning operation with verifiable records suitable for PSC inspection.
+            </p>
           </div>
 
           {/* ========== Generic deliverables + How we work + Positioning ========== */}
