@@ -1,3 +1,5 @@
+// client/src/pages/Services.tsx
+
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -62,7 +64,7 @@ const services = [
   {
     title: "Regulatory Compliance",
     description:
-      "Preparation and periodic updating of mandatory shipboard plans and manuals, tailored to the vessel’s configuration and operational profile. We ensure documents meet the latest IMO, MARPOL, and flag state requirements.",
+      "Preparation and periodic updating of mandatory shipboard plans and manuals, tailored to the vessel's configuration and operational profile. We ensure documents meet the latest IMO, MARPOL, and flag state requirements.",
     deliverables: [
       "Ballast Water Management Plan (BWMP)",
       "Shipboard Oil Pollution Emergency Plan (SoPEP)",
@@ -74,9 +76,9 @@ const services = [
     references: "IMO, MARPOL, flag state administrations",
   },
   {
-    title: "Project Management & Owner’s Representation",
+    title: "Project Management & Owner's Representation",
     description:
-      "Full technical management of dry‑dockings, refits, and complex modifications. Acting as Owner’s Technical Representative, we coordinate with shipyards, supervise works, and ensure quality control, delivering projects on schedule with complete engineering documentation.",
+      "Full technical management of dry‑dockings, refits, and complex modifications. Acting as Owner's Technical Representative, we coordinate with shipyards, supervise works, and ensure quality control, delivering projects on schedule with complete engineering documentation.",
     deliverables: [
       "Owner's Rep & Refit Supervision",
       "Dry‑Docking Specification & Management",
@@ -98,26 +100,30 @@ export default function Services() {
       />
       <div className="min-h-screen bg-background font-body">
         <Navigation />
+
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          {/* Main heading */}
+
+          {/* ── Page heading ── */}
+          {/*
+            FIX 2a – Removed the first SectionHeading whose subtitle ("Engineering
+            Management") duplicated the ProcessWheel's own internal header.
+            A single clear page title is sufficient here.
+          */}
           <SectionHeading
             title="Engineering Services"
-            subtitle="Engineering Management"
+            subtitle="Marine Engineering & Consultancy"
           />
 
-          {/* Interactive Process Wheel */}
+          {/* ── Interactive process diagram ── */}
+          {/*
+            FIX 2b – ProcessWheel now sits directly after the one page heading.
+            The second SectionHeading with title="" (which rendered an empty <h2>)
+            has been removed entirely.
+          */}
           <ProcessWheel />
 
-          {/* Second subtitle – using the same component for identical styling */}
-          <div className="mt-8">
-            <SectionHeading
-              title=""
-              subtitle="Marine Engineering & Consultancy"
-            />
-          </div>
-
-          {/* Service cards grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* ── Service cards grid ── */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
             {services.map((service, idx) => (
               <div key={idx} className="border-l-2 border-primary/20 pl-6 py-2">
                 <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-2">
@@ -140,7 +146,9 @@ export default function Services() {
               </div>
             ))}
           </div>
+
         </main>
+
         <Footer />
       </div>
     </>
