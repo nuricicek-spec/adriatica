@@ -5,6 +5,11 @@ import { SEO } from "@/components/SEO";
 
 const newsItems = [
   {
+    date: "25 March 2026",
+    title: "Adriatica Launches IMO‑Aligned Biofouling Management Plans",
+    excerpt: "As Port State Control regimes intensify scrutiny on biofouling documentation, Adriatica D.O.O. now offers vessel‑specific Biofouling Management Plans (BFMP) fully aligned with IMO MEPC.378(80) guidelines. These plans include quantified risk assessments, niche‑area identification, and a structured Biofouling Record Book (BFRB) – providing operators with PSC‑ready documentation and a clear pathway to compliance. With the 2026 enforcement convergence approaching, Adriatica stands ready to assist vessel operators in the Adriatic and Mediterranean to stay ahead of regulatory requirements."
+  },
+  {
     date: "30 June 2025",
     title: "Adriatica joins the Montenegrin Marine Industry Association",
     excerpt: "We are proud to become a member of the local marine industry network, strengthening our commitment to the Adriatic maritime community."
