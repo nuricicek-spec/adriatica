@@ -23,9 +23,9 @@ const caseStudies = [
       "Cost savings of 80% compared to dry‑docking (€6,000 vs. €30,000) and zero charter disruption. Full photographic documentation was logged in the vessel’s Biofouling Record Book.",
   },
   {
-    title: "Refit Supervision at Adriatic 42 Shipyard",
+    title: "Refit Supervision at Shipyard",
     challenge:
-      "A 55‑meter motor yacht scheduled a 6‑week refit at Adriatic 42 (Bijela). The owner needed technical oversight to ensure coating specifications, shaft alignment, and niche‑area documentation were properly executed.",
+      "A 55‑meter motor yacht scheduled a 6‑week refit in Bijela. The owner needed technical oversight to ensure coating specifications, shaft alignment, and niche‑area documentation were properly executed.",
     solution:
       "Adriatica provided full‑time on‑site engineering supervision, coordinating with the shipyard and acting as Owner’s Technical Representative.",
     result:

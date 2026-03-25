@@ -1,5 +1,3 @@
-// client/src/pages/Services.tsx
-
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -103,27 +101,53 @@ export default function Services() {
 
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
 
-          {/* ── Page heading ── */}
-          {/*
-            FIX 2a – Removed the first SectionHeading whose subtitle ("Engineering
-            Management") duplicated the ProcessWheel's own internal header.
-            A single clear page title is sufficient here.
-          */}
+          {/* Page heading */}
           <SectionHeading
             title="Engineering Services"
             subtitle="Marine Engineering & Consultancy"
           />
 
-          {/* ── Interactive process diagram ── */}
-          {/*
-            FIX 2b – ProcessWheel now sits directly after the one page heading.
-            The second SectionHeading with title="" (which rendered an empty <h2>)
-            has been removed entirely.
-          */}
+          {/* Interactive process diagram */}
           <ProcessWheel />
 
-          {/* ── Service cards grid ── */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+          {/* ========== NEW SECTION: What you get + How we work + Positioning ========== */}
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* What you get (Deliverables) */}
+            <div className="border-l-2 border-primary/20 pl-6">
+              <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">
+                What You Get
+              </h3>
+              <ul className="list-disc pl-5 text-muted-foreground space-y-2">
+                <li>Technical Report (findings, analysis, recommendations)</li>
+                <li>Engineering Documentation (plans, drawings, manuals)</li>
+                <li>Action Plan (clear next steps and timelines)</li>
+                <li>Ongoing Support (follow‑up, implementation assistance)</li>
+              </ul>
+            </div>
+
+            {/* How we work (Client journey) */}
+            <div className="border-l-2 border-primary/20 pl-6">
+              <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">
+                How We Work
+              </h3>
+              <ol className="list-decimal pl-5 text-muted-foreground space-y-2">
+                <li>Brief & Information Gathering – share vessel details and concerns</li>
+                <li>Analysis & Planning – technical assessment, risk identification, scope definition</li>
+                <li>Execution / Coordination – engineering supervision, contractor management, quality control</li>
+                <li>Documentation & Handover – complete records ready for audits or class submission</li>
+              </ol>
+            </div>
+          </div>
+
+          {/* Positioning statement */}
+          <div className="mt-10 p-6 bg-neutral-50 border border-border/50 rounded-sm text-center">
+            <p className="text-lg text-[#0B3B5C] font-medium">
+              Adriatica provides independent engineering management, technical oversight, and compliance assurance – from initial assessment to final documentation. We don’t just advise; we deliver actionable, auditable results.
+            </p>
+          </div>
+
+          {/* Service cards grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
             {services.map((service, idx) => (
               <div key={idx} className="border-l-2 border-primary/20 pl-6 py-2">
                 <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-2">
