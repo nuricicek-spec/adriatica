@@ -109,7 +109,7 @@ export function Navigation() {
             }}
             className="w-full bg-primary text-primary-foreground px-6 py-3 rounded-sm font-medium mt-4"
           >
-            Inquire Now
+            Request Consultation
           </button>
         </div>
       )}
