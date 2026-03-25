@@ -118,12 +118,9 @@ export default function Home() {
 
                 {/* Context line (new) – clickable to News page */}
                 <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-xl mx-auto lg:mx-0 mb-2">
-                  <a
-                    href="/news"
-                    className="hover:underline hover:text-primary transition-colors"
-                  >
-                    With 2026 IMO enforcement convergence approaching, vessel compliance is no longer optional.
-                  </a>
+<a href="/news" className="hover:underline hover:text-primary transition-colors">
+  With increasing PSC scrutiny across Europe, unmanaged biofouling is becoming an operational and regulatory risk. The 2026 IMO enforcement timeline accelerates the need for action.
+</a>
                 </p>
 
                 {/* Benefit line */}
