@@ -38,38 +38,50 @@ export default function StructuralIntegrity() {
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">References</h2>
             <p>IACS UR Z10, classification societies</p>
 
-            {/* Detailed sections for each deliverable */}
+            {/* Detailed sections – enhanced depth */}
             <div className="mt-8 space-y-6">
-              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+              <div className="border-l-2 border-primary/20 pl-6">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Structural Integrity & Life Extension Studies</h3>
                 <p className="text-muted-foreground">
-                  We analyse the remaining fatigue life of critical structural components using finite element analysis and historical data. The study provides a roadmap for targeted reinforcements, enabling safe operation beyond the original design life while minimising costs.
+                  We analyse the remaining fatigue life of critical structural components using finite element analysis (FEA) combined with historical load data and inspection records. The study identifies areas of high stress concentration and predicts future degradation. A detailed roadmap of required reinforcements, with prioritised recommendations and cost estimates, is provided.
+                </p>
+                <p className="text-muted-foreground mt-2">
+                  <span className="font-medium">Outcome:</span> A clear path to extend the vessel’s safe operational life while minimising downtime and avoiding unplanned repairs.
                 </p>
               </div>
 
-              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+              <div className="border-l-2 border-primary/20 pl-6">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Hull Condition Analysis</h3>
                 <p className="text-muted-foreground">
-                  A detailed evaluation of the hull’s current state, including thickness measurements, corrosion assessment, and structural audits. The report identifies areas of concern and recommends remedial actions to maintain classification and safety.
+                  A detailed evaluation of the hull’s current state, including thickness measurements, corrosion assessment, and structural audits. We use ultrasonic testing (UT) and visual inspections to map the condition of plating and framing. The report includes a “wastage plan” highlighting areas that require repair or replacement.
+                </p>
+                <p className="text-muted-foreground mt-2">
+                  <span className="font-medium">Outcome:</span> An objective assessment that supports classification renewal, insurance surveys, and strategic maintenance planning.
                 </p>
               </div>
 
-              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+              <div className="border-l-2 border-primary/20 pl-6">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Modification Consultancy</h3>
                 <p className="text-muted-foreground">
-                  Engineering support for structural alterations, such as adding new equipment, changing deck arrangements, or extending superstructures. We provide feasibility studies, design calculations, and approval‑ready documentation.
+                  Engineering support for structural alterations, such as adding new equipment, changing deck arrangements, or extending superstructures. We provide feasibility studies, design calculations, and approval‑ready documentation for class and flag state. Our team also assists with the integration of modifications into the vessel’s existing systems.
+                </p>
+                <p className="text-muted-foreground mt-2">
+                  <span className="font-medium">Outcome:</span> Safe, compliant modifications delivered on time, with minimal impact on vessel operations.
                 </p>
               </div>
 
-              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+              <div className="border-l-2 border-primary/20 pl-6">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Vibration & Noise Diagnostic</h3>
                 <p className="text-muted-foreground">
-                  On‑board measurements to identify sources of excessive vibration and noise. We use advanced sensors and analysis techniques to pinpoint root causes and recommend practical mitigation measures, improving crew comfort and equipment longevity.
+                  On‑board measurements using high‑precision accelerometers and acoustic sensors to identify sources of excessive vibration and noise. We analyse the data to pinpoint root causes – such as propeller imbalance, machinery misalignment, or structural resonance – and recommend practical mitigation measures. A post‑implementation verification is available to confirm effectiveness.
+                </p>
+                <p className="text-muted-foreground mt-2">
+                  <span className="font-medium">Outcome:</span> Improved crew comfort, reduced equipment wear, and compliance with noise regulations.
                 </p>
               </div>
             </div>
 
-            <div className="mt-12 p-8 bg-neutral-50 border-l-4 border-primary text-center">
+            <div className="mt-12 p-8 bg-neutral-50 border-l-2 border-primary/20 rounded-sm text-center">
               <p className="text-lg font-medium text-[#0B3B5C] mb-2">
                 Concerned about your vessel’s structural condition?
               </p>

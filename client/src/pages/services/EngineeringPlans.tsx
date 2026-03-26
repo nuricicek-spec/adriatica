@@ -39,38 +39,50 @@ export default function EngineeringPlans() {
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">References</h2>
             <p>Class society rules (RINA, BV, DNV), flag state regulations</p>
 
-            {/* Detailed sections for each deliverable */}
+            {/* Detailed sections for each deliverable – enhanced depth */}
             <div className="mt-8 space-y-6">
-              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+              <div className="border-l-2 border-primary/20 pl-6">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Structural Drawings</h3>
                 <p className="text-muted-foreground">
-                  We produce comprehensive structural drawings covering the vessel’s primary and secondary steelwork, including framing, plating, and connections. These drawings are prepared in accordance with the applicable classification society rules and include all necessary details for fabrication and approval.
+                  We produce complete structural drawings covering the vessel’s primary and secondary steelwork, including framing, plating, and connections. All drawings are prepared in accordance with the applicable classification society rules (RINA, BV, DNV) and include fabrication details, material specifications, and welding procedures. We also provide 3D models and finite element analysis (FEA) results when required for complex structures.
+                </p>
+                <p className="text-muted-foreground mt-2">
+                  <span className="font-medium">Outcome:</span> Approval‑ready documentation that minimises back‑and‑forth with class and ensures a smooth construction process.
                 </p>
               </div>
 
-              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+              <div className="border-l-2 border-primary/20 pl-6">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">As‑Built Drawing Sets</h3>
                 <p className="text-muted-foreground">
-                  After construction or modification, we update the original drawings to reflect the actual condition of the vessel. These as‑built sets are essential for future maintenance, modifications, and compliance documentation.
+                  After construction or major modifications, we update the original drawings to reflect the actual condition of the vessel. This includes verifying measurements on‑site and incorporating any field changes. The final as‑built set is essential for future maintenance, modifications, and compliance documentation.
+                </p>
+                <p className="text-muted-foreground mt-2">
+                  <span className="font-medium">Outcome:</span> A reliable record that supports safe operation, simplifies future engineering work, and meets flag state requirements for vessel documentation.
                 </p>
               </div>
 
-              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+              <div className="border-l-2 border-primary/20 pl-6">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Arrangement Plans</h3>
                 <p className="text-muted-foreground">
-                  General arrangement plans, machinery arrangement, piping isometrics, and accommodation layouts. We ensure that all spaces and systems are clearly documented for operational and regulatory purposes.
+                  General arrangement (GA), machinery arrangement, piping isometrics, and accommodation layouts. We ensure that all spaces and systems are clearly documented, with proper labelling of equipment, access points, and emergency exits. Drawings are produced in both 2D and 3D formats as needed.
+                </p>
+                <p className="text-muted-foreground mt-2">
+                  <span className="font-medium">Outcome:</span> Clear, user‑friendly plans that facilitate crew training, maintenance planning, and regulatory surveys.
                 </p>
               </div>
 
-              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+              <div className="border-l-2 border-primary/20 pl-6">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Fire & Safety Plans</h3>
                 <p className="text-muted-foreground">
-                  Fire control plans, emergency escape routes, and safety equipment location drawings, compliant with SOLAS and flag state requirements. These plans are vital for crew safety and PSC inspections.
+                  Fire control plans, emergency escape routes, and safety equipment location drawings, compliant with SOLAS and flag state requirements. These plans are designed to be easily understood by crew and port state control officers, and we provide both shipboard copies and the required electronic version for the fire control plan folder.
+                </p>
+                <p className="text-muted-foreground mt-2">
+                  <span className="font-medium">Outcome:</span> PSC‑ready documentation that enhances onboard safety and demonstrates regulatory compliance.
                 </p>
               </div>
             </div>
 
-            <div className="mt-12 p-8 bg-neutral-50 border-l-4 border-primary text-center">
+            <div className="mt-12 p-8 bg-neutral-50 border-l-2 border-primary/20 rounded-sm text-center">
               <p className="text-lg font-medium text-[#0B3B5C] mb-2">
                 Ready to start your next project?
               </p>
