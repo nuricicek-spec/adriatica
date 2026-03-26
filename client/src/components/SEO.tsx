@@ -10,8 +10,8 @@ interface SEOProps {
 }
 
 const defaultTitle = "Adriatica D.O.O. - Marine Engineering & Consultancy";
-const defaultDescription = "Adriatica D.O.O. - Marine engineering consultancy specializing in structural integrity, regulatory compliance, and sustainable technologies. Serving Montenegro, Adriatic Coast, and European maritime industry.";
-const defaultKeywords = "marine engineering, naval architecture, ship design, structural analysis, yacht design, yacht refit, new building, shipyard, Montenegro, Adriatic Coast, European Coast, marine industry, regulatory compliance, IHM, BWMP, SEEMP, P&ID, electrical load analysis, vibration diagnostics, Montenegro shipyard, Adriatic shipbuilding, EU MRV monitoring plan, IMO DCS reporting, Biofouling Management Plan, THETIS-MRV compliance, FuelEU Maritime, carbon emissions reporting, vessel performance monitoring";
+const defaultDescription = "Adriatica D.O.O. provides independent marine engineering consultancy, technical project management, and regulatory compliance services for yachts, commercial vessels, and fishing boats. Expertise includes engineering plans, structural integrity, sustainable technologies, in-water cleaning management, and owner's representation.";
+const defaultKeywords = "marine engineering, naval architecture, ship design, structural analysis, yacht refit, new building, shipyard, Montenegro, Adriatic Coast, European Coast, marine industry, regulatory compliance, IHM, BWMP, SEEMP, P&ID, electrical load analysis, vibration diagnostics, EU MRV, IMO DCS, Biofouling Management Plan, THETIS-MRV, FuelEU Maritime, carbon emissions reporting, vessel performance monitoring, technical project management, owner's representation, dry-docking, in-water cleaning, sustainable technologies, hull performance, CII advisory";
 const defaultOgImage = "/og-image-default.png";
 const siteUrl = "https://www.adriaticadoo.me";
 
