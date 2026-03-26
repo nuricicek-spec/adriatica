@@ -38,38 +38,89 @@ export default function SustainableTech() {
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">References</h2>
             <p>IMO, EU MRV, Paris MoU</p>
 
-            {/* Detailed biofouling block */}
-            <div className="mt-8 bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
-              <div className="flex flex-wrap items-center gap-3 mb-3">
-                <h3 className="font-display text-xl font-bold text-[#0B3B5C]">
-                  Biofouling & In‑Water Cleaning
-                </h3>
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
-                  IMO 2026 Priority
-                </span>
+            {/* Detailed sections for each deliverable */}
+            <div className="mt-8 space-y-6">
+              {/* Biofouling Management – detailed block */}
+              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+                <div className="flex flex-wrap items-center gap-3 mb-3">
+                  <h3 className="font-display text-xl font-bold text-[#0B3B5C]">Biofouling Management Plan (IMO MEPC.378(80))</h3>
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                    IMO 2026 Priority
+                  </span>
+                </div>
+                <p className="text-muted-foreground mb-2">
+                  Adriatica does not perform physical cleaning operations. We provide independent engineering management, coordination, and compliance oversight.
+                </p>
+                <p className="text-muted-foreground mb-3">
+                  Without proper management, in-water cleaning can lead to non‑compliance with port regulations, environmental penalties, and coating damage. Adriatica ensures controlled, compliant, and documented operations.
+                </p>
+                <p className="text-muted-foreground mb-3">
+                  When you work with us on biofouling management, you receive a complete compliance package:
+                </p>
+                <ul className="list-disc pl-5 text-muted-foreground space-y-2">
+                  <li>Vessel‑specific biofouling assessment (coating condition, niche areas)</li>
+                  <li>Cleaning execution plan with method selection (non‑abrasive, vacuum‑supported)</li>
+                  <li>Certified diver coordination & operation management</li>
+                  <li>Environmental compliance verification (debris containment, local regulations)</li>
+                  <li>Before/after photographic evidence and inspection records</li>
+                  <li>Biofouling Record Book (BFRB) entry support</li>
+                  <li>Post‑operation technical summary with compliance status</li>
+                </ul>
+                <p className="mt-4 text-primary font-medium">
+                  Typical outcome: A structured, compliance‑ready documentation package and fully managed in‑water cleaning operation with verifiable records suitable for PSC inspection.
+                </p>
               </div>
 
-              <p className="text-muted-foreground mb-2">
-                Adriatica does not perform physical cleaning operations. We provide independent engineering management, coordination, and compliance oversight.
-              </p>
-              <p className="text-muted-foreground mb-3">
-                Without proper management, in-water cleaning can lead to non‑compliance with port regulations, environmental penalties, and coating damage. Adriatica ensures controlled, compliant, and documented operations.
-              </p>
-              <p className="text-muted-foreground mb-3">
-                When you work with us on biofouling management, you receive a complete compliance package:
-              </p>
-              <ul className="list-disc pl-5 text-muted-foreground space-y-2">
-                <li>Vessel‑specific biofouling assessment (coating condition, niche areas)</li>
-                <li>Cleaning execution plan with method selection (non‑abrasive, vacuum‑supported)</li>
-                <li>Certified diver coordination & operation management</li>
-                <li>Environmental compliance verification (debris containment, local regulations)</li>
-                <li>Before/after photographic evidence and inspection records</li>
-                <li>Biofouling Record Book (BFRB) entry support</li>
-                <li>Post‑operation technical summary with compliance status</li>
-              </ul>
-              <p className="mt-4 text-primary font-medium">
-                Typical outcome: A structured, compliance‑ready documentation package and fully managed in‑water cleaning operation with verifiable records suitable for PSC inspection.
-              </p>
+              {/* Eco‑friendly Coating Advisory */}
+              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Eco‑friendly Coating Advisory</h3>
+                <p className="text-muted-foreground mb-2">
+                  We help you select the most suitable anti‑fouling coating based on your vessel’s operational profile, trading area, and environmental regulations. Our advisory includes:
+                </p>
+                <ul className="list-disc pl-5 text-muted-foreground space-y-2">
+                  <li>Review of coating specifications and performance data</li>
+                  <li>Compatibility assessment with existing coatings and hull material</li>
+                  <li>Application procedure guidance to ensure warranty validity</li>
+                  <li>Life‑cycle cost analysis (including potential fuel savings)</li>
+                </ul>
+                <p className="mt-3 text-muted-foreground">
+                  We also assist with coating condition inspections and can recommend recoating schedules to maintain optimal performance and compliance.
+                </p>
+              </div>
+
+              {/* Energy Audit & Efficiency Surveys */}
+              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Energy Audit & Efficiency Surveys</h3>
+                <p className="text-muted-foreground mb-2">
+                  Our energy audits provide a comprehensive assessment of your vessel’s energy consumption and identify opportunities for improvement. The service includes:
+                </p>
+                <ul className="list-disc pl-5 text-muted-foreground space-y-2">
+                  <li>On‑board data collection (engine performance, auxiliary systems, fuel consumption)</li>
+                  <li>Analysis of operational patterns and load profiles</li>
+                  <li>Identification of inefficiencies (e.g., fouling, sub‑optimal trim, machinery degradation)</li>
+                  <li>Cost‑benefit analysis of retrofit measures (e.g., LED lighting, variable speed drives, hull cleaning)</li>
+                </ul>
+                <p className="mt-3 text-muted-foreground">
+                  The final report includes a prioritized list of recommendations with estimated savings and payback periods, supporting your Ship Energy Efficiency Management Plan (SEEMP) and CII rating.
+                </p>
+              </div>
+
+              {/* MRV Monitoring Plan (EU MRV Regulation) */}
+              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">MRV Monitoring Plan (EU MRV Regulation)</h3>
+                <p className="text-muted-foreground mb-2">
+                  We prepare Monitoring, Reporting, and Verification (MRV) plans in full compliance with EU Regulation 2015/757. Our plans include:
+                </p>
+                <ul className="list-disc pl-5 text-muted-foreground space-y-2">
+                  <li>Definition of monitoring methodologies (fuel consumption, CO₂ emissions)</li>
+                  <li>Description of data collection procedures and equipment</li>
+                  <li>Risk assessment and quality assurance measures</li>
+                  <li>Documentation of emission factors and calculation methods</li>
+                </ul>
+                <p className="mt-3 text-muted-foreground">
+                  We also support you during the reporting period, ensuring that the collected data meets THETIS‑MRV requirements and that the annual emission report is submitted on time.
+                </p>
+              </div>
             </div>
 
             <div className="mt-12 p-8 bg-neutral-50 border-l-4 border-primary text-center">

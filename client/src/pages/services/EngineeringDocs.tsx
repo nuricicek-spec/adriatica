@@ -38,6 +38,37 @@ export default function EngineeringDocs() {
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">References</h2>
             <p>IMO, EU MRV, MARPOL</p>
 
+            {/* Detailed sections for each deliverable */}
+            <div className="mt-8 space-y-6">
+              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">As‑Built P&ID / System Manuals</h3>
+                <p className="text-muted-foreground">
+                  Piping and instrumentation diagrams (P&IDs) that reflect the final installed systems. These are essential for troubleshooting, training, and modification planning. We also compile complete system manuals that integrate all relevant diagrams and operational instructions.
+                </p>
+              </div>
+
+              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Electrical Load Analysis (EAB)</h3>
+                <p className="text-muted-foreground">
+                  A detailed assessment of the vessel’s electrical power balance, identifying peak loads, generator sizing, and distribution system capacity. This analysis supports classification society approval and helps plan future electrical upgrades.
+                </p>
+              </div>
+
+              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Fuel Management & Quality Booklet</h3>
+                <p className="text-muted-foreground">
+                  A structured guide to fuel handling, storage, and consumption. It includes procedures for bunkering, sampling, and reporting, helping operators maintain fuel quality and comply with MARPOL Annex VI requirements.
+                </p>
+              </div>
+
+              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Inventory of Hazardous Materials (IHM)</h3>
+                <p className="text-muted-foreground">
+                  A comprehensive list of hazardous materials on board, prepared in accordance with the Hong Kong Convention and EU Ship Recycling Regulation. This document is essential for end‑of‑life planning and demonstrates environmental responsibility.
+                </p>
+              </div>
+            </div>
+
             <div className="mt-12 p-8 bg-neutral-50 border-l-4 border-primary text-center">
               <p className="text-lg font-medium text-[#0B3B5C] mb-2">
                 Need support with your vessel’s technical manuals?

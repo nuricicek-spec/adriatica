@@ -38,6 +38,37 @@ export default function ProjectManagement() {
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">References</h2>
             <p>Industry best practices, IACS UR Z10</p>
 
+            {/* Detailed sections for each deliverable */}
+            <div className="mt-8 space-y-6">
+              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Owner's Rep & Refit Supervision</h3>
+                <p className="text-muted-foreground">
+                  We act as your dedicated technical representative, present on‑site to oversee all phases of the refit. Our role includes attending daily progress meetings, reviewing contractor work, and ensuring that specifications are met. We document all activities and report back to you with transparent progress updates.
+                </p>
+              </div>
+
+              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Dry‑Docking Specification & Management</h3>
+                <p className="text-muted-foreground">
+                  We prepare detailed dry‑docking specifications, coordinate with shipyards, and manage the entire docking process – from block arrangement to final sea trials. Our involvement ensures that work is carried out efficiently, minimising off‑hire time and avoiding costly surprises.
+                </p>
+              </div>
+
+              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">On‑site Technical Troubleshooting</h3>
+                <p className="text-muted-foreground">
+                  When unexpected issues arise, our engineers are there to analyse the problem, propose solutions, and manage the necessary repairs. We bring engineering expertise to the yard, helping to resolve technical challenges quickly and without compromising safety or quality.
+                </p>
+              </div>
+
+              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Cost & Schedule Control</h3>
+                <p className="text-muted-foreground">
+                  We monitor project costs and schedules against the baseline plan, identifying deviations early and implementing corrective actions. Our detailed reporting gives you full visibility into budget performance and timeline status, allowing informed decisions throughout the project.
+                </p>
+              </div>
+            </div>
+
             <div className="mt-12 p-8 bg-neutral-50 border-l-4 border-primary text-center">
               <p className="text-lg font-medium text-[#0B3B5C] mb-2">
                 Planning a refit or dry‑docking?

@@ -39,6 +39,37 @@ export default function EngineeringPlans() {
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">References</h2>
             <p>Class society rules (RINA, BV, DNV), flag state regulations</p>
 
+            {/* Detailed sections for each deliverable */}
+            <div className="mt-8 space-y-6">
+              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Structural Drawings</h3>
+                <p className="text-muted-foreground">
+                  We produce comprehensive structural drawings covering the vessel’s primary and secondary steelwork, including framing, plating, and connections. These drawings are prepared in accordance with the applicable classification society rules and include all necessary details for fabrication and approval.
+                </p>
+              </div>
+
+              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">As‑Built Drawing Sets</h3>
+                <p className="text-muted-foreground">
+                  After construction or modification, we update the original drawings to reflect the actual condition of the vessel. These as‑built sets are essential for future maintenance, modifications, and compliance documentation.
+                </p>
+              </div>
+
+              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Arrangement Plans</h3>
+                <p className="text-muted-foreground">
+                  General arrangement plans, machinery arrangement, piping isometrics, and accommodation layouts. We ensure that all spaces and systems are clearly documented for operational and regulatory purposes.
+                </p>
+              </div>
+
+              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Fire & Safety Plans</h3>
+                <p className="text-muted-foreground">
+                  Fire control plans, emergency escape routes, and safety equipment location drawings, compliant with SOLAS and flag state requirements. These plans are vital for crew safety and PSC inspections.
+                </p>
+              </div>
+            </div>
+
             <div className="mt-12 p-8 bg-neutral-50 border-l-4 border-primary text-center">
               <p className="text-lg font-medium text-[#0B3B5C] mb-2">
                 Ready to start your next project?
