@@ -10,7 +10,16 @@ import News from "@/pages/News";
 import Insights from "@/pages/Insights";
 import Services from "@/pages/Services";
 import CaseStudies from "@/pages/CaseStudies";
-import About from "@/pages/About";                 // <-- new import
+import About from "@/pages/About";
+
+// Service detail pages
+import EngineeringPlans from "@/pages/services/EngineeringPlans";
+import EngineeringDocs from "@/pages/services/EngineeringDocs";
+import StructuralIntegrity from "@/pages/services/StructuralIntegrity";
+import SustainableTech from "@/pages/services/SustainableTech";
+import RegulatoryCompliance from "@/pages/services/RegulatoryCompliance";
+import ProjectManagement from "@/pages/services/ProjectManagement";
+
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import TermsOfService from "@/pages/TermsOfService";
 import CookiePolicy from "@/pages/CookiePolicy";
@@ -23,9 +32,18 @@ function Router() {
       <Route path="/careers" component={Careers} />
       <Route path="/news" component={News} />
       <Route path="/insights" component={Insights} />
+
+      {/* Service detail pages – add before the generic /services route */}
+      <Route path="/services/engineering-plans" component={EngineeringPlans} />
+      <Route path="/services/engineering-documentation" component={EngineeringDocs} />
+      <Route path="/services/structural-integrity" component={StructuralIntegrity} />
+      <Route path="/services/sustainable-technologies" component={SustainableTech} />
+      <Route path="/services/regulatory-compliance" component={RegulatoryCompliance} />
+      <Route path="/services/project-management" component={ProjectManagement} />
+
       <Route path="/services" component={Services} />
       <Route path="/case-studies" component={CaseStudies} />
-      <Route path="/about" component={About} />    {/* <-- new route */}
+      <Route path="/about" component={About} />
       <Route path="/privacy-policy" component={PrivacyPolicy} />
       <Route path="/terms-of-service" component={TermsOfService} />
       <Route path="/cookie-policy" component={CookiePolicy} />

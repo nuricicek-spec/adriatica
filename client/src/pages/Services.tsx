@@ -4,10 +4,12 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { Helmet } from "react-helmet-async";
 import { SEO } from "@/components/SEO";
 import ProcessWheel from "@/components/ProcessWheel";
+import { HashLink } from "@/components/HashLink";
 
 const services = [
   {
     title: "Engineering Plans",
+    slug: "engineering-plans",
     description:
       "Detailed engineering drawings and plan sets for new constructions, conversions, and refits. We produce documentation in accordance with classification society rules and flag state requirements, supporting both regulatory approval and operational safety. Our deliverables are suitable for yachts, commercial vessels, and fishing boats.",
     deliverables: [
@@ -22,6 +24,7 @@ const services = [
   },
   {
     title: "Engineering Documentation",
+    slug: "engineering-documentation",
     description:
       "Development of vessel‑specific technical manuals and analyses, ensuring completeness and alignment with IMO conventions, EU MRV, and class requirements. We prepare documents to facilitate crew training, maintenance planning, and port state control inspections.",
     deliverables: [
@@ -35,6 +38,7 @@ const services = [
   },
   {
     title: "Structural Integrity",
+    slug: "structural-integrity",
     description:
       "Comprehensive hull condition assessments, life extension studies, modification consultancy, and vibration/noise diagnostics. Using advanced engineering methods and IACS unified requirements, we evaluate structural performance and recommend targeted repairs or reinforcements.",
     deliverables: [
@@ -48,6 +52,7 @@ const services = [
   },
   {
     title: "Sustainable Technologies & Compliance",
+    slug: "sustainable-technologies",
     description:
       "Advisory and planning services to help vessels meet environmental regulations while improving efficiency. We work with operators to implement practical, cost‑effective solutions that reduce emissions and biosecurity risks.",
     deliverables: [
@@ -61,6 +66,7 @@ const services = [
   },
   {
     title: "Regulatory Compliance",
+    slug: "regulatory-compliance",
     description:
       "Preparation and periodic updating of mandatory shipboard plans and manuals, tailored to the vessel's configuration and operational profile. We ensure documents meet the latest IMO, MARPOL, and flag state requirements.",
     deliverables: [
@@ -75,6 +81,7 @@ const services = [
   },
   {
     title: "Project Management & Owner's Representation",
+    slug: "project-management",
     description:
       "Full technical management of dry‑dockings, refits, and complex modifications. Acting as Owner's Technical Representative, we coordinate with shipyards, supervise works, and ensure quality control, delivering projects on schedule with complete engineering documentation.",
     deliverables: [
@@ -109,47 +116,6 @@ export default function Services() {
 
           {/* Interactive process diagram */}
           <ProcessWheel />
-
-          {/* ========== Enhanced biofouling / in-water cleaning block ========== */}
-          <div className="mt-12 bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
-            <div className="flex flex-wrap items-center gap-3 mb-3">
-              <h3 className="font-display text-xl font-bold text-[#0B3B5C]">
-                For Biofouling & In‑Water Cleaning Engagements
-              </h3>
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
-                IMO 2026 Priority
-              </span>
-            </div>
-
-            {/* We don't clean statement */}
-            <p className="text-muted-foreground mb-2">
-              Adriatica does not perform physical cleaning operations. We provide independent engineering management, coordination, and compliance oversight.
-            </p>
-
-            {/* Risk → Solution */}
-            <p className="text-muted-foreground mb-3">
-              Without proper management, in-water cleaning can lead to non‑compliance with port regulations, environmental penalties, and coating damage. Adriatica ensures controlled, compliant, and documented operations.
-            </p>
-
-            <p className="text-muted-foreground mb-3">
-              When you work with us on biofouling management, you receive a complete compliance package:
-            </p>
-
-            <ul className="list-disc pl-5 text-muted-foreground space-y-2">
-              <li>Vessel‑specific biofouling assessment (coating condition, niche areas)</li>
-              <li>Cleaning execution plan with method selection (non‑abrasive, vacuum‑supported)</li>
-              <li>Certified diver coordination & operation management</li>
-              <li>Environmental compliance verification (debris containment, local regulations)</li>
-              <li>Before/after photographic evidence and inspection records</li>
-              <li>Biofouling Record Book (BFRB) entry support</li>
-              <li>Post‑operation technical summary with compliance status</li>
-            </ul>
-
-            {/* Outcome sentence */}
-            <p className="mt-4 text-primary font-medium">
-              Typical outcome: A structured, compliance‑ready documentation package and fully managed in‑water cleaning operation with verifiable records suitable for PSC inspection.
-            </p>
-          </div>
 
           {/* ========== Generic deliverables + How we work + Positioning ========== */}
           <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -208,6 +174,14 @@ export default function Services() {
                 <p className="text-sm text-primary/70 font-mono mt-1 italic">
                   References: {service.references}
                 </p>
+                <div className="mt-3">
+                  <HashLink
+                    href={`/services/${service.slug}`}
+                    className="text-primary hover:underline text-sm font-medium inline-flex items-center gap-1"
+                  >
+                    Learn more →
+                  </HashLink>
+                </div>
               </div>
             ))}
           </div>
