@@ -150,11 +150,11 @@ function StructuralTimelineDiagram() {
   ];
 
   // SVG layout constants
-  const W          = 480;
-  const H          = 220;
-  const lineY      = 110;          // y of the horizontal axis
-  const startX     = 36;
-  const endX       = W - 36;
+  const W          = 500;          // wider so first/last labels don't clip
+  const H          = 230;          // taller to give above-labels more room
+  const lineY      = 130;          // axis lower → above-labels have more space at top
+  const startX     = 52;           // more left margin — prevents "B" clipping
+  const endX       = W - 52;       // symmetric right margin
   const step       = (endX - startX) / (milestones.length - 1);
   const nodeR      = 10;
   const accentCol  = "#3A74A0";
@@ -194,8 +194,9 @@ function StructuralTimelineDiagram() {
           const isLast = i === milestones.length - 1;
           // Alternate label above / below line for readability
           const above  = i % 2 === 0;
-          const labelY = above ? lineY - 18 : lineY + 28;
-          const subY   = above ? lineY - 50 : lineY + 56;
+          // "above" labels: push far enough up to clear the node (nodeR=10) + gap
+          const labelY = above ? lineY - 34 : lineY + 28;
+          const subY   = above ? lineY - 68 : lineY + 56;
 
           // Split label on \n
           const labelLines = m.label.split("\n");
@@ -203,10 +204,10 @@ function StructuralTimelineDiagram() {
 
           return (
             <g key={i}>
-              {/* Connector tick */}
+              {/* Connector tick — runs from node edge to just below/above the label */}
               <line
-                x1={x} y1={lineY - nodeR}
-                x2={x} y2={above ? lineY - 18 : lineY + 18}
+                x1={x} y1={above ? lineY - nodeR : lineY + nodeR}
+                x2={x} y2={above ? labelY + 14 : lineY + nodeR + 8}
                 stroke={accentCol} strokeWidth="1.5" strokeDasharray="3 2"
               />
 
