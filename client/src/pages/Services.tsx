@@ -261,9 +261,10 @@ function StructuralTimelineDiagram() {
           );
         })}
 
-        {/* Arrow tip at end of line */}
+        {/* Arrow tip — placed on the line, well before the last node so they don't overlap.
+            Tip sits at endX-22, base at endX-32. Last node is at endX (x=448). */}
         <polygon
-          points={`${endX + 8},${lineY} ${endX - 2},${lineY - 5} ${endX - 2},${lineY + 5}`}
+          points={`${endX - 22},${lineY} ${endX - 32},${lineY - 5} ${endX - 32},${lineY + 5}`}
           fill={accentCol}
         />
 
@@ -310,11 +311,20 @@ function OperatingModelDiagram() {
   const fillCol   = "rgba(58,116,160,0.10)";
   const strokeCol = "#3A74A0";
 
-  // Intersection label positions (manually tuned to sit in overlap zones)
+  // Intersection label positions
+  // CX=200, CY=190, OFF=48, SQRT3≈1.732
+  // Circle centres: top=(200,142), BL=(158.4,214), BR=(241.6,214)
+  //
+  // "Technical Compliance"  lives in the TOP-LEFT overlap (Engineering ∩ Compliance)
+  //   → push left and UP, clear of centre text
+  // "Regulatory Oversight"  lives in the TOP-RIGHT overlap (Engineering ∩ Operations)
+  //   → push right and UP, clear of centre text
+  // "Execution Control"     lives in the BOTTOM overlap (Compliance ∩ Operations)
+  //   → keep below centre, already clear
   const intersections = [
-    { x: CX - OFF * SQRT3/4,  y: CY - OFF/4 + 4,  text: "Technical\nCompliance" },
-    { x: CX + OFF * SQRT3/4,  y: CY - OFF/4 + 4,  text: "Regulatory\nOversight"  },
-    { x: CX,                  y: CY + OFF/2 + 14,  text: "Execution\nControl"     },
+    { x: CX - 34,  y: CY - 28,        text: "Technical\nCompliance"  },
+    { x: CX + 34,  y: CY - 28,        text: "Regulatory\nOversight"  },
+    { x: CX,       y: CY + OFF/2 + 14, text: "Execution\nControl"    },
   ];
 
   return (
