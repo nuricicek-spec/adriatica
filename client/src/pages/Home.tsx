@@ -5,7 +5,7 @@ import { Navigation } from "@/components/Navigation";
 import { FeatureCard } from "@/components/FeatureCard";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Footer } from "@/components/Footer";
-import { ArrowDown, ShieldCheck, Gauge, Handshake } from "lucide-react";
+import { ArrowDown, ShieldCheck, Gauge, Handshake, Clipboard, Search, Wrench, FileText } from "lucide-react";
 import { SEO } from "@/components/SEO";
 
 const COMMISSIONS_TEXT = "We are currently accepting commissions for Q2 2026.";
@@ -180,19 +180,6 @@ export default function Home() {
           </motion.div>
         </section>
 
-        {/* Scope Tags - Engineering | Compliance | Operations */}
-        <div className="py-8 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-wrap justify-center items-center gap-4 text-sm font-medium text-muted-foreground">
-              <span>Engineering</span>
-              <span className="text-primary/30">|</span>
-              <span>Compliance</span>
-              <span className="text-primary/30">|</span>
-              <span>Operations</span>
-            </div>
-          </div>
-        </div>
-
         {/* Operational Region Section */}
         <section className="py-20 bg-neutral-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -257,6 +244,42 @@ export default function Home() {
                 <p className="text-muted-foreground">
                   We act as your technical eyes and ears in shipyards, ensuring quality control and budget adherence.
                 </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* How We Work Section */}
+        <section className="py-20 bg-neutral-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-[#0B3B5C] mb-3">
+                How We Work
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                A structured approach to deliver clarity, compliance, and results.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="text-center p-6 border-l-2 border-primary/20">
+                <Clipboard className="h-12 w-12 text-primary mx-auto mb-4" />
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-2">1. Brief & Information</h3>
+                <p className="text-muted-foreground">Share vessel details, operational profile, and specific concerns.</p>
+              </div>
+              <div className="text-center p-6 border-l-2 border-primary/20">
+                <Search className="h-12 w-12 text-primary mx-auto mb-4" />
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-2">2. Analysis & Planning</h3>
+                <p className="text-muted-foreground">Technical assessment, risk identification, and scope definition.</p>
+              </div>
+              <div className="text-center p-6 border-l-2 border-primary/20">
+                <Wrench className="h-12 w-12 text-primary mx-auto mb-4" />
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-2">3. Execution & Supervision</h3>
+                <p className="text-muted-foreground">Engineering oversight, contractor coordination, quality control.</p>
+              </div>
+              <div className="text-center p-6 border-l-2 border-primary/20">
+                <FileText className="h-12 w-12 text-primary mx-auto mb-4" />
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-2">4. Documentation & Handover</h3>
+                <p className="text-muted-foreground">Complete records, audit‑ready reports, and as‑built documentation.</p>
               </div>
             </div>
           </div>
