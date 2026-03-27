@@ -1,10 +1,13 @@
+// client/src/pages/Services.tsx
+
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { SectionHeading } from "@/components/SectionHeading";
-import { Helmet } from "react-helmet-async";
 import { SEO } from "@/components/SEO";
 import ProcessWheel from "@/components/ProcessWheel";
 import { HashLink } from "@/components/HashLink";
+
+// ─── Service data ─────────────────────────────────────────────────────────────
 
 const services = [
   {
@@ -95,6 +98,334 @@ const services = [
   },
 ];
 
+// ─── Reusable service card ────────────────────────────────────────────────────
+
+function ServiceCard({ service }: { service: typeof services[number] }) {
+  return (
+    <div className="border-l-2 border-primary/20 pl-6 py-2">
+      <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-2">
+        {service.title}
+      </h3>
+      <p className="text-muted-foreground leading-relaxed mb-3">
+        {service.description}
+      </p>
+      <ul className="list-disc pl-5 mb-2 text-muted-foreground space-y-1 text-sm">
+        {service.deliverables.map((item, i) => (
+          <li key={i}>{item}</li>
+        ))}
+      </ul>
+      <p className="text-sm text-primary font-medium mt-3">
+        Outcome: {service.outcome}
+      </p>
+      <p className="text-sm text-primary/70 font-mono mt-1 italic">
+        References: {service.references}
+      </p>
+      <div className="mt-3">
+        <HashLink
+          href={`/services/${service.slug}`}
+          className="text-primary hover:underline text-sm font-medium inline-flex items-center gap-1"
+        >
+          Learn more →
+        </HashLink>
+      </div>
+    </div>
+  );
+}
+
+// ─── Diagram A: Structural Life‑Cycle Inspection Timeline ────────────────────
+// Placed in the empty grid slot beside "Structural Integrity" (Engineering row)
+//
+// Concept: horizontal timeline showing key structural intervention points
+// across a vessel's operational life — Survey → Mid-life → Special Survey →
+// Life Extension. Reinforces the "life extension studies" deliverable.
+
+function StructuralTimelineDiagram() {
+  // Timeline milestones
+  const milestones = [
+    { year: "Yr 0",   label: "Newbuild /\nBaseline Survey",  sub: "Initial condition\nestablished" },
+    { year: "Yr 2.5", label: "Intermediate\nSurvey",         sub: "Hull & coating\ncondition check" },
+    { year: "Yr 5",   label: "Special Survey\n(1st)",         sub: "Class renewal,\nfull inspection" },
+    { year: "Yr 10",  label: "Special Survey\n(2nd)",         sub: "Structural assessment\n& repair scope" },
+    { year: "Yr 15+", label: "Life Extension\nStudy",         sub: "Integrity analysis,\nclass acceptance" },
+  ];
+
+  // SVG layout constants
+  const W          = 480;
+  const H          = 220;
+  const lineY      = 110;          // y of the horizontal axis
+  const startX     = 36;
+  const endX       = W - 36;
+  const step       = (endX - startX) / (milestones.length - 1);
+  const nodeR      = 10;
+  const accentCol  = "#3A74A0";
+  const navyCol    = "#0B3B5C";
+  const muteCol    = "#8FA8BC";
+  const bgCol      = "#F8FAFB";
+
+  return (
+    <div className="border-l-2 border-primary/20 pl-6 py-2 flex flex-col justify-between h-full">
+      {/* Header matches service card style */}
+      <div>
+        <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-2">
+          Structural Life‑Cycle Milestones
+        </h3>
+        <p className="text-muted-foreground leading-relaxed mb-4 text-sm">
+          Structural integrity management is a continuous process. Key intervention
+          points align with class survey schedules — allowing targeted assessment,
+          repair, and life extension decisions at each milestone.
+        </p>
+      </div>
+
+      {/* SVG timeline */}
+      <svg
+        viewBox={`0 0 ${W} ${H}`}
+        className="w-full h-auto"
+        aria-label="Structural Life-Cycle Inspection Timeline"
+      >
+        {/* Horizontal baseline */}
+        <line
+          x1={startX} y1={lineY}
+          x2={endX}   y2={lineY}
+          stroke={accentCol} strokeWidth="2" strokeLinecap="round"
+        />
+
+        {milestones.map((m, i) => {
+          const x      = startX + i * step;
+          const isLast = i === milestones.length - 1;
+          // Alternate label above / below line for readability
+          const above  = i % 2 === 0;
+          const labelY = above ? lineY - 18 : lineY + 28;
+          const subY   = above ? lineY - 50 : lineY + 56;
+
+          // Split label on \n
+          const labelLines = m.label.split("\n");
+          const subLines   = m.sub.split("\n");
+
+          return (
+            <g key={i}>
+              {/* Connector tick */}
+              <line
+                x1={x} y1={lineY - nodeR}
+                x2={x} y2={above ? lineY - 18 : lineY + 18}
+                stroke={accentCol} strokeWidth="1.5" strokeDasharray="3 2"
+              />
+
+              {/* Node circle */}
+              <circle
+                cx={x} cy={lineY}
+                r={nodeR}
+                fill={isLast ? navyCol : accentCol}
+                stroke="white" strokeWidth="2"
+              />
+
+              {/* Year label inside circle */}
+              <text
+                x={x} y={lineY + 1}
+                textAnchor="middle" dominantBaseline="middle"
+                fill="white"
+                fontFamily="var(--font-body, 'Inter', sans-serif)"
+                fontSize="6" fontWeight="700"
+              >
+                {m.year}
+              </text>
+
+              {/* Milestone label (2 lines) */}
+              {labelLines.map((line, li) => (
+                <text
+                  key={li}
+                  x={x} y={labelY + li * 13}
+                  textAnchor="middle"
+                  fill={navyCol}
+                  fontFamily="var(--font-display, 'Playfair Display', serif)"
+                  fontSize="9.5" fontWeight="600"
+                >
+                  {line}
+                </text>
+              ))}
+
+              {/* Sub-label (muted, smaller) */}
+              {subLines.map((line, li) => (
+                <text
+                  key={li}
+                  x={x} y={subY + li * 11}
+                  textAnchor="middle"
+                  fill={muteCol}
+                  fontFamily="var(--font-body, 'Inter', sans-serif)"
+                  fontSize="7.5" fontWeight="400"
+                >
+                  {line}
+                </text>
+              ))}
+            </g>
+          );
+        })}
+
+        {/* Arrow tip at end of line */}
+        <polygon
+          points={`${endX + 8},${lineY} ${endX - 2},${lineY - 5} ${endX - 2},${lineY + 5}`}
+          fill={accentCol}
+        />
+
+        {/* Bottom caption */}
+        <text
+          x={W / 2} y={H - 6}
+          textAnchor="middle"
+          fill={muteCol}
+          fontFamily="var(--font-body, 'Inter', sans-serif)"
+          fontSize="7" fontStyle="italic"
+        >
+          Intervention points aligned with IACS UR Z10 & class survey schedules
+        </text>
+      </svg>
+    </div>
+  );
+}
+
+// ─── Diagram B: Operating Model (fixed Venn) ─────────────────────────────────
+// Placed in the empty grid slot beside "Project Management" (Operations row)
+//
+// Fixed from the original: corrected circle positions, text anchoring,
+// intersection labels moved into actual overlap zones, overall proportions.
+
+function OperatingModelDiagram() {
+  // Three circles arranged in equilateral triangle formation
+  // Centre of triangle at (200, 195); each circle offset by r_offset
+  const CX  = 200;
+  const CY  = 190;
+  const R   = 90;          // circle radius
+  const OFF = 48;          // offset from triangle centre to each circle centre
+  const SQRT3 = Math.sqrt(3);
+
+  // Circle centres: top, bottom-left, bottom-right
+  const circles = [
+    { cx: CX,                  cy: CY - OFF,               label: "Engineering",  labelDy: -OFF - R + 14 },
+    { cx: CX - OFF * SQRT3/2,  cy: CY + OFF / 2,           label: "Compliance",   labelDy: 0 },
+    { cx: CX + OFF * SQRT3/2,  cy: CY + OFF / 2,           label: "Operations",   labelDy: 0 },
+  ];
+
+  const navyCol   = "#0B3B5C";
+  const accentCol = "#3A74A0";
+  const muteCol   = "#6B8FA8";
+  const fillCol   = "rgba(58,116,160,0.10)";
+  const strokeCol = "#3A74A0";
+
+  // Intersection label positions (manually tuned to sit in overlap zones)
+  const intersections = [
+    { x: CX - OFF * SQRT3/4,  y: CY - OFF/4 + 4,  text: "Technical\nCompliance" },
+    { x: CX + OFF * SQRT3/4,  y: CY - OFF/4 + 4,  text: "Regulatory\nOversight"  },
+    { x: CX,                  y: CY + OFF/2 + 14,  text: "Execution\nControl"     },
+  ];
+
+  return (
+    <div className="border-l-2 border-primary/20 pl-6 py-2 flex flex-col justify-between h-full">
+      {/* Header matches service card style */}
+      <div>
+        <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-2">
+          Our Operating Model
+        </h3>
+        <p className="text-muted-foreground leading-relaxed mb-4 text-sm">
+          Engineering, compliance, and operations work as one integrated system —
+          delivering engineering‑led solutions from concept to completion, with no
+          gaps between disciplines.
+        </p>
+      </div>
+
+      {/* SVG Venn */}
+      <svg
+        viewBox="0 0 400 340"
+        className="w-full h-auto"
+        aria-label="Adriatica Operating Model – Engineering, Compliance, Operations"
+      >
+        {/* Three overlapping circles */}
+        {circles.map((c, i) => (
+          <circle
+            key={i}
+            cx={c.cx} cy={c.cy} r={R}
+            fill={fillCol}
+            stroke={strokeCol} strokeWidth="1.5"
+          />
+        ))}
+
+        {/* Circle labels — positioned outside overlap zone */}
+        {/* Engineering – top */}
+        <text x={CX} y={CY - OFF - R + 18}
+          textAnchor="middle"
+          fill={navyCol}
+          fontFamily="var(--font-display, 'Playfair Display', serif)"
+          fontSize="13" fontWeight="600"
+        >
+          Engineering
+        </text>
+
+        {/* Compliance – bottom left */}
+        <text
+          x={CX - OFF * SQRT3/2 - R + 18} y={CY + OFF / 2 + R - 12}
+          textAnchor="middle"
+          fill={navyCol}
+          fontFamily="var(--font-display, 'Playfair Display', serif)"
+          fontSize="13" fontWeight="600"
+        >
+          Compliance
+        </text>
+
+        {/* Operations – bottom right */}
+        <text
+          x={CX + OFF * SQRT3/2 + R - 18} y={CY + OFF / 2 + R - 12}
+          textAnchor="middle"
+          fill={navyCol}
+          fontFamily="var(--font-display, 'Playfair Display', serif)"
+          fontSize="13" fontWeight="600"
+        >
+          Operations
+        </text>
+
+        {/* Intersection labels */}
+        {intersections.map((n, i) => {
+          const lines = n.text.split("\n");
+          return (
+            <text
+              key={i}
+              x={n.x} y={n.y}
+              textAnchor="middle"
+              fill={muteCol}
+              fontFamily="var(--font-body, 'Inter', sans-serif)"
+              fontSize="8" fontWeight="500"
+            >
+              {lines.map((line, li) => (
+                <tspan key={li} x={n.x} dy={li === 0 ? 0 : 11}>{line}</tspan>
+              ))}
+            </text>
+          );
+        })}
+
+        {/* Central label — "Integrated Management" */}
+        <text x={CX} y={CY + 4}
+          textAnchor="middle"
+          fill={navyCol}
+          fontFamily="var(--font-display, 'Playfair Display', serif)"
+          fontSize="12" fontWeight="700"
+        >
+          <tspan x={CX} dy="-8">Integrated</tspan>
+          <tspan x={CX} dy="18">Management</tspan>
+        </text>
+
+        {/* Bottom caption */}
+        <text
+          x={CX} y={330}
+          textAnchor="middle"
+          fill={muteCol}
+          fontFamily="var(--font-body, 'Inter', sans-serif)"
+          fontSize="8" fontStyle="italic"
+        >
+          One point of contact across all three disciplines
+        </text>
+      </svg>
+    </div>
+  );
+}
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
+
 export default function Services() {
   return (
     <>
@@ -108,18 +439,17 @@ export default function Services() {
 
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
 
-          {/* Page heading */}
+          {/* ── Page heading ── */}
           <SectionHeading
             title="Engineering Services"
             subtitle="Marine Engineering & Consultancy"
           />
 
-          {/* Interactive process diagram */}
+          {/* ── Interactive process diagram ── */}
           <ProcessWheel />
 
-          {/* ========== Generic deliverables + How we work + Positioning ========== */}
+          {/* ── What you get / How we work ── */}
           <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* What you get (Deliverables) */}
             <div className="border-l-2 border-primary/20 pl-6">
               <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">
                 What You Get
@@ -131,8 +461,6 @@ export default function Services() {
                 <li>Ongoing Support (follow‑up, implementation assistance)</li>
               </ul>
             </div>
-
-            {/* How we work (Client journey) */}
             <div className="border-l-2 border-primary/20 pl-6">
               <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">
                 How We Work
@@ -146,176 +474,69 @@ export default function Services() {
             </div>
           </div>
 
-          {/* Positioning statement */}
+          {/* ── Positioning statement ── */}
           <div className="mt-10 p-6 bg-neutral-50 border border-border/50 rounded-sm text-center">
             <p className="text-lg text-[#0B3B5C] font-medium">
-              Adriatica provides independent engineering management, technical oversight, and compliance assurance – from initial assessment to final documentation. We don’t just advise; we deliver actionable, auditable results.
+              Adriatica provides independent engineering management, technical oversight, and compliance
+              assurance – from initial assessment to final documentation. We don't just advise; we deliver
+              actionable, auditable results.
             </p>
           </div>
 
-          {/* Service cards with category headings */}
-          
-          {/* Engineering category */}
+          {/* ══════════════════════════════════════════════════════════════════
+              ENGINEERING CATEGORY
+              Grid: [Card 1] [Card 2] on row 1
+                    [Card 3 – Structural Integrity] [Diagram A – Timeline] on row 2
+          ══════════════════════════════════════════════════════════════════ */}
           <div className="mt-12">
             <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-4 border-l-2 border-primary/20 pl-4">
               Engineering
             </h3>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {services.slice(0, 3).map((service, idx) => (
-                <div key={idx} className="border-l-2 border-primary/20 pl-6 py-2">
-                  <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-2">
-                    {service.title}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed mb-3">
-                    {service.description}
-                  </p>
-                  <ul className="list-disc pl-5 mb-2 text-muted-foreground space-y-1 text-sm">
-                    {service.deliverables.map((item, i) => (
-                      <li key={i}>{item}</li>
-                    ))}
-                  </ul>
-                  <p className="text-sm text-primary font-medium mt-3">
-                    Outcome: {service.outcome}
-                  </p>
-                  <p className="text-sm text-primary/70 font-mono mt-1 italic">
-                    References: {service.references}
-                  </p>
-                  <div className="mt-3">
-                    <HashLink
-                      href={`/services/${service.slug}`}
-                      className="text-primary hover:underline text-sm font-medium inline-flex items-center gap-1"
-                    >
-                      Learn more →
-                    </HashLink>
-                  </div>
-                </div>
-              ))}
+
+              {/* Cards 0 & 1: Engineering Plans, Engineering Documentation */}
+              <ServiceCard service={services[0]} />
+              <ServiceCard service={services[1]} />
+
+              {/* Card 2: Structural Integrity */}
+              <ServiceCard service={services[2]} />
+
+              {/* DIAGRAM A — fills the empty slot beside Structural Integrity */}
+              <StructuralTimelineDiagram />
+
             </div>
           </div>
 
-          {/* Compliance & Regulatory category */}
+          {/* ══════════════════════════════════════════════════════════════════
+              COMPLIANCE & REGULATORY CATEGORY
+              Grid: [Card 4] [Card 5] — both slots filled, no gaps
+          ══════════════════════════════════════════════════════════════════ */}
           <div className="mt-12">
             <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-4 border-l-2 border-primary/20 pl-4">
               Compliance & Regulatory
             </h3>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {services.slice(3, 5).map((service, idx) => (
-                <div key={idx} className="border-l-2 border-primary/20 pl-6 py-2">
-                  <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-2">
-                    {service.title}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed mb-3">
-                    {service.description}
-                  </p>
-                  <ul className="list-disc pl-5 mb-2 text-muted-foreground space-y-1 text-sm">
-                    {service.deliverables.map((item, i) => (
-                      <li key={i}>{item}</li>
-                    ))}
-                  </ul>
-                  <p className="text-sm text-primary font-medium mt-3">
-                    Outcome: {service.outcome}
-                  </p>
-                  <p className="text-sm text-primary/70 font-mono mt-1 italic">
-                    References: {service.references}
-                  </p>
-                  <div className="mt-3">
-                    <HashLink
-                      href={`/services/${service.slug}`}
-                      className="text-primary hover:underline text-sm font-medium inline-flex items-center gap-1"
-                    >
-                      Learn more →
-                    </HashLink>
-                  </div>
-                </div>
-              ))}
+              <ServiceCard service={services[3]} />
+              <ServiceCard service={services[4]} />
             </div>
           </div>
 
-          {/* Operations category */}
+          {/* ══════════════════════════════════════════════════════════════════
+              OPERATIONS CATEGORY
+              Grid: [Card 6 – Project Management] [Diagram B – Operating Model]
+          ══════════════════════════════════════════════════════════════════ */}
           <div className="mt-12">
             <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-4 border-l-2 border-primary/20 pl-4">
               Operations
             </h3>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {services.slice(5, 6).map((service, idx) => (
-                <div key={idx} className="border-l-2 border-primary/20 pl-6 py-2">
-                  <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-2">
-                    {service.title}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed mb-3">
-                    {service.description}
-                  </p>
-                  <ul className="list-disc pl-5 mb-2 text-muted-foreground space-y-1 text-sm">
-                    {service.deliverables.map((item, i) => (
-                      <li key={i}>{item}</li>
-                    ))}
-                  </ul>
-                  <p className="text-sm text-primary font-medium mt-3">
-                    Outcome: {service.outcome}
-                  </p>
-                  <p className="text-sm text-primary/70 font-mono mt-1 italic">
-                    References: {service.references}
-                  </p>
-                  <div className="mt-3">
-                    <HashLink
-                      href={`/services/${service.slug}`}
-                      className="text-primary hover:underline text-sm font-medium inline-flex items-center gap-1"
-                    >
-                      Learn more →
-                    </HashLink>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
 
-          {/* ========== Operating Model Venn Diagram ========== */}
-          <div className="mt-16 py-12 bg-neutral-50 rounded-sm">
-            <div className="max-w-4xl mx-auto px-4 text-center">
-              <h3 className="font-display text-3xl font-bold text-[#0B3B5C] mb-4">
-                Our Operating Model
-              </h3>
-              <p className="text-muted-foreground mb-10 max-w-2xl mx-auto">
-                Engineering, compliance, and operations work as one integrated system – delivering engineering‑led solutions from concept to completion.
-              </p>
+              {/* Card 6: Project Management & Owner's Representation */}
+              <ServiceCard service={services[5]} />
 
-              <div className="relative w-full max-w-3xl mx-auto aspect-square">
-                <svg viewBox="0 0 400 400" className="w-full h-auto">
-                  <defs>
-                    <style>
-                      {`
-                        .venn-circle { fill: rgba(59, 116, 160, 0.15); stroke: #3A74A0; stroke-width: 2; }
-                        .venn-text { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 16px; fill: #0B3B5C; }
-                        .venn-small-text { font-family: 'Inter', sans-serif; font-size: 12px; fill: #4A6070; }
-                        .overlay-text { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 18px; fill: #0B3B5C; }
-                      `}
-                    </style>
-                  </defs>
+              {/* DIAGRAM B — fills the empty slot beside Project Management */}
+              <OperatingModelDiagram />
 
-                  {/* Engineering circle (left) */}
-                  <circle cx="150" cy="200" r="110" className="venn-circle" />
-                  <text x="80" y="190" className="venn-text">Engineering</text>
-
-                  {/* Compliance circle (right) */}
-                  <circle cx="250" cy="200" r="110" className="venn-circle" />
-                  <text x="290" y="190" className="venn-text">Compliance</text>
-
-                  {/* Operations circle (bottom) */}
-                  <circle cx="200" cy="280" r="110" className="venn-circle" />
-                  <text x="190" y="340" className="venn-text">Operations</text>
-
-                  {/* Central overlapping area – place text in the middle */}
-                  <text x="200" y="220" textAnchor="middle" className="overlay-text">
-                    <tspan x="200" dy="-8">Integrated</tspan>
-                    <tspan x="200" dy="24">Management</tspan>
-                  </text>
-
-                  {/* Optional: small labels for intersections */}
-                  <text x="110" y="240" className="venn-small-text">Technical solutions</text>
-                  <text x="280" y="240" className="venn-small-text">Regulatory alignment</text>
-                  <text x="200" y="310" className="venn-small-text">Execution oversight</text>
-                </svg>
-              </div>
             </div>
           </div>
 
