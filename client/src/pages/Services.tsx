@@ -153,37 +153,120 @@ export default function Services() {
             </p>
           </div>
 
-          {/* Service cards grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
-            {services.map((service, idx) => (
-              <div key={idx} className="border-l-2 border-primary/20 pl-6 py-2">
-                <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-2">
-                  {service.title}
-                </h3>
-                <p className="text-muted-foreground leading-relaxed mb-3">
-                  {service.description}
-                </p>
-                <ul className="list-disc pl-5 mb-2 text-muted-foreground space-y-1 text-sm">
-                  {service.deliverables.map((item, i) => (
-                    <li key={i}>{item}</li>
-                  ))}
-                </ul>
-                <p className="text-sm text-primary font-medium mt-3">
-                  Outcome: {service.outcome}
-                </p>
-                <p className="text-sm text-primary/70 font-mono mt-1 italic">
-                  References: {service.references}
-                </p>
-                <div className="mt-3">
-                  <HashLink
-                    href={`/services/${service.slug}`}
-                    className="text-primary hover:underline text-sm font-medium inline-flex items-center gap-1"
-                  >
-                    Learn more →
-                  </HashLink>
+          {/* Service cards with category headings */}
+          
+          {/* Engineering category */}
+          <div className="mt-12">
+            <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-4 border-l-2 border-primary/20 pl-4">
+              Engineering
+            </h3>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {services.slice(0, 3).map((service, idx) => (
+                <div key={idx} className="border-l-2 border-primary/20 pl-6 py-2">
+                  <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-2">
+                    {service.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed mb-3">
+                    {service.description}
+                  </p>
+                  <ul className="list-disc pl-5 mb-2 text-muted-foreground space-y-1 text-sm">
+                    {service.deliverables.map((item, i) => (
+                      <li key={i}>{item}</li>
+                    ))}
+                  </ul>
+                  <p className="text-sm text-primary font-medium mt-3">
+                    Outcome: {service.outcome}
+                  </p>
+                  <p className="text-sm text-primary/70 font-mono mt-1 italic">
+                    References: {service.references}
+                  </p>
+                  <div className="mt-3">
+                    <HashLink
+                      href={`/services/${service.slug}`}
+                      className="text-primary hover:underline text-sm font-medium inline-flex items-center gap-1"
+                    >
+                      Learn more →
+                    </HashLink>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          </div>
+
+          {/* Compliance & Regulatory category */}
+          <div className="mt-12">
+            <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-4 border-l-2 border-primary/20 pl-4">
+              Compliance & Regulatory
+            </h3>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {services.slice(3, 5).map((service, idx) => (
+                <div key={idx} className="border-l-2 border-primary/20 pl-6 py-2">
+                  <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-2">
+                    {service.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed mb-3">
+                    {service.description}
+                  </p>
+                  <ul className="list-disc pl-5 mb-2 text-muted-foreground space-y-1 text-sm">
+                    {service.deliverables.map((item, i) => (
+                      <li key={i}>{item}</li>
+                    ))}
+                  </ul>
+                  <p className="text-sm text-primary font-medium mt-3">
+                    Outcome: {service.outcome}
+                  </p>
+                  <p className="text-sm text-primary/70 font-mono mt-1 italic">
+                    References: {service.references}
+                  </p>
+                  <div className="mt-3">
+                    <HashLink
+                      href={`/services/${service.slug}`}
+                      className="text-primary hover:underline text-sm font-medium inline-flex items-center gap-1"
+                    >
+                      Learn more →
+                    </HashLink>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Operations category */}
+          <div className="mt-12">
+            <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-4 border-l-2 border-primary/20 pl-4">
+              Operations
+            </h3>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {services.slice(5, 6).map((service, idx) => (
+                <div key={idx} className="border-l-2 border-primary/20 pl-6 py-2">
+                  <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-2">
+                    {service.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed mb-3">
+                    {service.description}
+                  </p>
+                  <ul className="list-disc pl-5 mb-2 text-muted-foreground space-y-1 text-sm">
+                    {service.deliverables.map((item, i) => (
+                      <li key={i}>{item}</li>
+                    ))}
+                  </ul>
+                  <p className="text-sm text-primary font-medium mt-3">
+                    Outcome: {service.outcome}
+                  </p>
+                  <p className="text-sm text-primary/70 font-mono mt-1 italic">
+                    References: {service.references}
+                  </p>
+                  <div className="mt-3">
+                    <HashLink
+                      href={`/services/${service.slug}`}
+                      className="text-primary hover:underline text-sm font-medium inline-flex items-center gap-1"
+                    >
+                      Learn more →
+                    </HashLink>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
         </main>
