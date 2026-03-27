@@ -3,9 +3,42 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { SectionHeading } from "@/components/SectionHeading";
+import { Helmet } from "react-helmet-async";
 import { SEO } from "@/components/SEO";
 import ProcessWheel from "@/components/ProcessWheel";
 import { HashLink } from "@/components/HashLink";
+
+// ─── Organisation-level structured data (same as homepage) ─────────────────
+const organizationData = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Adriatica D.O.O.",
+  "image": "https://www.adriaticadoo.me/og-image-default.png",
+  "url": "https://www.adriaticadoo.me",
+  "taxID": "03612807",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Budva",
+    "addressCountry": "ME"
+  },
+  "serviceType": [
+    "Marine Engineering",
+    "Regulatory Compliance",
+    "MRV Reporting",
+    "Biofouling Management",
+    "Structural Integrity"
+  ],
+  "description": "Marine engineering consultancy specializing in EU MRV, IMO DCS, and Biofouling compliance.",
+  "areaServed": [
+    "Bar",
+    "Budva",
+    "Kotor",
+    "Tivat",
+    "Montenegro",
+    "Adriatic Coast",
+    "Europe"
+  ]
+};
 
 // ─── Service data ─────────────────────────────────────────────────────────────
 
@@ -445,6 +478,12 @@ export default function Services() {
         description="Adriatica D.O.O. provides marine engineering services: engineering plans, documentation, structural integrity, sustainable technologies, regulatory compliance, and project management for all vessel types."
         canonical="https://www.adriaticadoo.me/services"
       />
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(organizationData)}
+        </script>
+      </Helmet>
+
       <div className="min-h-screen bg-background font-body">
         <Navigation />
 

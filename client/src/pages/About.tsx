@@ -6,6 +6,38 @@ import { SEO } from "@/components/SEO";
 import { HashLink } from "@/components/HashLink";
 
 export default function About() {
+  // Organisation-level structured data (same as homepage)
+  const organizationData = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Adriatica D.O.O.",
+    "image": "https://www.adriaticadoo.me/og-image-default.png",
+    "url": "https://www.adriaticadoo.me",
+    "taxID": "03612807",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Budva",
+      "addressCountry": "ME"
+    },
+    "serviceType": [
+      "Marine Engineering",
+      "Regulatory Compliance",
+      "MRV Reporting",
+      "Biofouling Management",
+      "Structural Integrity"
+    ],
+    "description": "Marine engineering consultancy specializing in EU MRV, IMO DCS, and Biofouling compliance.",
+    "areaServed": [
+      "Bar",
+      "Budva",
+      "Kotor",
+      "Tivat",
+      "Montenegro",
+      "Adriatic Coast",
+      "Europe"
+    ]
+  };
+
   return (
     <>
       <SEO
@@ -13,6 +45,12 @@ export default function About() {
         description="Adriatica D.O.O. – marine engineering consultancy specializing in biofouling management, in‑water cleaning, and regulatory compliance for superyachts and commercial vessels in the Adriatic and Mediterranean."
         canonical="https://www.adriaticadoo.me/about"
       />
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(organizationData)}
+        </script>
+      </Helmet>
+
       <div className="min-h-screen bg-background font-body">
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
