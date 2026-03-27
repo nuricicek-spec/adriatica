@@ -269,6 +269,56 @@ export default function Services() {
             </div>
           </div>
 
+          {/* ========== Operating Model Venn Diagram ========== */}
+          <div className="mt-16 py-12 bg-neutral-50 rounded-sm">
+            <div className="max-w-4xl mx-auto px-4 text-center">
+              <h3 className="font-display text-3xl font-bold text-[#0B3B5C] mb-4">
+                Our Operating Model
+              </h3>
+              <p className="text-muted-foreground mb-10 max-w-2xl mx-auto">
+                Engineering, compliance, and operations work as one integrated system – delivering engineering‑led solutions from concept to completion.
+              </p>
+
+              <div className="relative w-full max-w-3xl mx-auto aspect-square">
+                <svg viewBox="0 0 400 400" className="w-full h-auto">
+                  <defs>
+                    <style>
+                      {`
+                        .venn-circle { fill: rgba(59, 116, 160, 0.15); stroke: #3A74A0; stroke-width: 2; }
+                        .venn-text { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 16px; fill: #0B3B5C; }
+                        .venn-small-text { font-family: 'Inter', sans-serif; font-size: 12px; fill: #4A6070; }
+                        .overlay-text { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 18px; fill: #0B3B5C; }
+                      `}
+                    </style>
+                  </defs>
+
+                  {/* Engineering circle (left) */}
+                  <circle cx="150" cy="200" r="110" className="venn-circle" />
+                  <text x="80" y="190" className="venn-text">Engineering</text>
+
+                  {/* Compliance circle (right) */}
+                  <circle cx="250" cy="200" r="110" className="venn-circle" />
+                  <text x="290" y="190" className="venn-text">Compliance</text>
+
+                  {/* Operations circle (bottom) */}
+                  <circle cx="200" cy="280" r="110" className="venn-circle" />
+                  <text x="190" y="340" className="venn-text">Operations</text>
+
+                  {/* Central overlapping area – place text in the middle */}
+                  <text x="200" y="220" textAnchor="middle" className="overlay-text">
+                    <tspan x="200" dy="-8">Integrated</tspan>
+                    <tspan x="200" dy="24">Management</tspan>
+                  </text>
+
+                  {/* Optional: small labels for intersections */}
+                  <text x="110" y="240" className="venn-small-text">Technical solutions</text>
+                  <text x="280" y="240" className="venn-small-text">Regulatory alignment</text>
+                  <text x="200" y="310" className="venn-small-text">Execution oversight</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+
         </main>
 
         <Footer />
