@@ -25,10 +25,31 @@ export default function InsightDetail() {
     );
   }
 
-  // İlgili makaleler: önce manuel ilişkiler, yoksa aynı kategorideki diğer makaleler (max 2)
-  const related = insight.relatedSlugs && insight.relatedSlugs.length > 0
-    ? insights.filter(i => insight.relatedSlugs!.includes(i.slug))
-    : insights.filter(i => i.slug !== insight.slug && i.category === insight.category).slice(0, 2);
+  // İlgili makaleler mantığı
+  let related: typeof insights = [];
+
+  if (insight.relatedSlugs && insight.relatedSlugs.length > 0) {
+    // 1. Manuel ilişkiler
+    related = insights.filter(i => insight.relatedSlugs!.includes(i.slug));
+  } else {
+    // 2. Aynı kategorideki diğer makaleler
+    const sameCategory = insights.filter(i => i.slug !== insight.slug && i.category === insight.category);
+    related = [...sameCategory];
+
+    // 3. Eğer 2'den azsa, diğer kategorilerden en son yayınlananlarla tamamla (kendisi ve seçilenler hariç)
+    if (related.length < 2) {
+      const alreadySelectedSlugs = new Set(related.map(r => r.slug));
+      const others = insights
+        .filter(i => i.slug !== insight.slug && !alreadySelectedSlugs.has(i.slug))
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); // en yeni önce
+
+      const needed = 2 - related.length;
+      related.push(...others.slice(0, needed));
+    }
+  }
+
+  // Maksimum 2 göster
+  related = related.slice(0, 2);
 
   const shareOnLinkedIn = () => {
     const url = encodeURIComponent(window.location.href);
@@ -53,6 +74,13 @@ export default function InsightDetail() {
         <Navigation />
 
         <article className="max-w-4xl mx-auto px-4 pt-32 pb-12 md:pt-40">
+          {/* Geri dönüş bağlantısı */}
+          <div className="mb-4">
+            <Link href="/insights" className="text-sm text-primary hover:underline inline-flex items-center gap-1">
+              ← Back to all insights
+            </Link>
+          </div>
+
           <div className="text-sm text-primary font-medium mb-2">{insight.category}</div>
           <h1 className="text-4xl font-display font-bold mb-4">{insight.title}</h1>
           <div className="flex items-center gap-4 text-muted-foreground text-sm mb-8">
