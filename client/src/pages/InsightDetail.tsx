@@ -16,7 +16,7 @@ export default function InsightDetail() {
     return (
       <div className="min-h-screen bg-background">
         <Navigation />
-        <div className="max-w-4xl mx-auto px-4 py-12 text-center">
+        <div className="max-w-4xl mx-auto px-4 pt-32 pb-12 text-center">
           <h1 className="text-2xl font-bold">Makale bulunamadı</h1>
           <Link href="/insights" className="text-primary underline">← Tüm Insights</Link>
         </div>
@@ -25,7 +25,7 @@ export default function InsightDetail() {
     );
   }
 
-  // Related: önce manuel ilişkiler, yoksa aynı kategorideki diğer makaleler (max 2)
+  // İlgili makaleler: önce manuel ilişkiler, yoksa aynı kategorideki diğer makaleler (max 2)
   const related = insight.relatedSlugs && insight.relatedSlugs.length > 0
     ? insights.filter(i => insight.relatedSlugs!.includes(i.slug))
     : insights.filter(i => i.slug !== insight.slug && i.category === insight.category).slice(0, 2);
@@ -52,7 +52,7 @@ export default function InsightDetail() {
       <div className="min-h-screen bg-background font-body">
         <Navigation />
 
-        <article className="max-w-4xl mx-auto px-4 py-12">
+        <article className="max-w-4xl mx-auto px-4 pt-32 pb-12 md:pt-40">
           <div className="text-sm text-primary font-medium mb-2">{insight.category}</div>
           <h1 className="text-4xl font-display font-bold mb-4">{insight.title}</h1>
           <div className="flex items-center gap-4 text-muted-foreground text-sm mb-8">

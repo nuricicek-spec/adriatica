@@ -45,6 +45,18 @@ export default function InsightsPage() {
               </Link>
             ))}
           </div>
+
+          {/* CTA Bölümü – orijinal Insights sayfasından alındı */}
+          <div className="mt-16 p-6 bg-neutral-50 border border-border/10 text-center rounded-sm">
+            <p className="text-lg text-muted-foreground mb-4">
+              Have a specific technical challenge? Our team is ready to assist.
+            </p>
+            <Link href="/#begin-voyage">
+              <a className="inline-block px-6 py-3 bg-[#0B3B5C] text-white font-medium rounded-sm hover:bg-[#1A4B7A] transition-colors">
+                Request Technical Consultation →
+              </a>
+            </Link>
+          </div>
         </main>
 
         <Footer />

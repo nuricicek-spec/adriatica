@@ -19,7 +19,7 @@ export const insights: Insight[] = [
     readTime: 8,
     description: 'A strategic policy paper comparing Boka Kotorska with UNESCO‑protected sites that have implemented Zero‑Emission Zones (ZEZ).',
     contentHtml: '<p><strong>Mock content.</strong> Replace with actual HTML later.</p>',
-    pdfUrl: '/pdfs/zero-emission-zone.pdf',
+    pdfUrl: '/pdfs/zero-emission-zone.pdf',  // public/pdfs/ altında
     relatedSlugs: ['biofouling-compliance-imo-2026'],
   },
   {
