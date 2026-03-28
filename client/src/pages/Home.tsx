@@ -123,9 +123,9 @@ export default function Home() {
 
 {/* Context block: only left border, with company name */}
 <div className="border-l-2 border-primary pl-6 mb-10">
-  <p className="font-display font-bold text-[#0B3B5C] uppercase tracking-wide text-3xl md:text-5xl lg:text-6xl leading-tight">
+  <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-[#0B3B5C] uppercase tracking-wide leading-[1.1]">
     ADRIATICA D.O.O.
-  </p>
+  </h1>
 </div>
 
                 {/* Buttons removed */}
