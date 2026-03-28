@@ -17,7 +17,7 @@ export default function InsightDetail() {
   const [rating, setRating] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
-  // İlgili makaleler (önceki mantık)
+  // İlgili makaleler
   let related: typeof insights = [];
   if (insight?.relatedSlugs && insight.relatedSlugs.length > 0) {
     related = insights.filter(i => insight.relatedSlugs!.includes(i.slug));
@@ -35,11 +35,11 @@ export default function InsightDetail() {
   }
   related = related.slice(0, 2);
 
-  // Most Popular (sidebar)
+  // Most Popular
   const popular = recommendedSlugs
     .map(slug => insights.find(i => i.slug === slug))
     .filter((i): i is typeof insights[0] => i !== undefined && i.slug !== insight?.slug)
-    .slice(0, 5); // en fazla 5 göster (scroll için)
+    .slice(0, 5);
 
   const shareOnLinkedIn = () => {
     const url = encodeURIComponent(window.location.href);
@@ -51,7 +51,6 @@ export default function InsightDetail() {
     setRating(value);
     setSubmitted(true);
 
-    // GA4 event
     if (typeof window.gtag !== 'undefined') {
       window.gtag('event', 'article_rating', {
         event_category: 'engagement',
@@ -65,7 +64,7 @@ export default function InsightDetail() {
     return (
       <div className="min-h-screen bg-background">
         <Navigation />
-        <div className="max-w-7xl mx-auto px-4 pt-32 pb-12 text-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-12 text-center">
           <h1 className="text-2xl font-bold">Makale bulunamadı</h1>
           <Link href="/insights" className="text-primary underline">← Tüm Insights</Link>
         </div>
@@ -87,10 +86,9 @@ export default function InsightDetail() {
       <div className="min-h-screen bg-background font-body">
         <Navigation />
 
-        <div className="max-w-7xl mx-auto px-4 pt-32 pb-12 md:pt-40">
-          {/* Grid: ana içerik + sidebar */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-12 md:pt-40">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Ana sütun (2/3) */}
+            {/* Ana sütun */}
             <article className="lg:col-span-2">
               <div className="mb-4">
                 <Link href="/insights" className="text-sm text-primary hover:underline inline-flex items-center gap-1">
@@ -132,8 +130,8 @@ export default function InsightDetail() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {related.map(rel => (
                       <Link key={rel.slug} href={`/insights/${rel.slug}`}>
-                        <a className="block p-4 border rounded hover:shadow transition group">
-                          <h4 className="font-bold mb-1 group-hover:text-primary transition-colors">
+                        <a className="block p-4 border rounded hover:border-primary transition group">
+                          <h4 className="font-bold mb-1 group-hover:text-primary group-hover:underline transition">
                             {rel.title}
                           </h4>
                           <p className="text-sm text-muted-foreground">{rel.description}</p>
@@ -145,9 +143,9 @@ export default function InsightDetail() {
               )}
             </article>
 
-            {/* Sağ sidebar (1/3) */}
+            {/* Sağ sidebar */}
             <aside className="space-y-8">
-              {/* Oylama bölümü */}
+              {/* Oylama */}
               <div className="p-6 bg-neutral-50 rounded">
                 <h3 className="font-display text-lg font-bold mb-4">How relevant and useful is this article for you?</h3>
                 {!submitted ? (
@@ -167,7 +165,7 @@ export default function InsightDetail() {
                 )}
               </div>
 
-              {/* Most Popular Insights – scroll özellikli kutu */}
+              {/* Most Popular – scroll */}
               {popular.length > 0 && (
                 <div className="p-6 bg-white border border-border/40 rounded max-h-96 overflow-y-auto">
                   <h3 className="font-display text-lg font-bold mb-4 sticky top-0 bg-white pb-2">
