@@ -87,8 +87,8 @@ export default function Home() {
       <div className="min-h-screen bg-background font-body selection:bg-primary/20">
         <Navigation />
 
-        {/* Hero Section - adjusted top padding */}
-        <section className="relative min-h-screen flex overflow-hidden pt-8 pb-16 md:pt-6 md:pb-24">
+        {/* Hero Section */}
+        <section className="relative min-h-screen flex overflow-hidden pt-32 pb-16 md:pt-24 md:pb-24">
           {/* Abstract Background Elements */}
           <div className="absolute inset-0 z-0">
             <div className="absolute top-0 right-0 w-2/3 h-full bg-[#1A4B7A]/5 -skew-x-12 transform origin-top" />
@@ -111,25 +111,22 @@ export default function Home() {
                   <span className="text-[#3A74A0]">ENGINEERING</span>
                 </h1>
 
-                {/* Broad descriptor */}
                 <p className="text-base md:text-lg lg:text-xl text-primary font-semibold mb-6">
                   Engineering Management for Marine Operations
                 </p>
 
-                {/* Benefit line – replaced */}
                 <p className="text-base md:text-lg lg:text-xl font-medium text-primary leading-relaxed max-w-xl mx-auto lg:mx-0 mb-6">
                   Technical Consultancy • Compliance • Operations
                 </p>
 
-                {/* Context block: left border, company name */}
-                <div className="border-l-2 border-primary pl-6 mb-48 mt-4">   {/* increased bottom margin to push down */}
+                {/* Context block: left border, company name + URL */}
+                <div className="border-l-2 border-primary pl-6 mb-48 mt-4">
                   <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold uppercase tracking-wide leading-[1.1]">
                     <span className="text-[#3A74A0]">ADRIATICA</span>{' '}
                     <span className="text-[#0B3B5C]">D.O.O.</span>
                   </h1>
-                  {/* Website URL placed directly below company name */}
-                  <div className="mt-4">
-                    <p className="font-display text-xl md:text-2xl text-primary/70 uppercase tracking-wide">
+                  <div className="mt-2">
+                    <p className="text-xs uppercase tracking-widest text-primary/60">
                       www.adriaticadoo.me
                     </p>
                   </div>
@@ -156,18 +153,17 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Scroll indicator with arrow only (URL removed) */}
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5, duration: 1 }}
-            className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center text-primary/40"
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-primary/40"
           >
             <ArrowDown className="animate-bounce w-5 h-5" />
           </motion.div>
         </section>
 
-        {/* Operational Region Section (unchanged) */}
+        {/* Operational Region Section */}
         <section className="py-20 bg-neutral-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -190,7 +186,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Value Proposition Section (unchanged) */}
+        {/* Value Proposition Section */}
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
@@ -236,7 +232,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* How We Work Section (unchanged) */}
+        {/* How We Work Section */}
         <section className="py-20 bg-neutral-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
@@ -272,7 +268,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Expertise Grid (unchanged) */}
+        {/* Expertise Grid */}
         <section id="core-competencies" className="py-24 md:py-32 bg-white relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeading 
@@ -354,7 +350,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Mid‑page CTA (unchanged) */}
+        {/* Mid‑page CTA */}
         <section className="py-16 bg-neutral-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
@@ -369,7 +365,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Image / Vision Section (unchanged) */}
+        {/* Image / Vision Section */}
         <section id="philosophy" className="py-24 bg-[#0B3B5C] text-white overflow-hidden relative">
           <div className="absolute inset-0 opacity-10">
             <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -742,7 +738,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Contact CTA (unchanged) */}
+        {/* Contact CTA */}
         <section id="begin-voyage" className="py-24 bg-neutral-50 border-t border-border/10">
           <div className="max-w-4xl mx-auto px-4 text-center">
             <h2 className="font-display text-4xl md:text-5xl font-bold text-[#0B3B5C] mb-6">
