@@ -113,7 +113,7 @@ export default function Home() {
 
                 {/* New broad descriptor */}
                 <p className="text-base md:text-lg lg:text-xl text-primary font-semibold mb-6">
-                  Engineering Management & Compliance Solutions for Marine Operations
+                  Engineering Management for Marine Operations
                 </p>
 
                 {/* Benefit line */}
