@@ -121,12 +121,13 @@ export default function Home() {
                   Technical Consultancy • Compliance • Operations
                 </p>
 
-                {/* Context block: only left border, with company name – moved down */}
-                <div className="border-l-2 border-primary pl-6 mb-16">
-                  <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-[#3A74A0] uppercase tracking-wide leading-[1.1]">
-                    ADRIATICA D.O.O.
-                  </h1>
-                </div>
+{/* Context block: left border, company name */}
+<div className="border-l-2 border-primary pl-6 mb-20">  {/* increased margin-bottom */}
+  <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold uppercase tracking-wide leading-[1.1]">
+    <span className="text-[#3A74A0]">ADRIATICA</span>{' '}
+    <span className="text-[#0B3B5C]">D.O.O.</span>
+  </h1>
+</div>
 
                 {/* Buttons removed */}
               </motion.div>
