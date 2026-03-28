@@ -87,8 +87,8 @@ export default function Home() {
       <div className="min-h-screen bg-background font-body selection:bg-primary/20">
         <Navigation />
 
-        {/* Hero Section - fully responsive */}
-        <section className="relative min-h-screen flex overflow-hidden pt-32 pb-16 md:pt-24 md:pb-24">
+        {/* Hero Section - adjusted padding */}
+        <section className="relative min-h-screen flex overflow-hidden pt-20 pb-16 md:pt-16 md:pb-24">
           {/* Abstract Background Elements */}
           <div className="absolute inset-0 z-0">
             <div className="absolute top-0 right-0 w-2/3 h-full bg-[#1A4B7A]/5 -skew-x-12 transform origin-top" />
@@ -121,12 +121,12 @@ export default function Home() {
                   Technical Consultancy • Compliance • Operations
                 </p>
 
-{/* Context block: only left border, with company name */}
-<div className="border-l-2 border-primary pl-6 mb-10">
-  <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-[#0B3B5C] uppercase tracking-wide leading-[1.1]">
-    ADRIATICA D.O.O.
-  </h1>
-</div>
+                {/* Context block: only left border, with company name – moved down */}
+                <div className="border-l-2 border-primary pl-6 mb-16">
+                  <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-[#3A74A0] uppercase tracking-wide leading-[1.1]">
+                    ADRIATICA D.O.O.
+                  </h1>
+                </div>
 
                 {/* Buttons removed */}
               </motion.div>
@@ -149,19 +149,19 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Scroll indicator with website URL */}
+          {/* Scroll indicator with website URL – moved up */}
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5, duration: 1 }}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-primary/40"
+            className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center text-primary/40"
           >
             <span className="text-xs uppercase tracking-widest mb-2">www.adriaticadoo.me</span>
             <ArrowDown className="animate-bounce w-5 h-5" />
           </motion.div>
         </section>
 
-        {/* Operational Region Section */}
+        {/* Operational Region Section (unchanged) */}
         <section className="py-20 bg-neutral-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -184,7 +184,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Value Proposition Section */}
+        {/* Value Proposition Section (unchanged) */}
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
@@ -230,7 +230,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* How We Work Section */}
+        {/* How We Work Section (unchanged) */}
         <section className="py-20 bg-neutral-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
@@ -266,7 +266,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Expertise Grid */}
+        {/* Expertise Grid (unchanged) */}
         <section id="core-competencies" className="py-24 md:py-32 bg-white relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeading 
@@ -348,7 +348,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Mid‑page CTA */}
+        {/* Mid‑page CTA (unchanged) */}
         <section className="py-16 bg-neutral-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
@@ -363,8 +363,9 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Image / Vision Section */}
+        {/* Image / Vision Section (unchanged) */}
         <section id="philosophy" className="py-24 bg-[#0B3B5C] text-white overflow-hidden relative">
+          {/* (content unchanged – omitted for brevity) */}
           <div className="absolute inset-0 opacity-10">
             <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
                <path d="M0 100 L100 0 L100 100 Z" fill="white" />
@@ -736,7 +737,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Contact CTA */}
+        {/* Contact CTA (unchanged) */}
         <section id="begin-voyage" className="py-24 bg-neutral-50 border-t border-border/10">
           <div className="max-w-4xl mx-auto px-4 text-center">
             <h2 className="font-display text-4xl md:text-5xl font-bold text-[#0B3B5C] mb-6">
