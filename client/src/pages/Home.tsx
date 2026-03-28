@@ -121,12 +121,12 @@ export default function Home() {
                   Technical Consultancy • Compliance • Operations
                 </p>
 
-                {/* Context block: only left border, with company name */}
-                <div className="border-l-2 border-primary pl-6 mb-10">
-                  <p className="text-base md:text-lg lg:text-xl font-display font-bold text-[#0B3B5C] leading-relaxed max-w-xl mx-auto lg:mx-0">
-                    ADRIATICA D.O.O.
-                  </p>
-                </div>
+{/* Context block: only left border, with company name */}
+<div className="border-l-2 border-primary pl-6 mb-10">
+  <p className="font-display font-bold text-[#0B3B5C] uppercase tracking-wide text-3xl md:text-5xl lg:text-6xl leading-tight">
+    ADRIATICA D.O.O.
+  </p>
+</div>
 
                 {/* Buttons removed */}
               </motion.div>
