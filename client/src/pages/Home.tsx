@@ -119,8 +119,8 @@ export default function Home() {
                   Technical Consultancy • Compliance • Operations
                 </p>
 
-                {/* Context block: left border, company name + URL */}
-                <div className="border-l-2 border-primary pl-6 mb-48 mt-4">
+                {/* Context block: left border, company name + URL – moved further down */}
+                <div className="border-l-2 border-primary pl-6 mb-72 mt-4">
                   <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold uppercase tracking-wide leading-[1.1]">
                     <span className="text-[#3A74A0]">ADRIATICA</span>{' '}
                     <span className="text-[#0B3B5C]">D.O.O.</span>
