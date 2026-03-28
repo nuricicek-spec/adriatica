@@ -87,7 +87,7 @@ export default function Home() {
       <div className="min-h-screen bg-background font-body selection:bg-primary/20">
         <Navigation />
 
-        {/* Hero Section */}
+        {/* Hero Section - fully responsive */}
         <section className="relative min-h-screen flex overflow-hidden pt-32 pb-16 md:pt-24 md:pb-24">
           {/* Abstract Background Elements */}
           <div className="absolute inset-0 z-0">
@@ -97,12 +97,11 @@ export default function Home() {
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-24 items-center">
-              {/* Left column – added mt-20 to shift entire text block down */}
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
-                className="text-center lg:text-left mb-10 lg:mb-0 mt-20"
+                className="text-center lg:text-left mb-10 lg:mb-0"
               >
                 <h2 className="text-primary font-medium tracking-[0.2em] uppercase mb-4">
                   Est. 2025
@@ -112,31 +111,46 @@ export default function Home() {
                   <span className="text-[#3A74A0]">ENGINEERING</span>
                 </h1>
 
+                {/* New broad descriptor */}
                 <p className="text-base md:text-lg lg:text-xl text-primary font-semibold mb-6">
                   Engineering Management for Marine Operations
                 </p>
 
+                {/* Benefit line */}
                 <p className="text-base md:text-lg lg:text-xl font-medium text-primary leading-relaxed max-w-xl mx-auto lg:mx-0 mb-6">
-                  Technical Consultancy • Compliance • Operations
+                  Avoid drydock delays. Stay PSC‑ready. Maintain your charter schedule.
                 </p>
 
-                {/* Company name + URL */}
+                {/* Context block with badge and left border */}
                 <div className="border-l-2 border-primary pl-6 mb-10">
-                  <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold uppercase tracking-wide leading-[1.1]">
-                    <span className="text-[#3A74A0]">ADRIATICA</span>{' '}
-                    <span className="text-[#0B3B5C]">D.O.O.</span>
-                  </h1>
-                  <div className="mt-2">
-                    <p className="text-xs uppercase tracking-widest text-primary/60">
-                      www.adriaticadoo.me
-                    </p>
+                  <div className="flex flex-wrap items-center gap-3 mb-2">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                      IMO 2026 Priority
+                    </span>
                   </div>
+                  <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-xl mx-auto lg:mx-0">
+                    <a href="/news" className="hover:underline hover:text-primary transition-colors">
+                      With increasing PSC scrutiny across Europe, unmanaged biofouling is becoming an operational and regulatory risk. The 2026 IMO enforcement timeline accelerates the need for action.
+                    </a>
+                  </p>
                 </div>
-
-                {/* Buttons removed */}
+                
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                  <button 
+                    onClick={() => document.getElementById('begin-voyage')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="px-8 py-4 bg-[#D4AF37] text-white font-medium rounded-sm shadow-lg shadow-[#D4AF37]/20 hover:bg-[#C9A961] transition-all duration-300 uppercase tracking-wide text-sm"
+                  >
+                    Request Technical Assessment
+                  </button>
+                  <button 
+                    onClick={() => document.getElementById('core-competencies')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="px-8 py-4 bg-transparent border border-[#0B3B5C] text-[#0B3B5C] font-medium rounded-sm hover:bg-[#0B3B5C]/5 transition-all duration-300 uppercase tracking-wide text-sm"
+                  >
+                    Explore Services
+                  </button>
+                </div>
               </motion.div>
 
-              {/* Right column – unchanged */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9, rotate: 5 }}
                 animate={{ opacity: 1, scale: 1, rotate: 0 }}
@@ -161,6 +175,7 @@ export default function Home() {
             transition={{ delay: 1.5, duration: 1 }}
             className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-primary/40"
           >
+            <span className="text-xs uppercase tracking-widest mb-2">Scroll</span>
             <ArrowDown className="animate-bounce w-5 h-5" />
           </motion.div>
         </section>
