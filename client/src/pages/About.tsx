@@ -90,7 +90,7 @@ export default function About() {
             </p>
 
             {/* Why Choose Adriatica – benefit cards + link to homepage philosophy */}
-            <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Why Choose Adriatica</h2>
+            <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Why Adriatica?</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
               <div className="border-l-2 border-primary/20 pl-4">
                 <h3 className="font-bold text-[#0B3B5C] mb-2">Risk‑Based Approach</h3>
@@ -148,7 +148,7 @@ export default function About() {
                 href="/#begin-voyage"
                 className="inline-block mt-2 bg-[#0B3B5C] text-white px-6 py-3 rounded-sm font-medium hover:bg-[#1A4B7A] transition-colors"
               >
-                Request Compliance Assessment
+                Contact Our Team
               </HashLink>
             </div>
           </div>
