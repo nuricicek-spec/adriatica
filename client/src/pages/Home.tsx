@@ -97,7 +97,7 @@ export default function Home() {
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-24 items-center">
-              {/* Left column – added mt-20 to shift entire text block down */}
+              {/* Left column – shifted down */}
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -132,18 +132,16 @@ export default function Home() {
                     </p>
                   </div>
                 </div>
-
-                {/* Buttons removed */}
               </motion.div>
 
-              {/* Right column – unchanged */}
+              {/* Right column – logo container reduced in size */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9, rotate: 5 }}
                 animate={{ opacity: 1, scale: 1, rotate: 0 }}
                 transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
                 className="relative flex justify-center items-center mt-8 lg:mt-0"
               >
-                <div className="relative w-full max-w-[200px] sm:max-w-[280px] lg:max-w-md aspect-square flex items-center justify-center">
+                <div className="relative w-full max-w-[180px] sm:max-w-[252px] lg:max-w-[400px] aspect-square flex items-center justify-center">
                   <div className="absolute inset-0 bg-gradient-to-tr from-[#0B3B5C]/10 to-transparent rounded-full blur-3xl" />
                   <img 
                     src="/logo.svg" 
