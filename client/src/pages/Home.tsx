@@ -119,7 +119,13 @@ export default function Home() {
                   Technical Consultancy • Compliance • Operations
                 </p>
 
-                {/* Context block: left border, company name + URL – moved further down */}
+                {/*
+                  Context block — ADRIATICA D.O.O. + URL
+                  mb-48 → mb-72: shifts the block ~80px further down
+                  so it aligns near the bottom of the pinecone logo
+                  on the right column (max-w-md aspect-square ≈ 448px tall).
+                  Adjust between mb-64 and mb-80 if fine-tuning is needed.
+                */}
                 <div className="border-l-2 border-primary pl-6 mb-72 mt-4">
                   <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold uppercase tracking-wide leading-[1.1]">
                     <span className="text-[#3A74A0]">ADRIATICA</span>{' '}
@@ -218,11 +224,11 @@ export default function Home() {
                   Smart planning and digital documentation minimise dry‑dock time and improve fuel performance.
                 </p>
               </div>
-              {/* 3. Owner’s Trusted Representative */}
+              {/* 3. Owner's Trusted Representative */}
               <div className="text-center p-6 border-l-2 border-primary/20">
                 <Handshake className="h-12 w-12 text-primary mx-auto mb-4" />
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-2">
-                  Owner’s Trusted Representative
+                  Owner's Trusted Representative
                 </h3>
                 <p className="text-muted-foreground">
                   We act as your technical eyes and ears in shipyards, ensuring quality control and budget adherence.
