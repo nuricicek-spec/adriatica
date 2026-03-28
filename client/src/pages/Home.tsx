@@ -304,6 +304,7 @@ export default function Home() {
                   "Fire & Safety Plans"
                 ]}
                 delay={0.1}
+                linkTo="engineering-plans"
               />
               <p className="hidden">Specializing in Adriatic shipyard projects and new building designs.</p>
               <FeatureCard 
@@ -316,6 +317,7 @@ export default function Home() {
                   "IHM (Inventory of Hazardous Materials)"
                 ]}
                 delay={0.2}
+                linkTo="engineering-documentation"
               />
               <FeatureCard 
                 number="03" 
@@ -327,6 +329,7 @@ export default function Home() {
                   "Vibration & Noise Diagnostic"
                 ]}
                 delay={0.3}
+                linkTo="structural-integrity"
               />
               <p className="hidden">For yachts, commercial vessels, and European fleet operators.</p>
               <FeatureCard 
@@ -339,6 +342,7 @@ export default function Home() {
                   "MRV Monitoring Plan (EU MRV Regulation)"
                 ]}
                 delay={0.4}
+                linkTo="sustainable-technologies"
               />
               <FeatureCard 
                 number="05" 
@@ -351,6 +355,7 @@ export default function Home() {
                   "Emergency Response Manuals"
                 ]}
                 delay={0.5}
+                linkTo="regulatory-compliance"
               />
               <p className="hidden">IMO standards for Montenegro and Adriatic Coast operators.</p>
               <FeatureCard 
@@ -362,6 +367,7 @@ export default function Home() {
                   "On-site Technical Troubleshooting"
                 ]}
                 delay={0.6}
+                linkTo="project-management"
               />
             </div>
           </div>
