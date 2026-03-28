@@ -1,58 +1,66 @@
-export interface Insight {
-  slug: string;
-  title: string;
-  category: string;
-  date: string;
-  readTime: number;
-  description: string;
-  contentHtml: string;
-  pdfUrl: string;
-  relatedSlugs?: string[];
-}
+import { Navigation } from "@/components/Navigation";
+import { Footer } from "@/components/Footer";
+import { SectionHeading } from "@/components/SectionHeading";
+import { Helmet } from "react-helmet-async";
+import { SEO } from "@/components/SEO";
+import { Link } from "wouter";
+import { insights } from "@/data/insights";
 
-export const insights: Insight[] = [
-  {
-    slug: 'zero-emission-zone-boka-kotorska',
-    title: 'The Case for a "Zero-Emission Zone": Why is Boka Kotorska Not Protected Yet?',
-    category: 'Strategic Outlook',
-    date: '2025-02-15',
-    readTime: 8,
-    description: 'A strategic policy paper comparing Boka Kotorska with UNESCO‑protected sites that have implemented Zero‑Emission Zones (ZEZ).',
-    contentHtml: '<p><strong>Mock content.</strong> Replace with actual HTML later.</p>',
-    pdfUrl: '/pdfs/ADRI-TIS-004.pdf',  // sizin dosya adınız
-    relatedSlugs: ['biofouling-compliance-imo-2026'],
-  },
-  {
-    slug: 'biofouling-compliance-imo-2026',
-    title: 'Biofouling Compliance: Preparing for the IMO 2026 Transition',
-    category: 'Regulation',
-    date: '2025-01-20',
-    readTime: 6,
-    description: 'A real-world superyacht case study on proactive biofouling management.',
-    contentHtml: '<p><strong>Mock content.</strong> Replace with actual HTML later.</p>',
-    pdfUrl: '/pdfs/ADRI-TIS-001.pdf',
-    relatedSlugs: ['sustainable-in-water-cleaning-yacht'],
-  },
-  {
-    slug: 'sustainable-in-water-cleaning-yacht',
-    title: 'Sustainable In-Water Cleaning: Engineering Management for European Coastal Yacht Compliance',
-    category: 'Technical Guidance',
-    date: '2024-12-10',
-    readTime: 7,
-    description: 'Technical guidance on managing in-water cleaning operations for vessels 25m+ and 50m+.',
-    contentHtml: '<p><strong>Mock content.</strong> Replace with actual HTML later.</p>',
-    pdfUrl: '/pdfs/ADRI-TIS-002.pdf',
-    relatedSlugs: ['biofouling-compliance-imo-2026'],
-  },
-  {
-    slug: 'technical-operations-montenegro',
-    title: 'Technical Operations in Montenegro: Navigating Local Regulations and Shipyard Excellence',
-    category: 'Case Insight',
-    date: '2024-11-05',
-    readTime: 5,
-    description: 'Examination of Montenegro\'s maritime landscape, focusing on UPSUL regulations and shipyard capabilities.',
-    contentHtml: '<p><strong>Mock content.</strong> Replace with actual HTML later.</p>',
-    pdfUrl: '/pdfs/ADRI-TIS-003.pdf',
-    relatedSlugs: [], // manuel ilişki yoksa otomatik mantık devreye girecek
-  },
-];
+export default function InsightsPage() {  // ← burada export default var mı?
+  return (
+    <>
+      <SEO
+        title="Insights"
+        description="Technical articles, case studies, and regulatory updates from Adriatica D.O.O. Marine Engineering Consultancy."
+        canonical="https://www.adriaticadoo.me/insights"
+      />
+      <Helmet>
+        {/* Ekstra meta etiketleri istenirse eklenebilir */}
+      </Helmet>
+
+      <div className="min-h-screen bg-background font-body">
+        <Navigation />
+
+        <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          <SectionHeading
+            title="Insights"
+            subtitle="Technical articles and updates from Adriatica D.O.O."
+          />
+
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+            {insights.map(insight => (
+              <Link key={insight.slug} href={`/insights/${insight.slug}`}>
+                <a className="block group p-6 bg-white border border-border/40 rounded-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                  <div className="text-sm text-primary font-medium mb-2">{insight.category}</div>
+                  <h2 className="text-xl font-display font-bold mb-2 group-hover:text-primary transition-colors">
+                    {insight.title}
+                  </h2>
+                  <p className="text-muted-foreground text-sm mb-3">{insight.description}</p>
+                  <div className="flex items-center text-xs text-muted-foreground">
+                    <span>{new Date(insight.date).toLocaleDateString('en-GB')}</span>
+                    <span className="mx-2">•</span>
+                    <span>{insight.readTime} min read</span>
+                  </div>
+                </a>
+              </Link>
+            ))}
+          </div>
+
+          {/* CTA Bölümü */}
+          <div className="mt-16 p-6 bg-neutral-50 border border-border/10 text-center rounded-sm">
+            <p className="text-lg text-muted-foreground mb-4">
+              Have a specific technical challenge? Our team is ready to assist.
+            </p>
+            <Link href="/#begin-voyage">
+              <a className="inline-block px-6 py-3 bg-[#0B3B5C] text-white font-medium rounded-sm hover:bg-[#1A4B7A] transition-colors">
+                Request Technical Consultation →
+              </a>
+            </Link>
+          </div>
+        </main>
+
+        <Footer />
+      </div>
+    </>
+  );
+}
