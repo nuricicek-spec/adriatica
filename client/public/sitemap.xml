@@ -67,6 +67,31 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <!-- Insight detail pages (new) -->
+  <url>
+    <loc>https://www.adriaticadoo.me/insights/biofouling-compliance-imo-2026</loc>
+    <lastmod>2026-01-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.adriaticadoo.me/insights/sustainable-in-water-cleaning-yacht</loc>
+    <lastmod>2026-02-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.adriaticadoo.me/insights/technical-operations-montenegro</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.adriaticadoo.me/insights/zero-emission-zone-boka-kotorska</loc>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
   <url>
     <loc>https://www.adriaticadoo.me/careers</loc>
     <lastmod>2026-03-20</lastmod>
