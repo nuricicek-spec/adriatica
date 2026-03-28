@@ -87,8 +87,8 @@ export default function Home() {
       <div className="min-h-screen bg-background font-body selection:bg-primary/20">
         <Navigation />
 
-        {/* Hero Section - adjusted padding */}
-        <section className="relative min-h-screen flex overflow-hidden pt-20 pb-16 md:pt-16 md:pb-24">
+        {/* Hero Section - adjusted top padding */}
+        <section className="relative min-h-screen flex overflow-hidden pt-8 pb-16 md:pt-6 md:pb-24">
           {/* Abstract Background Elements */}
           <div className="absolute inset-0 z-0">
             <div className="absolute top-0 right-0 w-2/3 h-full bg-[#1A4B7A]/5 -skew-x-12 transform origin-top" />
@@ -121,13 +121,19 @@ export default function Home() {
                   Technical Consultancy • Compliance • Operations
                 </p>
 
-{/* Context block: left border, company name */}
-<div className="border-l-2 border-primary pl-6 mb-30 mt-4">   {/* added more bottom margin and top margin */}
-  <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold uppercase tracking-wide leading-[1.1]">
-    <span className="text-[#3A74A0]">ADRIATICA</span>{' '}
-    <span className="text-[#0B3B5C]">D.O.O.</span>
-  </h1>
-</div>
+                {/* Context block: left border, company name */}
+                <div className="border-l-2 border-primary pl-6 mb-48 mt-4">   {/* increased bottom margin to push down */}
+                  <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold uppercase tracking-wide leading-[1.1]">
+                    <span className="text-[#3A74A0]">ADRIATICA</span>{' '}
+                    <span className="text-[#0B3B5C]">D.O.O.</span>
+                  </h1>
+                  {/* Website URL placed directly below company name */}
+                  <div className="mt-4">
+                    <p className="font-display text-xl md:text-2xl text-primary/70 uppercase tracking-wide">
+                      www.adriaticadoo.me
+                    </p>
+                  </div>
+                </div>
 
                 {/* Buttons removed */}
               </motion.div>
@@ -150,14 +156,13 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Scroll indicator with website URL – moved up */}
+          {/* Scroll indicator with arrow only (URL removed) */}
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5, duration: 1 }}
             className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center text-primary/40"
           >
-            <span className="text-xs uppercase tracking-widest mb-2">www.adriaticadoo.me</span>
             <ArrowDown className="animate-bounce w-5 h-5" />
           </motion.div>
         </section>
@@ -366,7 +371,6 @@ export default function Home() {
 
         {/* Image / Vision Section (unchanged) */}
         <section id="philosophy" className="py-24 bg-[#0B3B5C] text-white overflow-hidden relative">
-          {/* (content unchanged – omitted for brevity) */}
           <div className="absolute inset-0 opacity-10">
             <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
                <path d="M0 100 L100 0 L100 100 Z" fill="white" />
