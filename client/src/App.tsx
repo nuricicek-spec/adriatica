@@ -8,6 +8,7 @@ import Home from "@/pages/Home";
 import Careers from "@/pages/Careers";
 import News from "@/pages/News";
 import Insights from "@/pages/Insights";
+import InsightDetail from "@/pages/InsightDetail"; // YENİ: detay sayfası
 import Services from "@/pages/Services";
 import CaseStudies from "@/pages/CaseStudies";
 import About from "@/pages/About";
@@ -32,6 +33,7 @@ function Router() {
       <Route path="/careers" component={Careers} />
       <Route path="/news" component={News} />
       <Route path="/insights" component={Insights} />
+      <Route path="/insights/:slug" component={InsightDetail} /> {/* YENİ ROUTE */}
 
       {/* Service detail pages – add before the generic /services route */}
       <Route path="/services/engineering-plans" component={EngineeringPlans} />
