@@ -56,7 +56,7 @@ export function Footer() {
             <h4 className="font-display font-bold text-lg mb-6">Company</h4>
             <ul className="space-y-4">
               {[
-                { name: 'About', href: '/#philosophy' },
+                { name: 'About', href: '/about' }, // Değişiklik burada
                 { name: 'Careers', href: '/careers' },
                 { name: 'News', href: '/news' },
                 { name: 'Contact', href: '/#begin-voyage' }

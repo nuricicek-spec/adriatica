@@ -111,14 +111,15 @@ export default function Home() {
                   <span className="text-[#3A74A0]">ENGINEERING</span>
                 </h1>
 
-                {/* New broad descriptor */}
-                <p className="text-base md:text-lg lg:text-xl text-primary font-semibold mb-6">
-                  Engineering Management for Marine Operations
+                {/* Segment & Outcome - New */}
+                <p className="text-lg md:text-xl font-semibold text-primary mb-2">
+                  For Shipowners & Operators in the Adriatic and Mediterranean
                 </p>
-
-                {/* Benefit line */}
+                <p className="text-base md:text-lg lg:text-xl text-primary font-semibold mb-4">
+                  Engineering Management & Compliance Solutions
+                </p>
                 <p className="text-base md:text-lg lg:text-xl font-medium text-primary leading-relaxed max-w-xl mx-auto lg:mx-0 mb-6">
-                  Avoid drydock delays. Stay PSC‑ready. Maintain your charter schedule.
+                  Reduce dry‑dock delays, stay PSC‑ready, and protect your charter schedule.
                 </p>
 
                 {/* Context block with badge and left border */}
