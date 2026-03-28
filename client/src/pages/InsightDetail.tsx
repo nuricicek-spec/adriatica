@@ -6,7 +6,7 @@ import { Share2, Download, Star } from "lucide-react";
 import { Link } from "wouter";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function InsightDetail() {
   const [match, params] = useRoute("/insights/:slug");
@@ -17,7 +17,17 @@ export default function InsightDetail() {
   const [rating, setRating] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
-  // İlgili makaleler
+  // localStorage kontrolü: sayfa yüklendiğinde bu makale için oy verilmiş mi?
+  useEffect(() => {
+    if (slug) {
+      const hasVoted = localStorage.getItem(`rated_${slug}`);
+      if (hasVoted === 'true') {
+        setSubmitted(true);
+      }
+    }
+  }, [slug]);
+
+  // İlgili makaleler mantığı (önceki ile aynı)
   let related: typeof insights = [];
   if (insight?.relatedSlugs && insight.relatedSlugs.length > 0) {
     related = insights.filter(i => insight.relatedSlugs!.includes(i.slug));
@@ -35,7 +45,7 @@ export default function InsightDetail() {
   }
   related = related.slice(0, 2);
 
-  // Most Popular
+  // Most Popular (sidebar)
   const popular = recommendedSlugs
     .map(slug => insights.find(i => i.slug === slug))
     .filter((i): i is typeof insights[0] => i !== undefined && i.slug !== insight?.slug)
@@ -51,6 +61,12 @@ export default function InsightDetail() {
     setRating(value);
     setSubmitted(true);
 
+    // localStorage'e kaydet
+    if (slug) {
+      localStorage.setItem(`rated_${slug}`, 'true');
+    }
+
+    // GA4 event
     if (typeof window.gtag !== 'undefined') {
       window.gtag('event', 'article_rating', {
         event_category: 'engagement',
@@ -145,7 +161,7 @@ export default function InsightDetail() {
 
             {/* Sağ sidebar */}
             <aside className="space-y-8">
-              {/* Oylama */}
+              {/* Oylama bölümü */}
               <div className="p-6 bg-neutral-50 rounded">
                 <h3 className="font-display text-lg font-bold mb-4">How relevant and useful is this article for you?</h3>
                 {!submitted ? (
