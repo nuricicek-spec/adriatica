@@ -97,11 +97,12 @@ export default function Home() {
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-24 items-center">
+              {/* Left column – added mt-20 to shift entire text block down */}
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
-                className="text-center lg:text-left mb-10 lg:mb-0"
+                className="text-center lg:text-left mb-10 lg:mb-0 mt-20"
               >
                 <h2 className="text-primary font-medium tracking-[0.2em] uppercase mb-4">
                   Est. 2025
@@ -119,14 +120,8 @@ export default function Home() {
                   Technical Consultancy • Compliance • Operations
                 </p>
 
-                {/*
-                  Context block — ADRIATICA D.O.O. + URL
-                  mb-48 → mb-72: shifts the block ~80px further down
-                  so it aligns near the bottom of the pinecone logo
-                  on the right column (max-w-md aspect-square ≈ 448px tall).
-                  Adjust between mb-64 and mb-80 if fine-tuning is needed.
-                */}
-                <div className="border-l-2 border-primary pl-6 mb-72 mt-4">
+                {/* Company name + URL */}
+                <div className="border-l-2 border-primary pl-6 mb-10">
                   <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold uppercase tracking-wide leading-[1.1]">
                     <span className="text-[#3A74A0]">ADRIATICA</span>{' '}
                     <span className="text-[#0B3B5C]">D.O.O.</span>
@@ -141,6 +136,7 @@ export default function Home() {
                 {/* Buttons removed */}
               </motion.div>
 
+              {/* Right column – unchanged */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9, rotate: 5 }}
                 animate={{ opacity: 1, scale: 1, rotate: 0 }}
@@ -224,11 +220,11 @@ export default function Home() {
                   Smart planning and digital documentation minimise dry‑dock time and improve fuel performance.
                 </p>
               </div>
-              {/* 3. Owner's Trusted Representative */}
+              {/* 3. Owner’s Trusted Representative */}
               <div className="text-center p-6 border-l-2 border-primary/20">
                 <Handshake className="h-12 w-12 text-primary mx-auto mb-4" />
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-2">
-                  Owner's Trusted Representative
+                  Owner’s Trusted Representative
                 </h3>
                 <p className="text-muted-foreground">
                   We act as your technical eyes and ears in shipyards, ensuring quality control and budget adherence.
