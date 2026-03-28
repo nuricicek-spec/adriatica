@@ -111,44 +111,24 @@ export default function Home() {
                   <span className="text-[#3A74A0]">ENGINEERING</span>
                 </h1>
 
-                {/* New broad descriptor */}
+                {/* Broad descriptor */}
                 <p className="text-base md:text-lg lg:text-xl text-primary font-semibold mb-6">
                   Engineering Management for Marine Operations
                 </p>
 
-                {/* Benefit line */}
+                {/* Benefit line – replaced */}
                 <p className="text-base md:text-lg lg:text-xl font-medium text-primary leading-relaxed max-w-xl mx-auto lg:mx-0 mb-6">
-                  Avoid drydock delays. Stay PSC‑ready. Maintain your charter schedule.
+                  Technical Consultancy • Compliance • Operations
                 </p>
 
-                {/* Context block with badge and left border */}
+                {/* Context block: only left border, with company name */}
                 <div className="border-l-2 border-primary pl-6 mb-10">
-                  <div className="flex flex-wrap items-center gap-3 mb-2">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
-                      IMO 2026 Priority
-                    </span>
-                  </div>
-                  <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-xl mx-auto lg:mx-0">
-                    <a href="/news" className="hover:underline hover:text-primary transition-colors">
-                      With increasing PSC scrutiny across Europe, unmanaged biofouling is becoming an operational and regulatory risk. The 2026 IMO enforcement timeline accelerates the need for action.
-                    </a>
+                  <p className="text-base md:text-lg lg:text-xl font-display font-bold text-[#0B3B5C] leading-relaxed max-w-xl mx-auto lg:mx-0">
+                    ADRIATICA D.O.O.
                   </p>
                 </div>
-                
-                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                  <button 
-                    onClick={() => document.getElementById('begin-voyage')?.scrollIntoView({ behavior: 'smooth' })}
-                    className="px-8 py-4 bg-[#D4AF37] text-white font-medium rounded-sm shadow-lg shadow-[#D4AF37]/20 hover:bg-[#C9A961] transition-all duration-300 uppercase tracking-wide text-sm"
-                  >
-                    Request Technical Assessment
-                  </button>
-                  <button 
-                    onClick={() => document.getElementById('core-competencies')?.scrollIntoView({ behavior: 'smooth' })}
-                    className="px-8 py-4 bg-transparent border border-[#0B3B5C] text-[#0B3B5C] font-medium rounded-sm hover:bg-[#0B3B5C]/5 transition-all duration-300 uppercase tracking-wide text-sm"
-                  >
-                    Explore Services
-                  </button>
-                </div>
+
+                {/* Buttons removed */}
               </motion.div>
 
               <motion.div
@@ -169,13 +149,14 @@ export default function Home() {
             </div>
           </div>
 
+          {/* Scroll indicator with website URL */}
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5, duration: 1 }}
             className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-primary/40"
           >
-            <span className="text-xs uppercase tracking-widest mb-2">Scroll</span>
+            <span className="text-xs uppercase tracking-widest mb-2">www.adriaticadoo.me</span>
             <ArrowDown className="animate-bounce w-5 h-5" />
           </motion.div>
         </section>
