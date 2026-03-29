@@ -42,7 +42,7 @@ export const caseStudies: CaseStudy[] = [
       "Adriatica provided full‑time on‑site engineering supervision, coordinating with the shipyard and acting as Owner’s Technical Representative.",
     result:
       "The project was completed two days ahead of schedule, with all technical records accepted by the classification society and local Port Authority.",
-    relatedServices: ["project-management"],
-    relatedInsights: ["technical-operations-montenegro"], // Yerel operasyonlar ve tersane süreçleriyle ilgili
+    relatedServices: ["project-management", "engineering-plans", "engineering-documentation", "structural-integrity"], // refit sürecinde birden çok servis devreye girer
+    relatedInsights: ["technical-operations-montenegro"], // Montenegro'daki yerel operasyonları anlatan insight
   },
 ];
