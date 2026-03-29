@@ -37,19 +37,19 @@ export default function CookiePolicy() {
 
             <div className="space-y-6 text-muted-foreground leading-relaxed">
               <p>
-                This Cookie Policy explains how Adriatica D.O.O. uses cookies and similar technologies to recognize you when you visit our website.
+                We use cookies and similar technologies to recognise you when you visit our website. This Cookie Policy explains what cookies are, how we use them, and how you can control them.
               </p>
               <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">What are cookies?</h2>
               <p>
-                Cookies are small data files that are placed on your computer or mobile device when you visit a website. They are widely used by website owners to make their websites work, or to work more efficiently, as well as to provide reporting information.
+                Cookies are small data files placed on your computer or mobile device when you visit a website. Website owners use them to make their sites work more efficiently and to provide reporting information.
               </p>
               <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">How we use cookies</h2>
               <p>
-                We use cookies for a variety of reasons, including to understand how our website is used, to remember your preferences, and to improve your overall experience.
+                We use cookies to understand how our website is used, remember your preferences, and improve your overall experience.
               </p>
               <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">Managing cookies</h2>
               <p>
-                You can set or amend your web browser controls to accept or refuse cookies. If you choose to reject cookies, you may still use our website, though your access to some functionality and areas of our website may be restricted.
+                You can control cookies through your browser settings. Most browsers allow you to refuse or accept cookies. If you choose to reject cookies, you may still use our website, though some functionality may be limited.
               </p>
             </div>
           </motion.div>

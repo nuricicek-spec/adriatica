@@ -31,7 +31,7 @@ export function RelatedContent({ serviceSlugs, caseStudySlugs, insightSlugs }: R
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {relatedServices && relatedServices.length > 0 && (
           <div>
-            <h3 className="font-display text-xl font-bold mb-4">Related Services</h3>
+            <h3 className="font-display text-xl font-bold mb-4">Related services you can use</h3>
             <ul className="space-y-2">
               {relatedServices.map(service => (
                 <li key={service.slug}>
@@ -45,7 +45,7 @@ export function RelatedContent({ serviceSlugs, caseStudySlugs, insightSlugs }: R
         )}
         {relatedCaseStudies && relatedCaseStudies.length > 0 && (
           <div>
-            <h3 className="font-display text-xl font-bold mb-4">Relevant Case Studies</h3>
+            <h3 className="font-display text-xl font-bold mb-4">See how we solved similar challenges</h3>
             <ul className="space-y-2">
               {relatedCaseStudies.map(cs => (
                 <li key={cs.slug}>
@@ -59,7 +59,7 @@ export function RelatedContent({ serviceSlugs, caseStudySlugs, insightSlugs }: R
         )}
         {relatedInsights && relatedInsights.length > 0 && (
           <div>
-            <h3 className="font-display text-xl font-bold mb-4">Further Reading</h3>
+            <h3 className="font-display text-xl font-bold mb-4">Read more insights</h3>
             <ul className="space-y-2">
               {relatedInsights.map(insight => (
                 <li key={insight.slug}>

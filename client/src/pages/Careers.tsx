@@ -24,16 +24,16 @@ export default function Careers() {
             </h1>
             <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
               <p>
-                We are always looking for passionate marine engineers, naval architects, and technical consultants to join our growing team in Montenegro.
+                We’re always looking for passionate marine engineers, naval architects, and technical consultants to join our growing team in Montenegro.
               </p>
               <p>
-                If you share our values of independence, practicality, and technical excellence, please send your CV and cover letter to:
+                If you share our values of independence, practicality, and technical excellence, send your CV and cover letter to:
               </p>
               <p className="font-bold text-[#0B3B5C]">
                 info@adriaticadoo.me
               </p>
               <p className="text-sm italic">
-                (We will respond to suitable candidates within two weeks.)
+                We’ll respond to suitable candidates within two weeks.
               </p>
             </div>
           </motion.div>

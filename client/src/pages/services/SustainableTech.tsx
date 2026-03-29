@@ -27,7 +27,7 @@ export default function SustainableTech() {
 
           <div className="prose prose-lg max-w-none text-muted-foreground">
             <p>
-              Advisory and planning services to help vessels meet environmental regulations while improving efficiency. We work with operators to implement practical, cost‑effective solutions that reduce emissions and biosecurity risks.
+              Your vessel gets advisory and planning services that help meet environmental regulations while improving efficiency. We work with you to implement practical, cost‑effective solutions that reduce emissions and biosecurity risks.
             </p>
 
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Deliverables</h2>
@@ -39,7 +39,7 @@ export default function SustainableTech() {
             </ul>
 
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Outcome</h2>
-            <p>IMO‑compliant plans, reduced fuel consumption, and lower environmental risk.</p>
+            <p>You receive IMO‑compliant plans, reduced fuel consumption, and lower environmental risk.</p>
 
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">References</h2>
             <p>IMO, EU MRV, Paris MoU</p>
@@ -58,7 +58,7 @@ export default function SustainableTech() {
                   Adriatica does not perform physical cleaning operations. We provide independent engineering management, coordination, and compliance oversight.
                 </p>
                 <p className="text-muted-foreground mb-3">
-                  Without proper management, in-water cleaning can lead to non‑compliance with port regulations, environmental penalties, and coating damage. Adriatica ensures controlled, compliant, and documented operations.
+                  Without proper management, in-water cleaning can lead to non‑compliance with port regulations, environmental penalties, and coating damage. We ensure your operations are controlled, compliant, and fully documented.
                 </p>
                 <p className="text-muted-foreground mb-3">
                   When you work with us on biofouling management, you receive a complete compliance package:
@@ -73,7 +73,7 @@ export default function SustainableTech() {
                   <li>Post‑operation technical summary with compliance status</li>
                 </ul>
                 <p className="mt-4 text-primary font-medium">
-                  Typical outcome: A structured, compliance‑ready documentation package and fully managed in‑water cleaning operation with verifiable records suitable for PSC inspection.
+                  Typical outcome: A structured, compliance‑ready documentation package and a fully managed in‑water cleaning operation with verifiable records – ready for PSC inspection.
                 </p>
               </div>
 
@@ -90,7 +90,7 @@ export default function SustainableTech() {
                   <li>Life‑cycle cost analysis (including potential fuel savings)</li>
                 </ul>
                 <p className="mt-3 text-muted-foreground">
-                  We also assist with coating condition inspections and can recommend recoating schedules to maintain optimal performance and compliance.
+                  We also assist with coating condition inspections and recommend recoating schedules to maintain optimal performance and compliance.
                 </p>
               </div>
 
@@ -124,14 +124,14 @@ export default function SustainableTech() {
                   <li>Documentation of emission factors and calculation methods</li>
                 </ul>
                 <p className="mt-3 text-muted-foreground">
-                  We also support you during the reporting period, ensuring that the collected data meets THETIS‑MRV requirements and that the annual emission report is submitted on time.
+                  We also support you during the reporting period, ensuring that the collected data meets THETIS‑MRV requirements and that your annual emission report is submitted on time.
                 </p>
               </div>
             </div>
 
             <div className="mt-12 p-8 bg-neutral-50 border-l-4 border-primary text-center">
               <p className="text-lg font-medium text-[#0B3B5C] mb-2">
-                Ready to reduce your vessel’s environmental footprint?
+                Ready to reduce your vessel’s environmental footprint? Let’s get started.
               </p>
               <HashLink
                 href="/#begin-voyage"

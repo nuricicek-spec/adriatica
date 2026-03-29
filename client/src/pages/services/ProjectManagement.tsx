@@ -27,7 +27,7 @@ export default function ProjectManagement() {
 
           <div className="prose prose-lg max-w-none text-muted-foreground">
             <p>
-              Full technical management of dry‑dockings, refits, and complex modifications. Acting as Owner's Technical Representative, we coordinate with shipyards, supervise works, and ensure quality control, delivering projects on schedule with complete engineering documentation.
+              You get full technical management of dry‑dockings, refits, and complex modifications. As your Owner's Technical Representative, we coordinate with shipyards, supervise works, and ensure quality control – delivering your project on schedule with complete engineering documentation.
             </p>
 
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Deliverables</h2>
@@ -39,7 +39,7 @@ export default function ProjectManagement() {
             </ul>
 
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Outcome</h2>
-            <p>On‑time, on‑budget project delivery with verified quality and complete as‑built records.</p>
+            <p>You receive on‑time, on‑budget project delivery with verified quality and complete as‑built records.</p>
 
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">References</h2>
             <p>Industry best practices, IACS UR Z10</p>
@@ -49,7 +49,7 @@ export default function ProjectManagement() {
               <div className="border-l-2 border-primary/20 pl-6">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Owner's Rep & Refit Supervision</h3>
                 <p className="text-muted-foreground">
-                  We act as your dedicated technical representative, present on‑site to oversee all phases of the refit. Our role includes attending daily progress meetings, reviewing contractor work, and ensuring that specifications are met. We document all activities, flag deviations, and provide you with daily or weekly reports. Our presence ensures that your interests are protected throughout the project.
+                  We act as your dedicated technical representative, present on‑site to oversee all phases of the refit. Our role includes attending daily progress meetings, reviewing contractor work, and ensuring that specifications are met. We document all activities, flag deviations, and provide you with daily or weekly reports. Our presence ensures your interests are protected throughout the project.
                 </p>
                 <p className="text-muted-foreground mt-2">
                   <span className="font-medium">Outcome:</span> A fully managed refit with transparent communication, quality assurance, and no surprises.
@@ -59,7 +59,7 @@ export default function ProjectManagement() {
               <div className="border-l-2 border-primary/20 pl-6">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Dry‑Docking Specification & Management</h3>
                 <p className="text-muted-foreground">
-                  We prepare detailed dry‑docking specifications that clearly define the scope of work, acceptance criteria, and responsibilities. We then coordinate with shipyards, manage the tender process, and assist in contract negotiations. During the docking, we oversee the work, verify block arrangements, and manage the critical path to minimise off‑hire time.
+                  We prepare detailed dry‑docking specifications that clearly define the scope of work, acceptance criteria, and responsibilities. We then coordinate with shipyards, manage the tender process, and assist in contract negotiations. During the docking, we oversee the work, verify block arrangements, and manage the critical path to minimise your vessel’s off‑hire time.
                 </p>
                 <p className="text-muted-foreground mt-2">
                   <span className="font-medium">Outcome:</span> A well‑planned, efficiently executed dry‑docking that returns your vessel to service on time.
@@ -89,7 +89,7 @@ export default function ProjectManagement() {
 
             <div className="mt-12 p-8 bg-neutral-50 border-l-2 border-primary/20 rounded-sm text-center">
               <p className="text-lg font-medium text-[#0B3B5C] mb-2">
-                Planning a refit or dry‑docking?
+                Planning a refit or dry‑docking? Let’s talk.
               </p>
               <HashLink
                 href="/#begin-voyage"

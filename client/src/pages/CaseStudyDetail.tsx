@@ -16,7 +16,7 @@ export default function CaseStudyDetail() {
       <div className="min-h-screen bg-background">
         <Navigation />
         <div className="max-w-4xl mx-auto px-4 pt-32 pb-12 text-center">
-          <h1 className="text-2xl font-bold">Case study not found</h1>
+          <h1 className="text-2xl font-bold">Sorry, this case study could not be found.</h1>
           <Link href="/case-studies" className="text-primary underline">← All case studies</Link>
         </div>
         <Footer />

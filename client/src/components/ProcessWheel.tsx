@@ -20,10 +20,10 @@ const STEPS: Step[] = [
     phase: "Phase 1 of 4",
     title: "Risk Assessment & Planning",
     description:
-      "Every project begins with a thorough evaluation of vessel condition, regulatory requirements, and operational constraints — forming the foundation for a precise, compliance-ready work plan.",
+      "We start every project with a thorough evaluation of your vessel's condition, regulatory requirements, and operational constraints — giving you a precise, compliance‑ready work plan.",
     bullets: [
       "Vessel inspection & condition survey",
-      "IMO / port-state regulatory mapping",
+      "IMO / port‑state regulatory mapping",
       "Work scope definition & budget estimation",
     ],
   },
@@ -31,7 +31,7 @@ const STEPS: Step[] = [
     phase: "Phase 2 of 4",
     title: "Certified Partner Coordination",
     description:
-      "We engage and manage only vetted, certified contractors and service providers — ensuring technical competence and regulatory compliance at every stage of execution.",
+      "We engage and manage only vetted, certified contractors and service providers — so you get technical competence and regulatory compliance at every stage.",
     bullets: [
       "Contractor qualification & approval",
       "Method statement & safety plan review",
@@ -42,18 +42,18 @@ const STEPS: Step[] = [
     phase: "Phase 3 of 4",
     title: "Execution & Quality Control",
     description:
-      "On-site supervision ensures work is carried out exactly to specification. Our engineers oversee each phase, performing real-time quality checks and managing deviations immediately.",
+      "Our engineers supervise on‑site, performing real‑time quality checks and managing deviations immediately — ensuring your project stays exactly to specification.",
     bullets: [
-      "On-site engineering supervision",
+      "On‑site engineering supervision",
       "Coating / equipment compliance checks",
-      "Non-conformity management & sign-off",
+      "Non‑conformity management & sign‑off",
     ],
   },
   {
     phase: "Phase 4 of 4",
     title: "Documentation & Reporting",
     description:
-      "Comprehensive, class-ready records are produced at project close — feeding directly into the next risk assessment cycle and ensuring long-term compliance readiness.",
+      "You receive comprehensive, class‑ready records at project close — feeding directly into the next risk assessment cycle and your long‑term compliance readiness.",
     bullets: [
       "Class society submission packages",
       "Biofouling & maintenance record updates",
@@ -129,10 +129,9 @@ function ArrowMarker({ angleDeg }: { angleDeg: number }) {
   const r    = 190;
   const span = 13;
   const [tx, ty]   = polar(CX, CY, r, angleDeg + span);
-  const perpBase   = angleDeg + span + 90;
   const sz         = 5;
-  const [bx1, by1] = polar(tx, ty, sz, perpBase - 155);
-  const [bx2, by2] = polar(tx, ty, sz, perpBase + 155);
+  const [bx1, by1] = polar(tx, ty, sz, angleDeg + span + 90 - 155);
+  const [bx2, by2] = polar(tx, ty, sz, angleDeg + span + 90 + 155);
   return (
     <polygon
       points={`${tx},${ty} ${bx1},${by1} ${bx2},${by2}`}
@@ -148,7 +147,6 @@ export default function ProcessWheel() {
   const [visible, setVisible] = useState(true); // drives panel fade
   const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // FIX 1a – triggerFade is now a stable useCallback so startAuto can depend on it
   const triggerFade = useCallback(() => {
     setVisible(false);
     setTimeout(() => setVisible(true), 40);
@@ -161,7 +159,6 @@ export default function ProcessWheel() {
     }
   }, []);
 
-  // FIX 1b – triggerFade added to dependency array (no more stale closure)
   const startAuto = useCallback(() => {
     if (autoRef.current) clearInterval(autoRef.current);
     autoRef.current = setInterval(() => {
@@ -175,7 +172,6 @@ export default function ProcessWheel() {
     return () => stopAuto();
   }, [startAuto, stopAuto]);
 
-  // select is also memoised so child buttons get a stable reference
   const select = useCallback((idx: number) => {
     stopAuto();
     triggerFade();
@@ -191,7 +187,6 @@ export default function ProcessWheel() {
 
   // ─── Render ───────────────────────────────────────────────────────────────
   return (
-    // FIX 4 – bg-white removed; inherits bg-background from Services wrapper
     <section className="w-full py-16 px-6">
       <div className="flex flex-col md:flex-row items-center gap-16 max-w-5xl mx-auto">
 
@@ -222,9 +217,6 @@ export default function ProcessWheel() {
                   onClick={() => select(i)}
                   onKeyDown={e => handleKey(e, i)}
                 >
-                  {/* FIX 3 – SVG filter attribute removed entirely.
-                      CSS filter (inline style) is the single source of truth.
-                      Previously both coexisted, CSS was winning silently. */}
                   <path
                     d={arcPath(CX, CY, R_OUT, R_IN, seg.start, seg.end)}
                     fill={SEG_COLORS[i]}
@@ -237,8 +229,6 @@ export default function ProcessWheel() {
                     }}
                   />
 
-                  {/* Segment label – SVG font attrs use site CSS variables
-                      so they pick up whatever font the project loads globally */}
                   <text
                     x={lx}
                     y={ly}
@@ -273,7 +263,7 @@ export default function ProcessWheel() {
               style={{ filter: "drop-shadow(0 2px 5px rgba(11,59,92,0.18))" }} />
             <circle cx={CX} cy={CY} r={R_IN - 4} fill="#F8FAFB" />
 
-            {/* Centre text – single word, larger and vertically centred */}
+            {/* Centre text */}
             <text x={CX} y={CY + 6} textAnchor="middle"
               fill="#0B3B5C"
               fontFamily="var(--font-display, 'Playfair Display', serif)"
@@ -292,7 +282,6 @@ export default function ProcessWheel() {
               transition: "opacity 0.26s ease, transform 0.26s ease",
             }}
           >
-            {/* Phase indicator — mirrors SectionHeading subtitle style */}
             <div className="flex items-center gap-3 mb-5">
               <div
                 className="w-3 h-px flex-shrink-0"
@@ -303,17 +292,14 @@ export default function ProcessWheel() {
               </span>
             </div>
 
-            {/* Title — font-display + font-bold matches service card h3 exactly */}
             <h3 className="font-display text-2xl font-bold text-primary mb-3 leading-snug">
               {STEPS[active].title}
             </h3>
 
-            {/* Description — text-muted-foreground leading-relaxed matches service cards */}
             <p className="text-muted-foreground leading-relaxed mb-5">
               {STEPS[active].description}
             </p>
 
-            {/* Deliverable list — list-disc pl-5 text-sm matches service card deliverables */}
             <ul className="list-disc pl-5 text-muted-foreground space-y-1 text-sm">
               {STEPS[active].bullets.map((b, i) => (
                 <li key={i}>{b}</li>

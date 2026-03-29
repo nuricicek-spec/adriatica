@@ -8,14 +8,14 @@ const newsItems = [
   {
     date: "25 March 2026",
     title: "Adriatica Launches IMO‑Aligned Biofouling Management Plans",
-    excerpt: "As Port State Control regimes intensify scrutiny on biofouling documentation, Adriatica D.O.O. now offers vessel‑specific Biofouling Management Plans (BFMP) fully aligned with IMO MEPC.378(80) guidelines. These plans include quantified risk assessments, niche‑area identification, and a structured Biofouling Record Book (BFRB) – providing operators with PSC‑ready documentation and a clear pathway to compliance. With the 2026 enforcement convergence approaching, Adriatica stands ready to assist vessel operators in the Adriatic and Mediterranean to stay ahead of regulatory requirements.",
+    excerpt: "With Port State Control regimes intensifying scrutiny on biofouling documentation, Adriatica D.O.O. now provides vessel‑specific Biofouling Management Plans (BFMP) fully aligned with IMO MEPC.378(80) guidelines. You get quantified risk assessments, niche‑area identification, and a structured Biofouling Record Book (BFRB) – PSC‑ready documentation and a clear path to compliance. As the 2026 enforcement deadline approaches, we're here to help vessel operators in the Adriatic and Mediterranean stay ahead of regulatory requirements.",
     showCta: true,
   },
   {
     date: "30 June 2025",
-    title: "Adriatica joins the Montenegrin Marine Industry Association",
-    excerpt: "We are proud to become a member of the local marine industry network, strengthening our commitment to the Adriatic maritime community.",
-    showCta: true,   // <-- added CTA for this news item
+    title: "Adriatica Joins the Montenegrin Marine Industry Association",
+    excerpt: "We're proud to become a member of the local marine industry network, strengthening our commitment to the Adriatic maritime community.",
+    showCta: true,
   },
 ];
 
@@ -59,7 +59,7 @@ export default function News() {
                       href="/#begin-voyage"
                       className="inline-flex items-center gap-1 text-primary hover:underline text-sm font-medium"
                     >
-                      Need support? → Request consultation
+                      Need support? Request a consultation →
                     </HashLink>
                   )}
                 </article>

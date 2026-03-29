@@ -27,7 +27,7 @@ export default function EngineeringDocs() {
 
           <div className="prose prose-lg max-w-none text-muted-foreground">
             <p>
-              Development of vessel‑specific technical manuals and analyses, ensuring completeness and alignment with IMO conventions, EU MRV, and class requirements. We prepare documents to facilitate crew training, maintenance planning, and port state control inspections.
+              You get vessel‑specific technical manuals and analyses, fully aligned with IMO conventions, EU MRV, and class requirements. These documents facilitate crew training, maintenance planning, and port state control inspections – keeping you audit‑ready.
             </p>
 
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Deliverables</h2>
@@ -39,7 +39,7 @@ export default function EngineeringDocs() {
             </ul>
 
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Outcome</h2>
-            <p>Audit‑ready documentation, improved crew familiarity, and smoother port state control inspections.</p>
+            <p>You receive audit‑ready documentation, improved crew familiarity, and smoother port state control inspections.</p>
 
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">References</h2>
             <p>IMO, EU MRV, MARPOL</p>
@@ -49,7 +49,7 @@ export default function EngineeringDocs() {
               <div className="border-l-2 border-primary/20 pl-6">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">As‑Built P&ID / System Manuals</h3>
                 <p className="text-muted-foreground">
-                  We produce complete piping and instrumentation diagrams (P&IDs) that reflect the final installed systems, including all valves, pumps, sensors, and control loops. These are compiled into system manuals that also include operational descriptions, troubleshooting guides, and maintenance schedules. The documents are delivered in both printed and digital formats for easy access.
+                  You receive complete piping and instrumentation diagrams (P&IDs) that reflect the final installed systems, including all valves, pumps, sensors, and control loops. These are compiled into system manuals that also include operational descriptions, troubleshooting guides, and maintenance schedules – delivered in both printed and digital formats for easy access.
                 </p>
                 <p className="text-muted-foreground mt-2">
                   <span className="font-medium">Outcome:</span> A comprehensive reference that supports crew training, reduces downtime, and simplifies future modifications.
@@ -59,7 +59,7 @@ export default function EngineeringDocs() {
               <div className="border-l-2 border-primary/20 pl-6">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Electrical Load Analysis (EAB)</h3>
                 <p className="text-muted-foreground">
-                  A detailed assessment of the vessel’s electrical power balance, identifying peak loads, generator sizing, and distribution system capacity. We use advanced calculation tools and consider all operational modes (navigation, manoeuvring, harbour, emergency). The analysis is submitted to class for approval and is essential for generator scheduling and future electrical upgrades.
+                  A detailed assessment of your vessel’s electrical power balance, identifying peak loads, generator sizing, and distribution system capacity. We use advanced calculation tools and consider all operational modes (navigation, manoeuvring, harbour, emergency). The analysis is submitted to class for approval – essential for generator scheduling and future electrical upgrades.
                 </p>
                 <p className="text-muted-foreground mt-2">
                   <span className="font-medium">Outcome:</span> Class‑approved load analysis, optimised generator operation, and a solid basis for any electrical system changes.
@@ -79,7 +79,7 @@ export default function EngineeringDocs() {
               <div className="border-l-2 border-primary/20 pl-6">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Inventory of Hazardous Materials (IHM)</h3>
                 <p className="text-muted-foreground">
-                  A comprehensive list of hazardous materials on board, prepared in accordance with the Hong Kong Convention and EU Ship Recycling Regulation. We conduct a thorough review of vessel documentation and, if necessary, on‑board sampling to identify materials such as asbestos, PCBs, and ozone‑depleting substances. The IHM is essential for end‑of‑life planning and demonstrates environmental responsibility.
+                  A comprehensive list of hazardous materials on board, prepared in accordance with the Hong Kong Convention and EU Ship Recycling Regulation. We conduct a thorough review of vessel documentation and, if necessary, on‑board sampling to identify materials such as asbestos, PCBs, and ozone‑depleting substances. The IHM is essential for end‑of‑life planning and demonstrates your environmental responsibility.
                 </p>
                 <p className="text-muted-foreground mt-2">
                   <span className="font-medium">Outcome:</span> A complete, compliant IHM that facilitates recycling, protects crew health, and meets regulatory requirements.
@@ -89,7 +89,7 @@ export default function EngineeringDocs() {
 
             <div className="mt-12 p-8 bg-neutral-50 border-l-2 border-primary/20 rounded-sm text-center">
               <p className="text-lg font-medium text-[#0B3B5C] mb-2">
-                Need support with your vessel’s technical manuals?
+                Ready to get your vessel’s technical manuals in order?
               </p>
               <HashLink
                 href="/#begin-voyage"

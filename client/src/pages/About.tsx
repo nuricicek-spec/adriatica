@@ -62,7 +62,7 @@ export default function About() {
           <div className="prose prose-lg max-w-none text-muted-foreground">
             {/* Opening – Montenegro origin + global reach */}
             <p className="mb-6">
-              Adriatica was founded in Montenegro to bridge the gap between complex maritime regulations and practical vessel management. We don’t just consult – we engineer compliance, performance, and peace of mind for vessel operators around the world, with a strong focus on the Adriatic and Mediterranean.
+              Adriatica was founded in Montenegro to bridge the gap between complex maritime regulations and practical vessel management. You don’t just get a consultant – you get an engineer who builds compliance, performance, and peace of mind for vessel operators worldwide, with a strong focus on the Adriatic and Mediterranean.
             </p>
 
             {/* Expertise – with intro, representative note, and link to Services */}
@@ -86,7 +86,7 @@ export default function About() {
             {/* Operational Region – broader ports + global hint */}
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Operational Region</h2>
             <p>
-              We operate across the Adriatic Sea and the Mediterranean Basin, supporting both yachts and commercial vessels at key maritime hubs. Our regional presence includes ports such as Bar (Montenegro), Durrës (Albania), Rijeka, Split, Ploče (Croatia), as well as renowned yacht destinations like Tivat, Dubrovnik, Monaco, and others. Beyond the region, we provide engineering management and technical advisory services globally, ensuring compliance and operational excellence wherever your vessel operates.
+              You’ll find our support across the Adriatic Sea and the Mediterranean Basin – from key commercial ports like Bar (Montenegro), Durrës (Albania), Rijeka, Split, Ploče (Croatia) to yacht destinations such as Tivat, Dubrovnik, and Monaco. And when your vessel sails beyond the region, we’re still with you: global engineering management and technical advisory services that keep you compliant and operationally excellent, anywhere.
             </p>
 
             {/* Why Choose Adriatica – benefit cards + link to homepage philosophy */}
@@ -97,15 +97,15 @@ export default function About() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
               <div className="border-l-2 border-primary/20 pl-4">
                 <h3 className="font-bold text-[#0B3B5C] mb-2">Risk‑Based Approach</h3>
-                <p className="text-sm">We prioritise what matters – focusing on niche areas, coating condition, and operational profile to deliver targeted, cost‑effective solutions.</p>
+                <p className="text-sm">You get targeted, cost‑effective solutions because we focus on what truly matters: niche areas, coating condition, and your operational profile.</p>
               </div>
               <div className="border-l-2 border-primary/20 pl-4">
                 <h3 className="font-bold text-[#0B3B5C] mb-2">Regional Expertise</h3>
-                <p className="text-sm">We understand Port State Control expectations in the Adriatic and Mediterranean, ensuring your vessel stays compliant and disruption‑free.</p>
+                <p className="text-sm">We know Port State Control expectations in the Adriatic and Mediterranean inside out – so your vessel stays compliant and disruption‑free.</p>
               </div>
               <div className="border-l-2 border-primary/20 pl-4">
                 <h3 className="font-bold text-[#0B3B5C] mb-2">Engineering Depth</h3>
-                <p className="text-sm">We don’t just advise – we manage, certify, and document. Every project is backed by thorough engineering analysis and inspection‑ready records.</p>
+                <p className="text-sm">You don’t get just advice – you get management, certification, and full documentation. Every project is backed by rigorous engineering analysis and inspection‑ready records.</p>
               </div>
             </div>
             <p className="mb-2">
@@ -121,7 +121,7 @@ export default function About() {
             {/* Regulatory Alignment – simplified badges */}
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Regulatory Alignment</h2>
             <p className="mb-4">
-              Our work is aligned with international and regional maritime frameworks, including:
+              Your vessel benefits from our alignment with international and regional maritime frameworks, including:
             </p>
             <div className="flex flex-wrap gap-3 text-sm text-muted-foreground border-t border-border/20 pt-4 mt-2">
               <span className="bg-neutral-100 px-3 py-1 rounded-full">Classification society rules (DNV, BV, RINA)</span>

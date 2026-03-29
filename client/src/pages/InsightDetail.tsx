@@ -64,8 +64,8 @@ export default function InsightDetail() {
       <div className="min-h-screen bg-background">
         <Navigation />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-12 text-center">
-          <h1 className="text-2xl font-bold">Makale bulunamadı</h1>
-          <Link href="/insights" className="text-primary underline">← Tüm Insights</Link>
+          <h1 className="text-2xl font-bold">Article not found</h1>
+          <Link href="/insights" className="text-primary underline">← All insights</Link>
         </div>
         <Footer />
       </div>
@@ -134,7 +134,7 @@ export default function InsightDetail() {
             <aside className="space-y-8">
               {/* Oylama bölümü */}
               <div className="p-6 bg-neutral-50 rounded">
-                <h3 className="font-display text-lg font-bold mb-4">How relevant and useful is this article for you?</h3>
+                <h3 className="font-display text-lg font-bold mb-4">How useful was this article?</h3>
                 {!submitted ? (
                   <div className="flex gap-1">
                     {[1, 2, 3, 4, 5].map(value => (
@@ -148,7 +148,7 @@ export default function InsightDetail() {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-green-700 text-sm">Thank you for your feedback!</p>
+                  <p className="text-green-700 text-sm">Thank you!</p>
                 )}
               </div>
 

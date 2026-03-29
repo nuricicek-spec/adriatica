@@ -37,19 +37,19 @@ export default function PrivacyPolicy() {
 
             <div className="space-y-6 text-muted-foreground leading-relaxed">
               <p>
-                At Adriatica D.O.O., we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your personal information when you visit our website.
+                At Adriatica D.O.O., we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your personal information when you visit our website.
               </p>
-              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">Information Collection</h2>
+              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">What information we collect</h2>
               <p>
-                We collect information that you provide directly to us, such as when you request a consultation or sign up for our newsletter. This may include your name, email address, and any other information you choose to provide.
+                We collect information you provide directly to us – for example, when you request a consultation or sign up for our newsletter. This may include your name, email address, and any other details you choose to share.
               </p>
-              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">Use of Information</h2>
+              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">How we use your information</h2>
               <p>
-                We use the information we collect to provide and improve our services, communicate with you, and comply with legal obligations. We do not sell your personal information to third parties.
+                We use your information to provide and improve our services, communicate with you, and comply with legal obligations. We never sell your personal information to third parties.
               </p>
-              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">Data Security</h2>
+              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">Data security</h2>
               <p>
-                We implement reasonable security measures to protect your information from unauthorized access, disclosure, or alteration. However, no method of transmission over the internet is 100% secure.
+                We implement reasonable security measures to protect your information from unauthorised access, disclosure, or alteration. However, no internet transmission is 100% secure.
               </p>
             </div>
           </motion.div>

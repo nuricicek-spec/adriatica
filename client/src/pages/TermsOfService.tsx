@@ -37,19 +37,19 @@ export default function TermsOfService() {
 
             <div className="space-y-6 text-muted-foreground leading-relaxed">
               <p>
-                By accessing or using the Adriatica D.O.O. website, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our website.
+                By accessing or using the Adriatica D.O.O. website, you agree to follow these Terms of Service. If not, please do not use our website.
               </p>
               <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">Intellectual Property</h2>
               <p>
-                All content on this website, including text, graphics, logos, and images, is the property of Adriatica D.O.O. or its content suppliers and is protected by international copyright laws.
+                All content on this website – including text, graphics, logos, and images – is owned by Adriatica D.O.O. or its content suppliers and is protected by international copyright laws.
               </p>
               <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">Disclaimer of Warranties</h2>
               <p>
-                The information provided on this website is for general informational purposes only. We make no representations or warranties of any kind, express or implied, about the completeness, accuracy, or reliability of the information.
+                The information on this website is for general informational purposes only. We provide no guarantees, express or implied, about its completeness, accuracy, or reliability.
               </p>
               <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">Limitation of Liability</h2>
               <p>
-                In no event shall Adriatica D.O.O. be liable for any direct, indirect, incidental, or consequential damages arising out of or in connection with your use of this website.
+                We will not be liable for any direct, indirect, incidental, or consequential damages arising from your use of this website.
               </p>
             </div>
           </motion.div>

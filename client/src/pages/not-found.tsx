@@ -21,7 +21,7 @@ export default function NotFound() {
             </div>
 
             <p className="mt-4 text-sm text-muted-foreground">
-              The coordinates you have entered do not correspond to a known location in our chart.
+              The coordinates you entered do not match any known location on our chart.
             </p>
             
             <div className="mt-8">

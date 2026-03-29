@@ -27,7 +27,7 @@ export default function EngineeringPlans() {
 
           <div className="prose prose-lg max-w-none text-muted-foreground">
             <p>
-              Detailed engineering drawings and plan sets for new constructions, conversions, and refits. We produce documentation in accordance with classification society rules and flag state requirements, supporting both regulatory approval and operational safety. Our deliverables are suitable for yachts, commercial vessels, and fishing boats.
+              You get detailed engineering drawings and plan sets for new constructions, conversions, and refits. All documentation is produced in accordance with classification society rules and flag state requirements – supporting your regulatory approval and operational safety. Our deliverables suit yachts, commercial vessels, and fishing boats.
             </p>
 
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Deliverables</h2>
@@ -40,7 +40,7 @@ export default function EngineeringPlans() {
             </ul>
 
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Outcome</h2>
-            <p>Class‑approved plan sets, reduced approval delays, and a clear basis for construction or modification.</p>
+            <p>You receive class‑approved plan sets, reduced approval delays, and a clear basis for construction or modification.</p>
 
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">References</h2>
             <p>Class society rules (RINA, BV, DNV), flag state regulations</p>
@@ -50,7 +50,7 @@ export default function EngineeringPlans() {
               <div className="border-l-2 border-primary/20 pl-6">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Structural Drawings</h3>
                 <p className="text-muted-foreground">
-                  We produce complete structural drawings covering the vessel’s primary and secondary steelwork, including framing, plating, and connections. All drawings are prepared in accordance with the applicable classification society rules (RINA, BV, DNV) and include fabrication details, material specifications, and welding procedures. We also provide 3D models and finite element analysis (FEA) results when required for complex structures.
+                  You receive complete structural drawings covering your vessel’s primary and secondary steelwork, including framing, plating, and connections. All drawings are prepared in accordance with the applicable classification society rules (RINA, BV, DNV) and include fabrication details, material specifications, and welding procedures. We also provide 3D models and finite element analysis (FEA) results when required for complex structures.
                 </p>
                 <p className="text-muted-foreground mt-2">
                   <span className="font-medium">Outcome:</span> Approval‑ready documentation that minimises back‑and‑forth with class and ensures a smooth construction process.
@@ -60,7 +60,7 @@ export default function EngineeringPlans() {
               <div className="border-l-2 border-primary/20 pl-6">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">As‑Built Drawing Sets</h3>
                 <p className="text-muted-foreground">
-                  After construction or major modifications, we update the original drawings to reflect the actual condition of the vessel. This includes verifying measurements on‑site and incorporating any field changes. The final as‑built set is essential for future maintenance, modifications, and compliance documentation.
+                  After construction or major modifications, we update the original drawings to reflect the actual condition of your vessel. This includes verifying measurements on‑site and incorporating any field changes. The final as‑built set is essential for future maintenance, modifications, and compliance documentation.
                 </p>
                 <p className="text-muted-foreground mt-2">
                   <span className="font-medium">Outcome:</span> A reliable record that supports safe operation, simplifies future engineering work, and meets flag state requirements for vessel documentation.
@@ -80,17 +80,17 @@ export default function EngineeringPlans() {
               <div className="border-l-2 border-primary/20 pl-6">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Fire & Safety Plans</h3>
                 <p className="text-muted-foreground">
-                  Fire control plans, emergency escape routes, and safety equipment location drawings, compliant with SOLAS and flag state requirements. These plans are designed to be easily understood by crew and port state control officers, and we provide both shipboard copies and the required electronic version for the fire control plan folder.
+                  Fire control plans, emergency escape routes, and safety equipment location drawings, compliant with SOLAS and flag state requirements. These plans are designed to be easily understood by crew and port state control officers. We provide both shipboard copies and the required electronic version for the fire control plan folder.
                 </p>
                 <p className="text-muted-foreground mt-2">
-                  <span className="font-medium">Outcome:</span> PSC‑ready documentation that enhances onboard safety and demonstrates regulatory compliance.
+                  <span className="font-medium">Outcome:</span> PSC‑ready documentation that enhances onboard safety and demonstrates your regulatory compliance.
                 </p>
               </div>
             </div>
 
             <div className="mt-12 p-8 bg-neutral-50 border-l-2 border-primary/20 rounded-sm text-center">
               <p className="text-lg font-medium text-[#0B3B5C] mb-2">
-                Ready to start your next project?
+                Ready to get your engineering plans in place?
               </p>
               <HashLink
                 href="/#begin-voyage"

@@ -190,7 +190,7 @@ export default function Home() {
                   Operational Region
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  Adriatica provides engineering management and technical advisory services for a wide range of vessels – including superyachts, commercial vessels, and fishing boats – operating in the <strong>Adriatic Sea</strong>, <strong>Mediterranean Basin</strong>, and <strong>European coastal waters</strong>.
+                  You benefit from our engineering management and technical advisory services across a wide range of vessels – superyachts, commercial vessels, and fishing boats – operating in the <strong>Adriatic Sea</strong>, <strong>Mediterranean Basin</strong>, and <strong>European coastal waters</strong>.
                 </p>
               </div>
               <div className="flex justify-center">
@@ -226,7 +226,7 @@ export default function Home() {
                   Technical Excellence & Compliance
                 </h3>
                 <p className="text-muted-foreground">
-                  All projects are managed in full alignment with IMO, MARPOL, and IACS standards. We aim for zero PSC risk.
+                  Your projects are managed in full alignment with IMO, MARPOL, and IACS standards – so you get zero PSC risk.
                 </p>
               </div>
               {/* 2. Operational Efficiency */}
@@ -236,7 +236,7 @@ export default function Home() {
                   Operational Efficiency
                 </h3>
                 <p className="text-muted-foreground">
-                  Smart planning and digital documentation minimise dry‑dock time and improve fuel performance.
+                  Smart planning and digital documentation cut dry‑dock time and improve fuel performance – saving you time and money.
                 </p>
               </div>
               {/* 3. Owner’s Trusted Representative */}
@@ -246,7 +246,7 @@ export default function Home() {
                   Owner’s Trusted Representative
                 </h3>
                 <p className="text-muted-foreground">
-                  We act as your technical eyes and ears in shipyards, ensuring quality control and budget adherence.
+                  We act as your technical eyes and ears in shipyards, ensuring quality control and budget adherence – so you can focus on operations.
                 </p>
               </div>
             </div>
@@ -271,22 +271,22 @@ export default function Home() {
               <div className="text-center p-6 border-l-2 border-primary/20">
                 <Clipboard className="h-12 w-12 text-primary mx-auto mb-4" />
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-2">1. Brief & Information</h3>
-                <p className="text-muted-foreground">Share vessel details, operational profile, and specific concerns.</p>
+                <p className="text-muted-foreground">You share vessel details, operational profile, and specific concerns.</p>
               </div>
               <div className="text-center p-6 border-l-2 border-primary/20">
                 <Search className="h-12 w-12 text-primary mx-auto mb-4" />
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-2">2. Analysis & Planning</h3>
-                <p className="text-muted-foreground">Technical assessment, risk identification, and scope definition.</p>
+                <p className="text-muted-foreground">We perform technical assessment, risk identification, and scope definition.</p>
               </div>
               <div className="text-center p-6 border-l-2 border-primary/20">
                 <Wrench className="h-12 w-12 text-primary mx-auto mb-4" />
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-2">3. Execution & Supervision</h3>
-                <p className="text-muted-foreground">Engineering oversight, contractor coordination, quality control.</p>
+                <p className="text-muted-foreground">We handle engineering oversight, contractor coordination, and quality control.</p>
               </div>
               <div className="text-center p-6 border-l-2 border-primary/20">
                 <FileText className="h-12 w-12 text-primary mx-auto mb-4" />
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-2">4. Documentation & Handover</h3>
-                <p className="text-muted-foreground">Complete records, audit‑ready reports, and as‑built documentation.</p>
+                <p className="text-muted-foreground">You receive complete records, audit‑ready reports, and as‑built documentation.</p>
               </div>
             </div>
           </div>
@@ -384,7 +384,7 @@ export default function Home() {
         <section className="py-16 bg-neutral-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Have a specific technical challenge? Our team is ready to assist.
+              Have a specific technical challenge? We're ready to solve it.
             </p>
             <button 
               onClick={() => document.getElementById('begin-voyage')?.scrollIntoView({ behavior: 'smooth' })}
@@ -775,7 +775,7 @@ export default function Home() {
               Begin Your Voyage
             </h2>
             <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto">
-              Discuss your marine engineering requirements with our principal architects. {COMMISSIONS_TEXT}
+              Tell us your marine engineering requirements, and our principal architects will respond. {COMMISSIONS_TEXT}
             </p>
 
             {formStatus === 'success' ? (

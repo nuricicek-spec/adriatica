@@ -47,7 +47,7 @@ const services = [
     title: "Engineering Plans",
     slug: "engineering-plans",
     description:
-      "Detailed engineering drawings and plan sets for new constructions, conversions, and refits. We produce documentation in accordance with classification society rules and flag state requirements, supporting both regulatory approval and operational safety. Our deliverables are suitable for yachts, commercial vessels, and fishing boats.",
+      "You get detailed engineering drawings and plan sets for new constructions, conversions, and refits. All documentation is produced in accordance with classification society rules and flag state requirements – supporting your regulatory approval and operational safety. Our deliverables suit yachts, commercial vessels, and fishing boats.",
     deliverables: [
       "Structural Drawings",
       "As‑Built Drawing Sets",
@@ -62,7 +62,7 @@ const services = [
     title: "Engineering Documentation",
     slug: "engineering-documentation",
     description:
-      "Development of vessel‑specific technical manuals and analyses, ensuring completeness and alignment with IMO conventions, EU MRV, and class requirements. We prepare documents to facilitate crew training, maintenance planning, and port state control inspections.",
+      "You receive vessel‑specific technical manuals and analyses, fully aligned with IMO conventions, EU MRV, and class requirements. These documents facilitate crew training, maintenance planning, and port state control inspections – keeping you audit‑ready.",
     deliverables: [
       "As‑Built P&ID / System Manuals",
       "Electrical Load Analysis (EAB)",
@@ -76,7 +76,7 @@ const services = [
     title: "Structural Integrity",
     slug: "structural-integrity",
     description:
-      "Comprehensive hull condition assessments, life extension studies, modification consultancy, and vibration/noise diagnostics. Using advanced engineering methods and IACS unified requirements, we evaluate structural performance and recommend targeted repairs or reinforcements.",
+      "Your vessel benefits from comprehensive hull condition assessments, life extension studies, modification consultancy, and vibration/noise diagnostics. Using advanced engineering methods and IACS unified requirements, we evaluate structural performance and recommend targeted repairs or reinforcements.",
     deliverables: [
       "Structural Integrity & Life Extension Studies",
       "Hull Condition Analysis",
@@ -90,7 +90,7 @@ const services = [
     title: "Sustainable Technologies & Compliance",
     slug: "sustainable-technologies",
     description:
-      "Advisory and planning services to help vessels meet environmental regulations while improving efficiency. We work with operators to implement practical, cost‑effective solutions that reduce emissions and biosecurity risks.",
+      "Advisory and planning services that help your vessel meet environmental regulations while improving efficiency. We work with you to implement practical, cost‑effective solutions that reduce emissions and biosecurity risks – giving you peace of mind.",
     deliverables: [
       "Biofouling Management Plan (IMO MEPC.378(80))",
       "Eco‑friendly Coating Advisory",
@@ -104,7 +104,7 @@ const services = [
     title: "Regulatory Compliance",
     slug: "regulatory-compliance",
     description:
-      "Preparation and periodic updating of mandatory shipboard plans and manuals, tailored to the vessel's configuration and operational profile. We ensure documents meet the latest IMO, MARPOL, and flag state requirements.",
+      "You get preparation and periodic updating of mandatory shipboard plans and manuals, tailored to your vessel's configuration and operational profile. All documents meet the latest IMO, MARPOL, and flag state requirements – so you stay ahead of inspections.",
     deliverables: [
       "Ballast Water Management Plan (BWMP)",
       "Shipboard Oil Pollution Emergency Plan (SoPEP)",
@@ -119,7 +119,7 @@ const services = [
     title: "Project Management & Owner's Representation",
     slug: "project-management",
     description:
-      "Full technical management of dry‑dockings, refits, and complex modifications. Acting as Owner's Technical Representative, we coordinate with shipyards, supervise works, and ensure quality control, delivering projects on schedule with complete engineering documentation.",
+      "Full technical management of dry‑dockings, refits, and complex modifications. As your Owner's Technical Representative, we coordinate with shipyards, supervise works, and ensure quality control – delivering your project on schedule with complete engineering documentation.",
     deliverables: [
       "Owner's Rep & Refit Supervision",
       "Dry‑Docking Specification & Management",
@@ -505,10 +505,10 @@ export default function Services() {
                 What You Get
               </h3>
               <ul className="list-disc pl-5 text-muted-foreground space-y-2">
-                <li>Technical Report (findings, analysis, recommendations)</li>
-                <li>Engineering Documentation (plans, drawings, manuals)</li>
-                <li>Action Plan (clear next steps and timelines)</li>
-                <li>Ongoing Support (follow‑up, implementation assistance)</li>
+                <li>Technical Report – findings, analysis, recommendations</li>
+                <li>Engineering Documentation – plans, drawings, manuals</li>
+                <li>Action Plan – clear next steps and timelines</li>
+                <li>Ongoing Support – follow‑up and implementation assistance</li>
               </ul>
             </div>
             <div className="border-l-2 border-primary/20 pl-6">
@@ -516,10 +516,10 @@ export default function Services() {
                 How We Work
               </h3>
               <ol className="list-decimal pl-5 text-muted-foreground space-y-2">
-                <li>Brief & Information Gathering – share vessel details and concerns</li>
-                <li>Analysis & Planning – technical assessment, risk identification, scope definition</li>
-                <li>Execution / Coordination – engineering supervision, contractor management, quality control</li>
-                <li>Documentation & Handover – complete records ready for audits or class submission</li>
+                <li>You share vessel details and concerns – we listen.</li>
+                <li>We analyse and plan – technical assessment, risk identification, scope definition.</li>
+                <li>We execute and coordinate – engineering supervision, contractor management, quality control.</li>
+                <li>You receive documentation – complete records ready for audits or class submission.</li>
               </ol>
             </div>
           </div>
@@ -527,9 +527,7 @@ export default function Services() {
           {/* ── Positioning statement ── */}
           <div className="mt-10 p-6 bg-neutral-50 border border-border/50 rounded-sm text-center">
             <p className="text-lg text-[#0B3B5C] font-medium">
-              Adriatica provides independent engineering management, technical oversight, and compliance
-              assurance – from initial assessment to final documentation. We don't just advise; we deliver
-              actionable, auditable results.
+              You get independent engineering management, technical oversight, and compliance assurance – from initial assessment to final documentation. We don't just advise; we deliver actionable, auditable results.
             </p>
           </div>
 
