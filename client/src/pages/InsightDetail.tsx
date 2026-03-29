@@ -7,6 +7,7 @@ import { Link } from "wouter";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { useState, useEffect } from "react";
+import { RelatedContent } from "@/components/RelatedContent";
 
 export default function InsightDetail() {
   const [match, params] = useRoute("/insights/:slug");
@@ -26,24 +27,6 @@ export default function InsightDetail() {
       }
     }
   }, [slug]);
-
-  // İlgili makaleler mantığı (önceki ile aynı)
-  let related: typeof insights = [];
-  if (insight?.relatedSlugs && insight.relatedSlugs.length > 0) {
-    related = insights.filter(i => insight.relatedSlugs!.includes(i.slug));
-  } else if (insight) {
-    const sameCategory = insights.filter(i => i.slug !== insight.slug && i.category === insight.category);
-    related = [...sameCategory];
-    if (related.length < 2) {
-      const alreadySelectedSlugs = new Set(related.map(r => r.slug));
-      const others = insights
-        .filter(i => i.slug !== insight.slug && !alreadySelectedSlugs.has(i.slug))
-        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-      const needed = 2 - related.length;
-      related.push(...others.slice(0, needed));
-    }
-  }
-  related = related.slice(0, 2);
 
   // Most Popular (sidebar)
   const popular = recommendedSlugs
@@ -139,24 +122,12 @@ export default function InsightDetail() {
                 dangerouslySetInnerHTML={{ __html: insight.contentHtml }}
               />
 
-              {/* İlgili makaleler */}
-              {related.length > 0 && (
-                <div className="mt-12 border-t pt-8">
-                  <h3 className="text-2xl font-display mb-4">Related Insights</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {related.map(rel => (
-                      <Link key={rel.slug} href={`/insights/${rel.slug}`}>
-                        <a className="block p-4 border rounded hover:border-primary transition group">
-                          <h4 className="font-bold mb-1 group-hover:text-primary group-hover:underline transition">
-                            {rel.title}
-                          </h4>
-                          <p className="text-sm text-muted-foreground">{rel.description}</p>
-                        </a>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
+              {/* Related Content (Services, Case Studies, Insights) */}
+              <RelatedContent
+                serviceSlugs={insight.relatedServices}
+                caseStudySlugs={insight.relatedCaseStudies}
+                insightSlugs={insight.relatedSlugs}
+              />
             </article>
 
             {/* Sağ sidebar */}

@@ -3,45 +3,8 @@ import { Footer } from "@/components/Footer";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Helmet } from "react-helmet-async";
 import { SEO } from "@/components/SEO";
-import { Link } from "wouter"; // <-- Link import edildi
-
-// Define type for case study items
-interface CaseStudy {
-  title: string;
-  challenge: string;
-  solution: string;
-  result: string;
-}
-
-const caseStudies: CaseStudy[] = [
-  {
-    title: "Biofouling Management for Mediterranean Entry",
-    challenge:
-      "A 50‑meter superyacht relocated from high‑fouling zones (Dubai, Maldives) to the Mediterranean. The vessel faced potential Port State Control delays due to uncertain biofouling history and lack of documented niche‑area inspections.",
-    solution:
-      "Adriatica conducted a quantified risk assessment, developed a vessel‑specific Biofouling Management Plan (BFMP), and integrated a Biofouling Record Book (BFRB) with photographic evidence. The framework was implemented prior to departure.",
-    result:
-      "The yacht transited to Montenegro with full documentation, enabling seamless Port State Control clearance, avoiding emergency cleaning fees, and maintaining charter continuity.",
-  },
-  {
-    title: "Managed In‑Water Cleaning vs. Unscheduled Dry‑Docking",
-    challenge:
-      "A 35‑meter motor yacht in the Mediterranean required urgent biofouling removal during peak charter season. Unscheduled dry‑docking would have caused 4 days of downtime and high costs.",
-    solution:
-      "Adriatica managed an in‑water cleaning operation using certified divers with debris capture systems. The cleaning was completed within one day during guest turnaround.",
-    result:
-      "Cost savings of 80% compared to dry‑docking (€6,000 vs. €30,000) and zero charter disruption. Full photographic documentation was logged in the vessel’s Biofouling Record Book.",
-  },
-  {
-    title: "Refit Supervision at Shipyard",
-    challenge:
-      "A 55‑meter motor yacht scheduled a 6‑week refit in Bijela. The owner needed technical oversight to ensure coating specifications, shaft alignment, and niche‑area documentation were properly executed.",
-    solution:
-      "Adriatica provided full‑time on‑site engineering supervision, coordinating with the shipyard and acting as Owner’s Technical Representative.",
-    result:
-      "The project was completed two days ahead of schedule, with all technical records accepted by the classification society and local Port Authority.",
-  },
-];
+import { Link } from "wouter";
+import { caseStudies } from "@/data/caseStudies";
 
 // Organisation-level structured data (same as homepage)
 const organizationData = {
@@ -97,37 +60,38 @@ export default function CaseStudies() {
             subtitle="Engineering in Action"
           />
           <div className="space-y-12 mt-12">
-            {caseStudies.map((study, idx) => (
-              <div key={idx} className="border-l-2 border-primary/20 pl-6">
-                <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-3">
-                  {study.title}
-                </h3>
-                <div className="space-y-3 text-muted-foreground">
-                  <p>
-                    <span className="font-semibold text-[#0B3B5C]">Challenge:</span>{" "}
-                    {study.challenge}
-                  </p>
-                  <p>
-                    <span className="font-semibold text-[#0B3B5C]">Solution:</span>{" "}
-                    {study.solution}
-                  </p>
-                  <p>
-                    <span className="font-semibold text-[#0B3B5C]">Result:</span>{" "}
-                    {study.result}
-                  </p>
-                </div>
-              </div>
+            {caseStudies.map((study) => (
+              <Link key={study.slug} href={`/case-studies/${study.slug}`}>
+                <a className="block border-l-2 border-primary/20 pl-6 hover:border-primary transition-colors group">
+                  <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-3 group-hover:text-primary transition-colors">
+                    {study.title}
+                  </h3>
+                  <div className="space-y-3 text-muted-foreground">
+                    <p>
+                      <span className="font-semibold text-[#0B3B5C]">Challenge:</span>{" "}
+                      {study.challenge}
+                    </p>
+                    <p>
+                      <span className="font-semibold text-[#0B3B5C]">Solution:</span>{" "}
+                      {study.solution}
+                    </p>
+                    <p>
+                      <span className="font-semibold text-[#0B3B5C]">Result:</span>{" "}
+                      {study.result}
+                    </p>
+                  </div>
+                </a>
+              </Link>
             ))}
           </div>
 
-          {/* CTA Bölümü – eklendi */}
           <div className="mt-16 p-6 bg-neutral-50 border border-border/10 text-center rounded-sm">
             <p className="text-lg text-muted-foreground mb-4">
               Have a specific technical challenge? Our team is ready to assist.
             </p>
             <Link href="/#begin-voyage">
               <a className="inline-block px-6 py-3 bg-[#0B3B5C] text-white font-medium rounded-sm hover:bg-[#1A4B7A] transition-colors">
-                Request Technical Consultation →
+                Request Technical Consultation
               </a>
             </Link>
           </div>

@@ -3,8 +3,14 @@ import { Footer } from "@/components/Footer";
 import { Helmet } from "react-helmet-async";
 import { SEO } from "@/components/SEO";
 import { HashLink } from "@/components/HashLink";
+import { useRoute } from "wouter";
+import { services } from "@/data/services";
+import { RelatedContent } from "@/components/RelatedContent";
 
 export default function EngineeringDocs() {
+  const [match] = useRoute("/services/engineering-documentation");
+  const service = services.find(s => s.slug === "engineering-documentation");
+
   return (
     <>
       <SEO
@@ -93,6 +99,14 @@ export default function EngineeringDocs() {
               </HashLink>
             </div>
           </div>
+
+          {service && (
+            <RelatedContent
+              serviceSlugs={[]}
+              caseStudySlugs={service.relatedCaseStudies}
+              insightSlugs={service.relatedInsights}
+            />
+          )}
         </main>
         <Footer />
       </div>

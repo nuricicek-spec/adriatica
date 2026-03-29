@@ -8,6 +8,8 @@ export interface Insight {
   contentHtml: string;
   pdfUrl: string;
   relatedSlugs?: string[];
+  relatedServices?: string[];
+  relatedCaseStudies?: string[];
 }
 
 export const insights: Insight[] = [
@@ -21,6 +23,8 @@ export const insights: Insight[] = [
     contentHtml: '<p><strong>Mock content.</strong> Replace with actual HTML later.</p>',
     pdfUrl: '/pdfs/ADRI-TIS-004.pdf',
     relatedSlugs: ['biofouling-compliance-imo-2026'],
+    relatedServices: ['sustainable-technologies'],
+    relatedCaseStudies: [],
   },
   {
     slug: 'technical-operations-montenegro',
@@ -32,6 +36,8 @@ export const insights: Insight[] = [
     contentHtml: '<p><strong>Mock content.</strong> Replace with actual HTML later.</p>',
     pdfUrl: '/pdfs/ADRI-TIS-003.pdf',
     relatedSlugs: [],
+    relatedServices: ['project-management'],
+    relatedCaseStudies: ['refit-supervision-shipyard'],
   },
   {
     slug: 'sustainable-in-water-cleaning-yacht',
@@ -43,6 +49,8 @@ export const insights: Insight[] = [
     contentHtml: '<p><strong>Mock content.</strong> Replace with actual HTML later.</p>',
     pdfUrl: '/pdfs/ADRI-TIS-002.pdf',
     relatedSlugs: ['biofouling-compliance-imo-2026'],
+    relatedServices: ['sustainable-technologies'],
+    relatedCaseStudies: ['managed-in-water-cleaning'],
   },
   {
     slug: 'biofouling-compliance-imo-2026',
@@ -54,5 +62,7 @@ export const insights: Insight[] = [
     contentHtml: '<p><strong>Mock content.</strong> Replace with actual HTML later.</p>',
     pdfUrl: '/pdfs/ADRI-TIS-001.pdf',
     relatedSlugs: ['sustainable-in-water-cleaning-yacht'],
+    relatedServices: ['sustainable-technologies'],
+    relatedCaseStudies: ['biofouling-management-mediterranean', 'managed-in-water-cleaning'],
   },
 ];

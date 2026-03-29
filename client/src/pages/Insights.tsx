@@ -6,7 +6,7 @@ import { SEO } from "@/components/SEO";
 import { Link } from "wouter";
 import { insights } from "@/data/insights";
 
-export default function InsightsPage() {  // ← burada export default var mı?
+export default function InsightsPage() {
   return (
     <>
       <SEO
@@ -46,14 +46,14 @@ export default function InsightsPage() {  // ← burada export default var mı?
             ))}
           </div>
 
-          {/* CTA Bölümü */}
+          {/* CTA Bölümü – ok işareti kaldırıldı */}
           <div className="mt-16 p-6 bg-neutral-50 border border-border/10 text-center rounded-sm">
             <p className="text-lg text-muted-foreground mb-4">
               Have a specific technical challenge? Our team is ready to assist.
             </p>
             <Link href="/#begin-voyage">
               <a className="inline-block px-6 py-3 bg-[#0B3B5C] text-white font-medium rounded-sm hover:bg-[#1A4B7A] transition-colors">
-                Request Technical Consultation →
+                Request Technical Consultation
               </a>
             </Link>
           </div>
