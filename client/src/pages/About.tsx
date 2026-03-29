@@ -91,6 +91,9 @@ export default function About() {
 
             {/* Why Choose Adriatica – benefit cards + link to homepage philosophy */}
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Why Adriatica?</h2>
+            <p className="text-primary text-sm font-medium uppercase tracking-wider mb-4">
+              The Adriatica Integrity Cycle – Align · Execute · Verify
+            </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
               <div className="border-l-2 border-primary/20 pl-4">
                 <h3 className="font-bold text-[#0B3B5C] mb-2">Risk‑Based Approach</h3>

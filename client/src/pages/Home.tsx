@@ -211,8 +211,11 @@ export default function Home() {
               <h2 className="font-display text-3xl md:text-4xl font-bold text-[#0B3B5C] mb-3">
                 Why Choose Adriatica
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-muted-foreground max-w-2xl mx-auto mb-2">
                 Engineering management that delivers compliance, efficiency, and peace of mind.
+              </p>
+              <p className="text-primary text-sm font-medium uppercase tracking-wider">
+                The Adriatica Integrity Cycle – Align · Execute · Verify
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -257,8 +260,11 @@ export default function Home() {
               <h2 className="font-display text-3xl md:text-4xl font-bold text-[#0B3B5C] mb-3">
                 How We Work
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-muted-foreground max-w-2xl mx-auto mb-2">
                 A structured approach to deliver clarity, compliance, and results.
+              </p>
+              <p className="text-primary text-sm font-medium uppercase tracking-wider">
+                Following the Adriatica Integrity Cycle – Align · Execute · Verify
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

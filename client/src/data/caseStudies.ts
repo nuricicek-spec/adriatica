@@ -17,7 +17,7 @@ export const caseStudies: CaseStudy[] = [
     solution:
       "Adriatica conducted a quantified risk assessment, developed a vessel‑specific Biofouling Management Plan (BFMP), and integrated a Biofouling Record Book (BFRB) with photographic evidence. The framework was implemented prior to departure.",
     result:
-      "The yacht transited to Montenegro with full documentation, enabling seamless Port State Control clearance, avoiding emergency cleaning fees, and maintaining charter continuity.",
+      "The yacht transited to Montenegro with full documentation, enabling seamless Port State Control clearance, avoiding an estimated €15,000 in emergency cleaning fees, and maintaining charter continuity without delay.",
     relatedServices: ["sustainable-technologies"],
     relatedInsights: ["biofouling-compliance-imo-2026", "sustainable-in-water-cleaning-yacht"],
   },
@@ -41,8 +41,8 @@ export const caseStudies: CaseStudy[] = [
     solution:
       "Adriatica provided full‑time on‑site engineering supervision, coordinating with the shipyard and acting as Owner’s Technical Representative.",
     result:
-      "The project was completed two days ahead of schedule, with all technical records accepted by the classification society and local Port Authority.",
-    relatedServices: ["project-management", "engineering-plans", "engineering-documentation", "structural-integrity"], // refit sürecinde birden çok servis devreye girer
-    relatedInsights: ["technical-operations-montenegro"], // Montenegro'daki yerel operasyonları anlatan insight
+      "The project was completed two days ahead of schedule (a 5% time saving), with all technical records accepted by the classification society and local Port Authority, and no post‑refit warranty claims.",
+    relatedServices: ["project-management", "engineering-plans", "engineering-documentation", "structural-integrity"],
+    relatedInsights: ["technical-operations-montenegro"],
   },
 ];
