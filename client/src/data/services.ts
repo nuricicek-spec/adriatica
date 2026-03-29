@@ -23,8 +23,8 @@ export const services: Service[] = [
     ],
     outcome: "Class‑approved plan sets, reduced approval delays, and a clear basis for construction or modification.",
     references: "Class society rules (RINA, BV, DNV), flag state regulations",
-    relatedCaseStudies: ["refit-supervision-shipyard"], // example link
-    relatedInsights: ["zero-emission-zone-boka-kotorska"],
+    relatedCaseStudies: ["refit-supervision-shipyard"],
+    relatedInsights: ["technical-operations-montenegro"], // Değiştirildi (daha ilgili)
   },
   {
     slug: "engineering-documentation",
@@ -38,8 +38,8 @@ export const services: Service[] = [
     ],
     outcome: "Audit‑ready documentation, improved crew familiarity, and smoother port state control inspections.",
     references: "IMO, EU MRV, MARPOL",
-    relatedCaseStudies: [],
-    relatedInsights: [],
+    relatedCaseStudies: ["refit-supervision-shipyard"], // Aynı case study (refit sırasında dokümantasyon önemli)
+    relatedInsights: ["technical-operations-montenegro"], // Aynı insight (yerel operasyonlar ve dokümantasyon)
   },
   {
     slug: "structural-integrity",
@@ -53,8 +53,8 @@ export const services: Service[] = [
     ],
     outcome: "Clear repair priorities, extended operational life, and classification society acceptance.",
     references: "IACS UR Z10, classification societies",
-    relatedCaseStudies: [],
-    relatedInsights: [],
+    relatedCaseStudies: ["refit-supervision-shipyard"], // Aynı case study (refit sırasında yapısal denetim)
+    relatedInsights: ["technical-operations-montenegro"], // Aynı insight (yerel operasyonlar, tersane süreçleri)
   },
   {
     slug: "sustainable-technologies",
@@ -84,8 +84,8 @@ export const services: Service[] = [
     ],
     outcome: "PSC‑ready documentation, reduced inspection risk, and full compliance with current regulations.",
     references: "IMO, MARPOL, flag state administrations",
-    relatedCaseStudies: [],
-    relatedInsights: [],
+    relatedCaseStudies: [], // Doğrudan bir case study yok (ancak biofouling case study'leri ile ilgili olabilir, ancak zorlama olmasın)
+    relatedInsights: ["biofouling-compliance-imo-2026"], // IMO 2026 uyumu ile bağlantılı
   },
   {
     slug: "project-management",
@@ -100,6 +100,6 @@ export const services: Service[] = [
     outcome: "On‑time, on‑budget project delivery with verified quality and complete as‑built records.",
     references: "Industry best practices, IACS UR Z10",
     relatedCaseStudies: ["refit-supervision-shipyard"],
-    relatedInsights: [],
+    relatedInsights: ["technical-operations-montenegro"], // Yerel operasyonlar ve tersane yönetimi ile ilgili
   },
 ];

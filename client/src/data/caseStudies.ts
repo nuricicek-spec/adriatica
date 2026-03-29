@@ -43,6 +43,6 @@ export const caseStudies: CaseStudy[] = [
     result:
       "The project was completed two days ahead of schedule, with all technical records accepted by the classification society and local Port Authority.",
     relatedServices: ["project-management"],
-    relatedInsights: [],
+    relatedInsights: ["technical-operations-montenegro"], // Yerel operasyonlar ve tersane süreçleriyle ilgili
   },
 ];
