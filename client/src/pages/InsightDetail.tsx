@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 import { RelatedContent } from "@/components/RelatedContent";
 
 export default function InsightDetail() {
-  const [match, params] = useRoute("/insights/:slug");
+  const [, params] = useRoute("/insights/:slug");
   const slug = params?.slug;
   const insight = insights.find(i => i.slug === slug);
 
@@ -172,6 +172,18 @@ export default function InsightDetail() {
                   </ul>
                 </div>
               )}
+
+              {/* CTA Butonu – Get Support */}
+              <div className="p-6 bg-primary/5 border border-primary/20 rounded text-center">
+                <p className="text-muted-foreground mb-4 text-sm">
+                  Have a specific technical challenge?
+                </p>
+                <Link href="/#begin-voyage">
+                  <a className="inline-block w-full px-4 py-2 bg-primary text-white font-medium rounded-sm hover:bg-primary/90 transition-colors">
+                    Get Support
+                  </a>
+                </Link>
+              </div>
             </aside>
           </div>
         </div>
