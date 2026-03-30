@@ -18,10 +18,10 @@ export const zeroEmissionZone: Insight = {
       </figcaption>
     </figure>
 
-    <p class="lead text-lg font-medium mb-6">Listed as a UNESCO World Heritage site since 1979, Boka Kotorska is one of the most significant and fragile ecosystems in the Mediterranean. While structurally similar regions (e.g., Gulf of Girolata, Geirangerfjord) have rapidly implemented Zero-Emission Zones (ZEZ) - areas where vessel operations are restricted to zero-emission propulsion or equivalent emission-neutral technologies - Boka Kotorska remains without comprehensive protection against maritime emissions. This paper analyzes global benchmarks, identifies structural risks, and proposes a strategic "Blue Economy" roadmap. It calls for immediate preparatory actions in 2026-2027, followed by a phased administrative framework between 2027 and 2030, supported by an EU-backed innovation ecosystem to preserve this heritage for future generations.</p>
+    <p class="lead text-lg font-medium mb-6">Listed as a UNESCO World Heritage site since 1979 [1], Boka Kotorska is one of the most significant and fragile ecosystems in the Mediterranean. While structurally similar regions (e.g., Gulf of Girolata, Geirangerfjord) have rapidly implemented Zero-Emission Zones (ZEZ) - areas where vessel operations are restricted to zero-emission propulsion or equivalent emission-neutral technologies - Boka Kotorska remains without comprehensive protection against maritime emissions. This paper analyzes global benchmarks, identifies structural risks, and proposes a strategic "Blue Economy" roadmap. It calls for immediate preparatory actions in 2026-2027, followed by a phased administrative framework between 2027 and 2030, supported by an EU-backed innovation ecosystem to preserve this heritage for future generations.</p>
 
     <h2>1. Structural Sensitivity and Cultural Heritage</h2>
-    <p>Boka Kotorska was inscribed on the UNESCO World Heritage list as the "Natural and Culturo-Historical Region of Kotor" in 1979. Its unique semi-enclosed fjord-like structure, connected by narrow straits (Verige), results in extremely limited water circulation and air exchange.</p>
+    <p>Boka Kotorska was inscribed on the UNESCO World Heritage list as the "Natural and Culturo-Historical Region of Kotor" in 1979 [1]. Its unique semi-enclosed fjord-like structure, connected by narrow straits (Verige), results in extremely limited water circulation and air exchange.</p>
     <p>In critical zones such as the Blue Cave and the inner basins of Perast and Kotor, exhaust emissions (NOx, SOx, and Particulate Matter) from internal combustion engines and generators become trapped. Due to the bay’s restricted water exchange, even moderate emission loads can result in locally elevated pollutant concentrations, significantly exceeding open‑sea dispersion conditions. This anthropogenic pressure not only degrades marine biodiversity but also accelerates the physical erosion of historic limestone structures due to the acidic nature of soot and gas deposits.</p>
 
     <h2>2. Comparative Analysis: UNESCO Milestones vs. Regulatory Action</h2>
@@ -36,39 +36,39 @@ export const zeroEmissionZone: Insight = {
             <th class="border border-border p-3 text-left font-medium">Restriction Milestones</th>
             <th class="border border-border p-3 text-left font-medium">Primary Rationale &amp; Policy</th>
             <th class="border border-border p-3 text-left font-medium">Legal Basis / Instrument</th>
-           </tr>
+          \)"
         </thead>
         <tbody>
           <tr>
             <td class="border border-border p-3">Boka Kotorska (Montenegro)</td>
-            <td class="border border-border p-3">1979</td>
+            <td class="border border-border p-3">1979 [1]</td>
             <td class="border border-border p-3">Undefined</td>
             <td class="border border-border p-3">No structured motor or emission restrictions currently in place.</td>
             <td class="border border-border p-3">None (No specific instrument)</td>
-           </tr>
+          </tr>
           <tr>
             <td class="border border-border p-3">Gulf of Girolata (France)</td>
-            <td class="border border-border p-3">1983</td>
+            <td class="border border-border p-3">1983 [2]</td>
             <td class="border border-border p-3">Late 1990s</td>
             <td class="border border-border p-3">Rigid mooring and motor restrictions to protect marine reserves.</td>
             <td class="border border-border p-3">National Park Regulations</td>
-           </tr>
+          </tr>
           <tr>
             <td class="border border-border p-3">Cinque Terre (Italy)</td>
-            <td class="border border-border p-3">1997</td>
+            <td class="border border-border p-3">1997 [3]</td>
             <td class="border border-border p-3">2002</td>
             <td class="border border-border p-3">Marine Protected Area (MPA) designation; strict transit control.</td>
             <td class="border border-border p-3">MPA Decree / Local Ordinance</td>
-           </tr>
+          </tr>
           <tr>
             <td class="border border-border p-3">Geirangerfjord (Norway)</td>
-            <td class="border border-border p-3">2005</td>
+            <td class="border border-border p-3">2005 [4]</td>
             <td class="border border-border p-3">2018 / 2026</td>
             <td class="border border-border p-3">Mandatory zero‑emission requirement for tourist vessels, with entry into force in 2026.</td>
             <td class="border border-border p-3">National Zero-Emission Regulation</td>
-           </tr>
+          </tr>
         </tbody>
-       </table>
+      </table>
     </div>
 
     <h2>3. The Catalyst for Restriction: Anthropogenic Impact</h2>
@@ -99,8 +99,8 @@ export const zeroEmissionZone: Insight = {
     <h2>5. The Strategic Opportunity: An EU-Backed Blue Economy</h2>
     <p>Declaring Boka Kotorska a "Zero-Emission Zone" is not merely a restriction; it is an invitation for high-tech investment and international cooperation:</p>
     <ul class="list-disc pl-6 space-y-2">
-      <li><strong>EU Green Deal &amp; Funding:</strong> As a candidate country, Montenegro can leverage IPA III and Horizon Europe funds to transform Boka Kotorska into a "Living Lab" for green maritime technology.</li>
-      <li><strong>The Triple Helix Model:</strong> A collaboration between Academia (University of Montenegro), Government, and Industry (Adriatica D.O.O. as a potential technical contributor to feasibility and engineering assessment studies) can foster a unique innovation hub. This ecosystem will focus on developing specialized electric vessels, eco-taxis, and hybrid service boats tailored for the bay.</li>
+      <li><strong>EU Green Deal &amp; Funding:</strong> As a candidate country, Montenegro can leverage IPA III and Horizon Europe funds to transform Boka Kotorska into a "Living Lab" for green maritime technology [6].</li>
+      <li><strong>The Triple Helix Model:</strong> A collaboration between Academia (University of Montenegro), Government, and Industry (Adriatica D.O.O. as a potential technical contributor to feasibility and engineering assessment studies [7]) can foster a unique innovation hub. This ecosystem will focus on developing specialized electric vessels, eco-taxis, and hybrid service boats tailored for the bay.</li>
       <li><strong>Sustainable Economic Growth:</strong> By creating a market for zero-emission technology, Montenegro can shift from "mass/low-value" tourism to "high-end/sustainable" maritime operations, ensuring long-term economic prosperity and local employment.</li>
     </ul>
 

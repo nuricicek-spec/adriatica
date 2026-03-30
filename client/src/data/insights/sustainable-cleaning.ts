@@ -8,7 +8,7 @@ export const sustainableCleaning: Insight = {
   readTime: 7,
   description: 'Technical guidance on managing in-water cleaning operations for vessels 25m+ and 50m+.',
   contentHtml: `
-    <p class="lead text-lg font-medium mb-6">As IMO MEPC.378(80) Guidelines transition toward structured enforcement convergence across Port State Control (PSC) regimes, biofouling management is shifting from voluntary guidance toward structured operational oversight. While in‑water cleaning offers a cost‑effective alternative to dry‑docking, it requires stringent adherence to environmental standards and technical documentation across different European regions. Adriatica D.O.O. provides engineering management services to plan, coordinate, and certify in‑water cleaning operations. Although Adriatica D.O.O. operates primarily in the Adriatic and Mediterranean regions, our compliance framework is aligned with Port State Control inspection expectations under the Paris MoU framework, ensuring continued compliance for 25m+ and 50m+ vessels without disruption to operational scheduling.</p>
+    <p class="lead text-lg font-medium mb-6">As IMO MEPC.378(80) Guidelines transition toward structured enforcement convergence across Port State Control (PSC) regimes, biofouling management is shifting from voluntary guidance toward structured operational oversight. While in‑water cleaning offers a cost‑effective alternative to dry‑docking, it requires stringent adherence to environmental standards and technical documentation across different European regions. Adriatica D.O.O. provides engineering management services to plan, coordinate, and certify in‑water cleaning operations. Although Adriatica D.O.O. operates primarily in the Adriatic and Mediterranean regions, our compliance framework is aligned with Port State Control inspection expectations under the Paris MoU framework [5,9], ensuring continued compliance for 25m+ and 50m+ vessels without disruption to operational scheduling.</p>
 
     <div class="bg-neutral-50 border-l-4 border-primary p-4 my-6 rounded-sm">
       <p class="text-sm font-medium mb-1">Note:</p>
@@ -16,7 +16,7 @@ export const sustainableCleaning: Insight = {
     </div>
 
     <h2>1. Context &amp; Regulatory Landscape</h2>
-    <p>Under the IMO MEPC.378(80) Guidelines, biofouling management is progressing from voluntary guidance toward structured enforcement convergence. European coastal regimes, including the Mediterranean, Adriatic, and Baltic Seas, are intensifying scrutiny of arriving vessels. Regional enforcement intensity varies; for example, the Baltic Sea region is subject to heightened environmental sensitivity under HELCOM coordination frameworks. For motor yachts and sailing vessels (25m+), reliance on reactive cleaning leads to:</p>
+    <p>Under the IMO MEPC.378(80) Guidelines [1], biofouling management is progressing from voluntary guidance toward structured enforcement convergence. European coastal regimes, including the Mediterranean, Adriatic, and Baltic Seas, are intensifying scrutiny of arriving vessels [5]. Regional enforcement intensity varies; for example, the Baltic Sea region is subject to heightened environmental sensitivity under HELCOM coordination frameworks [9]. For motor yachts and sailing vessels (25m+), reliance on reactive cleaning leads to:</p>
     <ul class="list-disc pl-6 space-y-2">
       <li>High costs of unscheduled dry-docking.</li>
       <li>Charter schedule disruptions and operational downtime.</li>
@@ -26,7 +26,7 @@ export const sustainableCleaning: Insight = {
     <h2>2. Methodology: Adriatica Engineering Management Framework</h2>
     <p>In-water cleaning (cleaning without hauling the vessel) provides a sustainable solution when executed professionally. It offers:</p>
     <ul class="list-disc pl-6 space-y-2">
-      <li><strong>Cost Efficiency:</strong> Cost reductions typically ranging between 60‑70% compared to unscheduled dry-docking.</li>
+      <li><strong>Cost Efficiency:</strong> Cost reductions typically ranging between 60‑70% compared to unscheduled dry-docking [8].</li>
       <li><strong>Operational Continuity:</strong> Cleaning performed during guest turnaround or downtime.</li>
       <li><strong>Technical Focus:</strong> Specialized removal of macro-fouling from niche areas (propellers, thruster tunnels, rudder pintles).</li>
     </ul>
@@ -34,8 +34,8 @@ export const sustainableCleaning: Insight = {
     <ul class="list-disc pl-6 space-y-2">
       <li><strong>Pre-Cleaning Risk Assessment:</strong> Technical evaluation of fouling levels to determine the necessary cleaning intensity based on the vessel's operational history. Technical diagrams identifying all vessel-specific high-risk zones.</li>
       <li><strong>Certified Partner Coordination:</strong> Management of certified diving teams equipped with advanced cleaning technologies, including diver-operated or ROV-based systems, with vacuum-assisted and non-abrasive methods for debris capture. This ensures compliance with stringent environmental standards in diverse ports such as Monaco, Tivat, Dubrovnik, and Kiel.</li>
-      <li><strong>Environmental Control &amp; Debris Capture Compliance:</strong> Ensuring diver technology selection adheres to debris containment and sensitivity regarding discharge in European coastal waters, particularly in ecologically sensitive areas like the Baltic or specific Mediterranean marine reserves. In the Baltic Sea, lower salinity and enclosed sea dynamics increase the risk of invasive species establishment, making debris capture particularly critical under HELCOM coordination. In jurisdictions with strict port authority enforcement (e.g., Monaco), failure to contain cleaning debris may trigger Port State Control or port authority enforcement action, including administrative penalties or temporary operational restrictions, depending on jurisdiction.</li>
-      <li><strong>Quality Assurance &amp; Reporting:</strong> Oversight of the operation, including high-resolution photographic documentation, ensuring the process is logged in the vessel's Biofouling Record Book (BFRB).</li>
+      <li><strong>Environmental Control &amp; Debris Capture Compliance:</strong> Ensuring diver technology selection adheres to debris containment and sensitivity regarding discharge in European coastal waters, particularly in ecologically sensitive areas like the Baltic or specific Mediterranean marine reserves. In the Baltic Sea, lower salinity and enclosed sea dynamics increase the risk of invasive species establishment, making debris capture particularly critical under HELCOM coordination. In jurisdictions with strict port authority enforcement (e.g., Monaco), failure to contain cleaning debris may trigger Port State Control or port authority enforcement action, including administrative penalties or temporary operational restrictions, depending on jurisdiction [3].</li>
+      <li><strong>Quality Assurance &amp; Reporting:</strong> Oversight of the operation, including high-resolution photographic documentation, ensuring the process is logged in the vessel's Biofouling Record Book (BFRB) [6].</li>
     </ul>
 
     <h2>3. Case Study: Economic Comparison</h2>
@@ -74,7 +74,7 @@ export const sustainableCleaning: Insight = {
     <h2>4. Outcomes &amp; Technical Benefits</h2>
     <p>Implementing a managed in-water cleaning program delivers measurable operational advantages:</p>
     <ul class="list-disc pl-6 space-y-2">
-      <li><strong>Regulatory Alignment:</strong> Full documentation to satisfy Paris MoU and Class society expectations. Biofouling Record Book (BFRB) entries with photographic evidence create an audit trail accepted by Port State Control authorities. Supports alignment with IMO MEPC.378(80) guidance and anticipated 2026 enforcement convergence.</li>
+      <li><strong>Regulatory Alignment:</strong> Full documentation to satisfy Paris MoU and Class society expectations [5,6]. Biofouling Record Book (BFRB) entries with photographic evidence create an audit trail accepted by Port State Control authorities. Supports alignment with IMO MEPC.378(80) guidance and anticipated 2026 enforcement convergence.</li>
       <li><strong>Operational Continuity:</strong> Cleaning performed during guest turnaround or scheduled downtime, avoiding charter disruption. Typical cleaning completed within one day, compared to 4‑7 days for unscheduled dry-docking.</li>
       <li><strong>Cost Savings:</strong> Up to 80% reduction in direct costs compared to unscheduled dry-docking (€6,000 vs. €30,000 based on European operational averages). Elimination of off-hire penalties and emergency cleaning surcharges (€5,000‑€15,000).</li>
       <li><strong>Environmental Stewardship:</strong> Verified debris capture using vacuum-based systems reduces risk of environmental enforcement in sensitive areas such as the Baltic Sea (HELCOM) and Mediterranean marine reserves. Supports the vessel's environmental profile, increasingly a factor in marina access and charter market positioning.</li>

@@ -11,13 +11,13 @@ export const biofoulingCompliance: Insight = {
     <p class="lead text-lg font-medium mb-6">Adriatica D.O.O. presents a real-world superyacht case study on biofouling management, showcasing how proactive documentation and niche area risk assessment support compliance readiness for the anticipated IMO 2026 transition. Learn how our framework delivers seamless Mediterranean entry, operational efficiency, and measurable sustainability gains.</p>
 
     <h2>1. Context &amp; Regulatory Landscape</h2>
-    <p>The maritime industry is approaching a regulatory inflection point. While the IMO biofouling guidelines remain formally non-mandatory, Port State Control regimes and regional biosecurity frameworks are increasingly aligning toward structured enforcement. The risk is therefore not theoretical — it is operational. Vessels without measurable documentation, inspection traceability, and niche-area assessment face tangible exposure in the form of entry delays, diver inspections, emergency cleaning requirements, and charter disruption.</p>
-    <p>Under the IMO MEPC.378(80) framework, biofouling management is progressing from voluntary guidance toward structured enforcement convergence expected by 2026.</p>
+    <p>The maritime industry is approaching a regulatory inflection point. While the IMO biofouling guidelines remain formally non-mandatory, Port State Control regimes and regional biosecurity frameworks are increasingly aligning toward structured enforcement. The risk is therefore not theoretical — it is operational. Vessels without measurable documentation, inspection traceability, and niche-area assessment face tangible exposure in the form of entry delays, diver inspections [3,5], emergency cleaning requirements, and charter disruption.</p>
+    <p>Under the IMO MEPC.378(80) framework [1], biofouling management is progressing from voluntary guidance toward structured enforcement convergence expected by 2026.</p>
     <p><strong>Scenario:</strong> A 50-meter superyacht is relocating from high-fouling risk zones (Dubai, Maldives) to the Mediterranean.</p>
-    <p><strong>Risk:</strong> Coastal states across the Mediterranean, including Montenegro, France, and Italy, are expected to increase scrutiny of arriving vessels. Without verified documentation, yachts may face Port State Control (PSC) delays, entry restrictions, or costly underwater cleaning requirements to mitigate the risk of Invasive Aquatic Species (IAS).</p>
+    <p><strong>Risk:</strong> Coastal states across the Mediterranean, including Montenegro, France, and Italy, are expected to increase scrutiny of arriving vessels [5]. Without verified documentation, yachts may face Port State Control (PSC) delays, entry restrictions, or costly underwater cleaning requirements to mitigate the risk of Invasive Aquatic Species (IAS).</p>
 
     <h2>2. Methodology: Adriatica Compliance Framework</h2>
-    <p>Adriatica D.O.O. has developed a proactive technical framework to ensure vessel readiness before international enforcement reaches its peak. Our methodology focuses on three pillars:</p>
+    <p>Adriatica D.O.O. has developed a proactive technical framework [8] to ensure vessel readiness before international enforcement reaches its peak. Our methodology focuses on three pillars:</p>
 
     <h3>I. Quantified Risk Assessment</h3>
     <p>Rather than relying solely on narrative evaluation, the vessel exposure was assessed using measurable parameters: idle duration in tropical waters, coating age profile, trading pattern shift, water temperature band, and niche-area configuration complexity. This structured exposure index transformed regulatory uncertainty into a measurable technical decision trigger, based on predefined thresholds for each parameter.</p>
@@ -29,7 +29,7 @@ export const biofoulingCompliance: Insight = {
     </ul>
 
     <h3>II. Development of the Biofouling Management Plan (BFMP)</h3>
-    <p>We provide a vessel-specific BFMP, structured to meet Class (RINA/BV/DNV) expectations. Unlike generic plans, our BFMP includes:</p>
+    <p>We provide a vessel-specific BFMP, structured to meet Class (RINA/BV/DNV) expectations [6]. Unlike generic plans, our BFMP includes:</p>
     <ul class="list-disc pl-6 space-y-2">
       <li>Specific Anti-Fouling System (AFS) performance data.</li>
       <li>Technical diagrams identifying all vessel-specific high-risk zones.</li>
@@ -37,7 +37,7 @@ export const biofoulingCompliance: Insight = {
     </ul>
 
     <h3>III. Biofouling Record Book (BFRB) Integration</h3>
-    <p>The BFRB serves as the vessel's "biological passport." Our framework ensures the crew documents every inspection and cleaning event with photographic evidence, creating a transparent audit trail for PSC inspections.</p>
+    <p>The BFRB serves as the vessel's "biological passport." Our framework ensures the crew documents every inspection and cleaning event with photographic evidence, creating a transparent audit trail for PSC inspections [3,5].</p>
 
     <h2>3. Case Study Application</h2>
     <p>A 50-meter superyacht operating in high-fouling risk zones (Dubai, Maldives) was scheduled to enter the Mediterranean. By applying the quantified risk assessment, a high exposure index (score 8/10) was identified due to idle duration in tropical waters (&gt;90 days) and coating age (&gt;36 months). Adriatica implemented a BFMP with documented niche-area inspections and integrated a BFRB prior to departure. The vessel transited to Montenegro with full documentation, enabling seamless PSC clearance.</p>
@@ -45,8 +45,8 @@ export const biofoulingCompliance: Insight = {
     <h2>4. Outcomes &amp; Technical Benefits</h2>
     <p>Implementing this compliance methodology provides measurable operational advantages:</p>
     <ul class="list-disc pl-6 space-y-2">
-      <li><strong>Regulatory Readiness</strong> – Ensuring the vessel meets evolving Paris MoU requirements and upcoming 2026 mandates.</li>
-      <li><strong>Operational Efficiency</strong> – Maintaining a clean hull can lead to fuel savings of up to 7% (IMO GloFouling / DNV hull performance data), directly improving the vessel's CII (Carbon Intensity Indicator) rating.</li>
+      <li><strong>Regulatory Readiness</strong> – Ensuring the vessel meets evolving Paris MoU requirements [5] and upcoming 2026 mandates [4].</li>
+      <li><strong>Operational Efficiency</strong> – Maintaining a clean hull can lead to fuel savings of up to 7% (IMO GloFouling / DNV hull performance data), directly improving the vessel's CII (Carbon Intensity Indicator) rating [2].</li>
       <li><strong>Cost Mitigation</strong> – Avoiding emergency in-water cleaning fees (typically €5,000–€15,000) and off-hire penalties during peak Mediterranean season.</li>
     </ul>
 
