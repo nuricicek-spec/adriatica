@@ -5,6 +5,7 @@ export interface Service {
   deliverables: string[];
   outcome: string;
   references: string;
+  relatedServices?: string[];
   relatedCaseStudies?: string[];
   relatedInsights?: string[];
 }
@@ -23,8 +24,9 @@ export const services: Service[] = [
     ],
     outcome: "Class‑approved plan sets, reduced approval delays, and a clear basis for construction or modification.",
     references: "Class society rules (RINA, BV, DNV), flag state regulations",
+    relatedServices: ["engineering-documentation", "structural-integrity"],
     relatedCaseStudies: ["refit-supervision-shipyard"],
-    relatedInsights: ["technical-operations-montenegro"], // teknik operasyonlar ve yerel uygulamalar bağlamında
+    relatedInsights: ["technical-operations-montenegro"],
   },
   {
     slug: "engineering-documentation",
@@ -38,8 +40,9 @@ export const services: Service[] = [
     ],
     outcome: "Audit‑ready documentation, improved crew familiarity, and smoother port state control inspections.",
     references: "IMO, EU MRV, MARPOL",
-    relatedCaseStudies: ["refit-supervision-shipyard"], // refit sırasında as-built dokümantasyon kritiktir
-    relatedInsights: ["technical-operations-montenegro"], // yerel düzenlemeler ve dokümantasyon süreçleri
+    relatedServices: ["engineering-plans", "structural-integrity"],
+    relatedCaseStudies: ["refit-supervision-shipyard"],
+    relatedInsights: ["technical-operations-montenegro"],
   },
   {
     slug: "structural-integrity",
@@ -53,8 +56,9 @@ export const services: Service[] = [
     ],
     outcome: "Clear repair priorities, extended operational life, and classification society acceptance.",
     references: "IACS UR Z10, classification societies",
-    relatedCaseStudies: ["refit-supervision-shipyard"], // refit sırasında yapısal incelemeler yapılır
-    relatedInsights: ["technical-operations-montenegro"], // yerel tersane işlemleri ve proje yönetimi
+    relatedServices: ["engineering-plans", "engineering-documentation"],
+    relatedCaseStudies: ["refit-supervision-shipyard"],
+    relatedInsights: ["technical-operations-montenegro"],
   },
   {
     slug: "sustainable-technologies",
@@ -68,6 +72,7 @@ export const services: Service[] = [
     ],
     outcome: "IMO‑compliant plans, reduced fuel consumption, and lower environmental risk.",
     references: "IMO, EU MRV, Paris MoU",
+    relatedServices: ["regulatory-compliance"],
     relatedCaseStudies: ["biofouling-management-mediterranean", "managed-in-water-cleaning"],
     relatedInsights: ["biofouling-compliance-imo-2026", "sustainable-in-water-cleaning-yacht"],
   },
@@ -84,8 +89,9 @@ export const services: Service[] = [
     ],
     outcome: "PSC‑ready documentation, reduced inspection risk, and full compliance with current regulations.",
     references: "IMO, MARPOL, flag state administrations",
-    relatedCaseStudies: [], // şimdilik doğrudan bir case study yok
-    relatedInsights: ["biofouling-compliance-imo-2026"], // IMO uyumluluk bağlamında
+    relatedServices: ["sustainable-technologies"],
+    relatedCaseStudies: [],
+    relatedInsights: ["biofouling-compliance-imo-2026"],
   },
   {
     slug: "project-management",
@@ -99,7 +105,8 @@ export const services: Service[] = [
     ],
     outcome: "On‑time, on‑budget project delivery with verified quality and complete as‑built records.",
     references: "Industry best practices, IACS UR Z10",
+    relatedServices: ["engineering-plans", "structural-integrity"],
     relatedCaseStudies: ["refit-supervision-shipyard"],
-    relatedInsights: ["technical-operations-montenegro"], // yerel operasyonlar ve proje yönetimi
+    relatedInsights: ["technical-operations-montenegro"],
   },
 ];

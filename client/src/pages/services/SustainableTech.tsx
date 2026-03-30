@@ -144,7 +144,7 @@ export default function SustainableTech() {
 
           {service && (
             <RelatedContent
-              serviceSlugs={[]}
+              serviceSlugs={service.relatedServices}
               caseStudySlugs={service.relatedCaseStudies}
               insightSlugs={service.relatedInsights}
             />

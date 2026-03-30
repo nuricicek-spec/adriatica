@@ -102,7 +102,7 @@ export default function ProjectManagement() {
 
           {service && (
             <RelatedContent
-              serviceSlugs={[]}
+              serviceSlugs={service.relatedServices}
               caseStudySlugs={service.relatedCaseStudies}
               insightSlugs={service.relatedInsights}
             />

@@ -113,7 +113,7 @@ export default function RegulatoryCompliance() {
 
           {service && (
             <RelatedContent
-              serviceSlugs={[]}
+              serviceSlugs={service.relatedServices}
               caseStudySlugs={service.relatedCaseStudies}
               insightSlugs={service.relatedInsights}
             />

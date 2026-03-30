@@ -104,7 +104,7 @@ export default function EngineeringPlans() {
           {/* İçerik bağlantıları */}
           {service && (
             <RelatedContent
-              serviceSlugs={[]}
+              serviceSlugs={service.relatedServices}
               caseStudySlugs={service.relatedCaseStudies}
               insightSlugs={service.relatedInsights}
             />
