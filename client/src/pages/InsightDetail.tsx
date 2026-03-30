@@ -1,5 +1,5 @@
 import { useRoute } from "wouter";
-import { insights } from "@/data/insights";
+import { insights } from '@/data/insights/index';
 import { recommendedSlugs } from "@/data/recommended";
 import { Helmet } from "react-helmet-async";
 import { Share2, Download, Star } from "lucide-react";
