@@ -1,4 +1,4 @@
-import { Insight } from '../insights';
+import { Insight } from '.';
 
 export const sustainableCleaning: Insight = {
   slug: 'sustainable-in-water-cleaning-yacht',

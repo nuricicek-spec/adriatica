@@ -1,4 +1,4 @@
-import { Insight } from '../insights';
+import { Insight } from '.';
 
 export const zeroEmissionZone: Insight = {
   slug: 'zero-emission-zone-boka-kotorska',

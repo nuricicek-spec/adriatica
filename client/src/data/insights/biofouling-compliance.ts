@@ -1,4 +1,4 @@
-import { Insight } from '../insights';
+import { Insight } from '.';
 
 export const biofoulingCompliance: Insight = {
   slug: 'biofouling-compliance-imo-2026',

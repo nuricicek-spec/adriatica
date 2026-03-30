@@ -1,4 +1,4 @@
-import { Insight } from '../insights';
+import { Insight } from '.';
 
 export const technicalOperations: Insight = {
   slug: 'technical-operations-montenegro',
