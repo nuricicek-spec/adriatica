@@ -113,7 +113,7 @@ export default function Home() {
 
                 {/* Segment & Outcome - New */}
                 <p className="text-lg md:text-xl font-semibold text-primary mb-2">
-                  For Shipowners & Operators in the Adriatic and Mediterranean
+                  For Superyacht Owners & Commercial Fleet Operators in the Adriatic and Mediterranean
                 </p>
                 <p className="text-base md:text-lg lg:text-xl text-primary font-semibold mb-4">
                   Engineering Management & Compliance Solutions
