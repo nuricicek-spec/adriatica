@@ -143,7 +143,88 @@ export const insights: Insight[] = [
     date: '2026-03-20',
     readTime: 5,
     description: 'Examination of Montenegro\'s maritime landscape, focusing on UPSUL regulations and shipyard capabilities.',
-    contentHtml: '<p><strong>Mock content.</strong> Replace with actual HTML later.</p>',
+    contentHtml: `
+      <p class="lead text-lg font-medium mb-6">Adriatica D.O.O. examines the critical importance of direct technical presence in the Adriatic region, focusing on the synergy between Montenegrin maritime regulations (UPSUL) and shipyard supervision. This insight provides a strategic roadmap for navigating complex refit cycles and ensuring compliance within Montenegro's evolving maritime infrastructure.</p>
+
+      <h2>1. Context &amp; Regulatory Landscape</h2>
+      <p>As Montenegro solidifies its position as a premier Mediterranean yachting hub, the gap between standard engineering consultancy and on-site technical execution is widening. Vessels operating in the Adriatic face a unique dual-layer challenge:</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><strong>Regulatory Compliance:</strong> Aligning with the Montenegrin Maritime Safety and Port Management Administration (UPSUL) requirements (see also Paris MoU Guidance Note No. 20), which are increasingly harmonizing with EU standards.</li>
+        <li><strong>Infrastructural Navigation:</strong> Coordinating complex technical works across specialized hubs like Adriatic 42 (Bijela) and Navar (Tivat), where local knowledge directly impacts project timelines.</li>
+      </ul>
+      <p>The evolution of Montenegro's maritime technical environment is reflected in the following milestones:</p>
+
+      <div class="overflow-x-auto my-8">
+        <table class="w-full border-collapse border border-border text-sm">
+          <thead>
+            <tr class="bg-neutral-100">
+              <th class="border border-border p-3 text-left font-medium">Milestone</th>
+              <th class="border border-border p-3 text-left font-medium">Operational Relevance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border border-border p-3">UPSUL</td>
+              <td class="border border-border p-3">Baseline for national technical and safety compliance.</td>
+            </tr>
+            <tr>
+              <td class="border border-border p-3">Paris MoU Integration</td>
+              <td class="border border-border p-3">Harmonization of local inspections with European Port State Control standards.</td>
+            </tr>
+            <tr>
+              <td class="border border-border p-3">Adriatic 42 &amp; Navar Exp.</td>
+              <td class="border border-border p-3">Emergence of Montenegro as a high-capacity refit and technical hub.</td>
+            </tr>
+            <tr>
+              <td class="border border-border p-3">Regulatory Convergence</td>
+              <td class="border border-border p-3">Transition toward mandatory digital documentation and environmental oversight.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>2. Methodology: Adriatica Direct Technical Presence</h2>
+      <p>Direct Technical Presence — our framework converts geographical proximity and local regulatory fluency into a measurable commercial advantage for vessel owners.</p>
+      
+      <h3>I. Shipyard Supervision &amp; Engineering Oversight</h3>
+      <p>Engineering excellence in Montenegro requires more than remote guidance. Adriatica's on-site presence ensures:</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><strong>Technical Liaison:</strong> Acting as the primary technical bridge between the vessel's crew and shipyard engineering teams to prevent specification drift.</li>
+        <li><strong>Quality Control (QC):</strong> Physical verification of structural repairs, coating applications, and mechanical overhauls at critical Adriatic shipyards.</li>
+      </ul>
+
+      <h3>II. Navigating Montenegrin Maritime Standards (UPSUL)</h3>
+      <p>Compliance in local waters is not merely administrative; it is an operational prerequisite. Our presence provides:</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><strong>Local Regulatory Fluency:</strong> Direct coordination with Port Authorities in Bar, Tivat, and Kotor to ensure all technical certifications meet local and Paris MoU expectations.</li>
+        <li><strong>Rapid Response:</strong> Immediate on-site technical intervention for Port State Control (PSC) inquiries or emergency engineering requirements.</li>
+      </ul>
+
+      <h2>3. Case Study: Refit Supervision at Adriatic 42</h2>
+      <p>A 55‑meter motor yacht scheduled a 6‑week refit at Adriatic 42 (Bijela). Adriatica provided full‑time on‑site engineering supervision, coordinating coating specifications, shaft alignment verification, and niche‑area biofouling documentation. The project was completed two days ahead of schedule, with all technical records accepted by the vessel's classification society and local Port Authority.</p>
+
+      <h2>4. Outcomes &amp; Technical Benefits</h2>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><strong>Timeline Optimization:</strong> Reducing dry‑docking duration by up to 15% through proactive local logistics and shipyard coordination.</li>
+        <li><strong>Cost Containment:</strong> Avoiding "remote-consultancy" premiums and minimizing off‑hire penalties during the peak Mediterranean season.</li>
+        <li><strong>Regulatory Shielding:</strong> Ensuring the vessel's "biological passport" and technical records align with both international (IMO 2026) and local Adriatic biosecurity trends.</li>
+      </ul>
+
+      <h2>5. Strategic Insight</h2>
+      <p>In the Adriatic market, technical documentation alone is insufficient. True operational leverage is gained through <strong>Direct Technical Presence</strong> — the ability to convert engineering theory into on‑site execution within the specific regulatory and industrial landscape of Montenegro.</p>
+
+      <h2>6. Conclusion</h2>
+      <p>In the Adriatic market, technical documentation alone is insufficient. Adriatica D.O.O. converts theoretical engineering knowledge into on‑site execution within the specific regulatory and industrial landscape of Montenegro. Direct Technical Presence is the most effective way to maintain control over complex refit processes and transform legal compliance into a strategic operational asset. As regulatory scrutiny increases, structured oversight will continue to distinguish compliant operators from reactive ones.</p>
+
+      <h2>References</h2>
+      <ol class="list-decimal pl-6 space-y-1 text-sm">
+        <li>Uprava pomorske sigurnosti i upravljanja lukama (UPSUL). (2025). Maritime Safety Code of Montenegro. Podgorica: UPSUL.</li>
+        <li>Paris Memorandum of Understanding on Port State Control. (2020). Guidance Note No. 20: Procedures for PSC Inspections. Paris: Paris MoU Secretariat.</li>
+        <li>International Association of Classification Societies (IACS). (2019). Unified Requirements UR Z10: Hull Structural Surveys. London: IACS.</li>
+        <li>Adriatic Shipyard Operational Protocols. (2024). Bijela & Tivat Engineering Workflows. Bijela/Tivat: Adriatic 42 & Navar.</li>
+        <li>Adriatica D.O.O. Engineering Archives. (2026). Internal Case Studies on Shipyard Supervision and Technical Management in Montenegro. Podgorica: Adriatica D.O.O.</li>
+      </ol>
+    `,
     pdfUrl: '/pdfs/ADRI-TIS-003.pdf',
     relatedSlugs: [],
     relatedServices: ['project-management'],
@@ -156,7 +237,98 @@ export const insights: Insight[] = [
     date: '2026-02-20',
     readTime: 7,
     description: 'Technical guidance on managing in-water cleaning operations for vessels 25m+ and 50m+.',
-    contentHtml: '<p><strong>Mock content.</strong> Replace with actual HTML later.</p>',
+    contentHtml: `
+      <p class="lead text-lg font-medium mb-6">As IMO MEPC.378(80) Guidelines transition toward structured enforcement convergence across Port State Control (PSC) regimes, biofouling management is shifting from voluntary guidance toward structured operational oversight. While in‑water cleaning offers a cost‑effective alternative to dry‑docking, it requires stringent adherence to environmental standards and technical documentation across different European regions. Adriatica D.O.O. provides engineering management services to plan, coordinate, and certify in‑water cleaning operations. Although Adriatica D.O.O. operates primarily in the Adriatic and Mediterranean regions, our compliance framework is aligned with Port State Control inspection expectations under the Paris MoU framework, ensuring continued compliance for 25m+ and 50m+ vessels without disruption to operational scheduling.</p>
+
+      <div class="bg-neutral-50 border-l-4 border-primary p-4 my-6 rounded-sm">
+        <p class="text-sm font-medium mb-1">Note:</p>
+        <p class="text-sm text-muted-foreground">Adriatica D.O.O. does not perform physical cleaning operations. Acting as Owner's Technical Representative for biofouling management, we design, manage, and technically certify the process.</p>
+      </div>
+
+      <h2>1. Context &amp; Regulatory Landscape</h2>
+      <p>Under the IMO MEPC.378(80) Guidelines, biofouling management is progressing from voluntary guidance toward structured enforcement convergence. European coastal regimes, including the Mediterranean, Adriatic, and Baltic Seas, are intensifying scrutiny of arriving vessels. Regional enforcement intensity varies; for example, the Baltic Sea region is subject to heightened environmental sensitivity under HELCOM coordination frameworks. For motor yachts and sailing vessels (25m+), reliance on reactive cleaning leads to:</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>High costs of unscheduled dry-docking.</li>
+        <li>Charter schedule disruptions and operational downtime.</li>
+        <li>Regulatory non-compliance penalties across different jurisdictions.</li>
+      </ul>
+
+      <h2>2. Methodology: Adriatica Engineering Management Framework</h2>
+      <p>In-water cleaning (cleaning without hauling the vessel) provides a sustainable solution when executed professionally. It offers:</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><strong>Cost Efficiency:</strong> Cost reductions typically ranging between 60‑70% compared to unscheduled dry-docking.</li>
+        <li><strong>Operational Continuity:</strong> Cleaning performed during guest turnaround or downtime.</li>
+        <li><strong>Technical Focus:</strong> Specialized removal of macro-fouling from niche areas (propellers, thruster tunnels, rudder pintles).</li>
+      </ul>
+      <p>Adriatica D.O.O. manages the entire cleaning process through a structured approach, ensuring quality and compliance. It is important to note that Adriatica D.O.O. does not perform physical cleaning operations; acting as Owner's Technical Representative for biofouling management, we design, manage, and technically certify the process.</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><strong>Pre-Cleaning Risk Assessment:</strong> Technical evaluation of fouling levels to determine the necessary cleaning intensity based on the vessel's operational history. Technical diagrams identifying all vessel-specific high-risk zones.</li>
+        <li><strong>Certified Partner Coordination:</strong> Management of certified diving teams equipped with advanced cleaning technologies, including diver-operated or ROV-based systems, with vacuum-assisted and non-abrasive methods for debris capture. This ensures compliance with stringent environmental standards in diverse ports such as Monaco, Tivat, Dubrovnik, and Kiel.</li>
+        <li><strong>Environmental Control &amp; Debris Capture Compliance:</strong> Ensuring diver technology selection adheres to debris containment and sensitivity regarding discharge in European coastal waters, particularly in ecologically sensitive areas like the Baltic or specific Mediterranean marine reserves. In the Baltic Sea, lower salinity and enclosed sea dynamics increase the risk of invasive species establishment, making debris capture particularly critical under HELCOM coordination. In jurisdictions with strict port authority enforcement (e.g., Monaco), failure to contain cleaning debris may trigger Port State Control or port authority enforcement action, including administrative penalties or temporary operational restrictions, depending on jurisdiction.</li>
+        <li><strong>Quality Assurance &amp; Reporting:</strong> Oversight of the operation, including high-resolution photographic documentation, ensuring the process is logged in the vessel's Biofouling Record Book (BFRB).</li>
+      </ul>
+
+      <h2>3. Case Study: Economic Comparison</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
+        <div class="border border-border rounded p-4 bg-white">
+          <div class="font-bold text-primary mb-2">Feature</div>
+          <ul class="list-disc pl-4 text-sm space-y-1">
+            <li>Cost</li>
+            <li>Downtime</li>
+            <li>Charter Risk</li>
+            <li>Environmental Compliance</li>
+          </ul>
+        </div>
+        <div class="border border-border rounded p-4 bg-neutral-50">
+          <div class="font-bold text-primary mb-2">Dry-Docking (Scenario A)</div>
+          <ul class="list-disc pl-4 text-sm space-y-1">
+            <li>€30,000</li>
+            <li>4 Days</li>
+            <li>High (Cancellation Likely)</li>
+            <li>Indirect (Yard documentation)</li>
+          </ul>
+        </div>
+        <div class="border border-border rounded p-4 bg-neutral-50">
+          <div class="font-bold text-primary mb-2">Managed In-Water Cleaning (Scenario B)</div>
+          <ul class="list-disc pl-4 text-sm space-y-1">
+            <li>€6,000</li>
+            <li>1 Day</li>
+            <li>Negligible</li>
+            <li>Direct (BFRB + Photographic Evidence)</li>
+          </ul>
+        </div>
+      </div>
+      <p class="text-sm text-muted-foreground italic">Note: Representative mid-season comparison based on European operational averages.</p>
+      <p>Conclusion: Managed in-water cleaning provided verified compliance with significant financial and operational advantages. The cleaning result was documented through post-cleaning inspection and recorded in the vessel's Biofouling Record Book (BFRB), establishing an auditable trail for Port State Control.</p>
+
+      <h2>4. Outcomes &amp; Technical Benefits</h2>
+      <p>Implementing a managed in-water cleaning program delivers measurable operational advantages:</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><strong>Regulatory Alignment:</strong> Full documentation to satisfy Paris MoU and Class society expectations. Biofouling Record Book (BFRB) entries with photographic evidence create an audit trail accepted by Port State Control authorities. Supports alignment with IMO MEPC.378(80) guidance and anticipated 2026 enforcement convergence.</li>
+        <li><strong>Operational Continuity:</strong> Cleaning performed during guest turnaround or scheduled downtime, avoiding charter disruption. Typical cleaning completed within one day, compared to 4‑7 days for unscheduled dry-docking.</li>
+        <li><strong>Cost Savings:</strong> Up to 80% reduction in direct costs compared to unscheduled dry-docking (€6,000 vs. €30,000 based on European operational averages). Elimination of off-hire penalties and emergency cleaning surcharges (€5,000‑€15,000).</li>
+        <li><strong>Environmental Stewardship:</strong> Verified debris capture using vacuum-based systems reduces risk of environmental enforcement in sensitive areas such as the Baltic Sea (HELCOM) and Mediterranean marine reserves. Supports the vessel's environmental profile, increasingly a factor in marina access and charter market positioning.</li>
+      </ul>
+
+      <h2>5. Strategic Insight</h2>
+      <p>In-water cleaning, when managed through a structured engineering framework, transforms a reactive maintenance task into a proactive compliance asset. The key is not only the cleaning itself but the documented audit trail that demonstrates responsible biofouling management. From a regulatory perspective, the transition from IMO voluntary guidance to structured Port State Control enforcement (anticipated by 2026) means that vessels without verifiable biofouling records will face increasing friction. A managed in-water cleaning program provides traceability, risk reduction, and cost certainty. As regional enforcement intensifies toward 2026 across Mediterranean and European coastal waters, vessels with verified cleaning records will experience fewer delays and stronger charter appeal.</p>
+
+      <h2>6. Conclusion</h2>
+      <p>As 2026 approaches, proactive biofouling governance differentiates compliant operators and protects charter continuity in high-demand Mediterranean seasons. The convergence of IMO MEPC.378(80) guidance with Port State Control enforcement means that documentation, traceability, and niche-area management are becoming prerequisites for seamless Mediterranean entry. Adriatica D.O.O. offers a structured engineering management solution that bridges regulatory requirements and on-water execution. We invite yacht operators to integrate managed in-water cleaning into their compliance roadmap ahead of 2026 enforcement convergence trends, ensuring operational freedom and regulatory readiness across Mediterranean and European coastal waters.</p>
+
+      <h2>References</h2>
+      <ol class="list-decimal pl-6 space-y-1 text-sm">
+        <li>IMO MEPC.378(80): 2023 Guidelines for the Control and Management of Ships' Biofouling to Minimize the Transfer of Invasive Aquatic Species.</li>
+        <li>IMO CII Framework: Technical guidance on the Carbon Intensity Indicator (CII) and its operational efficiency impacts.</li>
+        <li>BIMCO / Clean Shipping Alliance: Industry standards for in-water cleaning and biofouling documentation, emphasizing strict debris capture in sensitive areas.</li>
+        <li>IMO PPR Sub-Committee Reports (PPR 13, 2026 Preparatory Work): Detailing technical measures and enforcement pathways for biofouling management.</li>
+        <li>Paris Memorandum of Understanding (Paris MoU) Guidance Notes: Port State Control procedures and inspection criteria for biofouling documentation and compliance.</li>
+        <li>IACS Unified Requirements and relevant classification society rules (RINA, DNV, Bureau Veritas): Concerning Biofouling Management Plan documentation and compliance in alignment with regional environmental expectations.</li>
+        <li>Australian/New Zealand Biofouling Standards (BIOF125): Mandatory biosecurity models serving as benchmarks for global regulatory alignment.</li>
+        <li>Adriatica D.O.O. Engineering Archives: Internal case studies on superyacht operational efficiency in European &amp; Mediterranean regions.</li>
+        <li>Helsinki Commission (HELCOM): Environmental guidelines for the Baltic Sea area regarding biofouling and debris containment.</li>
+      </ol>
+    `,
     pdfUrl: '/pdfs/ADRI-TIS-002.pdf',
     relatedSlugs: ['biofouling-compliance-imo-2026'],
     relatedServices: ['sustainable-technologies'],
@@ -169,7 +341,67 @@ export const insights: Insight[] = [
     date: '2026-01-20',
     readTime: 6,
     description: 'A real-world superyacht case study on proactive biofouling management.',
-    contentHtml: '<p><strong>Mock content.</strong> Replace with actual HTML later.</p>',
+    contentHtml: `
+      <p class="lead text-lg font-medium mb-6">Adriatica D.O.O. presents a real-world superyacht case study on biofouling management, showcasing how proactive documentation and niche area risk assessment support compliance readiness for the anticipated IMO 2026 transition. Learn how our framework delivers seamless Mediterranean entry, operational efficiency, and measurable sustainability gains.</p>
+
+      <h2>1. Context &amp; Regulatory Landscape</h2>
+      <p>The maritime industry is approaching a regulatory inflection point. While the IMO biofouling guidelines remain formally non-mandatory, Port State Control regimes and regional biosecurity frameworks are increasingly aligning toward structured enforcement. The risk is therefore not theoretical — it is operational. Vessels without measurable documentation, inspection traceability, and niche-area assessment face tangible exposure in the form of entry delays, diver inspections, emergency cleaning requirements, and charter disruption.</p>
+      <p>Under the IMO MEPC.378(80) framework, biofouling management is progressing from voluntary guidance toward structured enforcement convergence expected by 2026.</p>
+      <p><strong>Scenario:</strong> A 50-meter superyacht is relocating from high-fouling risk zones (Dubai, Maldives) to the Mediterranean.</p>
+      <p><strong>Risk:</strong> Coastal states across the Mediterranean, including Montenegro, France, and Italy, are expected to increase scrutiny of arriving vessels. Without verified documentation, yachts may face Port State Control (PSC) delays, entry restrictions, or costly underwater cleaning requirements to mitigate the risk of Invasive Aquatic Species (IAS).</p>
+
+      <h2>2. Methodology: Adriatica Compliance Framework</h2>
+      <p>Adriatica D.O.O. has developed a proactive technical framework to ensure vessel readiness before international enforcement reaches its peak. Our methodology focuses on three pillars:</p>
+
+      <h3>I. Quantified Risk Assessment</h3>
+      <p>Rather than relying solely on narrative evaluation, the vessel exposure was assessed using measurable parameters: idle duration in tropical waters, coating age profile, trading pattern shift, water temperature band, and niche-area configuration complexity. This structured exposure index transformed regulatory uncertainty into a measurable technical decision trigger, based on predefined thresholds for each parameter.</p>
+      <p>Biofouling is not limited to flat hull surfaces; it predominantly thrives in "niche areas." These recessed geometries often escape routine visual inspection yet represent the highest biosecurity exposure points.</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><strong>Sea Chests &amp; Internal Systems</strong> – high-risk zones for macro-fouling.</li>
+        <li><strong>Thruster Tunnels &amp; Stabilizer Pockets</strong> – areas often overlooked during standard cleanings.</li>
+        <li><strong>Propeller Shafts &amp; Rudder Pintles</strong> – critical zones impacting both compliance and mechanical performance.</li>
+      </ul>
+
+      <h3>II. Development of the Biofouling Management Plan (BFMP)</h3>
+      <p>We provide a vessel-specific BFMP, structured to meet Class (RINA/BV/DNV) expectations. Unlike generic plans, our BFMP includes:</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>Specific Anti-Fouling System (AFS) performance data.</li>
+        <li>Technical diagrams identifying all vessel-specific high-risk zones.</li>
+        <li>Maintenance schedules aligned with the vessel's operating profile.</li>
+      </ul>
+
+      <h3>III. Biofouling Record Book (BFRB) Integration</h3>
+      <p>The BFRB serves as the vessel's "biological passport." Our framework ensures the crew documents every inspection and cleaning event with photographic evidence, creating a transparent audit trail for PSC inspections.</p>
+
+      <h2>3. Case Study Application</h2>
+      <p>A 50-meter superyacht operating in high-fouling risk zones (Dubai, Maldives) was scheduled to enter the Mediterranean. By applying the quantified risk assessment, a high exposure index (score 8/10) was identified due to idle duration in tropical waters (&gt;90 days) and coating age (&gt;36 months). Adriatica implemented a BFMP with documented niche-area inspections and integrated a BFRB prior to departure. The vessel transited to Montenegro with full documentation, enabling seamless PSC clearance.</p>
+
+      <h2>4. Outcomes &amp; Technical Benefits</h2>
+      <p>Implementing this compliance methodology provides measurable operational advantages:</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><strong>Regulatory Readiness</strong> – Ensuring the vessel meets evolving Paris MoU requirements and upcoming 2026 mandates.</li>
+        <li><strong>Operational Efficiency</strong> – Maintaining a clean hull can lead to fuel savings of up to 7% (IMO GloFouling / DNV hull performance data), directly improving the vessel's CII (Carbon Intensity Indicator) rating.</li>
+        <li><strong>Cost Mitigation</strong> – Avoiding emergency in-water cleaning fees (typically €5,000–€15,000) and off-hire penalties during peak Mediterranean season.</li>
+      </ul>
+
+      <h2>5. Strategic Insight</h2>
+      <p>The critical lesson from this case is not simply that biofouling must be cleaned, but that quantification reduces regulatory ambiguity, early inspection lowers enforcement friction, and documentation converts risk into operational leverage. Compliance readiness becomes a commercial asset in charter markets increasingly sensitive to environmental credibility. In a tightening regulatory climate, preparedness differentiates operators.</p>
+
+      <h2>6. Conclusion</h2>
+      <p>As regulatory convergence accelerates toward 2026, structured biofouling governance will distinguish compliant operators from reactive ones. Adriatica D.O.O. positions its clients ahead of enforcement curves through measurable assessment, controlled documentation, and proactive inspection strategy.</p>
+
+      <h2>References</h2>
+      <ol class="list-decimal pl-6 space-y-1 text-sm">
+        <li>IMO MEPC.378(80): 2023 Guidelines for the Control and Management of Ships' Biofouling to Minimize the Transfer of Invasive Aquatic Species.</li>
+        <li>IMO CII Framework: Technical guidance on the Carbon Intensity Indicator (CII) and its operational efficiency impacts.</li>
+        <li>BIMCO / Clean Shipping Alliance: Industry standards for in-water cleaning and biofouling documentation.</li>
+        <li>IMO PPR Sub-Committee Reports (PPR 13, 2026 Preparatory Work): Detailing technical measures and enforcement pathways for biofouling management.</li>
+        <li>Paris MoU Guidance Notes: Port State Control procedures and inspection criteria for biofouling documentation and compliance.</li>
+        <li>Recognized Classification Societies (RINA, BV, DNV): Requirements for vessel-specific Biofouling Management Plans and Record Books.</li>
+        <li>Australian/New Zealand Biofouling Standards (BIOF125): Mandatory biosecurity models serving as benchmarks for global regulatory alignment.</li>
+        <li>Adriatica D.O.O. Engineering Archives: Internal case studies on superyacht operational efficiency in the Adriatic &amp; Mediterranean regions.</li>
+      </ol>
+    `,
     pdfUrl: '/pdfs/ADRI-TIS-001.pdf',
     relatedSlugs: ['sustainable-in-water-cleaning-yacht'],
     relatedServices: ['sustainable-technologies'],
