@@ -84,16 +84,6 @@ export const insights: Insight[] = [
         </table>
       </div>
 
-      <figure class="my-8">
-        <img src="/insights-images/zez-comparison-table.png" 
-             alt="Comparison of Zero-Emission Zones in European UNESCO sites" 
-             class="rounded-lg shadow-md w-full"
-             loading="lazy">
-        <figcaption class="text-sm text-muted-foreground mt-2 text-center">
-          Visual comparison of ZEZ implementation (optional infographic).
-        </figcaption>
-      </figure>
-
       <h2>3. The Catalyst for Restriction: Anthropogenic Impact</h2>
       <p>Global precedents indicate two primary drivers for implementing Zero-Emission Zones (ZEZ), both of which are currently at critical levels in Boka Kotorska:</p>
       <ul class="list-disc pl-6 space-y-2">
