@@ -2,11 +2,11 @@ import { Insight } from '.';
 
 export const technicalOperations: Insight = {
   slug: 'technical-operations-montenegro',
-  title: 'Technical Operations in Montenegro: Navigating Local Regulations and Shipyard Excellence',
+  title: 'Montenegro Shipyard Supervision & UPSUL Compliance | Adriatica',
   category: 'Case Insight',
   date: '2026-03-20',
   readTime: 5,
-  description: 'Examination of Montenegro\'s maritime landscape, focusing on UPSUL regulations and shipyard capabilities.',
+  description: 'Direct technical presence in Montenegro: refit supervision, UPSUL regulatory compliance, and shipyard coordination. Reduce dry-docking time by up to 15%.',
   contentHtml: `
     <p class="lead text-lg font-medium mb-6">Adriatica D.O.O. examines the critical importance of direct technical presence in the Adriatic region, focusing on the synergy between Montenegrin maritime regulations (UPSUL) and shipyard supervision. This insight provides a strategic roadmap for navigating complex refit cycles and ensuring compliance within Montenegro's evolving maritime infrastructure.</p>
 

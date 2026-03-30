@@ -2,11 +2,11 @@ import { Insight } from '.';
 
 export const sustainableCleaning: Insight = {
   slug: 'sustainable-in-water-cleaning-yacht',
-  title: 'Sustainable In-Water Cleaning: Engineering Management for European Coastal Yacht Compliance',
+  title: 'In-Water Cleaning Management for Yachts | Sustainable Compliance | Adriatica',
   category: 'Technical Guidance',
   date: '2026-02-20',
   readTime: 7,
-  description: 'Technical guidance on managing in-water cleaning operations for vessels 25m+ and 50m+.',
+  description: 'Professional in-water cleaning management for 25m+ yachts. Cost savings up to 80%, regulatory alignment with Paris MoU, and full BFRB documentation.',
   contentHtml: `
     <p class="lead text-lg font-medium mb-6">As IMO MEPC.378(80) Guidelines transition toward structured enforcement convergence across Port State Control (PSC) regimes, biofouling management is shifting from voluntary guidance toward structured operational oversight. While in‑water cleaning offers a cost‑effective alternative to dry‑docking, it requires stringent adherence to environmental standards and technical documentation across different European regions. Adriatica D.O.O. provides engineering management services to plan, coordinate, and certify in‑water cleaning operations. Although Adriatica D.O.O. operates primarily in the Adriatic and Mediterranean regions, our compliance framework is aligned with Port State Control inspection expectations under the Paris MoU framework [5,9], ensuring continued compliance for 25m+ and 50m+ vessels without disruption to operational scheduling.</p>
 

@@ -2,11 +2,11 @@ import { Insight } from '.';
 
 export const zeroEmissionZone: Insight = {
   slug: 'zero-emission-zone-boka-kotorska',
-  title: 'The Case for a "Zero-Emission Zone": Why is Boka Kotorska Not Protected Yet?',
+  title: 'Boka Kotorska Zero-Emission Zone | UNESCO Protection Roadmap | Adriatica',
   category: 'Strategic Outlook',
   date: '2026-03-25',
   readTime: 8,
-  description: 'A strategic policy paper comparing Boka Kotorska with UNESCO‑protected sites that have implemented Zero‑Emission Zones (ZEZ).',
+  description: 'Why Boka Kotorska lacks a zero-emission zone despite UNESCO status. Strategic roadmap for 2026-2030, EU-backed Blue Economy, and comparative analysis with Geirangerfjord.',
   contentHtml: `
     <figure class="my-8">
       <img src="/insights-images/boka-kotorska-map.jpg" 
@@ -36,7 +36,7 @@ export const zeroEmissionZone: Insight = {
             <th class="border border-border p-3 text-left font-medium">Restriction Milestones</th>
             <th class="border border-border p-3 text-left font-medium">Primary Rationale &amp; Policy</th>
             <th class="border border-border p-3 text-left font-medium">Legal Basis / Instrument</th>
-          \)"
+          </tr>
         </thead>
         <tbody>
           <tr>

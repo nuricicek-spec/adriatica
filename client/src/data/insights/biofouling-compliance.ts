@@ -2,11 +2,11 @@ import { Insight } from '.';
 
 export const biofoulingCompliance: Insight = {
   slug: 'biofouling-compliance-imo-2026',
-  title: 'Biofouling Compliance: Preparing for the IMO 2026 Transition',
+  title: 'IMO 2026 Biofouling Compliance: Superyacht Case Study | Adriatica',
   category: 'Regulation',
   date: '2026-01-20',
   readTime: 6,
-  description: 'A real-world superyacht case study on proactive biofouling management.',
+  description: 'Learn IMO 2026 biofouling compliance through a real-world superyacht case study. Proactive documentation, niche-area risk assessment, and seamless Mediterranean entry.',
   contentHtml: `
     <p class="lead text-lg font-medium mb-6">Adriatica D.O.O. presents a real-world superyacht case study on biofouling management, showcasing how proactive documentation and niche area risk assessment support compliance readiness for the anticipated IMO 2026 transition. Learn how our framework delivers seamless Mediterranean entry, operational efficiency, and measurable sustainability gains.</p>
 
