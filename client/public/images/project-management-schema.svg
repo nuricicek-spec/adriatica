@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+  <defs>
+    <filter id="sh6" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="rgba(11,59,92,0.20)"/>
+    </filter>
+    <pattern id="grid6" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#3A74A0" stroke-width="0.35" opacity="0.20"/>
+    </pattern>
+  </defs>
+
+  <!-- Background grid -->
+  <rect width="800" height="800" fill="url(#grid6)"/>
+
+  <!-- Title -->
+  <text x="400" y="42" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="22" font-weight="700" fill="#0B3B5C" letter-spacing="1">
+    PROJECT MANAGEMENT
+  </text>
+  <text x="400" y="63" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="12" fill="#3A74A0" letter-spacing="2">OWNER'S REPRESENTATION · 4-PHASE PROCESS</text>
+
+  <!-- ── Vertical connector line (background) ── -->
+  <line x1="112" y1="110" x2="112" y2="668" stroke="#D4AF37" stroke-width="2" stroke-dasharray="6,4" opacity="0.5"/>
+
+  <!-- ═══ PHASE 1 ═══ -->
+  <rect x="56" y="100" width="688" height="128" rx="10"
+    fill="#0B3B5C" filter="url(#sh6)"/>
+  <!-- Step number circle (gold) -->
+  <circle cx="112" cy="164" r="32" fill="#D4AF37"/>
+  <text x="112" y="171" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="26" font-weight="700" fill="#0B3B5C">1</text>
+  <!-- Clipboard icon -->
+  <g transform="translate(166,130)" stroke="white" stroke-width="2" fill="none" stroke-linecap="round">
+    <rect x="2" y="6" width="24" height="30" rx="2"/>
+    <rect x="8" y="0" width="12" height="10" rx="2"/>
+    <line x1="6" y1="18" x2="22" y2="18"/>
+    <line x1="6" y1="25" x2="22" y2="25"/>
+    <line x1="6" y1="32" x2="14" y2="32"/>
+  </g>
+  <text x="210" y="148" font-family="Arial,Helvetica,sans-serif"
+    font-size="18" font-weight="700" fill="white">Brief &amp; Information</text>
+  <text x="210" y="170" font-family="Arial,Helvetica,sans-serif"
+    font-size="12" fill="rgba(255,255,255,0.75)">
+    Share vessel details, operational profile, regulatory concerns
+  </text>
+  <text x="210" y="190" font-family="Arial,Helvetica,sans-serif"
+    font-size="12" fill="rgba(255,255,255,0.75)">
+    and specific project requirements with our engineers
+  </text>
+  <text x="210" y="214" font-family="Arial,Helvetica,sans-serif"
+    font-size="11" font-weight="600" fill="#D4AF37">Kickoff · Vessel Survey · Scope Definition</text>
+
+  <!-- Chevron connector 1→2 -->
+  <polygon points="400,238 368,252 400,266 432,252" fill="#D4AF37" opacity="0.9"/>
+  <line x1="400" y1="228" x2="400" y2="238" stroke="#D4AF37" stroke-width="2"/>
+  <line x1="400" y1="266" x2="400" y2="278" stroke="#D4AF37" stroke-width="2"/>
+
+  <!-- ═══ PHASE 2 ═══ -->
+  <rect x="56" y="278" width="688" height="128" rx="10"
+    fill="#1A4B7A" filter="url(#sh6)"/>
+  <circle cx="112" cy="342" r="32" fill="#D4AF37"/>
+  <text x="112" y="349" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="26" font-weight="700" fill="#0B3B5C">2</text>
+  <!-- Calendar icon -->
+  <g transform="translate(166,308)" stroke="white" stroke-width="2" fill="none" stroke-linecap="round">
+    <rect x="0" y="4" width="28" height="28" rx="2"/>
+    <line x1="0"  y1="12" x2="28" y2="12"/>
+    <line x1="8"  y1="0"  x2="8"  y2="8"/>
+    <line x1="20" y1="0"  x2="20" y2="8"/>
+    <line x1="6"  y1="20" x2="10" y2="20"/>
+    <line x1="13" y1="20" x2="17" y2="20"/>
+    <line x1="20" y1="20" x2="24" y2="20"/>
+  </g>
+  <text x="210" y="326" font-family="Arial,Helvetica,sans-serif"
+    font-size="18" font-weight="700" fill="white">Planning &amp; Specification</text>
+  <text x="210" y="348" font-family="Arial,Helvetica,sans-serif"
+    font-size="12" fill="rgba(255,255,255,0.75)">
+    Technical assessment, risk identification, work specification
+  </text>
+  <text x="210" y="368" font-family="Arial,Helvetica,sans-serif"
+    font-size="12" fill="rgba(255,255,255,0.75)">
+    Budget preparation, contractor selection, schedule planning
+  </text>
+  <text x="210" y="392" font-family="Arial,Helvetica,sans-serif"
+    font-size="11" font-weight="600" fill="#D4AF37">Risk Matrix · Work Spec · Budget Control</text>
+
+  <!-- Chevron connector 2→3 -->
+  <polygon points="400,416 368,430 400,444 432,430" fill="#D4AF37" opacity="0.9"/>
+  <line x1="400" y1="406" x2="400" y2="416" stroke="#D4AF37" stroke-width="2"/>
+  <line x1="400" y1="444" x2="400" y2="456" stroke="#D4AF37" stroke-width="2"/>
+
+  <!-- ═══ PHASE 3 ═══ -->
+  <rect x="56" y="456" width="688" height="128" rx="10"
+    fill="#2A5F8A" filter="url(#sh6)"/>
+  <circle cx="112" cy="520" r="32" fill="#D4AF37"/>
+  <text x="112" y="527" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="26" font-weight="700" fill="#0B3B5C">3</text>
+  <!-- Wrench icon -->
+  <g transform="translate(166,486)" stroke="white" stroke-width="2" fill="none" stroke-linecap="round">
+    <path d="M26,2 C26,2 18,4 16,12 C14,18 16,22 16,22 L4,34 C2,36 2,40 4,42 C6,44 10,44 12,42 L24,30 C24,30 28,32 34,30 C42,28 44,20 44,20 L36,18 L34,14 L38,10 C38,10 34,2 26,2 Z"/>
+    <circle cx="8" cy="40" r="2" fill="white"/>
+  </g>
+  <text x="210" y="504" font-family="Arial,Helvetica,sans-serif"
+    font-size="18" font-weight="700" fill="white">Execution &amp; Supervision</text>
+  <text x="210" y="526" font-family="Arial,Helvetica,sans-serif"
+    font-size="12" fill="rgba(255,255,255,0.75)">
+    On-site engineering oversight, contractor coordination
+  </text>
+  <text x="210" y="546" font-family="Arial,Helvetica,sans-serif"
+    font-size="12" fill="rgba(255,255,255,0.75)">
+    Real-time quality control, non-conformity management
+  </text>
+  <text x="210" y="570" font-family="Arial,Helvetica,sans-serif"
+    font-size="11" font-weight="600" fill="#D4AF37">Owner's Rep · Shipyard Liaison · QC Sign-Off</text>
+
+  <!-- Chevron connector 3→4 -->
+  <polygon points="400,594 368,608 400,622 432,608" fill="#D4AF37" opacity="0.9"/>
+  <line x1="400" y1="584" x2="400" y2="594" stroke="#D4AF37" stroke-width="2"/>
+  <line x1="400" y1="622" x2="400" y2="634" stroke="#D4AF37" stroke-width="2"/>
+
+  <!-- ═══ PHASE 4 ═══ -->
+  <rect x="56" y="634" width="688" height="86" rx="10"
+    fill="#3A74A0" filter="url(#sh6)"/>
+  <circle cx="112" cy="677" r="32" fill="#D4AF37"/>
+  <text x="112" y="684" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="26" font-weight="700" fill="#0B3B5C">4</text>
+  <!-- File icon -->
+  <g transform="translate(166,650)" stroke="white" stroke-width="2" fill="none" stroke-linecap="round">
+    <rect x="2" y="0" width="26" height="34" rx="2"/>
+    <polyline points="18,0 18,10 28,10"/>
+    <line x1="6" y1="16" x2="22" y2="16"/>
+    <line x1="6" y1="22" x2="22" y2="22"/>
+    <line x1="6" y1="28" x2="14" y2="28"/>
+  </g>
+  <text x="210" y="665" font-family="Arial,Helvetica,sans-serif"
+    font-size="18" font-weight="700" fill="white">Documentation &amp; Handover</text>
+  <text x="210" y="686" font-family="Arial,Helvetica,sans-serif"
+    font-size="12" fill="rgba(255,255,255,0.75)">
+    Class-ready records, as-built documentation, audit trail
+  </text>
+  <text x="210" y="706" font-family="Arial,Helvetica,sans-serif"
+    font-size="11" font-weight="600" fill="#D4AF37">As-Built Docs · Class Submission · PSC Package</text>
+
+  <!-- ── OUTCOME ribbon ── -->
+  <rect x="100" y="742" width="600" height="44" rx="22"
+    fill="#D4AF37" filter="url(#sh6)"/>
+  <!-- Trophy icon -->
+  <g transform="translate(116,753)" stroke="#0B3B5C" stroke-width="2" fill="none" stroke-linecap="round">
+    <path d="M10,0 L10,14 C10,20 16,24 16,24 C16,24 22,20 22,14 L22,0 Z"/>
+    <line x1="8"  y1="26" x2="24" y2="26"/>
+    <line x1="16" y1="24" x2="16" y2="26"/>
+    <line x1="4"  y1="0"  x2="10" y2="0"/>
+    <line x1="22" y1="0"  x2="28" y2="0"/>
+    <path d="M4,0 C2,0 0,4 0,8 C0,12 4,14 10,12"/>
+    <path d="M28,0 C30,0 32,4 32,8 C32,12 28,14 22,12"/>
+  </g>
+  <text x="400" y="770" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="14" font-weight="700" fill="#0B3B5C" letter-spacing="1">
+    ON-TIME · ON-BUDGET DELIVERY
+  </text>
+
+</svg>

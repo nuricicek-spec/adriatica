@@ -25,6 +25,16 @@ export default function EngineeringDocs() {
             Engineering Documentation
           </h1>
 
+          {/* SVG şeması eklendi */}
+          <div className="my-10 flex justify-center">
+            <img 
+              src="/images/services/engineering-docs-schema.svg" 
+              alt="Engineering documentation workflow – from vessel data to IHM/class submission"
+              className="w-full max-w-3xl mx-auto"
+              loading="lazy"
+            />
+          </div>
+
           <div className="prose prose-lg max-w-none text-muted-foreground">
             <p>
               You get vessel‑specific technical manuals and analyses, fully aligned with IMO conventions, EU MRV, and class requirements. These documents facilitate crew training, maintenance planning, and port state control inspections – keeping you audit‑ready.

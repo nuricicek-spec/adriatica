@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <filter id="sh2" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="rgba(11,59,92,0.16)"/>
+    </filter>
+    <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 Z" fill="#D4AF37"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="400" y="36" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="22" font-weight="700" fill="#0B3B5C" letter-spacing="1">
+    ENGINEERING DOCUMENTATION
+  </text>
+  <text x="400" y="56" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="12" fill="#3A74A0" letter-spacing="2">DOCUMENT FLOW</text>
+
+  <!-- Audit Ready badge top-right -->
+  <rect x="648" y="16" width="130" height="34" rx="17" fill="#D4AF37" filter="url(#sh2)"/>
+  <text x="713" y="38" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="11" font-weight="700" fill="#0B3B5C" letter-spacing="1">AUDIT READY</text>
+
+  <!-- ── TOP: Vessel Data ── -->
+  <rect x="290" y="70" width="220" height="72" rx="8"
+    fill="#0B3B5C" filter="url(#sh2)"/>
+  <!-- Database icon -->
+  <g transform="translate(318,83)" stroke="white" stroke-width="1.8" fill="none">
+    <ellipse cx="18" cy="7"  rx="18" ry="7"/>
+    <ellipse cx="18" cy="25" rx="18" ry="7"/>
+    <line x1="0"  y1="7"  x2="0"  y2="25"/>
+    <line x1="36" y1="7"  x2="36" y2="25"/>
+    <path d="M0,16 Q18,23 36,16" />
+  </g>
+  <text x="400" y="122" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="15" font-weight="700" fill="white">Vessel Data</text>
+  <text x="400" y="138" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="11" fill="rgba(255,255,255,0.7)">Drawings · Specs · History</text>
+
+  <!-- Branch lines from Vessel Data -->
+  <!-- Vertical down -->
+  <line x1="400" y1="142" x2="400" y2="166" stroke="#D4AF37" stroke-width="2"/>
+  <!-- Horizontal spread -->
+  <line x1="148" y1="166" x2="652" y2="166" stroke="#D4AF37" stroke-width="2"/>
+  <!-- Down to three blocks -->
+  <line x1="148" y1="166" x2="148" y2="192" stroke="#D4AF37" stroke-width="2" marker-end="url(#arr2)"/>
+  <line x1="400" y1="166" x2="400" y2="192" stroke="#D4AF37" stroke-width="2" marker-end="url(#arr2)"/>
+  <line x1="652" y1="166" x2="652" y2="192" stroke="#D4AF37" stroke-width="2" marker-end="url(#arr2)"/>
+
+  <!-- ── BLOCK 1: P&ID / System Manuals ── -->
+  <rect x="40" y="200" width="216" height="120" rx="8"
+    fill="#1A4B7A" filter="url(#sh2)"/>
+  <!-- Document icon -->
+  <g transform="translate(56,214)" stroke="white" stroke-width="1.8" fill="none">
+    <rect x="0" y="0" width="24" height="30" rx="2"/>
+    <line x1="4" y1="9"  x2="20" y2="9"/>
+    <line x1="4" y1="15" x2="20" y2="15"/>
+    <line x1="4" y1="21" x2="14" y2="21"/>
+    <polyline points="16,0 16,8 24,8"/>
+  </g>
+  <text x="148" y="234" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="13" font-weight="700" fill="white">As-Built P&amp;ID</text>
+  <text x="148" y="252" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="13" font-weight="700" fill="white">System Manuals</text>
+  <text x="148" y="272" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="10.5" fill="rgba(255,255,255,0.72)">Piping &amp; instrumentation</text>
+  <text x="148" y="286" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="10.5" fill="rgba(255,255,255,0.72)">diagrams per IMO standards</text>
+  <text x="148" y="308" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="10" font-weight="600" fill="#D4AF37">EU MRV · MARPOL</text>
+
+  <!-- ── BLOCK 2: Electrical Load Analysis ── -->
+  <rect x="292" y="200" width="216" height="120" rx="8"
+    fill="#2A5F8A" filter="url(#sh2)"/>
+  <!-- Circuit icon -->
+  <g transform="translate(308,214)" stroke="white" stroke-width="1.8" fill="none">
+    <rect x="8" y="8" width="16" height="14" rx="2"/>
+    <line x1="0"  y1="15" x2="8"  y2="15"/>
+    <line x1="24" y1="15" x2="32" y2="15"/>
+    <line x1="0"  y1="11" x2="0"  y2="19"/>
+    <line x1="32" y1="11" x2="32" y2="19"/>
+    <line x1="16" y1="0"  x2="16" y2="8"/>
+    <line x1="16" y1="22" x2="16" y2="30"/>
+    <line x1="12" y1="30" x2="20" y2="30"/>
+  </g>
+  <text x="400" y="234" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="13" font-weight="700" fill="white">Electrical Load</text>
+  <text x="400" y="252" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="13" font-weight="700" fill="white">Analysis (EAB)</text>
+  <text x="400" y="272" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="10.5" fill="rgba(255,255,255,0.72)">Power balance, load groups,</text>
+  <text x="400" y="286" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="10.5" fill="rgba(255,255,255,0.72)">emergency supply verification</text>
+  <text x="400" y="308" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="10" font-weight="600" fill="#D4AF37">SOLAS · Class Rules</text>
+
+  <!-- ── BLOCK 3: Fuel Management ── -->
+  <rect x="544" y="200" width="216" height="120" rx="8"
+    fill="#3A74A0" filter="url(#sh2)"/>
+  <!-- Droplet icon -->
+  <g transform="translate(560,212)" stroke="white" stroke-width="1.8" fill="none">
+    <path d="M18,4 C18,4 6,20 6,26 A12,12 0 0,0 30,26 C30,20 18,4 18,4Z"/>
+    <line x1="10" y1="26" x2="14" y2="22"/>
+  </g>
+  <text x="652" y="234" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="13" font-weight="700" fill="white">Fuel Management</text>
+  <text x="652" y="252" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="13" font-weight="700" fill="white">&amp; Quality Booklet</text>
+  <text x="652" y="272" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="10.5" fill="rgba(255,255,255,0.72)">Bunkering procedures,</text>
+  <text x="652" y="286" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="10.5" fill="rgba(255,255,255,0.72)">quality control &amp; IHM inventory</text>
+  <text x="652" y="308" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="10" font-weight="600" fill="#D4AF37">EU MRV · IMO DCS</text>
+
+  <!-- Converging arrows to bottom -->
+  <line x1="148" y1="320" x2="148" y2="360" stroke="#D4AF37" stroke-width="2"/>
+  <line x1="148" y1="360" x2="376" y2="360" stroke="#D4AF37" stroke-width="2"/>
+  <line x1="400" y1="320" x2="400" y2="360" stroke="#D4AF37" stroke-width="2"/>
+  <line x1="652" y1="320" x2="652" y2="360" stroke="#D4AF37" stroke-width="2"/>
+  <line x1="652" y1="360" x2="424" y2="360" stroke="#D4AF37" stroke-width="2"/>
+  <line x1="400" y1="360" x2="400" y2="384" stroke="#D4AF37" stroke-width="2" marker-end="url(#arr2)"/>
+
+  <!-- ── BOTTOM: IHM / Class Submission ── -->
+  <rect x="210" y="392" width="380" height="80" rx="8"
+    fill="#D4AF37" filter="url(#sh2)"/>
+  <text x="400" y="425" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="17" font-weight="700" fill="#0B3B5C">IHM / Class Submission</text>
+  <text x="400" y="447" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="12" fill="#0B3B5C" opacity="0.8">
+    Inventory of Hazardous Materials · Flag State · PSC
+  </text>
+
+  <!-- Outcome -->
+  <text x="400" y="510" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="13" fill="#3A74A0" font-style="italic">
+    Outcome: Audit-ready documentation, full regulatory traceability
+  </text>
+
+  <!-- Bottom reference line -->
+  <line x1="100" y1="528" x2="700" y2="528" stroke="#0B3B5C" stroke-width="0.5" opacity="0.2"/>
+  <text x="400" y="548" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="10" fill="#3A74A0" letter-spacing="2" opacity="0.7">
+    ADRIATICA D.O.O. · ENGINEERING DOCUMENTATION
+  </text>
+
+</svg>
