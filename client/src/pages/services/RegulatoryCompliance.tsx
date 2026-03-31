@@ -45,6 +45,16 @@ export default function RegulatoryCompliance() {
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">References</h2>
             <p>IMO, MARPOL, flag state administrations</p>
 
+            {/* SVG Şeması – Düzenleyici matris */}
+            <div className="flex justify-center my-6">
+              <img
+                src="/images/services/regulatory-compliance-schema.svg"
+                alt="Regulatory compliance matrix – IMO, MARPOL, EU MRV, Paris MoU, HELCOM, Flag State, IACS"
+                className="w-full max-w-2xl mx-auto"
+                loading="lazy"
+              />
+            </div>
+
             {/* Detailed sections – enhanced depth */}
             <div className="mt-8 space-y-6">
               <div className="border-l-2 border-primary/20 pl-6">

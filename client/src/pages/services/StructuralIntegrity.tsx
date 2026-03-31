@@ -44,6 +44,16 @@ export default function StructuralIntegrity() {
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">References</h2>
             <p>IACS UR Z10, classification societies</p>
 
+            {/* SVG Şeması – Yaşam uzatma zaman çizelgesi */}
+            <div className="flex justify-center my-6">
+              <img
+                src="/images/services/structural-integrity-schema.svg"
+                alt="Structural integrity timeline – baseline survey, intermediate survey, special survey, life extension study"
+                className="w-full max-w-2xl mx-auto"
+                loading="lazy"
+              />
+            </div>
+
             {/* Detailed sections – enhanced depth */}
             <div className="mt-8 space-y-6">
               <div className="border-l-2 border-primary/20 pl-6">

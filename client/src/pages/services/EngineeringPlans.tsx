@@ -45,6 +45,16 @@ export default function EngineeringPlans() {
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">References</h2>
             <p>Class society rules (RINA, BV, DNV), flag state regulations</p>
 
+            {/* SVG şeması – References'ten sonra, detaylı bölümlerden önce */}
+            <div className="flex justify-center my-6">
+              <img 
+                src="/images/services/engineering-plans-schema.svg" 
+                alt="Engineering plans hierarchy – structural drawings, as-built sets, arrangement plans, fire & safety plans leading to class approval"
+                className="w-full max-w-2xl h-auto"
+                loading="lazy"
+              />
+            </div>
+
             {/* Detailed sections for each deliverable – enhanced depth */}
             <div className="mt-8 space-y-6">
               <div className="border-l-2 border-primary/20 pl-6">

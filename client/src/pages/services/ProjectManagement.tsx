@@ -44,6 +44,16 @@ export default function ProjectManagement() {
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">References</h2>
             <p>Industry best practices, IACS UR Z10</p>
 
+            {/* SVG Şeması – 4 aşamalı proje akışı */}
+            <div className="flex justify-center my-6">
+              <img
+                src="/images/services/project-management-schema.svg"
+                alt="Project management 4-phase process: brief, planning, execution, documentation"
+                className="w-full max-w-2xl mx-auto"
+                loading="lazy"
+              />
+            </div>
+
             {/* Detailed sections – enhanced depth */}
             <div className="mt-8 space-y-6">
               <div className="border-l-2 border-primary/20 pl-6">
