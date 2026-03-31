@@ -57,7 +57,7 @@ export default function SustainableTech() {
             {/* Detailed sections for each deliverable */}
             <div className="mt-8 space-y-6">
               {/* Biofouling Management – detailed block */}
-              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+              <div className="bg-neutral-50 border-l-2 border-primary/20 p-6 rounded-sm">
                 <div className="flex flex-wrap items-center gap-3 mb-3">
                   <h3 className="font-display text-xl font-bold text-[#0B3B5C]">Biofouling Management Plan (IMO MEPC.378(80))</h3>
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
@@ -88,7 +88,7 @@ export default function SustainableTech() {
               </div>
 
               {/* Eco‑friendly Coating Advisory */}
-              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+              <div className="bg-neutral-50 border-l-2 border-primary/20 p-6 rounded-sm">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Eco‑friendly Coating Advisory</h3>
                 <p className="text-muted-foreground mb-2">
                   We help you select the most suitable anti‑fouling coating based on your vessel’s operational profile, trading area, and environmental regulations. Our advisory includes:
@@ -105,7 +105,7 @@ export default function SustainableTech() {
               </div>
 
               {/* Energy Audit & Efficiency Surveys */}
-              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+              <div className="bg-neutral-50 border-l-2 border-primary/20 p-6 rounded-sm">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Energy Audit & Efficiency Surveys</h3>
                 <p className="text-muted-foreground mb-2">
                   Our energy audits provide a comprehensive assessment of your vessel’s energy consumption and identify opportunities for improvement. The service includes:
@@ -122,7 +122,7 @@ export default function SustainableTech() {
               </div>
 
               {/* MRV Monitoring Plan (EU MRV Regulation) */}
-              <div className="bg-neutral-50 border-l-4 border-primary p-6 rounded-sm">
+              <div className="bg-neutral-50 border-l-2 border-primary/20 p-6 rounded-sm">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">MRV Monitoring Plan (EU MRV Regulation)</h3>
                 <p className="text-muted-foreground mb-2">
                   We prepare Monitoring, Reporting, and Verification (MRV) plans in full compliance with EU Regulation 2015/757. Our plans include:
@@ -139,7 +139,7 @@ export default function SustainableTech() {
               </div>
             </div>
 
-            <div className="mt-12 p-8 bg-neutral-50 border-l-4 border-primary text-center">
+            <div className="mt-12 p-8 bg-neutral-50 border-l-2 border-primary/20 rounded-sm text-center">
               <p className="text-lg font-medium text-[#0B3B5C] mb-2">
                 Ready to reduce your vessel’s environmental footprint? Let’s get started.
               </p>
