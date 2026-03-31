@@ -44,12 +44,12 @@ export default function EngineeringDocs() {
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">References</h2>
             <p>IMO, EU MRV, MARPOL</p>
 
-            {/* SVG şeması – References'ten hemen sonra */}
-            <div className="my-10 flex justify-center">
-              <img 
-                src="/images/services/engineering-docs-schema.svg" 
-                alt="Engineering documentation flow: Vessel Data to P&ID, EAB, Fuel Management to IHM/Class Submission" 
-                className="w-full max-w-2xl mx-auto"
+            {/* SVG şeması – References'ten hemen sonra, detaylı bölümlerden önce */}
+            <div className="my-6 flex justify-center">
+              <img
+                src="/images/services/engineering-docs-schema.svg"
+                alt="Engineering documentation flow: vessel data to P&ID, EAB, Fuel booklet, then IHM/Class submission"
+                className="w-full max-w-2xl"
                 loading="lazy"
               />
             </div>
