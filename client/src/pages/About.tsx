@@ -65,15 +65,15 @@ export default function About() {
               Adriatica was founded in Montenegro to bridge the gap between complex maritime regulations and practical vessel management. You don’t just get a consultant – you get an engineer who builds compliance, performance, and peace of mind for vessel operators worldwide, with a strong focus on the Adriatic and Mediterranean.
             </p>
 
-            {/* Expertise – with intro, representative note, and link to Services */}
+            {/* Expertise – aligned with Core Competencies */}
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Expertise</h2>
             <p className="mb-2">Our core expertise includes:</p>
             <ul className="list-disc pl-6 space-y-2">
-              <li>Biofouling Management Planning (IMO MEPC.378(80))</li>
-              <li>In‑Water Cleaning Coordination & Supervision</li>
-              <li>Hull Performance Assessment & CII Advisory</li>
-              <li>Drydock & Refit Technical Supervision</li>
-              <li>Regulatory Compliance (EU MRV, IMO DCS, MARPOL)</li>
+              <li>Engineering & Technical Documentation</li>
+              <li>Structural Integrity & Life Extension</li>
+              <li>Sustainable Technologies & Biofouling Management</li>
+              <li>Regulatory Compliance & PSC Readiness</li>
+              <li>Project Management & Owner’s Representation</li>
             </ul>
             <p className="mt-2 text-sm text-muted-foreground">
               This is a representative selection; we also support related engineering and compliance needs.
