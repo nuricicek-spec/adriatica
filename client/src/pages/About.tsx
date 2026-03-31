@@ -89,11 +89,18 @@ export default function About() {
               You’ll find our support across the Adriatic Sea and the Mediterranean Basin – from key commercial ports like Bar (Montenegro), Durrës (Albania), Rijeka, Split, Ploče (Croatia) to yacht destinations such as Tivat, Dubrovnik, and Monaco. And when your vessel sails beyond the region, we’re still with you: global engineering management and technical advisory services that keep you compliant and operationally excellent, anywhere.
             </p>
 
-            {/* Why Choose Adriatica – benefit cards + link to homepage philosophy */}
+            {/* Why Choose Adriatica – signature framework block */}
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Why Adriatica?</h2>
-            <p className="text-primary text-sm font-medium uppercase tracking-wider mb-4">
-              The Adriatica Integrity Cycle – Align · Execute · Verify
-            </p>
+            <div className="bg-primary/5 border-l-4 border-primary p-5 mb-8 rounded-sm">
+              <p className="text-primary text-sm font-medium uppercase tracking-wider mb-1">Our Framework</p>
+              <p className="text-xl font-display font-bold text-[#0B3B5C]">The Adriatica Integrity Cycle</p>
+              <p className="text-base font-medium text-primary mt-1">Align · Execute · Verify</p>
+              <p className="text-muted-foreground text-sm mt-2">
+                A structured methodology that ensures compliance, efficiency, and peace of mind — from initial assessment to final documentation.
+              </p>
+            </div>
+
+            {/* Benefit cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
               <div className="border-l-2 border-primary/20 pl-4">
                 <h3 className="font-bold text-[#0B3B5C] mb-2">Risk‑Based Approach</h3>
@@ -132,7 +139,7 @@ export default function About() {
             </div>
 
             {/* Company Information Block */}
-            <div className="mt-8 p-6 bg-neutral-50 border-l-4 border-primary rounded-sm">
+            <div className="mt-8 p-6 bg-neutral-50 border-l-2 border-primary/20 rounded-sm">
               <h3 className="font-display text-lg font-bold text-[#0B3B5C] mb-2">Company Information</h3>
               <div className="space-y-1 text-sm text-muted-foreground">
                 <p><strong>Adriatica D.O.O.</strong></p>
@@ -143,7 +150,7 @@ export default function About() {
             </div>
 
             {/* CTA */}
-            <div className="mt-12 p-8 bg-neutral-50 border-l-4 border-primary text-center">
+            <div className="mt-12 p-8 bg-neutral-50 border-l-2 border-primary/20 text-center rounded-sm">
               <p className="text-lg font-medium text-[#0B3B5C] mb-2">
                 Ready to align your vessel with the latest compliance expectations?
               </p>
