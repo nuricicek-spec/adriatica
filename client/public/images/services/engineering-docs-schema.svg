@@ -9,6 +9,9 @@
   </defs>
 
   <!-- Title -->
+  <text x="400" y="36" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
+    font-size="22" font-weight="700" fill="#0B3B5C" letter-spacing="1">
+    ENGINEERING DOCUMENTATION
   <text x="400" y="56" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
     font-size="12" fill="#3A74A0" letter-spacing="2">DOCUMENT FLOW</text>
 
