@@ -47,7 +47,7 @@ export default function EngineeringDocs() {
             {/* SVG şeması – References'ten hemen sonra */}
             <div className="my-10 flex justify-center">
               <img 
-                src="/images/engineering-docs-schema.svg" 
+                src="/images/services/engineering-docs-schema.svg" 
                 alt="Engineering documentation flow: Vessel Data to P&ID, EAB, Fuel Management to IHM/Class Submission" 
                 className="w-full max-w-2xl mx-auto"
                 loading="lazy"
