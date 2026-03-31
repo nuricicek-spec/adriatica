@@ -1,130 +1,112 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 680" width="680" height="680">
   <defs>
-    <filter id="sh4" x="-15%" y="-15%" width="130%" height="130%">
-      <feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="rgba(11,59,92,0.18)"/>
+    <filter id="s" x="-12%" y="-12%" width="124%" height="124%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="rgba(11,59,92,0.16)"/>
     </filter>
-    <marker id="arr4" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">
-      <path d="M0,0 L0,8 L10,4 Z" fill="#D4AF37"/>
+    <marker id="a" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L0,8 L9,4 Z" fill="#D4AF37"/>
     </marker>
   </defs>
 
-  <!-- Title -->
-  <text x="400" y="40" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="22" font-weight="700" fill="#0B3B5C" letter-spacing="1">
-    BIOFOULING MANAGEMENT
-  </text>
-  <text x="400" y="62" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="12" fill="#3A74A0" letter-spacing="2">COMPLIANCE CLOSED LOOP</text>
-
-  <!-- ── Circular flow arrows (drawn as arcs) ── -->
-  <!-- Top→Right -->
-  <path d="M 510,196 A 160,160 0 0,1 604,510"
-    fill="none" stroke="#D4AF37" stroke-width="3" marker-end="url(#arr4)"/>
-  <!-- Right→Bottom -->
-  <path d="M 578,560 A 160,160 0 0,1 290,604"
-    fill="none" stroke="#D4AF37" stroke-width="3" marker-end="url(#arr4)"/>
-  <!-- Bottom→Left -->
-  <path d="M 222,578 A 160,160 0 0,1 196,290"
-    fill="none" stroke="#D4AF37" stroke-width="3" marker-end="url(#arr4)"/>
-  <!-- Left→Top -->
-  <path d="M 222,222 A 160,160 0 0,1 510,196"
-    fill="none" stroke="#D4AF37" stroke-width="3" marker-end="url(#arr4)"/>
+  <!-- Circular flow arrows -->
+  <path d="M 436,172 A 148,148 0 0,1 516,436"
+    fill="none" stroke="#D4AF37" stroke-width="2.5" marker-end="url(#a)"/>
+  <path d="M 494,488 A 148,148 0 0,1 246,516"
+    fill="none" stroke="#D4AF37" stroke-width="2.5" marker-end="url(#a)"/>
+  <path d="M 190,494 A 148,148 0 0,1 164,250"
+    fill="none" stroke="#D4AF37" stroke-width="2.5" marker-end="url(#a)"/>
+  <path d="M 186,194 A 148,148 0 0,1 436,172"
+    fill="none" stroke="#D4AF37" stroke-width="2.5" marker-end="url(#a)"/>
 
   <!-- ── NODE 1: Risk Assessment (TOP) ── -->
-  <rect x="278" y="100" width="244" height="112" rx="12"
-    fill="#0B3B5C" filter="url(#sh4)"/>
-  <!-- Magnifying glass icon -->
-  <g transform="translate(296,116)" stroke="white" stroke-width="2.2" fill="none" stroke-linecap="round">
-    <circle cx="16" cy="16" r="12"/>
-    <line x1="25" y1="25" x2="36" y2="36"/>
+  <rect x="228" y="80" width="224" height="104" rx="10" fill="#0B3B5C" filter="url(#s)"/>
+  <g transform="translate(248,94)" stroke="white" stroke-width="2" fill="none" stroke-linecap="round">
+    <circle cx="14" cy="14" r="11"/>
+    <line x1="22" y1="22" x2="32" y2="32"/>
   </g>
-  <text x="400" y="144" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="16" font-weight="700" fill="white">Risk Assessment</text>
-  <text x="400" y="164" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="11" fill="rgba(255,255,255,0.72)">Fouling level survey</text>
-  <text x="400" y="180" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="11" fill="rgba(255,255,255,0.72)">Coating age &amp; risk scoring</text>
-  <text x="400" y="198" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10" font-weight="600" fill="#D4AF37">MEPC.378(80) · IMO Guidelines</text>
+  <text x="340" y="122" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="700" fill="white">Risk Assessment</text>
+  <text x="340" y="140" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="rgba(255,255,255,0.78)">Fouling level survey</text>
+  <text x="340" y="156" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="rgba(255,255,255,0.78)">Coating age &amp; risk scoring</text>
+  <text x="340" y="174" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="600" fill="#D4AF37">MEPC.378(80) · IMO Guidelines</text>
 
   <!-- ── NODE 2: Cleaning Execution (RIGHT) ── -->
-  <rect x="564" y="340" width="184" height="120" rx="12"
-    fill="#2A5F8A" filter="url(#sh4)"/>
-  <!-- Diver icon (simplified) -->
-  <g transform="translate(578,354)" stroke="white" stroke-width="2" fill="none" stroke-linecap="round">
-    <circle cx="16" cy="10" r="7"/>
-    <line x1="16" y1="17" x2="16" y2="34"/>
-    <line x1="6"  y1="22" x2="26" y2="22"/>
-    <line x1="16" y1="34" x2="8"  y2="44"/>
-    <line x1="16" y1="34" x2="24" y2="44"/>
+  <rect x="484" y="296" width="168" height="116" rx="10" fill="#2A5F8A" filter="url(#s)"/>
+  <g transform="translate(496,308)" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round">
+    <circle cx="14" cy="9"  r="6"/>
+    <line x1="14" y1="15" x2="14" y2="30"/>
+    <line x1="5"  y1="19" x2="23" y2="19"/>
+    <line x1="14" y1="30" x2="7"  y2="40"/>
+    <line x1="14" y1="30" x2="21" y2="40"/>
   </g>
-  <text x="656" y="386" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="14" font-weight="700" fill="white">Cleaning</text>
-  <text x="656" y="404" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="14" font-weight="700" fill="white">Execution</text>
-  <text x="656" y="424" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10.5" fill="rgba(255,255,255,0.72)">In-water cleaning,</text>
-  <text x="656" y="438" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10.5" fill="rgba(255,255,255,0.72)">debris containment</text>
-  <text x="656" y="452" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10" font-weight="600" fill="#D4AF37">IMO · CA · NZ Compliant</text>
+  <text x="568" y="330" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="14" font-weight="700" fill="white">Cleaning</text>
+  <text x="568" y="348" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="14" font-weight="700" fill="white">Execution</text>
+  <text x="568" y="368" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="rgba(255,255,255,0.78)">In-water cleaning,</text>
+  <text x="568" y="384" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="rgba(255,255,255,0.78)">debris containment</text>
+  <text x="568" y="402" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="600" fill="#D4AF37">IMO · CA · NZ</text>
 
   <!-- ── NODE 3: Documentation (BOTTOM) ── -->
-  <rect x="278" y="568" width="244" height="112" rx="12"
-    fill="#1A4B7A" filter="url(#sh4)"/>
-  <!-- Clipboard icon -->
-  <g transform="translate(296,584)" stroke="white" stroke-width="2" fill="none" stroke-linecap="round">
-    <rect x="4"  y="6"  width="28" height="34" rx="2"/>
-    <rect x="10" y="0"  width="16" height="10" rx="2"/>
-    <line x1="10" y1="18" x2="28" y2="18"/>
-    <line x1="10" y1="26" x2="28" y2="26"/>
-    <line x1="10" y1="34" x2="20" y2="34"/>
+  <rect x="228" y="500" width="224" height="104" rx="10" fill="#1A4B7A" filter="url(#s)"/>
+  <g transform="translate(248,514)" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round">
+    <rect x="3" y="5"  width="24" height="30" rx="2"/>
+    <rect x="8" y="0"  width="14" height="9"  rx="2"/>
+    <line x1="8" y1="15" x2="24" y2="15"/>
+    <line x1="8" y1="22" x2="24" y2="22"/>
+    <line x1="8" y1="29" x2="17" y2="29"/>
   </g>
-  <text x="400" y="614" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="16" font-weight="700" fill="white">Documentation</text>
-  <text x="400" y="634" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="11" fill="rgba(255,255,255,0.72)">BMP records, cleaning reports</text>
-  <text x="400" y="650" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="11" fill="rgba(255,255,255,0.72)">Biofouling Record Book</text>
-  <text x="400" y="668" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10" font-weight="600" fill="#D4AF37">5-Year Retention · Class Ready</text>
+  <text x="340" y="534" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="700" fill="white">Documentation</text>
+  <text x="340" y="552" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="rgba(255,255,255,0.78)">BMP records, cleaning reports</text>
+  <text x="340" y="568" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="rgba(255,255,255,0.78)">Biofouling Record Book</text>
+  <text x="340" y="586" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="600" fill="#D4AF37">5-Year Retention · Class Ready</text>
 
   <!-- ── NODE 4: PSC Ready (LEFT) ── -->
-  <rect x="52" y="340" width="184" height="120" rx="12"
-    fill="#3A74A0" filter="url(#sh4)"/>
-  <!-- Checkmark shield icon -->
-  <g transform="translate(68,356)" stroke="white" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M16,2 L28,8 L28,22 C28,30 16,38 16,38 C16,38 4,30 4,22 L4,8 Z"/>
-    <polyline points="9,20 14,26 24,14"/>
+  <rect x="28"  y="296" width="168" height="116" rx="10" fill="#3A74A0" filter="url(#s)"/>
+  <g transform="translate(40,308)" stroke="white" stroke-width="2" fill="none"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14,2 L26,7 L26,20 C26,27 14,34 14,34 C14,34 2,27 2,20 L2,7 Z"/>
+    <polyline points="7,18 12,24 22,12"/>
   </g>
-  <text x="144" y="388" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="14" font-weight="700" fill="white">PSC Ready</text>
-  <text x="144" y="404" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10.5" fill="rgba(255,255,255,0.72)">Port state inspection</text>
-  <text x="144" y="418" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10.5" fill="rgba(255,255,255,0.72)">documentation verified</text>
-  <text x="144" y="438" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10.5" fill="rgba(255,255,255,0.72)">CA / NZ / Paris MoU</text>
-  <text x="144" y="452" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10" font-weight="600" fill="#D4AF37">Zero Detention Risk</text>
+  <text x="112" y="332" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="14" font-weight="700" fill="white">PSC Ready</text>
+  <text x="112" y="352" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="rgba(255,255,255,0.78)">Port state inspection</text>
+  <text x="112" y="368" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="rgba(255,255,255,0.78)">documentation verified</text>
+  <text x="112" y="388" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="rgba(255,255,255,0.78)">CA / NZ / Paris MoU</text>
+  <text x="112" y="404" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="600" fill="#D4AF37">Zero Detention Risk</text>
 
-  <!-- ── Centre circle ── -->
-  <circle cx="400" cy="400" r="72" fill="white" filter="url(#sh4)"/>
-  <circle cx="400" cy="400" r="68" fill="#F0F7FC"/>
-  <!-- Propeller / leaf icon -->
-  <g transform="translate(376,376)" fill="none" stroke="#3A74A0" stroke-width="2.2" stroke-linecap="round">
-    <circle cx="24" cy="24" r="6"/>
-    <!-- 3 blades -->
-    <path d="M24,18 C24,8 12,4 8,10 C14,12 18,16 24,18Z" fill="#3A74A0" opacity="0.7"/>
-    <path d="M29,27 C38,30 42,20 36,16 C32,22 30,24 29,27Z" fill="#3A74A0" opacity="0.7"/>
-    <path d="M19,29 C12,38 20,46 26,42 C24,36 22,32 19,29Z" fill="#3A74A0" opacity="0.7"/>
+  <!-- Centre circle -->
+  <circle cx="340" cy="354" r="68" fill="white" filter="url(#s)"/>
+  <circle cx="340" cy="354" r="64" fill="#F0F7FC"/>
+  <!-- Propeller blades -->
+  <g transform="translate(316,330)" fill="none" stroke="#3A74A0" stroke-width="2" stroke-linecap="round">
+    <circle cx="24" cy="24" r="5"/>
+    <path d="M24,19 C24,10 13,6 9,11 C14,13 18,16 24,19Z" fill="#3A74A0" opacity="0.65"/>
+    <path d="M28,26 C37,29 40,20 35,16 C31,21 29,23 28,26Z" fill="#3A74A0" opacity="0.65"/>
+    <path d="M20,28 C13,37 20,44 26,40 C24,34 22,31 20,28Z" fill="#3A74A0" opacity="0.65"/>
   </g>
-  <text x="400" y="428" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="9" font-weight="600" fill="#0B3B5C" letter-spacing="1">ECO COMPLIANT</text>
+  <text x="340" y="378" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="600"
+    fill="#0B3B5C" letter-spacing="1">ECO COMPLIANT</text>
 
-  <!-- ── IMO 2026 Priority badge ── -->
-  <rect x="272" y="726" width="256" height="38" rx="19" fill="#D4AF37" filter="url(#sh4)"/>
-  <text x="400" y="750" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="13" font-weight="700" fill="#0B3B5C" letter-spacing="1">IMO 2026 PRIORITY</text>
+  <!-- IMO badge -->
+  <rect x="212" y="622" width="256" height="36" rx="18" fill="#D4AF37" filter="url(#s)"/>
+  <text x="340" y="645" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700"
+    fill="#0B3B5C" letter-spacing="1">IMO 2026 PRIORITY</text>
 
 </svg>

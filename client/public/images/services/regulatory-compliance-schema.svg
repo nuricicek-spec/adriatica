@@ -1,166 +1,150 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" width="720" height="520">
   <defs>
-    <filter id="sh5" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="rgba(11,59,92,0.16)"/>
+    <filter id="s" x="-8%" y="-8%" width="116%" height="124%">
+      <feDropShadow dx="0" dy="2" stdDeviation="5" flood-color="rgba(11,59,92,0.14)"/>
     </filter>
-    <marker id="arr5" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+    <marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
       <path d="M0,0 L0,6 L8,3 Z" fill="#D4AF37"/>
     </marker>
   </defs>
 
-  <!-- Title -->
-  <text x="400" y="36" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="22" font-weight="700" fill="#0B3B5C" letter-spacing="1">
-    REGULATORY COMPLIANCE
-  </text>
-  <text x="400" y="57" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="12" fill="#3A74A0" letter-spacing="2">MULTI-FRAMEWORK CONVERGENCE</text>
+  <!-- ── TOP ROW: 3 regulation boxes ── -->
 
-  <!-- ── TOP ROW: 3 regulations ── -->
-
-  <!-- 1. IMO / MARPOL -->
-  <rect x="38"  y="76" width="202" height="88" rx="8" fill="#0B3B5C" filter="url(#sh5)"/>
-  <!-- Globe icon -->
-  <g transform="translate(52,88)" stroke="white" stroke-width="1.8" fill="none">
-    <circle cx="20" cy="20" r="18"/>
-    <ellipse cx="20" cy="20" rx="9" ry="18"/>
-    <line x1="2" y1="20" x2="38" y2="20"/>
-    <line x1="4" y1="11" x2="36" y2="11"/>
-    <line x1="4" y1="29" x2="36" y2="29"/>
+  <!-- 1. IMO/MARPOL -->
+  <rect x="16"  y="10" width="210" height="84" rx="6" fill="#0B3B5C" filter="url(#s)"/>
+  <g transform="translate(30,20)" stroke="white" stroke-width="1.6" fill="none">
+    <circle cx="18" cy="18" r="16"/>
+    <ellipse cx="18" cy="18" rx="8" ry="16"/>
+    <line x1="2"  y1="18" x2="34" y2="18"/>
+    <line x1="4"  y1="10" x2="32" y2="10"/>
+    <line x1="4"  y1="26" x2="32" y2="26"/>
   </g>
-  <text x="139" y="108" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="13" font-weight="700" fill="white">IMO / MARPOL</text>
-  <text x="139" y="126" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10" fill="rgba(255,255,255,0.72)">Global maritime standards</text>
-  <text x="139" y="144" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10" fill="#D4AF37">MEPC · MSC · SOLAS</text>
+  <text x="121" y="38" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" fill="white">IMO / MARPOL</text>
+  <text x="121" y="56" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="rgba(255,255,255,0.78)">Global maritime standards</text>
+  <text x="121" y="72" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="600" fill="#D4AF37">MEPC · MSC · SOLAS</text>
+  <text x="121" y="86" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="11" fill="rgba(255,255,255,0.5)">International</text>
 
   <!-- 2. EU MRV -->
-  <rect x="299" y="76" width="202" height="88" rx="8" fill="#1A4B7A" filter="url(#sh5)"/>
-  <!-- Ship icon -->
-  <g transform="translate(313,88)" stroke="white" stroke-width="1.8" fill="none">
-    <path d="M4,32 L8,16 L20,12 L32,16 L36,32 Z"/>
-    <rect x="12" y="4" width="16" height="12" rx="1"/>
-    <line x1="20" y1="0" x2="20" y2="4"/>
-    <line x1="4"  y1="32" x2="36" y2="32"/>
+  <rect x="255" y="10" width="210" height="84" rx="6" fill="#1A4B7A" filter="url(#s)"/>
+  <g transform="translate(269,20)" stroke="white" stroke-width="1.6" fill="none">
+    <path d="M4,28 L7,14 L18,10 L29,14 L32,28 Z"/>
+    <rect x="10" y="3"  width="15" height="11" rx="1"/>
+    <line x1="18" y1="0" x2="18" y2="3"/>
+    <line x1="4"  y1="28" x2="32" y2="28"/>
   </g>
-  <text x="400" y="108" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="13" font-weight="700" fill="white">EU MRV</text>
-  <text x="400" y="126" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10" fill="rgba(255,255,255,0.72)">Monitoring, Reporting,</text>
-  <text x="400" y="140" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10" fill="rgba(255,255,255,0.72)">Verification</text>
-  <text x="400" y="155" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10" fill="#D4AF37">Reg. 2015/757</text>
+  <text x="360" y="38" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" fill="white">EU MRV</text>
+  <text x="360" y="56" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="rgba(255,255,255,0.78)">Monitoring, Reporting,</text>
+  <text x="360" y="70" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="rgba(255,255,255,0.78)">Verification</text>
+  <text x="360" y="86" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="600" fill="#D4AF37">Reg. 2015/757</text>
 
   <!-- 3. Paris MoU -->
-  <rect x="560" y="76" width="202" height="88" rx="8" fill="#2A5F8A" filter="url(#sh5)"/>
-  <!-- Handshake icon -->
-  <g transform="translate(574,90)" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round">
-    <path d="M4,20 L14,12 L24,16 L36,10"/>
-    <path d="M4,28 L14,20 L24,24 L36,18"/>
-    <line x1="4" y1="20" x2="4" y2="28"/>
-    <line x1="36" y1="10" x2="36" y2="18"/>
+  <rect x="494" y="10" width="210" height="84" rx="6" fill="#2A5F8A" filter="url(#s)"/>
+  <g transform="translate(508,20)" stroke="white" stroke-width="1.6" fill="none" stroke-linecap="round">
+    <path d="M3,18 L12,11 L22,15 L33,9"/>
+    <path d="M3,26 L12,19 L22,23 L33,17"/>
+    <line x1="3" y1="18" x2="3" y2="26"/>
+    <line x1="33" y1="9"  x2="33" y2="17"/>
   </g>
-  <text x="661" y="108" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="13" font-weight="700" fill="white">Paris MoU</text>
-  <text x="661" y="126" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10" fill="rgba(255,255,255,0.72)">Port State Control</text>
-  <text x="661" y="140" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10" fill="rgba(255,255,255,0.72)">inspection regime</text>
-  <text x="661" y="155" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10" fill="#D4AF37">Zero Detention Target</text>
+  <text x="599" y="38" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" fill="white">Paris MoU</text>
+  <text x="599" y="56" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="rgba(255,255,255,0.78)">Port State Control</text>
+  <text x="599" y="72" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="rgba(255,255,255,0.78)">inspection regime</text>
+  <text x="599" y="88" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="600" fill="#D4AF37">Zero Detention Target</text>
 
-  <!-- ── BOTTOM ROW: 3 regulations ── -->
+  <!-- ── BOTTOM ROW: 3 regulation boxes ── -->
 
   <!-- 4. HELCOM -->
-  <rect x="38"  y="200" width="202" height="88" rx="8" fill="#2A5F8A" filter="url(#sh5)"/>
-  <!-- Leaf icon -->
-  <g transform="translate(52,212)" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round">
-    <path d="M20,36 C20,36 4,28 4,12 C4,4 20,2 20,2 C20,2 36,4 36,12 C36,28 20,36 20,36Z"/>
-    <line x1="20" y1="2" x2="20" y2="36"/>
-    <path d="M20,20 C20,20 10,16 8,10"/>
-    <path d="M20,20 C20,20 30,16 32,10"/>
+  <rect x="16"  y="120" width="210" height="84" rx="6" fill="#2A5F8A" filter="url(#s)"/>
+  <g transform="translate(30,130)" stroke="white" stroke-width="1.6" fill="none" stroke-linecap="round">
+    <path d="M18,34 C18,34 4,26 4,11 C4,4 18,2 18,2 C18,2 32,4 32,11 C32,26 18,34 18,34Z"/>
+    <line x1="18" y1="2" x2="18" y2="34"/>
+    <path d="M18,18 C18,18 10,14 8,9"/>
+    <path d="M18,18 C18,18 26,14 28,9"/>
   </g>
-  <text x="139" y="228" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="13" font-weight="700" fill="white">HELCOM</text>
-  <text x="139" y="246" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10" fill="rgba(255,255,255,0.72)">Baltic Sea protection,</text>
-  <text x="139" y="260" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10" fill="rgba(255,255,255,0.72)">environmental compliance</text>
-  <text x="139" y="278" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10" fill="#D4AF37">BWMS · ECA Zones</text>
+  <text x="121" y="148" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" fill="white">HELCOM</text>
+  <text x="121" y="166" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="rgba(255,255,255,0.78)">Baltic Sea protection</text>
+  <text x="121" y="182" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="rgba(255,255,255,0.78)">Environmental compliance</text>
+  <text x="121" y="196" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="600" fill="#D4AF37">BWMS · ECA Zones</text>
 
   <!-- 5. Flag State -->
-  <rect x="299" y="200" width="202" height="88" rx="8" fill="#1A4B7A" filter="url(#sh5)"/>
-  <!-- Flag icon -->
-  <g transform="translate(313,212)" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round">
-    <line x1="6" y1="2" x2="6" y2="38"/>
-    <path d="M6,2 L32,8 L6,20 Z" fill="white" opacity="0.3"/>
+  <rect x="255" y="120" width="210" height="84" rx="6" fill="#1A4B7A" filter="url(#s)"/>
+  <g transform="translate(269,130)" stroke="white" stroke-width="1.6" fill="none" stroke-linecap="round">
+    <line x1="6" y1="2" x2="6" y2="36"/>
+    <path d="M6,2 L30,8 L6,18 Z" fill="white" opacity="0.25"/>
   </g>
-  <text x="400" y="228" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="13" font-weight="700" fill="white">Flag State Admin.</text>
-  <text x="400" y="246" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10" fill="rgba(255,255,255,0.72)">Vessel registration,</text>
-  <text x="400" y="260" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10" fill="rgba(255,255,255,0.72)">certificates &amp; surveys</text>
-  <text x="400" y="278" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10" fill="#D4AF37">Montenegro · EU · UK</text>
+  <text x="360" y="148" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" fill="white">Flag State Admin.</text>
+  <text x="360" y="166" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="rgba(255,255,255,0.78)">Vessel registration,</text>
+  <text x="360" y="182" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="rgba(255,255,255,0.78)">certificates &amp; surveys</text>
+  <text x="360" y="196" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="600" fill="#D4AF37">Montenegro · EU · UK</text>
 
   <!-- 6. IACS / Class -->
-  <rect x="560" y="200" width="202" height="88" rx="8" fill="#3A74A0" filter="url(#sh5)"/>
-  <!-- Document/certificate icon -->
-  <g transform="translate(574,212)" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round">
-    <rect x="4" y="0" width="28" height="36" rx="2"/>
-    <polyline points="20,0 20,10 32,10"/>
-    <line x1="8" y1="16" x2="24" y2="16"/>
-    <line x1="8" y1="22" x2="24" y2="22"/>
-    <line x1="8" y1="28" x2="16" y2="28"/>
-    <!-- Star -->
-    <path d="M24,30 L25.5,27 L27,30 L24.5,28.5 L27.5,28.5 Z" fill="white"/>
+  <rect x="494" y="120" width="210" height="84" rx="6" fill="#3A74A0" filter="url(#s)"/>
+  <g transform="translate(508,130)" stroke="white" stroke-width="1.6" fill="none" stroke-linecap="round">
+    <rect x="3" y="0" width="26" height="34" rx="2"/>
+    <polyline points="18,0 18,9 29,9"/>
+    <line x1="7" y1="15" x2="22" y2="15"/>
+    <line x1="7" y1="21" x2="22" y2="21"/>
+    <line x1="7" y1="27" x2="15" y2="27"/>
   </g>
-  <text x="661" y="228" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="13" font-weight="700" fill="white">IACS / Class</text>
-  <text x="661" y="246" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10" fill="rgba(255,255,255,0.72)">RINA, BV, DNV structural</text>
-  <text x="661" y="260" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10" fill="rgba(255,255,255,0.72)">rules &amp; survey requirements</text>
-  <text x="661" y="278" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10" fill="#D4AF37">UR Z10 · UR E</text>
+  <text x="599" y="148" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" fill="white">IACS / Class</text>
+  <text x="599" y="166" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="rgba(255,255,255,0.78)">RINA, BV, DNV structural</text>
+  <text x="599" y="182" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="rgba(255,255,255,0.78)">rules &amp; survey requirements</text>
+  <text x="599" y="196" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="600" fill="#D4AF37">UR Z10 · UR E</text>
 
-  <!-- ── Dashed converging lines to "Your Vessel" ── -->
-  <!-- All 6 boxes bottom-centre → vessel -->
-  <line x1="139" y1="164" x2="139" y2="320" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="6,4"/>
-  <line x1="139" y1="288" x2="139" y2="320" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="6,4"/>
-  <line x1="400" y1="164" x2="400" y2="310" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="6,4"/>
-  <line x1="400" y1="288" x2="400" y2="310" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="6,4"/>
-  <line x1="661" y1="164" x2="661" y2="320" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="6,4"/>
-  <line x1="661" y1="288" x2="661" y2="320" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="6,4"/>
-  <!-- Horizontal connector -->
-  <line x1="139" y1="320" x2="661" y2="320" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="6,4"/>
-  <!-- Down to vessel -->
-  <line x1="400" y1="320" x2="400" y2="348" stroke="#D4AF37" stroke-width="2" marker-end="url(#arr5)"/>
+  <!-- Dashed converge lines — all 6 bottom centres → y=268 -->
+  <line x1="121" y1="204" x2="121" y2="268" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <line x1="360" y1="204" x2="360" y2="268" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <line x1="599" y1="204" x2="599" y2="268" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <line x1="121" y1="268" x2="599" y2="268" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <line x1="360" y1="268" x2="360" y2="292" stroke="#D4AF37" stroke-width="2" marker-end="url(#a)"/>
 
-  <!-- ── YOUR VESSEL box ── -->
-  <rect x="270" y="356" width="260" height="68" rx="8"
-    fill="#0B3B5C" filter="url(#sh5)"/>
-  <text x="400" y="387" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="17" font-weight="700" fill="white">YOUR VESSEL</text>
-  <text x="400" y="407" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="11" fill="rgba(255,255,255,0.70)">All frameworks applied &amp; documented</text>
+  <!-- YOUR VESSEL -->
+  <rect x="240" y="300" width="240" height="60" rx="6" fill="#0B3B5C" filter="url(#s)"/>
+  <text x="360" y="328" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="700" fill="white">YOUR VESSEL</text>
+  <text x="360" y="348" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="rgba(255,255,255,0.70)">All frameworks applied &amp; documented</text>
 
-  <!-- Arrow vessel → compliance package -->
-  <line x1="400" y1="424" x2="400" y2="454" stroke="#D4AF37" stroke-width="3" marker-end="url(#arr5)"/>
+  <!-- Arrow to compliance -->
+  <line x1="360" y1="360" x2="360" y2="386" stroke="#D4AF37" stroke-width="2.5" marker-end="url(#a)"/>
 
-  <!-- ── FULL COMPLIANCE PACKAGE ── -->
-  <rect x="120" y="462" width="560" height="64" rx="8"
-    fill="#D4AF37" filter="url(#sh5)"/>
-  <text x="400" y="491" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="18" font-weight="700" fill="#0B3B5C" letter-spacing="0.5">
-    FULL COMPLIANCE PACKAGE
-  </text>
-  <text x="400" y="512" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="11" fill="#0B3B5C" opacity="0.8">
+  <!-- FULL COMPLIANCE PACKAGE -->
+  <rect x="100" y="394" width="520" height="60" rx="6" fill="#D4AF37" filter="url(#s)"/>
+  <text x="360" y="422" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="700"
+    fill="#0B3B5C" letter-spacing="0.5">FULL COMPLIANCE PACKAGE</text>
+  <text x="360" y="442" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="#0B3B5C" opacity="0.8">
     PSC-ready · Class-approved · Flag State certified · Audit-ready
   </text>
+
+  <!-- Footer -->
+  <line x1="60" y1="470" x2="660" y2="470" stroke="#E2ECF3" stroke-width="1"/>
+  <text x="360" y="492" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="11" fill="#3A74A0"
+    letter-spacing="2" opacity="0.6">ADRIATICA D.O.O. · REGULATORY COMPLIANCE</text>
+
 </svg>

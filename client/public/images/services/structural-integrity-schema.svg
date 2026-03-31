@@ -1,139 +1,93 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 450" width="1000" height="450">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 340" width="860" height="340">
   <defs>
-    <filter id="sh3" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="0" dy="3" stdDeviation="7" flood-color="rgba(11,59,92,0.20)"/>
+    <filter id="s" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="5" flood-color="rgba(11,59,92,0.16)"/>
     </filter>
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#D4AF37" flood-opacity="0.6"/>
+    <filter id="g" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#D4AF37" flood-opacity="0.55"/>
     </filter>
   </defs>
 
-  <!-- Title -->
-  <text x="500" y="38" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="22" font-weight="700" fill="#0B3B5C" letter-spacing="1">
-    STRUCTURAL INTEGRITY
-  </text>
-  <text x="500" y="58" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="12" fill="#3A74A0" letter-spacing="2">VESSEL LIFE-CYCLE MILESTONE TIMELINE</text>
+  <!-- Timeline track -->
+  <rect x="60" y="166" width="750" height="7" rx="3.5" fill="#E2ECF3"/>
+  <rect x="60" y="166" width="750" height="7" rx="3.5" fill="#3A74A0" opacity="0.35"/>
 
-  <!-- Subtle ship silhouette above timeline -->
-  <g transform="translate(420,72)" fill="#0B3B5C" opacity="0.07">
-    <path d="M0,44 L20,20 L40,14 L80,14 L120,18 L140,30 L160,44
-             L140,50 L20,50 Z"/>
-    <rect x="50" y="4" width="40" height="14" rx="2"/>
-    <rect x="62" y="0" width="4" height="8"/>
-  </g>
+  <!-- Life extension dashed -->
+  <line x1="724" y1="169" x2="810" y2="169" stroke="#D4AF37" stroke-width="2.5" stroke-dasharray="7,4"/>
+  <polygon points="818,169 807,163 807,175" fill="#D4AF37"/>
 
-  <!-- ── Main timeline axis ── -->
-  <!-- Background track -->
-  <rect x="80" y="215" width="840" height="8" rx="4" fill="#E2ECF3"/>
-  <!-- Filled progress bar -->
-  <rect x="80" y="215" width="840" height="8" rx="4" fill="#3A74A0" opacity="0.4"/>
+  <!-- ═══ NODE 1: Yr 0 — ABOVE ═══ -->
+  <circle cx="88"  cy="169" r="18" fill="#0B3B5C" filter="url(#s)"/>
+  <circle cx="88"  cy="169" r="6"  fill="white"/>
+  <line x1="88" y1="151" x2="88" y2="110" stroke="#3A74A0" stroke-width="1.4" stroke-dasharray="3,2"/>
+  <text x="88" y="96" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" fill="#0B3B5C">Baseline Survey</text>
+  <text x="88" y="112" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="#3A74A0">Initial condition</text>
+  <text x="88" y="126" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="#3A74A0">established</text>
+  <rect x="62" y="194" width="52" height="20" rx="10" fill="#0B3B5C"/>
+  <text x="88" y="208" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="white">Yr 0</text>
 
-  <!-- Life extension dashed line extension -->
-  <line x1="830" y1="219" x2="920" y2="219"
-    stroke="#D4AF37" stroke-width="3" stroke-dasharray="8,5"/>
-  <polygon points="928,219 916,213 916,225" fill="#D4AF37"/>
+  <!-- ═══ NODE 2: Yr 2.5 — BELOW ═══ -->
+  <circle cx="238" cy="169" r="18" fill="#1A4B7A" filter="url(#s)"/>
+  <circle cx="238" cy="169" r="6"  fill="white"/>
+  <line x1="238" y1="187" x2="238" y2="228" stroke="#3A74A0" stroke-width="1.4" stroke-dasharray="3,2"/>
+  <text x="238" y="244" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" fill="#0B3B5C">Intermediate Survey</text>
+  <text x="238" y="260" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="#3A74A0">Hull &amp; coating check</text>
+  <rect x="208" y="142" width="60" height="20" rx="10" fill="#1A4B7A"/>
+  <text x="238" y="156" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="white">Yr 2.5</text>
 
-  <!-- ── NODE DATA ── -->
-  <!-- Node 1: Yr 0 – Baseline Survey -->
-  <!-- Node 2: Yr 2.5 – Intermediate Survey -->
-  <!-- Node 3: Yr 5 – Special Survey 1st -->
-  <!-- Node 4: Yr 10 – Special Survey 2nd -->
-  <!-- Node 5: Yr 15+ – Life Extension Study (GOLD) -->
+  <!-- ═══ NODE 3: Yr 5 — ABOVE ═══ -->
+  <circle cx="398" cy="169" r="18" fill="#2A5F8A" filter="url(#s)"/>
+  <circle cx="398" cy="169" r="6"  fill="white"/>
+  <line x1="398" y1="151" x2="398" y2="110" stroke="#3A74A0" stroke-width="1.4" stroke-dasharray="3,2"/>
+  <text x="398" y="96" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" fill="#0B3B5C">Special Survey (1st)</text>
+  <text x="398" y="112" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="#3A74A0">Class renewal,</text>
+  <text x="398" y="126" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="#3A74A0">full inspection</text>
+  <rect x="372" y="194" width="52" height="20" rx="10" fill="#2A5F8A"/>
+  <text x="398" y="208" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="white">Yr 5</text>
 
-  <!-- Node positions: x = 110, 280, 450, 650, 830 -->
+  <!-- ═══ NODE 4: Yr 10 — BELOW ═══ -->
+  <circle cx="568" cy="169" r="18" fill="#3A74A0" filter="url(#s)"/>
+  <circle cx="568" cy="169" r="6"  fill="white"/>
+  <line x1="568" y1="187" x2="568" y2="228" stroke="#3A74A0" stroke-width="1.4" stroke-dasharray="3,2"/>
+  <text x="568" y="244" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" fill="#0B3B5C">Special Survey (2nd)</text>
+  <text x="568" y="260" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="#3A74A0">Structural assessment</text>
+  <text x="568" y="274" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="#3A74A0">&amp; repair scope</text>
+  <rect x="538" y="142" width="60" height="20" rx="10" fill="#3A74A0"/>
+  <text x="568" y="156" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="white">Yr 10</text>
 
-  <!-- === NODE 1: Yr 0 === -->
-  <circle cx="110" cy="219" r="20" fill="#0B3B5C" filter="url(#sh3)"/>
-  <circle cx="110" cy="219" r="7"  fill="white"/>
-  <!-- Label above -->
-  <text x="110" y="132" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="13" font-weight="700" fill="#0B3B5C">Baseline Survey</text>
-  <text x="110" y="150" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10.5" fill="#3A74A0">Initial condition</text>
-  <text x="110" y="164" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10.5" fill="#3A74A0">established</text>
-  <!-- Connector -->
-  <line x1="110" y1="168" x2="110" y2="199" stroke="#3A74A0" stroke-width="1.5" stroke-dasharray="3,2"/>
-  <!-- Year badge below -->
-  <rect x="84" y="248" width="52" height="22" rx="11" fill="#0B3B5C"/>
-  <text x="110" y="263" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="11" font-weight="700" fill="white">Yr 0</text>
+  <!-- ═══ NODE 5: Yr 15+ — ABOVE — GOLD ═══ -->
+  <circle cx="724" cy="169" r="24" fill="#D4AF37" filter="url(#g)"/>
+  <circle cx="724" cy="169" r="9"  fill="white"/>
+  <line x1="724" y1="145" x2="724" y2="104" stroke="#D4AF37" stroke-width="1.8" stroke-dasharray="4,3"/>
+  <text x="724" y="90" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="14" font-weight="700" fill="#0B3B5C">Life Extension Study</text>
+  <text x="724" y="106" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="#3A74A0">Integrity analysis,</text>
+  <text x="724" y="120" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" fill="#3A74A0">class acceptance</text>
+  <rect x="692" y="200" width="64" height="20" rx="10" fill="#D4AF37"/>
+  <text x="724" y="214" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="#0B3B5C">Yr 15+</text>
 
-  <!-- === NODE 2: Yr 2.5 === -->
-  <circle cx="285" cy="219" r="20" fill="#1A4B7A" filter="url(#sh3)"/>
-  <circle cx="285" cy="219" r="7"  fill="white"/>
-  <!-- Label below -->
-  <text x="285" y="300" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="13" font-weight="700" fill="#0B3B5C">Intermediate Survey</text>
-  <text x="285" y="318" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10.5" fill="#3A74A0">Hull &amp; coating</text>
-  <text x="285" y="332" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10.5" fill="#3A74A0">condition check</text>
-  <!-- Connector -->
-  <line x1="285" y1="239" x2="285" y2="292" stroke="#3A74A0" stroke-width="1.5" stroke-dasharray="3,2"/>
-  <!-- Year badge above -->
-  <rect x="255" y="186" width="60" height="22" rx="11" fill="#1A4B7A"/>
-  <text x="285" y="201" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="11" font-weight="700" fill="white">Yr 2.5</text>
-
-  <!-- === NODE 3: Yr 5 === -->
-  <circle cx="460" cy="219" r="20" fill="#2A5F8A" filter="url(#sh3)"/>
-  <circle cx="460" cy="219" r="7"  fill="white"/>
-  <!-- Label above -->
-  <text x="460" y="132" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="13" font-weight="700" fill="#0B3B5C">Special Survey (1st)</text>
-  <text x="460" y="150" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10.5" fill="#3A74A0">Class renewal,</text>
-  <text x="460" y="164" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10.5" fill="#3A74A0">full inspection</text>
-  <!-- Connector -->
-  <line x1="460" y1="168" x2="460" y2="199" stroke="#3A74A0" stroke-width="1.5" stroke-dasharray="3,2"/>
-  <!-- Year badge below -->
-  <rect x="434" y="248" width="52" height="22" rx="11" fill="#2A5F8A"/>
-  <text x="460" y="263" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="11" font-weight="700" fill="white">Yr 5</text>
-
-  <!-- === NODE 4: Yr 10 === -->
-  <circle cx="650" cy="219" r="20" fill="#3A74A0" filter="url(#sh3)"/>
-  <circle cx="650" cy="219" r="7"  fill="white"/>
-  <!-- Label below -->
-  <text x="650" y="300" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="13" font-weight="700" fill="#0B3B5C">Special Survey (2nd)</text>
-  <text x="650" y="318" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10.5" fill="#3A74A0">Structural assessment</text>
-  <text x="650" y="332" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10.5" fill="#3A74A0">&amp; repair scope</text>
-  <!-- Connector -->
-  <line x1="650" y1="239" x2="650" y2="292" stroke="#3A74A0" stroke-width="1.5" stroke-dasharray="3,2"/>
-  <!-- Year badge above -->
-  <rect x="620" y="186" width="60" height="22" rx="11" fill="#3A74A0"/>
-  <text x="650" y="201" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="11" font-weight="700" fill="white">Yr 10</text>
-
-  <!-- === NODE 5: Yr 15+ – GOLD (Life Extension) === -->
-  <circle cx="830" cy="219" r="26" fill="#D4AF37" filter="url(#glow)"/>
-  <circle cx="830" cy="219" r="10" fill="white"/>
-  <!-- Label above -->
-  <text x="830" y="120" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="14" font-weight="700" fill="#0B3B5C">Life Extension Study</text>
-  <text x="830" y="138" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10.5" fill="#3A74A0">Integrity analysis,</text>
-  <text x="830" y="152" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10.5" fill="#3A74A0">class acceptance</text>
-  <!-- Connector -->
-  <line x1="830" y1="156" x2="830" y2="193" stroke="#D4AF37" stroke-width="2" stroke-dasharray="4,3"/>
-  <!-- Year badge below -->
-  <rect x="797" y="254" width="66" height="22" rx="11" fill="#D4AF37"/>
-  <text x="830" y="269" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="11" font-weight="700" fill="#0B3B5C">Yr 15+</text>
-
-  <!-- ── IACS reference bar ── -->
-  <rect x="80" y="390" width="840" height="34" rx="4" fill="#0B3B5C" opacity="0.06"/>
-  <text x="500" y="412" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="11" font-weight="600" fill="#0B3B5C" letter-spacing="2">
-    IACS UR Z10 ALIGNED · CLASSIFICATION SOCIETY ACCEPTED
-  </text>
+  <!-- IACS bar -->
+  <rect x="60" y="298" width="750" height="30" rx="4" fill="#0B3B5C" opacity="0.05"/>
+  <text x="435" y="318" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="600"
+    fill="#0B3B5C" letter-spacing="1.5">IACS UR Z10 ALIGNED · CLASSIFICATION SOCIETY ACCEPTED</text>
 
 </svg>
