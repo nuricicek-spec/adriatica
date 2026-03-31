@@ -136,12 +136,4 @@
     font-size="13" fill="#3A74A0" font-style="italic">
     Outcome: Audit-ready documentation, full regulatory traceability
   </text>
-
-  <!-- Bottom reference line -->
-  <line x1="100" y1="528" x2="700" y2="528" stroke="#0B3B5C" stroke-width="0.5" opacity="0.2"/>
-  <text x="400" y="548" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10" fill="#3A74A0" letter-spacing="2" opacity="0.7">
-    ADRIATICA D.O.O. · ENGINEERING DOCUMENTATION
-  </text>
-
 </svg>
