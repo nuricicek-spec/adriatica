@@ -127,10 +127,4 @@
   <text x="400" y="750" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
     font-size="13" font-weight="700" fill="#0B3B5C" letter-spacing="1">IMO 2026 PRIORITY</text>
 
-  <!-- Bottom text -->
-  <text x="400" y="788" text-anchor="middle" font-family="Arial,Helvetica,sans-serif"
-    font-size="10" fill="#3A74A0" letter-spacing="1.5">
-    ADRIATICA D.O.O. · SUSTAINABLE TECHNOLOGIES &amp; COMPLIANCE
-  </text>
-
 </svg>
