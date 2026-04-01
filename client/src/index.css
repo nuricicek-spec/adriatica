@@ -110,3 +110,32 @@ ol.list-decimal {
   list-style-type: decimal !important;
   padding-left: 1.5rem;
 }
+
+/* Mobil menü animasyonları (tailwindcss-animate eklentisi varsa zaten çalışır, yoksa aşağıdaki tanımlar) */
+@keyframes slide-in-from-top {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes animate-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-in {
+  animation: animate-in 0.2s ease-out forwards;
+}
+
+.slide-in-from-top {
+  animation: slide-in-from-top 0.2s ease-out forwards;
+}
