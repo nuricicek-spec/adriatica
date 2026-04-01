@@ -68,7 +68,7 @@ export const biofoulingCompliance: Insight = {
       <li>Adriatica D.O.O. Engineering Archives: Internal case studies on superyacht operational efficiency in the Adriatic &amp; Mediterranean regions.</li>
     </ol>
   `,
-  pdfUrl: '/pdfs/ADRI-TIS-001.pdf',
+  pdfUrl: '/pdfs/insights/ADRI-TIS-001.pdf',
   relatedSlugs: ['sustainable-in-water-cleaning-yacht'],
   relatedServices: ['sustainable-technologies'],
   relatedCaseStudies: ['biofouling-management-mediterranean', 'managed-in-water-cleaning'],

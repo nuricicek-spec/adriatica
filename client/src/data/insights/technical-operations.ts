@@ -89,7 +89,7 @@ export const technicalOperations: Insight = {
       <li>Adriatica D.O.O. Engineering Archives. (2026). Internal Case Studies on Shipyard Supervision and Technical Management in Montenegro. Podgorica: Adriatica D.O.O.</li>
     </ol>
   `,
-  pdfUrl: '/pdfs/ADRI-TIS-003.pdf',
+  pdfUrl: '/pdfs/insights/ADRI-TIS-003.pdf',
   relatedSlugs: [],
   relatedServices: ['project-management'],
   relatedCaseStudies: ['refit-supervision-shipyard'],

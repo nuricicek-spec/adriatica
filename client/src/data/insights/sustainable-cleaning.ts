@@ -99,7 +99,7 @@ export const sustainableCleaning: Insight = {
       <li>Helsinki Commission (HELCOM): Environmental guidelines for the Baltic Sea area regarding biofouling and debris containment.</li>
     </ol>
   `,
-  pdfUrl: '/pdfs/ADRI-TIS-002.pdf',
+  pdfUrl: '/pdfs/insights/ADRI-TIS-002.pdf',
   relatedSlugs: ['biofouling-compliance-imo-2026'],
   relatedServices: ['sustainable-technologies'],
   relatedCaseStudies: ['managed-in-water-cleaning'],

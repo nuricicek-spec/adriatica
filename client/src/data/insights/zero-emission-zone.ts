@@ -118,7 +118,7 @@ export const zeroEmissionZone: Insight = {
       <li>Adriatica D.O.O. Engineering Archives: Comparative analysis on anthropogenic impact and ZEZ feasibility (2025).</li>
     </ol>
   `,
-  pdfUrl: '/pdfs/ADRI-TIS-004.pdf',
+  pdfUrl: '/pdfs/insights/ADRI-TIS-004.pdf',
   relatedSlugs: ['biofouling-compliance-imo-2026'],
   relatedServices: ['sustainable-technologies'],
   relatedCaseStudies: [],
