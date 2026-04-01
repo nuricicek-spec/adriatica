@@ -9,6 +9,7 @@ import { deliverables } from '@/data/deliverables';
 
 export default function Deliverables() {
   const [category, setCategory] = useState('All');
+  const [previewItem, setPreviewItem] = useState<typeof deliverables[0] | null>(null);
   const categories = ['All', 'Engineering', 'Compliance', 'Operations'];
 
   const filtered = category === 'All'
@@ -77,17 +78,17 @@ export default function Deliverables() {
                 key={item.id}
                 className="border border-border/40 rounded-sm p-5 bg-white hover:shadow-md transition-shadow"
               >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-medium uppercase text-primary bg-primary/10 px-2 py-0.5 rounded">
-                    {item.category}
-                  </span>
+                <div className="flex items-start justify-between gap-3 mb-3">
                   {item.previewImage && (
                     <img
                       src={item.previewImage}
                       alt=""
-                      className="h-8 w-auto opacity-70"
+                      className="h-12 w-12 object-contain"
                     />
                   )}
+                  <span className="text-xs font-medium uppercase text-primary bg-primary/10 px-2 py-0.5 rounded whitespace-nowrap">
+                    {item.category}
+                  </span>
                 </div>
                 <h3 className="font-display text-xl font-bold text-primary mb-1">
                   {item.title}
@@ -95,7 +96,7 @@ export default function Deliverables() {
                 <p className="text-muted-foreground text-sm mb-4">
                   {item.description}
                 </p>
-                <div className="flex gap-4">
+                <div className="flex flex-wrap gap-3">
                   <HashLink
                     href={`/services/${item.serviceSlug}`}
                     className="text-primary text-sm hover:underline"
@@ -108,6 +109,12 @@ export default function Deliverables() {
                   >
                     Request a quote →
                   </HashLink>
+                  <button
+                    onClick={() => setPreviewItem(item)}
+                    className="text-primary text-sm hover:underline"
+                  >
+                    Preview →
+                  </button>
                 </div>
               </div>
             ))}
@@ -127,6 +134,44 @@ export default function Deliverables() {
           </div>
         </main>
         <Footer />
+
+        {/* Preview Modal */}
+        {previewItem && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={() => setPreviewItem(null)}>
+            <div className="bg-white rounded-sm max-w-2xl w-full max-h-[90vh] overflow-auto p-6 relative" onClick={e => e.stopPropagation()}>
+              <button
+                onClick={() => setPreviewItem(null)}
+                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+              >
+                ✕
+              </button>
+              <div className="flex items-center gap-4 mb-4">
+                {previewItem.previewImage && (
+                  <img src={previewItem.previewImage} alt="" className="h-16 w-16 object-contain" />
+                )}
+                <div>
+                  <h3 className="font-display text-2xl font-bold text-primary">{previewItem.title}</h3>
+                  <span className="text-xs uppercase text-primary bg-primary/10 px-2 py-0.5 rounded">
+                    {previewItem.category}
+                  </span>
+                </div>
+              </div>
+              <p className="text-muted-foreground mb-4">{previewItem.description}</p>
+              <div className="bg-neutral-50 p-4 rounded-sm text-center text-sm text-muted-foreground">
+                <p>PDF preview will be available soon.</p>
+                <p className="mt-1">For a full sample, please <HashLink href="/#begin-voyage" className="text-primary hover:underline">contact us</HashLink>.</p>
+              </div>
+              <div className="mt-6 flex justify-end">
+                <HashLink
+                  href={`/services/${previewItem.serviceSlug}`}
+                  className="bg-primary text-white px-4 py-2 rounded-sm hover:bg-primary/90 transition"
+                >
+                  Learn more about this deliverable
+                </HashLink>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
