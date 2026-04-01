@@ -107,38 +107,43 @@ export function Navigation() {
           </div>
         </div>
 
-        {/* Mobil Menü – overlay ve slide panel */}
+        {/* Mobil Menü – arka plan karartma (overlay) */}
         {isMobileMenuOpen && (
-          <div className="md:hidden fixed inset-0 z-50" ref={menuRef}>
-            {/* Arka plan karartma */}
-            <div
-              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-              onClick={closeMenu}
-            />
-            {/* Menü paneli */}
-            <div className="absolute top-full left-0 w-full bg-background border-b border-border/10 shadow-xl py-4 px-4 flex flex-col space-y-4 animate-in slide-in-from-top duration-200">
-              {navLinks.map((link) => (
-                <HashLink
-                  key={link.name}
-                  href={link.href}
-                  className="text-lg font-medium py-2 border-b border-border/5"
-                  onClick={closeMenu}
-                >
-                  {link.name}
-                </HashLink>
-              ))}
-              <button
-                onClick={() => {
-                  handleInquireClick();
-                  closeMenu();
-                }}
-                className="w-full bg-primary text-primary-foreground px-6 py-3 rounded-sm font-medium mt-4"
-              >
-                Request Consultation
-              </button>
-            </div>
-          </div>
+          <div
+            className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
+            onClick={closeMenu}
+          />
         )}
+
+        {/* Mobil Menü – panel (nav bar'ın hemen altında) */}
+        <div
+          className={cn(
+            "md:hidden absolute top-full left-0 w-full z-50 bg-background border-b border-border/10 shadow-xl py-4 px-4 flex flex-col space-y-4 transition-all duration-200",
+            isMobileMenuOpen
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 -translate-y-4 pointer-events-none"
+          )}
+        >
+          {navLinks.map((link) => (
+            <HashLink
+              key={link.name}
+              href={link.href}
+              className="text-lg font-medium py-2 border-b border-border/5"
+              onClick={closeMenu}
+            >
+              {link.name}
+            </HashLink>
+          ))}
+          <button
+            onClick={() => {
+              handleInquireClick();
+              closeMenu();
+            }}
+            className="w-full bg-primary text-primary-foreground px-6 py-3 rounded-sm font-medium mt-4"
+          >
+            Request Consultation
+          </button>
+        </div>
       </nav>
     </>
   );
