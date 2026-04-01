@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
@@ -35,7 +36,7 @@ export default function Home() {
       } else {
         setFormStatus('error');
       }
-    } catch (error) {
+    } catch (_error) {
       setFormStatus('error');
     }
   };

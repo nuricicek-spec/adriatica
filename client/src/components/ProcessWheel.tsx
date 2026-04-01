@@ -2,6 +2,7 @@
 // Interactive 4-step Engineering Management Process Wheel
 // SVG geometry built in React JSX – no external libraries required.
 
+import React from 'react'; // Eklendi
 import { useState, useEffect, useCallback, useRef } from "react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
