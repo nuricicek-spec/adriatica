@@ -6,22 +6,27 @@ import { Helmet } from "react-helmet-async";
 import { SEO } from "@/components/SEO";
 import { Link } from "wouter";
 import { insights } from "@/data/insights";
-import { Search, X } from "lucide-react";
+import { Search, X, ChevronDown } from "lucide-react";
+
+type SortOption = "newest" | "oldest" | "alphabetical";
 
 export default function InsightsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("All");
+  const [sortBy, setSortBy] = useState<SortOption>("newest");
 
-  // Kategori listesini insights verisinden çıkar
+  // Kategori listesini veriden çıkar
   const categories = useMemo(() => {
     const cats = new Set(insights.map(i => i.category));
     return ["All", ...Array.from(cats).sort()];
   }, []);
 
-  // Filtreleme mantığı
-  const filteredInsights = useMemo(() => {
-    return insights.filter(insight => {
+  // Filtreleme + sıralama
+  const filteredAndSorted = useMemo(() => {
+    let filtered = insights.filter(insight => {
+      // Kategori filtresi
       if (category !== "All" && insight.category !== category) return false;
+      // Arama filtresi
       if (searchTerm.trim() !== "") {
         const term = searchTerm.toLowerCase();
         return (
@@ -31,12 +36,20 @@ export default function InsightsPage() {
       }
       return true;
     });
-  }, [searchTerm, category]);
 
-  const clearFilters = () => {
-    setSearchTerm("");
-    setCategory("All");
-  };
+    // Sıralama
+    if (sortBy === "newest") {
+      filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    } else if (sortBy === "oldest") {
+      filtered.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    } else if (sortBy === "alphabetical") {
+      filtered.sort((a, b) => a.title.localeCompare(b.title));
+    }
+
+    return filtered;
+  }, [searchTerm, category, sortBy]);
+
+  const clearSearch = () => setSearchTerm("");
 
   return (
     <>
@@ -58,83 +71,90 @@ export default function InsightsPage() {
             subtitle="Technical articles and updates from Adriatica D.O.O."
           />
 
-          {/* Arama ve filtreleme bölümü */}
-          <div className="mt-8 mb-12 space-y-4">
-            <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-              {/* Arama kutusu */}
-              <div className="relative w-full md:w-80">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <input
-                  type="text"
-                  placeholder="Search articles..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-9 pr-8 py-2 border border-border rounded-sm bg-white focus:outline-none focus:ring-1 focus:ring-primary"
-                />
-                {searchTerm && (
-                  <button
-                    onClick={() => setSearchTerm("")}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                )}
-              </div>
-
-              {/* Kategori filtresi */}
-              <div className="flex items-center gap-3 w-full md:w-auto">
-                <select
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  className="border border-border rounded-sm px-3 py-2 bg-white focus:outline-none focus:ring-1 focus:ring-primary text-sm"
+          {/* Filtre ve arama bölümü */}
+          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-between items-center">
+            {/* Arama kutusu */}
+            <div className="relative w-full sm:w-80">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="Search articles..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-9 pr-8 py-2 border border-border/40 rounded-sm bg-white focus:outline-none focus:border-primary"
+              />
+              {searchTerm && (
+                <button
+                  onClick={clearSearch}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary"
                 >
-                  {categories.map(cat => (
-                    <option key={cat} value={cat}>{cat}</option>
-                  ))}
-                </select>
-
-                {(searchTerm || category !== "All") && (
-                  <button
-                    onClick={clearFilters}
-                    className="text-sm text-primary hover:underline"
-                  >
-                    Clear filters
-                  </button>
-                )}
-              </div>
+                  <X className="w-4 h-4" />
+                </button>
+              )}
             </div>
 
-            {/* Sonuç sayısı */}
-            <p className="text-sm text-muted-foreground">
-              {filteredInsights.length} {filteredInsights.length === 1 ? "result" : "results"}
-            </p>
+            <div className="flex gap-3 w-full sm:w-auto">
+              {/* Kategori filtresi */}
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="px-3 py-2 border border-border/40 rounded-sm bg-white focus:outline-none focus:border-primary"
+              >
+                {categories.map(cat => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+
+              {/* Sıralama seçeneği */}
+              <div className="relative">
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as SortOption)}
+                  className="appearance-none px-3 py-2 pr-8 border border-border/40 rounded-sm bg-white focus:outline-none focus:border-primary"
+                >
+                  <option value="newest">Newest first</option>
+                  <option value="oldest">Oldest first</option>
+                  <option value="alphabetical">Alphabetical</option>
+                </select>
+                <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+              </div>
+            </div>
           </div>
 
+          {/* Sonuç sayısı */}
+          <p className="text-sm text-muted-foreground mt-4">
+            {filteredAndSorted.length} article{filteredAndSorted.length !== 1 ? 's' : ''} found
+          </p>
+
           {/* Grid */}
-          {filteredInsights.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {filteredInsights.map(insight => (
-                <Link key={insight.slug} href={`/insights/${insight.slug}`}>
-                  <a className="block group p-6 bg-white border border-border/40 rounded-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                    <div className="text-sm text-primary font-medium mb-2">{insight.category}</div>
-                    <h2 className="text-xl font-display font-bold mb-2 group-hover:text-primary transition-colors">
-                      {insight.title}
-                    </h2>
-                    <p className="text-muted-foreground text-sm mb-3">{insight.description}</p>
-                    <div className="flex items-center text-xs text-muted-foreground">
-                      <span>{new Date(insight.date).toLocaleDateString('en-GB')}</span>
-                      <span className="mx-2">•</span>
-                      <span>{insight.readTime} min read</span>
-                    </div>
-                  </a>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-16">
-              <p className="text-muted-foreground">No articles match your search.</p>
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+            {filteredAndSorted.map(insight => (
+              <Link key={insight.slug} href={`/insights/${insight.slug}`}>
+                <a className="block group p-6 bg-white border border-border/40 rounded-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                  <div className="text-sm text-primary font-medium mb-2">{insight.category}</div>
+                  <h2 className="text-xl font-display font-bold mb-2 group-hover:text-primary transition-colors">
+                    {insight.title}
+                  </h2>
+                  <p className="text-muted-foreground text-sm mb-3">{insight.description}</p>
+                  <div className="flex items-center text-xs text-muted-foreground">
+                    <span>{new Date(insight.date).toLocaleDateString('en-GB')}</span>
+                    <span className="mx-2">•</span>
+                    <span>{insight.readTime} min read</span>
+                  </div>
+                </a>
+              </Link>
+            ))}
+          </div>
+
+          {/* Sonuç yoksa mesaj */}
+          {filteredAndSorted.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">No articles match your criteria.</p>
               <button
-                onClick={clearFilters}
+                onClick={() => {
+                  setSearchTerm("");
+                  setCategory("All");
+                }}
                 className="mt-2 text-primary hover:underline"
               >
                 Clear filters
