@@ -4,6 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { CookieConsent } from "@/components/CookieConsent"; // Eklendi
 import Home from "@/pages/Home";
 import Careers from "@/pages/Careers";
 import News from "@/pages/News";
@@ -13,7 +14,7 @@ import Services from "@/pages/Services";
 import CaseStudies from "@/pages/CaseStudies";
 import CaseStudyDetail from "@/pages/CaseStudyDetail";
 import About from "@/pages/About";
-import Deliverables from "@/pages/Deliverables"; // Yeni import
+import Deliverables from "@/pages/Deliverables";
 
 // Service detail pages
 import EngineeringPlans from "@/pages/services/EngineeringPlans";
@@ -47,7 +48,7 @@ function Router() {
       <Route path="/careers" component={Careers} />
       <Route path="/news" component={News} />
       <Route path="/about" component={About} />
-      <Route path="/deliverables" component={Deliverables} /> {/* Yeni route */}
+      <Route path="/deliverables" component={Deliverables} />
       <Route path="/privacy-policy" component={PrivacyPolicy} />
       <Route path="/terms-of-service" component={TermsOfService} />
       <Route path="/cookie-policy" component={CookiePolicy} />
@@ -66,6 +67,7 @@ function App() {
         <ScrollToTop />
         <Toaster />
         <Router />
+        <CookieConsent /> {/* Eklendi */}
       </TooltipProvider>
     </QueryClientProvider>
   );
