@@ -1,12 +1,11 @@
-// src/data/deliverables.ts
-
 export interface Deliverable {
   id: string;
   title: string;
   description: string;
   category: 'Engineering' | 'Compliance' | 'Operations';
   serviceSlug: string;
-  previewImage?: string; // SVG ikon yolu
+  previewImage?: string;
+  previewPdf?: string;   // PDF dosyasının yolu
 }
 
 export const deliverables: Deliverable[] = [
@@ -18,6 +17,7 @@ export const deliverables: Deliverable[] = [
     category: 'Engineering',
     serviceSlug: 'engineering-plans',
     previewImage: '/images/deliverables/drawing.svg',
+    previewPdf: '/pdfs/deliverables/structural-drawings.pdf',
   },
   {
     id: 'as-built-drawings',
@@ -26,6 +26,7 @@ export const deliverables: Deliverable[] = [
     category: 'Engineering',
     serviceSlug: 'engineering-plans',
     previewImage: '/images/deliverables/drawing.svg',
+    previewPdf: '/pdfs/deliverables/as-built-drawings.pdf',
   },
   {
     id: 'arrangement-plans',
@@ -34,6 +35,7 @@ export const deliverables: Deliverable[] = [
     category: 'Engineering',
     serviceSlug: 'engineering-plans',
     previewImage: '/images/deliverables/drawing.svg',
+    previewPdf: '/pdfs/deliverables/arrangement-plans.pdf',
   },
   {
     id: 'fire-safety-plans',
@@ -42,6 +44,7 @@ export const deliverables: Deliverable[] = [
     category: 'Engineering',
     serviceSlug: 'engineering-plans',
     previewImage: '/images/deliverables/drawing.svg',
+    previewPdf: '/pdfs/deliverables/fire-safety-plans.pdf',
   },
   {
     id: 'as-built-pid',
@@ -50,6 +53,7 @@ export const deliverables: Deliverable[] = [
     category: 'Engineering',
     serviceSlug: 'engineering-documentation',
     previewImage: '/images/deliverables/document.svg',
+    previewPdf: '/pdfs/deliverables/as-built-pid.pdf',
   },
   {
     id: 'electrical-load-analysis',
@@ -58,6 +62,7 @@ export const deliverables: Deliverable[] = [
     category: 'Engineering',
     serviceSlug: 'engineering-documentation',
     previewImage: '/images/deliverables/analysis.svg',
+    previewPdf: '/pdfs/deliverables/electrical-load-analysis.pdf',
   },
   {
     id: 'fuel-management-booklet',
@@ -66,6 +71,7 @@ export const deliverables: Deliverable[] = [
     category: 'Engineering',
     serviceSlug: 'engineering-documentation',
     previewImage: '/images/deliverables/document.svg',
+    previewPdf: '/pdfs/deliverables/fuel-management-booklet.pdf',
   },
   {
     id: 'ihm',
@@ -74,6 +80,7 @@ export const deliverables: Deliverable[] = [
     category: 'Engineering',
     serviceSlug: 'engineering-documentation',
     previewImage: '/images/deliverables/list.svg',
+    previewPdf: '/pdfs/deliverables/ihm.pdf',
   },
   {
     id: 'life-extension-study',
@@ -82,6 +89,7 @@ export const deliverables: Deliverable[] = [
     category: 'Engineering',
     serviceSlug: 'structural-integrity',
     previewImage: '/images/deliverables/analysis.svg',
+    previewPdf: '/pdfs/deliverables/life-extension-study.pdf',
   },
   {
     id: 'hull-condition-analysis',
@@ -90,6 +98,7 @@ export const deliverables: Deliverable[] = [
     category: 'Engineering',
     serviceSlug: 'structural-integrity',
     previewImage: '/images/deliverables/analysis.svg',
+    previewPdf: '/pdfs/deliverables/hull-condition-analysis.pdf',
   },
   {
     id: 'vibration-diagnostic',
@@ -98,6 +107,7 @@ export const deliverables: Deliverable[] = [
     category: 'Engineering',
     serviceSlug: 'structural-integrity',
     previewImage: '/images/deliverables/diagnostic.svg',
+    previewPdf: '/pdfs/deliverables/vibration-diagnostic.pdf',
   },
 
   // ==================== COMPLIANCE ====================
@@ -108,6 +118,7 @@ export const deliverables: Deliverable[] = [
     category: 'Compliance',
     serviceSlug: 'sustainable-technologies',
     previewImage: '/images/deliverables/plan.svg',
+    previewPdf: '/pdfs/deliverables/biofouling-management-plan.pdf',
   },
   {
     id: 'coating-advisory',
@@ -116,6 +127,7 @@ export const deliverables: Deliverable[] = [
     category: 'Compliance',
     serviceSlug: 'sustainable-technologies',
     previewImage: '/images/deliverables/advisory.svg',
+    previewPdf: '/pdfs/deliverables/coating-advisory.pdf',
   },
   {
     id: 'energy-audit',
@@ -124,6 +136,7 @@ export const deliverables: Deliverable[] = [
     category: 'Compliance',
     serviceSlug: 'sustainable-technologies',
     previewImage: '/images/deliverables/analysis.svg',
+    previewPdf: '/pdfs/deliverables/energy-audit.pdf',
   },
   {
     id: 'mrv-monitoring-plan',
@@ -132,6 +145,7 @@ export const deliverables: Deliverable[] = [
     category: 'Compliance',
     serviceSlug: 'sustainable-technologies',
     previewImage: '/images/deliverables/plan.svg',
+    previewPdf: '/pdfs/deliverables/mrv-monitoring-plan.pdf',
   },
   {
     id: 'bwmp',
@@ -140,6 +154,7 @@ export const deliverables: Deliverable[] = [
     category: 'Compliance',
     serviceSlug: 'regulatory-compliance',
     previewImage: '/images/deliverables/plan.svg',
+    previewPdf: '/pdfs/deliverables/bwmp.pdf',
   },
   {
     id: 'sopep',
@@ -148,6 +163,7 @@ export const deliverables: Deliverable[] = [
     category: 'Compliance',
     serviceSlug: 'regulatory-compliance',
     previewImage: '/images/deliverables/plan.svg',
+    previewPdf: '/pdfs/deliverables/sopep.pdf',
   },
   {
     id: 'seemp',
@@ -156,6 +172,7 @@ export const deliverables: Deliverable[] = [
     category: 'Compliance',
     serviceSlug: 'regulatory-compliance',
     previewImage: '/images/deliverables/plan.svg',
+    previewPdf: '/pdfs/deliverables/seemp.pdf',
   },
   {
     id: 'garbage-management-plan',
@@ -164,6 +181,7 @@ export const deliverables: Deliverable[] = [
     category: 'Compliance',
     serviceSlug: 'regulatory-compliance',
     previewImage: '/images/deliverables/plan.svg',
+    previewPdf: '/pdfs/deliverables/garbage-management-plan.pdf',
   },
   {
     id: 'emergency-response-manuals',
@@ -172,6 +190,7 @@ export const deliverables: Deliverable[] = [
     category: 'Compliance',
     serviceSlug: 'regulatory-compliance',
     previewImage: '/images/deliverables/document.svg',
+    previewPdf: '/pdfs/deliverables/emergency-response-manuals.pdf',
   },
 
   // ==================== OPERATIONS ====================
@@ -182,6 +201,7 @@ export const deliverables: Deliverable[] = [
     category: 'Operations',
     serviceSlug: 'project-management',
     previewImage: '/images/deliverables/supervision.svg',
+    previewPdf: '/pdfs/deliverables/refit-supervision.pdf',
   },
   {
     id: 'dry-docking-spec',
@@ -190,6 +210,7 @@ export const deliverables: Deliverable[] = [
     category: 'Operations',
     serviceSlug: 'project-management',
     previewImage: '/images/deliverables/specification.svg',
+    previewPdf: '/pdfs/deliverables/dry-docking-spec.pdf',
   },
   {
     id: 'onsite-troubleshooting',
@@ -198,6 +219,7 @@ export const deliverables: Deliverable[] = [
     category: 'Operations',
     serviceSlug: 'project-management',
     previewImage: '/images/deliverables/troubleshooting.svg',
+    previewPdf: '/pdfs/deliverables/onsite-troubleshooting.pdf',
   },
   {
     id: 'cost-schedule-control',
@@ -206,5 +228,6 @@ export const deliverables: Deliverable[] = [
     category: 'Operations',
     serviceSlug: 'project-management',
     previewImage: '/images/deliverables/control.svg',
+    previewPdf: '/pdfs/deliverables/cost-schedule-control.pdf',
   },
 ];

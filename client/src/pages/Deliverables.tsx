@@ -138,7 +138,7 @@ export default function Deliverables() {
         {/* Preview Modal */}
         {previewItem && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={() => setPreviewItem(null)}>
-            <div className="bg-white rounded-sm max-w-2xl w-full max-h-[90vh] overflow-auto p-6 relative" onClick={e => e.stopPropagation()}>
+            <div className="bg-white rounded-sm max-w-3xl w-full max-h-[90vh] overflow-auto p-6 relative" onClick={e => e.stopPropagation()}>
               <button
                 onClick={() => setPreviewItem(null)}
                 className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
@@ -157,9 +157,16 @@ export default function Deliverables() {
                 </div>
               </div>
               <p className="text-muted-foreground mb-4">{previewItem.description}</p>
-              <div className="bg-neutral-50 p-4 rounded-sm text-center text-sm text-muted-foreground">
-                <p>PDF preview will be available soon.</p>
-                <p className="mt-1">For a full sample, please <HashLink href="/#begin-voyage" className="text-primary hover:underline">contact us</HashLink>.</p>
+              <div className="bg-neutral-50 p-4 rounded-sm">
+                {previewItem.previewPdf ? (
+                  <embed
+                    src={previewItem.previewPdf}
+                    type="application/pdf"
+                    className="w-full h-[500px]"
+                  />
+                ) : (
+                  <p className="text-center text-muted-foreground">Preview not available yet.</p>
+                )}
               </div>
               <div className="mt-6 flex justify-end gap-4">
                 <HashLink
