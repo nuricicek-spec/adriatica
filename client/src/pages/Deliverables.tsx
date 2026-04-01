@@ -161,12 +161,18 @@ export default function Deliverables() {
                 <p>PDF preview will be available soon.</p>
                 <p className="mt-1">For a full sample, please <HashLink href="/#begin-voyage" className="text-primary hover:underline">contact us</HashLink>.</p>
               </div>
-              <div className="mt-6 flex justify-end">
+              <div className="mt-6 flex justify-end gap-4">
                 <HashLink
                   href={`/services/${previewItem.serviceSlug}`}
                   className="bg-primary text-white px-4 py-2 rounded-sm hover:bg-primary/90 transition"
                 >
                   Learn more about this deliverable
+                </HashLink>
+                <HashLink
+                  href="/#begin-voyage"
+                  className="border border-primary text-primary px-4 py-2 rounded-sm hover:bg-primary/10 transition"
+                >
+                  Request a quote
                 </HashLink>
               </div>
             </div>
