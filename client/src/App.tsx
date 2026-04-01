@@ -13,6 +13,7 @@ import Services from "@/pages/Services";
 import CaseStudies from "@/pages/CaseStudies";
 import CaseStudyDetail from "@/pages/CaseStudyDetail";
 import About from "@/pages/About";
+import Deliverables from "@/pages/Deliverables"; // Yeni import
 
 // Service detail pages
 import EngineeringPlans from "@/pages/services/EngineeringPlans";
@@ -46,6 +47,7 @@ function Router() {
       <Route path="/careers" component={Careers} />
       <Route path="/news" component={News} />
       <Route path="/about" component={About} />
+      <Route path="/deliverables" component={Deliverables} /> {/* Yeni route */}
       <Route path="/privacy-policy" component={PrivacyPolicy} />
       <Route path="/terms-of-service" component={TermsOfService} />
       <Route path="/cookie-policy" component={CookiePolicy} />
