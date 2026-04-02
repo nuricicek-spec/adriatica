@@ -40,6 +40,7 @@ export function Footer() {
               {[
                 { name: 'Home', href: '/' },
                 { name: 'Services', href: '/services' },
+                { name: 'Deliverables', href: '/deliverables' },
                 { name: 'Insights', href: '/insights' },
                 { name: 'Case Studies', href: '/case-studies' }
               ].map(item => (
@@ -56,7 +57,7 @@ export function Footer() {
             <h4 className="font-display font-bold text-lg mb-6">Company</h4>
             <ul className="space-y-4">
               {[
-                { name: 'About', href: '/about' }, // Değişiklik burada
+                { name: 'About', href: '/about' },
                 { name: 'Careers', href: '/careers' },
                 { name: 'News', href: '/news' },
                 { name: 'Contact', href: '/#begin-voyage' }

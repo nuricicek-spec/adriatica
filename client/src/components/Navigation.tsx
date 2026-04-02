@@ -32,6 +32,7 @@ export function Navigation() {
 
   const navLinks = [
     { name: "Services", href: "/services" },
+    { name: "Deliverables", href: "/deliverables" }, // YENİ LİNK
     { name: "Insights", href: "/insights" },
     { name: "Case Studies", href: "/case-studies" },
     { name: "About", href: "/about" },
