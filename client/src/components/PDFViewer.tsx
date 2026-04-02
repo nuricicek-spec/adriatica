@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
 
-// Worker'ı lokal dosyadan al
+// Worker'ı LOKAL olarak ayarla (CDN değil, kesin çalışır)
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/js/pdf.worker.min.js';
 
 interface PDFViewerProps {
@@ -28,11 +28,7 @@ export function PDFViewer({ url }: PDFViewerProps) {
         setCurrentPage(1);
       } catch (err: any) {
         console.error('PDF yüklenemedi:', err);
-        if (err.message?.includes('Failed to fetch') || err.name === 'MissingPDFException') {
-          setError('PDF file not found. The document may have been moved or deleted.');
-        } else {
-          setError('Failed to load PDF. Please try again later.');
-        }
+        setError('PDF could not be loaded. Please try again.');
       } finally {
         setLoading(false);
       }
@@ -73,12 +69,10 @@ export function PDFViewer({ url }: PDFViewerProps) {
 
   const goToPrevPage = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
-    window.scrollTo({ top: containerRef.current?.offsetTop || 0, behavior: 'smooth' });
   };
 
   const goToNextPage = () => {
     if (currentPage < numPages) setCurrentPage(currentPage + 1);
-    window.scrollTo({ top: containerRef.current?.offsetTop || 0, behavior: 'smooth' });
   };
 
   const zoomIn = () => setScale(prev => Math.min(prev + 0.2, 3));
@@ -93,7 +87,7 @@ export function PDFViewer({ url }: PDFViewerProps) {
       <div className="text-center py-8 text-red-600">
         <p>{error}</p>
         <a href={url} target="_blank" rel="noopener noreferrer" className="text-primary underline mt-2 inline-block">
-          Open PDF in new tab
+          Open PDF directly
         </a>
       </div>
     );
@@ -109,7 +103,7 @@ export function PDFViewer({ url }: PDFViewerProps) {
         <button
           onClick={goToPrevPage}
           disabled={currentPage <= 1}
-          className="px-3 py-1 bg-primary text-white rounded disabled:opacity-50 transition"
+          className="px-3 py-1 bg-primary text-white rounded disabled:opacity-50"
         >
           Previous
         </button>
@@ -119,16 +113,12 @@ export function PDFViewer({ url }: PDFViewerProps) {
         <button
           onClick={goToNextPage}
           disabled={currentPage >= numPages}
-          className="px-3 py-1 bg-primary text-white rounded disabled:opacity-50 transition"
+          className="px-3 py-1 bg-primary text-white rounded disabled:opacity-50"
         >
           Next
         </button>
-        <button onClick={zoomOut} className="px-3 py-1 bg-gray-200 rounded transition hover:bg-gray-300">
-          Zoom Out
-        </button>
-        <button onClick={zoomIn} className="px-3 py-1 bg-gray-200 rounded transition hover:bg-gray-300">
-          Zoom In
-        </button>
+        <button onClick={zoomOut} className="px-3 py-1 bg-gray-200 rounded">Zoom Out</button>
+        <button onClick={zoomIn} className="px-3 py-1 bg-gray-200 rounded">Zoom In</button>
       </div>
       <div
         ref={containerRef}
