@@ -6,7 +6,6 @@ import { SEO } from "@/components/SEO";
 import { HashLink } from "@/components/HashLink";
 
 export default function About() {
-  // Organisation-level structured data (same as homepage)
   const organizationData = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
@@ -28,21 +27,15 @@ export default function About() {
     ],
     "description": "Marine engineering consultancy specializing in EU MRV, IMO DCS, and Biofouling compliance.",
     "areaServed": [
-      "Bar",
-      "Budva",
-      "Kotor",
-      "Tivat",
-      "Montenegro",
-      "Adriatic Coast",
-      "Europe"
+      "Bar", "Budva", "Kotor", "Tivat", "Montenegro", "Adriatic Coast", "Europe"
     ]
   };
 
   return (
     <>
       <SEO
-        title="About"
-        description="Adriatica D.O.O. – marine engineering consultancy specializing in biofouling management, in‑water cleaning, and regulatory compliance for superyachts and commercial vessels in the Adriatic and Mediterranean."
+        title="About | Marine Engineering Consultancy | Adriatica D.O.O."
+        description="Adriatica D.O.O. – independent marine engineering consultancy for superyachts and commercial vessels. Biofouling management, regulatory compliance, and technical project management in the Adriatic and Mediterranean."
         canonical="https://www.adriaticadoo.me/about"
       />
       <Helmet>
@@ -62,12 +55,12 @@ export default function About() {
           <div className="prose prose-lg max-w-none text-muted-foreground">
             {/* Opening – Montenegro origin + global reach */}
             <p className="mb-6">
-              Adriatica was founded in Montenegro to bridge the gap between complex maritime regulations and practical vessel management. You don’t just get a consultant – you get an engineer who builds compliance, performance, and peace of mind for vessel operators worldwide, with a strong focus on the Adriatic and Mediterranean.
+              Founded in Montenegro, Adriatica bridges the gap between complex maritime regulations and practical vessel management. You don't just get a consultant — you get an engineer who builds compliance, performance, and peace of mind for vessel operators worldwide, with a strong focus on the Adriatic and Mediterranean.
             </p>
 
             {/* Expertise – aligned with Core Competencies */}
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Expertise</h2>
-            <p className="mb-2">Our core expertise includes:</p>
+            <p className="mb-2">Our core expertise covers five key areas:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Engineering & Technical Documentation</li>
               <li>Structural Integrity & Life Extension</li>
@@ -76,20 +69,18 @@ export default function About() {
               <li>Project Management & Owner’s Representation</li>
             </ul>
             <p className="mt-2 text-sm text-muted-foreground">
-              This is a representative selection; we also support related engineering and compliance needs.
-              <br />
               <HashLink href="/services" className="text-primary hover:underline inline-flex items-center gap-1 mt-1">
-                For a complete overview of our technical services, visit our Services page →
+                See all technical services →
               </HashLink>
             </p>
 
-            {/* Operational Region – broader ports + global hint */}
+            {/* Operational Region */}
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Operational Region</h2>
             <p>
-              You’ll find our support across the Adriatic Sea and the Mediterranean Basin – from key commercial ports like Bar (Montenegro), Durrës (Albania), Rijeka, Split, Ploče (Croatia) to yacht destinations such as Tivat, Dubrovnik, and Monaco. And when your vessel sails beyond the region, we’re still with you: global engineering management and technical advisory services that keep you compliant and operationally excellent, anywhere.
+              We support vessels across the Adriatic Sea and the Mediterranean Basin — from commercial ports like Bar (Montenegro), Durrës (Albania), Rijeka, Split, Ploče (Croatia) to yacht destinations such as Tivat, Dubrovnik, and Monaco. Beyond the region, we provide global engineering management and technical advisory services to keep you compliant and operationally excellent anywhere.
             </p>
 
-            {/* Why Choose Adriatica – signature framework block */}
+            {/* Why Adriatica – signature framework */}
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Why Adriatica?</h2>
             <div className="bg-primary/5 border-l-4 border-primary p-5 mb-8 rounded-sm">
               <p className="text-primary text-sm font-medium uppercase tracking-wider mb-1">Our Framework</p>
@@ -104,19 +95,19 @@ export default function About() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
               <div className="border-l-2 border-primary/20 pl-4">
                 <h3 className="font-bold text-[#0B3B5C] mb-2">Risk‑Based Approach</h3>
-                <p className="text-sm">You get targeted, cost‑effective solutions because we focus on what truly matters: niche areas, coating condition, and your operational profile.</p>
+                <p className="text-sm">We focus on niche areas, coating condition, and your operational profile — delivering targeted, cost‑effective solutions.</p>
               </div>
               <div className="border-l-2 border-primary/20 pl-4">
                 <h3 className="font-bold text-[#0B3B5C] mb-2">Regional Expertise</h3>
-                <p className="text-sm">We know Port State Control expectations in the Adriatic and Mediterranean inside out – so your vessel stays compliant and disruption‑free.</p>
+                <p className="text-sm">We know Port State Control expectations in the Adriatic and Mediterranean inside out — your vessel stays compliant and disruption‑free.</p>
               </div>
               <div className="border-l-2 border-primary/20 pl-4">
                 <h3 className="font-bold text-[#0B3B5C] mb-2">Engineering Depth</h3>
-                <p className="text-sm">You don’t get just advice – you get management, certification, and full documentation. Every project is backed by rigorous engineering analysis and inspection‑ready records.</p>
+                <p className="text-sm">You get management, certification, and full documentation — every project backed by rigorous engineering analysis and inspection‑ready records.</p>
               </div>
             </div>
             <p className="mb-2">
-              Our philosophy is rooted in timeless principles – wisdom, resilience, and reduction to the essential.
+              Our philosophy is rooted in timeless principles — wisdom, resilience, and reduction to the essential.
             </p>
             <HashLink
               href="/#philosophy"
@@ -125,20 +116,20 @@ export default function About() {
               → Discover our Philosophy
             </HashLink>
 
-            {/* Regulatory Alignment – simplified badges */}
+            {/* Regulatory Alignment */}
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Regulatory Alignment</h2>
             <p className="mb-4">
-              Your vessel benefits from our alignment with international and regional maritime frameworks, including:
+              We align with international and regional maritime frameworks to protect your vessel:
             </p>
             <div className="flex flex-wrap gap-3 text-sm text-muted-foreground border-t border-border/20 pt-4 mt-2">
-              <span className="bg-neutral-100 px-3 py-1 rounded-full">Classification society rules (DNV, BV, RINA)</span>
+              <span className="bg-neutral-100 px-3 py-1 rounded-full">Classification societies (DNV, BV, RINA)</span>
               <span className="bg-neutral-100 px-3 py-1 rounded-full">IMO Guidelines (biofouling, MARPOL, etc.)</span>
-              <span className="bg-neutral-100 px-3 py-1 rounded-full">Paris Memorandum of Understanding (Paris MoU)</span>
-              <span className="bg-neutral-100 px-3 py-1 rounded-full">EMSA – European Maritime Safety Agency</span>
-              <span className="bg-neutral-100 px-3 py-1 rounded-full">UPSUL – Montenegrin Maritime Safety Administration</span>
+              <span className="bg-neutral-100 px-3 py-1 rounded-full">Paris MoU</span>
+              <span className="bg-neutral-100 px-3 py-1 rounded-full">EMSA</span>
+              <span className="bg-neutral-100 px-3 py-1 rounded-full">UPSUL (Montenegro)</span>
             </div>
 
-            {/* Company Information Block */}
+            {/* Company Information */}
             <div className="mt-8 p-6 bg-neutral-50 border-l-2 border-primary/20 rounded-sm">
               <h3 className="font-display text-lg font-bold text-[#0B3B5C] mb-2">Company Information</h3>
               <div className="space-y-1 text-sm text-muted-foreground">

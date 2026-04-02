@@ -42,8 +42,8 @@ export default function CaseStudies() {
   return (
     <>
       <SEO
-        title="Case Studies"
-        description="Real-world examples of Adriatica D.O.O. technical services: biofouling compliance, in-water cleaning management, and refit supervision for superyachts."
+        title="Case Studies | Marine Engineering Success Stories | Adriatica"
+        description="Real-world marine engineering results: biofouling compliance, 80% cost savings with in‑water cleaning, and on‑time refit supervision. See how Adriatica delivers measurable outcomes for superyachts."
         canonical="https://www.adriaticadoo.me/case-studies"
       />
       <Helmet>
@@ -91,7 +91,7 @@ export default function CaseStudies() {
             </p>
             <Link href="/#begin-voyage">
               <a className="inline-block px-6 py-3 bg-[#0B3B5C] text-white font-medium rounded-sm hover:bg-[#1A4B7A] transition-colors">
-                Request Technical Consultation
+                Request Technical Consultation – Avoid Delays
               </a>
             </Link>
           </div>

@@ -14,21 +14,16 @@ export default function InsightDetail() {
   const slug = params?.slug;
   const insight = insights.find(i => i.slug === slug);
 
-  // Oylama durumu
   const [rating, setRating] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
-  // localStorage kontrolü: sayfa yüklendiğinde bu makale için oy verilmiş mi?
   useEffect(() => {
     if (slug) {
       const hasVoted = localStorage.getItem(`rated_${slug}`);
-      if (hasVoted === 'true') {
-        setSubmitted(true);
-      }
+      if (hasVoted === 'true') setSubmitted(true);
     }
   }, [slug]);
 
-  // Most Popular (sidebar)
   const popular = recommendedSlugs
     .map(slug => insights.find(i => i.slug === slug))
     .filter((i): i is typeof insights[0] => i !== undefined && i.slug !== insight?.slug)
@@ -43,13 +38,7 @@ export default function InsightDetail() {
     if (submitted) return;
     setRating(value);
     setSubmitted(true);
-
-    // localStorage'e kaydet
-    if (slug) {
-      localStorage.setItem(`rated_${slug}`, 'true');
-    }
-
-    // GA4 event
+    if (slug) localStorage.setItem(`rated_${slug}`, 'true');
     if (typeof window.gtag !== 'undefined') {
       window.gtag('event', 'article_rating', {
         event_category: 'engagement',
@@ -80,6 +69,19 @@ export default function InsightDetail() {
         <meta property="og:title" content={insight.title} />
         <meta property="og:type" content="article" />
         <meta property="article:published_time" content={insight.date} />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": insight.title,
+            "description": insight.description,
+            "datePublished": insight.date,
+            "author": {
+              "@type": "Organization",
+              "name": "Adriatica D.O.O."
+            }
+          })}
+        </script>
       </Helmet>
 
       <div className="min-h-screen bg-background font-body">
@@ -87,7 +89,6 @@ export default function InsightDetail() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-12 md:pt-40">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Ana sütun */}
             <article className="lg:col-span-2">
               <div className="mb-4">
                 <Link href="/insights" className="text-sm text-primary hover:underline inline-flex items-center gap-1">
@@ -122,7 +123,6 @@ export default function InsightDetail() {
                 dangerouslySetInnerHTML={{ __html: insight.contentHtml }}
               />
 
-              {/* Related Content (Services, Case Studies, Insights) */}
               <RelatedContent
                 serviceSlugs={insight.relatedServices}
                 caseStudySlugs={insight.relatedCaseStudies}
@@ -130,11 +130,9 @@ export default function InsightDetail() {
               />
             </article>
 
-            {/* Sağ sidebar */}
             <aside className="space-y-8">
-              {/* Oylama bölümü */}
               <div className="p-6 bg-neutral-50 rounded">
-                <h3 className="font-display text-lg font-bold mb-4">How useful was this article?</h3>
+                <h3 className="font-display text-lg font-bold mb-4">Was this article useful?</h3>
                 {!submitted ? (
                   <div className="flex gap-1">
                     {[1, 2, 3, 4, 5].map(value => (
@@ -152,7 +150,6 @@ export default function InsightDetail() {
                 )}
               </div>
 
-              {/* Most Popular – scroll */}
               {popular.length > 0 && (
                 <div className="p-6 bg-white border border-border/40 rounded max-h-96 overflow-y-auto">
                   <h3 className="font-display text-lg font-bold mb-4 sticky top-0 bg-white pb-2">
@@ -173,7 +170,6 @@ export default function InsightDetail() {
                 </div>
               )}
 
-              {/* CTA Butonu – Get Support */}
               <div className="p-6 bg-primary/5 border border-primary/20 rounded text-center">
                 <p className="text-muted-foreground mb-4 text-sm">
                   Have a specific technical challenge?
