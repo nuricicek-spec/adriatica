@@ -159,23 +159,27 @@ export default function Deliverables() {
                 </div>
               </div>
               <p className="text-muted-foreground mb-4">{previewItem.description}</p>
-<div className="bg-neutral-50 p-4 rounded-sm">
-  {/* ÖRNEK UYARISI */}
-  <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 mb-4 text-sm text-yellow-800">
-    <p className="font-semibold">📄 This is a sample document.</p>
-    <p>The full version is delivered upon project start or service purchase.</p>
-  </div>
 
-  {previewItem.previewPdf ? (
-    <iframe
-      src={previewItem.previewPdf}
-      className="w-full h-[500px]"
-      title="PDF Preview"
-    />
-  ) : (
-    <p className="text-center text-muted-foreground">Preview not available yet.</p>
-  )}
-</div>
+              <div className="bg-neutral-50 p-4 rounded-sm">
+                {/* ÖRNEK UYARISI */}
+                <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 mb-4 text-sm text-yellow-800">
+                  <p className="font-semibold">📄 This is a sample document.</p>
+                  <p>The full version is delivered upon project start or service purchase.</p>
+                </div>
+
+                {previewItem.previewPdf ? (
+                  <div className="overflow-auto w-full h-[500px] -webkit-overflow-scrolling:touch border border-gray-200 rounded">
+                    <iframe
+                      src={previewItem.previewPdf}
+                      className="w-[800px] h-full md:w-full"
+                      title="PDF Preview"
+                    />
+                  </div>
+                ) : (
+                  <p className="text-center text-muted-foreground">Preview not available yet.</p>
+                )}
+              </div>
+
               <div className="mt-6 flex justify-end gap-4">
                 <HashLink
                   href={`/services/${previewItem.serviceSlug}`}
