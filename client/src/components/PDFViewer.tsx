@@ -1,104 +1,130 @@
 import { useEffect, useRef, useState } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
+import type { PDFDocumentProxy } from 'pdfjs-dist';
 import { Download, Share2, Minus, Plus, ExternalLink } from 'lucide-react';
 
-// Worker'ı lokal dosyadan al
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/js/pdf.worker.min.js';
 
-// iOS tespiti (iPhone, iPad, iPod)
-const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+// Sabit — component dışında tanımlanması doğru, ama window/navigator
+// SSR ortamında olmayabileceği için guard ekliyoruz.
+const isIOS =
+  typeof navigator !== 'undefined' &&
+  /iPad|iPhone|iPod/.test(navigator.userAgent) &&
+  !(window as any).MSStream;
 
 interface PDFViewerProps {
   url: string;
 }
 
-export function PDFViewer({ url }: PDFViewerProps) {
-  // iOS için butonlu basit gösterim
-  if (isIOS) {
-    return (
-      <div className="flex flex-col items-center justify-center p-6 bg-neutral-50 rounded-sm text-center">
-        <p className="text-muted-foreground mb-4">
-          This PDF is best viewed in full screen on your device.
-        </p>
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-sm hover:bg-primary/90 transition shadow-sm"
-        >
-          <ExternalLink className="w-4 h-4" />
-          Open PDF in Full Screen
-        </a>
-      </div>
-    );
-  }
+// ─── iOS fallback (ayrı küçük component) ────────────────────────────────────
+function IOSFallback({ url }: { url: string }) {
+  return (
+    <div className="flex flex-col items-center justify-center p-6 bg-neutral-50 rounded-sm text-center">
+      <p className="text-muted-foreground mb-4">
+        This PDF is best viewed in full screen on your device.
+      </p>
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-sm hover:bg-primary/90 transition shadow-sm"
+      >
+        <ExternalLink className="w-4 h-4" />
+        Open PDF in Full Screen
+      </a>
+    </div>
+  );
+}
 
-  // Android / Masaüstü için PDF.js viewer (önceki kod)
+// ─── Ana viewer (tüm hook'lar burada — koşulsuz çağrılıyor) ─────────────────
+function PDFViewerDesktop({ url }: { url: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [numPages, setNumPages] = useState(0);
-  const [pdfDoc, setPdfDoc] = useState<any>(null);
+  const [pdfDoc, setPdfDoc] = useState<PDFDocumentProxy | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [scale, setScale] = useState(1.2);
 
+  // PDF yükle
   useEffect(() => {
+    let cancelled = false;
+
     const loadPdf = async () => {
       setLoading(true);
       setError(null);
       try {
         const doc = await pdfjsLib.getDocument(url).promise;
-        setPdfDoc(doc);
-        setNumPages(doc.numPages);
-        setCurrentPage(1);
-      } catch (err: any) {
+        if (!cancelled) {
+          setPdfDoc(doc);
+          setNumPages(doc.numPages);
+          setCurrentPage(1);
+        }
+      } catch (err) {
         console.error('PDF yüklenemedi:', err);
-        setError('Failed to load PDF. Please try again later.');
+        if (!cancelled) setError('Failed to load PDF. Please try again later.');
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     };
+
     loadPdf();
+    return () => {
+      cancelled = true;
+    };
   }, [url]);
 
+  // Sayfa render et
   useEffect(() => {
     if (!pdfDoc || !containerRef.current) return;
+
+    let cancelled = false;
 
     const renderPage = async () => {
       try {
         const page = await pdfDoc.getPage(currentPage);
+        if (cancelled) return;
+
         const viewport = page.getViewport({ scale });
-        const canvas = document.createElement('canvas');
+
+        // Mevcut canvas'ı yeniden kullan veya oluştur
+        if (!canvasRef.current) {
+          canvasRef.current = document.createElement('canvas');
+          canvasRef.current.className = 'max-w-full h-auto mx-auto block';
+        }
+
+        const canvas = canvasRef.current;
         const context = canvas.getContext('2d');
+        if (!context) return;
+
         canvas.width = viewport.width;
         canvas.height = viewport.height;
 
-        await page.render({
-          canvasContext: context,
-          viewport: viewport,
-        } as any).promise;
+        await page.render({ canvasContext: context, viewport }).promise;
+        if (cancelled) return;
 
-        while (containerRef.current?.firstChild) {
-          containerRef.current.removeChild(containerRef.current.firstChild);
+        // Container'ı güncelle (sadece gerekirse ekle)
+        if (!containerRef.current?.contains(canvas)) {
+          containerRef.current?.replaceChildren(canvas);
         }
-        containerRef.current?.appendChild(canvas);
       } catch (err) {
-        console.error('Sayfa render edilemedi:', err);
-        setError('Error rendering PDF page.');
+        if (!cancelled) {
+          console.error('Sayfa render edilemedi:', err);
+          setError('Error rendering PDF page.');
+        }
       }
     };
 
     renderPage();
+    return () => {
+      cancelled = true;
+    };
   }, [pdfDoc, currentPage, scale]);
 
-  const goToPrevPage = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
-  };
-
-  const goToNextPage = () => {
-    if (currentPage < numPages) setCurrentPage(currentPage + 1);
-  };
-
+  const goToPrevPage = () => setCurrentPage(p => Math.max(p - 1, 1));
+  const goToNextPage = () => setCurrentPage(p => Math.min(p + 1, numPages));
   const zoomIn = () => setScale(prev => Math.min(prev + 0.2, 3));
   const zoomOut = () => setScale(prev => Math.max(prev - 0.2, 0.6));
 
@@ -114,15 +140,12 @@ export function PDFViewer({ url }: PDFViewerProps) {
   const handleShare = async () => {
     if (navigator.share) {
       try {
-        await navigator.share({
-          title: 'Document',
-          url: url,
-        });
-      } catch (err) {
-        console.log('Paylaşım iptal edildi:', err);
+        await navigator.share({ title: 'Document', url });
+      } catch {
+        // kullanıcı iptal etti — sessizce geç
       }
     } else {
-      navigator.clipboard.writeText(url);
+      await navigator.clipboard.writeText(url);
       alert('Link copied!');
     }
   };
@@ -135,7 +158,12 @@ export function PDFViewer({ url }: PDFViewerProps) {
     return (
       <div className="text-center py-8 text-red-600">
         <p>{error}</p>
-        <a href={url} target="_blank" rel="noopener noreferrer" className="text-primary underline mt-2 inline-block">
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary underline mt-2 inline-block"
+        >
           Try opening PDF directly
         </a>
       </div>
@@ -148,47 +176,94 @@ export function PDFViewer({ url }: PDFViewerProps) {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="flex flex-wrap justify-center gap-2 mb-4">
+      {/* Araç çubuğu */}
+      <div className="flex flex-wrap justify-center items-center gap-2 mb-4">
         <button
           onClick={goToPrevPage}
           disabled={currentPage <= 1}
-          className="px-3 py-1 bg-primary text-white rounded-sm disabled:opacity-50 text-sm"
+          className="inline-flex items-center gap-1 px-3 py-1.5 bg-primary text-white rounded-md disabled:opacity-50 text-sm hover:bg-primary/90 transition"
+          aria-label="Previous page"
         >
           ← Prev
         </button>
-        <span className="text-sm text-muted-foreground">
+
+        <span className="text-sm text-muted-foreground" aria-live="polite">
           {currentPage} / {numPages}
         </span>
+
         <button
           onClick={goToNextPage}
           disabled={currentPage >= numPages}
-          className="px-3 py-1 bg-primary text-white rounded-sm disabled:opacity-50 text-sm"
+          className="inline-flex items-center gap-1 px-3 py-1.5 bg-primary text-white rounded-md disabled:opacity-50 text-sm hover:bg-primary/90 transition"
+          aria-label="Next page"
         >
           Next →
         </button>
-        <button onClick={zoomOut} className="p-1.5 bg-gray-100 rounded-sm hover:bg-gray-200 transition" title="Zoom Out">
+
+        <button
+          onClick={zoomOut}
+          className="p-1.5 bg-gray-100 rounded-md hover:bg-gray-200 transition"
+          aria-label="Zoom out"
+          title="Zoom Out"
+        >
           <Minus className="w-4 h-4" />
         </button>
-        <button onClick={zoomIn} className="p-1.5 bg-gray-100 rounded-sm hover:bg-gray-200 transition" title="Zoom In">
+
+        <button
+          onClick={zoomIn}
+          className="p-1.5 bg-gray-100 rounded-md hover:bg-gray-200 transition"
+          aria-label="Zoom in"
+          title="Zoom In"
+        >
           <Plus className="w-4 h-4" />
         </button>
-        <button onClick={handleDownload} className="p-1.5 bg-gray-100 rounded-sm hover:bg-gray-200 transition" title="Download PDF">
+
+        <button
+          onClick={handleDownload}
+          className="inline-flex items-center gap-1 px-3 py-1.5 bg-gray-100 rounded-md hover:bg-gray-200 transition text-sm"
+          aria-label="Download PDF"
+          title="Download PDF"
+        >
           <Download className="w-4 h-4" />
+          Download
         </button>
-        <button onClick={handleShare} className="p-1.5 bg-gray-100 rounded-sm hover:bg-gray-200 transition" title="Share PDF">
+
+        <button
+          onClick={handleShare}
+          className="inline-flex items-center gap-1 px-3 py-1.5 bg-gray-100 rounded-md hover:bg-gray-200 transition text-sm"
+          aria-label="Share PDF"
+          title="Share PDF"
+        >
           <Share2 className="w-4 h-4" />
+          Share
         </button>
       </div>
+
+      {/* Canvas alanı */}
       <div
         ref={containerRef}
-        className="border border-gray-200 rounded-sm shadow-sm overflow-auto w-full"
+        className="flex justify-center w-full overflow-auto"
         style={{ maxHeight: '60vh', minHeight: '350px' }}
+        role="img"
+        aria-label={`PDF page ${currentPage} of ${numPages}`}
       />
+
       <div className="text-xs text-muted-foreground mt-3">
-        <a href={url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary hover:underline"
+        >
           Open PDF in new tab
         </a>
       </div>
     </div>
   );
+}
+
+// ─── Export edilen wrapper — hook kurallarını ihlal etmeden iOS split'i yapar ─
+export function PDFViewer({ url }: PDFViewerProps) {
+  if (isIOS) return <IOSFallback url={url} />;
+  return <PDFViewerDesktop url={url} />;
 }
