@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+// Sabit sürüm numarası (kullandığınız pdfjs-dist sürümüne göre değiştirin, örn: "4.8.69")
+const PDFJS_VERSION = '4.8.69';
+pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDFJS_VERSION}/pdf.worker.min.js`;
 
 interface PDFViewerProps {
   url: string;
@@ -11,20 +13,27 @@ export function PDFViewer({ url }: PDFViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [numPages, setNumPages] = useState(0);
-  const [pdfDoc, setPdfDoc] = useState<pdfjsLib.PDFDocumentProxy | null>(null);
+  const [pdfDoc, setPdfDoc] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [scale, setScale] = useState(1.2);
 
   useEffect(() => {
     const loadPdf = async () => {
       setLoading(true);
+      setError(null);
       try {
         const doc = await pdfjsLib.getDocument(url).promise;
         setPdfDoc(doc);
         setNumPages(doc.numPages);
         setCurrentPage(1);
-      } catch (error) {
-        console.error('PDF yüklenemedi:', error);
+      } catch (err: any) {
+        console.error('PDF yüklenemedi:', err);
+        if (err.message?.includes('Failed to fetch') || err.name === 'MissingPDFException') {
+          setError('PDF file not found. The document may have been moved or deleted.');
+        } else {
+          setError('Failed to load PDF. Please try again later.');
+        }
       } finally {
         setLoading(false);
       }
@@ -36,23 +45,27 @@ export function PDFViewer({ url }: PDFViewerProps) {
     if (!pdfDoc || !containerRef.current) return;
 
     const renderPage = async () => {
-      const page = await pdfDoc.getPage(currentPage);
-      const viewport = page.getViewport({ scale });
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
-      canvas.width = viewport.width;
-      canvas.height = viewport.height;
+      try {
+        const page = await pdfDoc.getPage(currentPage);
+        const viewport = page.getViewport({ scale });
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
 
-      // Tip hatasını geçici olarak `as any` ile çözüyoruz
-      await page.render({
-        canvasContext: context,
-        viewport: viewport,
-      } as any).promise;
+        await page.render({
+          canvasContext: context,
+          viewport: viewport,
+        } as any).promise;
 
-      while (containerRef.current?.firstChild) {
-        containerRef.current.removeChild(containerRef.current.firstChild);
+        while (containerRef.current?.firstChild) {
+          containerRef.current.removeChild(containerRef.current.firstChild);
+        }
+        containerRef.current?.appendChild(canvas);
+      } catch (err) {
+        console.error('Sayfa render edilemedi:', err);
+        setError('Error rendering PDF page.');
       }
-      containerRef.current?.appendChild(canvas);
     };
 
     renderPage();
@@ -70,11 +83,22 @@ export function PDFViewer({ url }: PDFViewerProps) {
   const zoomOut = () => setScale(prev => Math.max(prev - 0.2, 0.6));
 
   if (loading) {
-    return <div className="text-center py-8 text-muted-foreground">PDF yükleniyor...</div>;
+    return <div className="text-center py-8 text-muted-foreground">Loading PDF...</div>;
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-8 text-red-600">
+        <p>{error}</p>
+        <a href={url} target="_blank" rel="noopener noreferrer" className="text-primary underline mt-2 inline-block">
+          Try opening PDF directly
+        </a>
+      </div>
+    );
   }
 
   if (!pdfDoc) {
-    return <div className="text-center py-8 text-red-600">PDF yüklenemedi.</div>;
+    return <div className="text-center py-8 text-red-600">PDF could not be loaded.</div>;
   }
 
   return (
@@ -85,20 +109,20 @@ export function PDFViewer({ url }: PDFViewerProps) {
           disabled={currentPage <= 1}
           className="px-3 py-1 bg-primary text-white rounded disabled:opacity-50"
         >
-          Önceki
+          Previous
         </button>
         <span className="text-sm text-muted-foreground">
-          Sayfa {currentPage} / {numPages}
+          Page {currentPage} of {numPages}
         </span>
         <button
           onClick={goToNextPage}
           disabled={currentPage >= numPages}
           className="px-3 py-1 bg-primary text-white rounded disabled:opacity-50"
         >
-          Sonraki
+          Next
         </button>
-        <button onClick={zoomOut} className="px-3 py-1 bg-gray-200 rounded">Uzaklaştır</button>
-        <button onClick={zoomIn} className="px-3 py-1 bg-gray-200 rounded">Yakınlaştır</button>
+        <button onClick={zoomOut} className="px-3 py-1 bg-gray-200 rounded">Zoom Out</button>
+        <button onClick={zoomIn} className="px-3 py-1 bg-gray-200 rounded">Zoom In</button>
       </div>
       <div
         ref={containerRef}
@@ -107,7 +131,7 @@ export function PDFViewer({ url }: PDFViewerProps) {
       />
       <div className="text-xs text-muted-foreground mt-2">
         <a href={url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-          PDF'i yeni sekmede aç
+          Open PDF in new tab
         </a>
       </div>
     </div>
