@@ -109,4 +109,21 @@ export const services: Service[] = [
     relatedCaseStudies: ["refit-supervision-shipyard"],
     relatedInsights: ["technical-operations-montenegro"],
   },
+  {
+    slug: "yacht-survey",
+    title: "Yacht Survey & Inspection",
+    description: "Independent technical surveys for yachts: pre-purchase, damage assessment, insurance valuation, charter inspection, and off-hire surveys. IACS‑aligned, class‑recognized reports.",
+    deliverables: [
+      "Pre‑purchase Survey",
+      "Damage / Haft Damage Assessment",
+      "Insurance Valuation Survey",
+      "Charter (On‑hire / Off‑hire) Inspection",
+      "Technical Condition Report",
+    ],
+    outcome: "Independent, actionable survey reports that support purchase decisions, insurance claims, and charter compliance.",
+    references: "IACS UR Z10, classification societies, Paris MoU guidelines",
+    relatedServices: ["project-management", "structural-integrity", "regulatory-compliance"],
+    relatedCaseStudies: ["refit-supervision-shipyard"],
+    relatedInsights: ["technical-operations-montenegro"],
+  },
 ];

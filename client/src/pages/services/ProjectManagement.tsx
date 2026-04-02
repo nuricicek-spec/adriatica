@@ -108,6 +108,22 @@ export default function ProjectManagement() {
                 Request Technical Assessment
               </HashLink>
             </div>
+
+            {/* Yacht Survey Services – yeni blok */}
+            <div className="mt-12 p-8 bg-neutral-50 border-l-4 border-primary rounded-sm">
+              <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-3">
+                Yacht Survey & Inspection
+              </h3>
+              <p className="text-muted-foreground mb-4">
+                In addition to project management, we offer independent technical surveys for yachts: pre-purchase, damage assessment, insurance valuation, charter inspection, and off-hire surveys. All reports are IACS‑aligned and accepted by class societies and insurers.
+              </p>
+              <HashLink
+                href="/services/yacht-survey"
+                className="inline-flex items-center gap-1 text-primary hover:underline font-medium"
+              >
+                Learn more about our yacht survey services →
+              </HashLink>
+            </div>
           </div>
 
           {service && (

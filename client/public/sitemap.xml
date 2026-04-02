@@ -67,6 +67,13 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <!-- Yacht Survey page -->
+  <url>
+    <loc>https://www.adriaticadoo.me/services/yacht-survey</loc>
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <!-- Insight detail pages -->
   <url>
     <loc>https://www.adriaticadoo.me/insights/biofouling-compliance-imo-2026</loc>

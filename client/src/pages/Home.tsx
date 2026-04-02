@@ -372,7 +372,8 @@ export default function Home() {
                 items={[
                   "Owner's Rep & Refit Supervision",
                   "Dry-Docking Specification & Management",
-                  "On-site Technical Troubleshooting"
+                  "On-site Technical Troubleshooting",
+                  "Yacht Survey & Inspection"   // Bu satırı ekleyin
                 ]}
                 delay={0.6}
                 linkTo="project-management"

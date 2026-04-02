@@ -23,6 +23,7 @@ import StructuralIntegrity from "@/pages/services/StructuralIntegrity";
 import SustainableTech from "@/pages/services/SustainableTech";
 import RegulatoryCompliance from "@/pages/services/RegulatoryCompliance";
 import ProjectManagement from "@/pages/services/ProjectManagement";
+import YachtSurvey from "@/pages/services/YachtSurvey";
 
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import TermsOfService from "@/pages/TermsOfService";
@@ -39,6 +40,7 @@ function Router() {
       <Route path="/services/sustainable-technologies" component={SustainableTech} />
       <Route path="/services/regulatory-compliance" component={RegulatoryCompliance} />
       <Route path="/services/project-management" component={ProjectManagement} />
+      <Route path="/services/yacht-survey" component={YachtSurvey} />
 
       <Route path="/services" component={Services} />
       <Route path="/insights/:slug" component={InsightDetail} />
