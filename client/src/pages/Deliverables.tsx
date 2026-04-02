@@ -6,13 +6,13 @@ import { HashLink } from "@/components/HashLink";
 import { SEO } from "@/components/SEO";
 import { Helmet } from "react-helmet-async";
 import { deliverables } from '@/data/deliverables';
+import { PDFViewer } from '@/components/PDFViewer';
 
 export default function Deliverables() {
   const [category, setCategory] = useState('All');
   const [previewItem, setPreviewItem] = useState<typeof deliverables[0] | null>(null);
   const categories = ['All', 'Engineering', 'Compliance', 'Operations'];
 
-  // Filtreleme ve alfabetik sıralama
   const filtered = (category === 'All'
     ? deliverables
     : deliverables.filter(d => d.category === category)
@@ -56,7 +56,6 @@ export default function Deliverables() {
             subtitle="What you receive when you work with us"
           />
 
-          {/* Filtre butonları */}
           <div className="flex flex-wrap justify-center gap-4 my-8">
             {categories.map(cat => (
               <button
@@ -73,7 +72,6 @@ export default function Deliverables() {
             ))}
           </div>
 
-          {/* Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map(item => (
               <div
@@ -116,7 +114,6 @@ export default function Deliverables() {
             ))}
           </div>
 
-          {/* Alt CTA */}
           <div className="mt-16 text-center p-6 bg-neutral-50 border border-border/10 rounded-sm">
             <p className="text-muted-foreground mb-3">
               Don’t see what you need?
@@ -131,7 +128,6 @@ export default function Deliverables() {
         </main>
         <Footer />
 
-        {/* Preview Modal */}
         {previewItem && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={() => setPreviewItem(null)}>
             <div className="bg-white rounded-sm max-w-3xl w-full max-h-[90vh] overflow-auto p-6 relative" onClick={e => e.stopPropagation()}>
@@ -152,24 +148,20 @@ export default function Deliverables() {
                   </span>
                 </div>
               </div>
-              {/* Açıklama satırı kaldırıldı */}
+
               <div className="bg-neutral-50 p-4 rounded-sm">
-                {/* ÖRNEK UYARISI */}
                 <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 mb-4 text-sm text-yellow-800">
                   <p className="font-semibold">📄 This is a sample document.</p>
                   <p>The full version is delivered upon project start or service purchase.</p>
                 </div>
 
                 {previewItem.previewPdf ? (
-                  <iframe
-                    src={previewItem.previewPdf}
-                    className="w-full h-[500px]"
-                    title="PDF Preview"
-                  />
+                  <PDFViewer url={previewItem.previewPdf} />
                 ) : (
                   <p className="text-center text-muted-foreground">Preview not available yet.</p>
                 )}
               </div>
+
               <div className="mt-6 flex justify-end gap-4">
                 <HashLink
                   href={`/services/${previewItem.serviceSlug}`}

@@ -1,0 +1,115 @@
+import { useEffect, useRef, useState } from 'react';
+import * as pdfjsLib from 'pdfjs-dist';
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+
+interface PDFViewerProps {
+  url: string;
+}
+
+export function PDFViewer({ url }: PDFViewerProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [numPages, setNumPages] = useState(0);
+  const [pdfDoc, setPdfDoc] = useState<pdfjsLib.PDFDocumentProxy | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [scale, setScale] = useState(1.2);
+
+  useEffect(() => {
+    const loadPdf = async () => {
+      setLoading(true);
+      try {
+        const doc = await pdfjsLib.getDocument(url).promise;
+        setPdfDoc(doc);
+        setNumPages(doc.numPages);
+        setCurrentPage(1);
+      } catch (error) {
+        console.error('PDF yüklenemedi:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadPdf();
+  }, [url]);
+
+  useEffect(() => {
+    if (!pdfDoc || !containerRef.current) return;
+
+    const renderPage = async () => {
+      const page = await pdfDoc.getPage(currentPage);
+      const viewport = page.getViewport({ scale });
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+
+      // Tip hatasını geçici olarak `as any` ile çözüyoruz
+      await page.render({
+        canvasContext: context,
+        viewport: viewport,
+      } as any).promise;
+
+      while (containerRef.current?.firstChild) {
+        containerRef.current.removeChild(containerRef.current.firstChild);
+      }
+      containerRef.current?.appendChild(canvas);
+    };
+
+    renderPage();
+  }, [pdfDoc, currentPage, scale]);
+
+  const goToPrevPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
+  const goToNextPage = () => {
+    if (currentPage < numPages) setCurrentPage(currentPage + 1);
+  };
+
+  const zoomIn = () => setScale(prev => Math.min(prev + 0.2, 3));
+  const zoomOut = () => setScale(prev => Math.max(prev - 0.2, 0.6));
+
+  if (loading) {
+    return <div className="text-center py-8 text-muted-foreground">PDF yükleniyor...</div>;
+  }
+
+  if (!pdfDoc) {
+    return <div className="text-center py-8 text-red-600">PDF yüklenemedi.</div>;
+  }
+
+  return (
+    <div className="flex flex-col items-center">
+      <div className="flex flex-wrap justify-center gap-3 mb-4">
+        <button
+          onClick={goToPrevPage}
+          disabled={currentPage <= 1}
+          className="px-3 py-1 bg-primary text-white rounded disabled:opacity-50"
+        >
+          Önceki
+        </button>
+        <span className="text-sm text-muted-foreground">
+          Sayfa {currentPage} / {numPages}
+        </span>
+        <button
+          onClick={goToNextPage}
+          disabled={currentPage >= numPages}
+          className="px-3 py-1 bg-primary text-white rounded disabled:opacity-50"
+        >
+          Sonraki
+        </button>
+        <button onClick={zoomOut} className="px-3 py-1 bg-gray-200 rounded">Uzaklaştır</button>
+        <button onClick={zoomIn} className="px-3 py-1 bg-gray-200 rounded">Yakınlaştır</button>
+      </div>
+      <div
+        ref={containerRef}
+        className="border border-gray-300 rounded shadow-sm overflow-auto max-w-full"
+        style={{ maxHeight: '550px' }}
+      />
+      <div className="text-xs text-muted-foreground mt-2">
+        <a href={url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+          PDF'i yeni sekmede aç
+        </a>
+      </div>
+    </div>
+  );
+}
