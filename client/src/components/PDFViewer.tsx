@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
 
-// Sabit sürüm numarası (kullandığınız pdfjs-dist sürümüne göre değiştirin, örn: "4.8.69")
-const PDFJS_VERSION = '4.8.69';
-pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDFJS_VERSION}/pdf.worker.min.js`;
+// Worker'ı lokal dosyadan al
+pdfjsLib.GlobalWorkerOptions.workerSrc = '/js/pdf.worker.min.js';
 
 interface PDFViewerProps {
   url: string;
@@ -58,6 +57,7 @@ export function PDFViewer({ url }: PDFViewerProps) {
           viewport: viewport,
         } as any).promise;
 
+        // Eski canvas'ı temizle
         while (containerRef.current?.firstChild) {
           containerRef.current.removeChild(containerRef.current.firstChild);
         }
@@ -73,10 +73,12 @@ export function PDFViewer({ url }: PDFViewerProps) {
 
   const goToPrevPage = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
+    window.scrollTo({ top: containerRef.current?.offsetTop || 0, behavior: 'smooth' });
   };
 
   const goToNextPage = () => {
     if (currentPage < numPages) setCurrentPage(currentPage + 1);
+    window.scrollTo({ top: containerRef.current?.offsetTop || 0, behavior: 'smooth' });
   };
 
   const zoomIn = () => setScale(prev => Math.min(prev + 0.2, 3));
@@ -91,7 +93,7 @@ export function PDFViewer({ url }: PDFViewerProps) {
       <div className="text-center py-8 text-red-600">
         <p>{error}</p>
         <a href={url} target="_blank" rel="noopener noreferrer" className="text-primary underline mt-2 inline-block">
-          Try opening PDF directly
+          Open PDF in new tab
         </a>
       </div>
     );
@@ -107,7 +109,7 @@ export function PDFViewer({ url }: PDFViewerProps) {
         <button
           onClick={goToPrevPage}
           disabled={currentPage <= 1}
-          className="px-3 py-1 bg-primary text-white rounded disabled:opacity-50"
+          className="px-3 py-1 bg-primary text-white rounded disabled:opacity-50 transition"
         >
           Previous
         </button>
@@ -117,12 +119,16 @@ export function PDFViewer({ url }: PDFViewerProps) {
         <button
           onClick={goToNextPage}
           disabled={currentPage >= numPages}
-          className="px-3 py-1 bg-primary text-white rounded disabled:opacity-50"
+          className="px-3 py-1 bg-primary text-white rounded disabled:opacity-50 transition"
         >
           Next
         </button>
-        <button onClick={zoomOut} className="px-3 py-1 bg-gray-200 rounded">Zoom Out</button>
-        <button onClick={zoomIn} className="px-3 py-1 bg-gray-200 rounded">Zoom In</button>
+        <button onClick={zoomOut} className="px-3 py-1 bg-gray-200 rounded transition hover:bg-gray-300">
+          Zoom Out
+        </button>
+        <button onClick={zoomIn} className="px-3 py-1 bg-gray-200 rounded transition hover:bg-gray-300">
+          Zoom In
+        </button>
       </div>
       <div
         ref={containerRef}
