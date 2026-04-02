@@ -1,16 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
-import { Download, Share2, Minus, Plus } from 'lucide-react';
+import { Download, Share2, Minus, Plus, ChevronLeft, ChevronRight } from 'lucide-react';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/js/pdf.worker.min.js';
 
 interface PDFViewerProps {
   url: string;
-  onDownload?: () => void;
-  onShare?: () => void;
 }
 
-export function PDFViewer({ url, onDownload, onShare }: PDFViewerProps) {
+export function PDFViewer({ url }: PDFViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [numPages, setNumPages] = useState(0);
@@ -80,22 +78,16 @@ export function PDFViewer({ url, onDownload, onShare }: PDFViewerProps) {
   const zoomOut = () => setScale(prev => Math.max(prev - 0.2, 0.6));
 
   const handleDownload = () => {
-    if (onDownload) {
-      onDownload();
-    } else {
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = url.split('/').pop() || 'document.pdf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = url.split('/').pop() || 'document.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const handleShare = async () => {
-    if (onShare) {
-      onShare();
-    } else if (navigator.share) {
+    if (navigator.share) {
       try {
         await navigator.share({
           title: 'Document',
@@ -131,43 +123,70 @@ export function PDFViewer({ url, onDownload, onShare }: PDFViewerProps) {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="flex flex-wrap justify-center gap-2 mb-4">
+      {/* Kontrol çubuğu - responsive, ikon + metin */}
+      <div className="flex flex-wrap justify-center items-center gap-2 mb-4 bg-gray-50 p-2 rounded-lg shadow-sm">
         <button
           onClick={goToPrevPage}
           disabled={currentPage <= 1}
-          className="px-3 py-1 bg-primary text-white rounded disabled:opacity-50"
+          className="flex items-center gap-1 px-3 py-1.5 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition"
         >
-          ← Prev
+          <ChevronLeft className="w-4 h-4" />
+          <span className="hidden sm:inline">Prev</span>
         </button>
-        <span className="text-sm text-muted-foreground">
+        <span className="text-sm text-gray-700 px-2">
           {currentPage} / {numPages}
         </span>
         <button
           onClick={goToNextPage}
           disabled={currentPage >= numPages}
-          className="px-3 py-1 bg-primary text-white rounded disabled:opacity-50"
+          className="flex items-center gap-1 px-3 py-1.5 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition"
         >
-          Next →
+          <span className="hidden sm:inline">Next</span>
+          <ChevronRight className="w-4 h-4" />
         </button>
-        <button onClick={zoomOut} className="p-1 bg-gray-200 rounded" title="Zoom Out">
-          <Minus className="w-5 h-5" />
+        <div className="w-px h-6 bg-gray-300 mx-1 hidden sm:block" />
+        <button
+          onClick={zoomOut}
+          className="p-1.5 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100 transition"
+          title="Zoom Out"
+        >
+          <Minus className="w-4 h-4" />
         </button>
-        <button onClick={zoomIn} className="p-1 bg-gray-200 rounded" title="Zoom In">
-          <Plus className="w-5 h-5" />
+        <button
+          onClick={zoomIn}
+          className="p-1.5 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100 transition"
+          title="Zoom In"
+        >
+          <Plus className="w-4 h-4" />
         </button>
-        <button onClick={handleDownload} className="p-1 bg-gray-200 rounded" title="Download PDF">
-          <Download className="w-5 h-5" />
+        <div className="w-px h-6 bg-gray-300 mx-1 hidden sm:block" />
+        <button
+          onClick={handleDownload}
+          className="flex items-center gap-1 px-3 py-1.5 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 transition"
+          title="Download PDF"
+        >
+          <Download className="w-4 h-4" />
+          <span className="hidden sm:inline">Download</span>
         </button>
-        <button onClick={handleShare} className="p-1 bg-gray-200 rounded" title="Share PDF">
-          <Share2 className="w-5 h-5" />
+        <button
+          onClick={handleShare}
+          className="flex items-center gap-1 px-3 py-1.5 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 transition"
+          title="Share PDF"
+        >
+          <Share2 className="w-4 h-4" />
+          <span className="hidden sm:inline">Share</span>
         </button>
       </div>
+
+      {/* Canvas alanı */}
       <div
         ref={containerRef}
-        className="border border-gray-300 rounded shadow-sm overflow-auto max-w-full"
+        className="border border-gray-300 rounded-lg shadow-sm overflow-auto max-w-full bg-white"
         style={{ maxHeight: '60vh', minHeight: '400px' }}
       />
-      <div className="text-xs text-muted-foreground mt-2">
+
+      {/* Alt link */}
+      <div className="text-xs text-muted-foreground mt-3">
         <a href={url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
           Open PDF in new tab
         </a>
