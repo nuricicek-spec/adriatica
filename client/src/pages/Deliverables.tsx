@@ -12,9 +12,11 @@ export default function Deliverables() {
   const [previewItem, setPreviewItem] = useState<typeof deliverables[0] | null>(null);
   const categories = ['All', 'Engineering', 'Compliance', 'Operations'];
 
-  const filtered = category === 'All'
+  // Filtreleme ve alfabetik sıralama
+  const filtered = (category === 'All'
     ? deliverables
-    : deliverables.filter(d => d.category === category);
+    : deliverables.filter(d => d.category === category)
+  ).sort((a, b) => a.title.localeCompare(b.title));
 
   return (
     <>
