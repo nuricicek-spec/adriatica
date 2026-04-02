@@ -97,19 +97,7 @@ export default function ProjectManagement() {
               </div>
             </div>
 
-            <div className="mt-12 p-8 bg-neutral-50 border-l-2 border-primary/20 rounded-sm text-center">
-              <p className="text-lg font-medium text-[#0B3B5C] mb-2">
-                Planning a refit or dry‑docking? Let’s talk.
-              </p>
-              <HashLink
-                href="/#begin-voyage"
-                className="inline-block mt-2 bg-[#0B3B5C] text-white px-6 py-3 rounded-sm font-medium hover:bg-[#1A4B7A] transition-colors"
-              >
-                Request Technical Assessment
-              </HashLink>
-            </div>
-
-            {/* Yacht Survey Services – yeni blok */}
+            {/* Yacht Survey Services – yeni blok (Cost & Schedule Control altına eklendi) */}
             <div className="mt-12 p-8 bg-neutral-50 border-l-4 border-primary rounded-sm">
               <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-3">
                 Yacht Survey & Inspection
@@ -122,6 +110,18 @@ export default function ProjectManagement() {
                 className="inline-flex items-center gap-1 text-primary hover:underline font-medium"
               >
                 Learn more about our yacht survey services →
+              </HashLink>
+            </div>
+
+            <div className="mt-12 p-8 bg-neutral-50 border-l-2 border-primary/20 rounded-sm text-center">
+              <p className="text-lg font-medium text-[#0B3B5C] mb-2">
+                Planning a refit or dry‑docking? Let’s talk.
+              </p>
+              <HashLink
+                href="/#begin-voyage"
+                className="inline-block mt-2 bg-[#0B3B5C] text-white px-6 py-3 rounded-sm font-medium hover:bg-[#1A4B7A] transition-colors"
+              >
+                Request Technical Assessment
               </HashLink>
             </div>
           </div>
