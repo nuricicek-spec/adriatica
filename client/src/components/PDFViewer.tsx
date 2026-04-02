@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
 
-// Worker'ı LOKAL olarak ayarla (CDN değil, kesin çalışır)
+// Worker'ı lokal dosyadan al (kesin yol)
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/js/pdf.worker.min.js';
+
+// iOS tespiti (iPhone, iPad, iPod)
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
 
 interface PDFViewerProps {
   url: string;
@@ -17,6 +20,29 @@ export function PDFViewer({ url }: PDFViewerProps) {
   const [error, setError] = useState<string | null>(null);
   const [scale, setScale] = useState(1.2);
 
+  // iOS için butonlu basit gösterim
+  if (isIOS) {
+    return (
+      <div className="flex flex-col items-center justify-center p-8 bg-neutral-50 rounded-sm">
+        <p className="text-center text-muted-foreground mb-4">
+          To view all pages and zoom, open PDF in full screen.
+        </p>
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-sm hover:bg-primary/90 transition"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+          Open PDF in Full Screen
+        </a>
+      </div>
+    );
+  }
+
+  // Android / Masaüstü için PDF.js viewer
   useEffect(() => {
     const loadPdf = async () => {
       setLoading(true);
@@ -28,7 +54,7 @@ export function PDFViewer({ url }: PDFViewerProps) {
         setCurrentPage(1);
       } catch (err: any) {
         console.error('PDF yüklenemedi:', err);
-        setError('PDF could not be loaded. Please try again.');
+        setError('Failed to load PDF. Please try again later.');
       } finally {
         setLoading(false);
       }
@@ -53,7 +79,6 @@ export function PDFViewer({ url }: PDFViewerProps) {
           viewport: viewport,
         } as any).promise;
 
-        // Eski canvas'ı temizle
         while (containerRef.current?.firstChild) {
           containerRef.current.removeChild(containerRef.current.firstChild);
         }
@@ -87,7 +112,7 @@ export function PDFViewer({ url }: PDFViewerProps) {
       <div className="text-center py-8 text-red-600">
         <p>{error}</p>
         <a href={url} target="_blank" rel="noopener noreferrer" className="text-primary underline mt-2 inline-block">
-          Open PDF directly
+          Try opening PDF directly
         </a>
       </div>
     );
