@@ -100,12 +100,6 @@ export default function Deliverables() {
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <HashLink
-                    href={`/services/${item.serviceSlug}`}
-                    className="text-primary text-sm hover:underline"
-                  >
-                    Learn more →
-                  </HashLink>
-                  <HashLink
                     href="/#begin-voyage"
                     className="text-primary text-sm hover:underline"
                   >
@@ -158,8 +152,7 @@ export default function Deliverables() {
                   </span>
                 </div>
               </div>
-              <p className="text-muted-foreground mb-4">{previewItem.description}</p>
-
+              {/* Açıklama satırı kaldırıldı */}
               <div className="bg-neutral-50 p-4 rounded-sm">
                 {/* ÖRNEK UYARISI */}
                 <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 mb-4 text-sm text-yellow-800">
@@ -168,18 +161,15 @@ export default function Deliverables() {
                 </div>
 
                 {previewItem.previewPdf ? (
-                  <div className="overflow-auto w-full h-[500px] -webkit-overflow-scrolling:touch border border-gray-200 rounded">
-                    <iframe
-                      src={previewItem.previewPdf}
-                      className="w-[800px] h-full md:w-full"
-                      title="PDF Preview"
-                    />
-                  </div>
+                  <iframe
+                    src={previewItem.previewPdf}
+                    className="w-full h-[500px]"
+                    title="PDF Preview"
+                  />
                 ) : (
                   <p className="text-center text-muted-foreground">Preview not available yet.</p>
                 )}
               </div>
-
               <div className="mt-6 flex justify-end gap-4">
                 <HashLink
                   href={`/services/${previewItem.serviceSlug}`}
