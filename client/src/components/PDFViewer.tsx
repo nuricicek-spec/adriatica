@@ -38,20 +38,21 @@ function IOSFallback({ url }: { url: string }) {
 
 // ─── Ana viewer (tüm hook'lar burada — koşulsuz çağrılıyor) ─────────────────
 function PDFViewerDesktop({ url }: { url: string }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);   // scroll wrapper
+  const canvasRef  = useRef<HTMLCanvasElement | null>(null);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [numPages, setNumPages] = useState(0);
-  const [pdfDoc, setPdfDoc] = useState<PDFDocumentProxy | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [scale, setScale] = useState(1.2);
+  const [numPages, setNumPages]       = useState(0);
+  const [pdfDoc, setPdfDoc]           = useState<PDFDocumentProxy | null>(null);
+  const [loading, setLoading]         = useState(true);
+  const [error, setError]             = useState<string | null>(null);
+
+  // zoomLevel: 1 = "container genişliğine sığdır", >1 veya <1 kullanıcı zoom'u
+  const [zoomLevel, setZoomLevel] = useState(1);
 
   // PDF yükle
   useEffect(() => {
     let cancelled = false;
-
     const loadPdf = async () => {
       setLoading(true);
       setError(null);
@@ -61,6 +62,7 @@ function PDFViewerDesktop({ url }: { url: string }) {
           setPdfDoc(doc);
           setNumPages(doc.numPages);
           setCurrentPage(1);
+          setZoomLevel(1); // yeni PDF açılırken zoom sıfırla
         }
       } catch (err) {
         console.error('PDF yüklenemedi:', err);
@@ -69,45 +71,53 @@ function PDFViewerDesktop({ url }: { url: string }) {
         if (!cancelled) setLoading(false);
       }
     };
-
     loadPdf();
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, [url]);
 
-  // Sayfa render et
+  // Sayfa render et — scale, container genişliğine göre otomatik hesaplanır
   useEffect(() => {
-    if (!pdfDoc || !containerRef.current) return;
-
+    if (!pdfDoc || !wrapperRef.current) return;
     let cancelled = false;
 
     const renderPage = async () => {
       try {
-        const page = await pdfDoc.getPage(currentPage);
+        const page     = await pdfDoc.getPage(currentPage);
         if (cancelled) return;
 
-        const viewport = page.getViewport({ scale });
+        // PDF'in orijinal viewport'u (scale=1)
+        const baseViewport = page.getViewport({ scale: 1 });
 
-        // Mevcut canvas'ı yeniden kullan veya oluştur
+        // Container'ın kullanılabilir genişliği
+        const containerWidth = wrapperRef.current!.clientWidth || 800;
+
+        // "fit-width" scale: container'a tam sığdır, sonra kullanıcı zoom'unu uygula
+        const fitScale    = containerWidth / baseViewport.width;
+        const finalScale  = fitScale * zoomLevel;
+
+        const viewport = page.getViewport({ scale: finalScale });
+
+        // Canvas: bir kez oluştur, sonra yeniden kullan
         if (!canvasRef.current) {
           canvasRef.current = document.createElement('canvas');
-          canvasRef.current.className = 'max-w-full h-auto mx-auto block';
+          // ÖNEMLİ: CSS ile boyutu asla ezme — canvas kendi piksellerini yönetir
+          canvasRef.current.style.display = 'block';
+          canvasRef.current.style.margin  = '0 auto';
         }
 
-        const canvas = canvasRef.current;
+        const canvas  = canvasRef.current;
         const context = canvas.getContext('2d');
         if (!context) return;
 
-        canvas.width = viewport.width;
+        // Canvas piksel boyutunu viewport'a eşitle (aspect ratio korunur)
+        canvas.width  = viewport.width;
         canvas.height = viewport.height;
 
-        await page.render({ canvasContext: context, viewport }).promise;
+        await page.render({ canvasContext: context, canvas, viewport }).promise;
         if (cancelled) return;
 
-        // Container'ı güncelle (sadece gerekirse ekle)
-        if (!containerRef.current?.contains(canvas)) {
-          containerRef.current?.replaceChildren(canvas);
+        if (!wrapperRef.current?.contains(canvas)) {
+          wrapperRef.current?.replaceChildren(canvas);
         }
       } catch (err) {
         if (!cancelled) {
@@ -118,15 +128,15 @@ function PDFViewerDesktop({ url }: { url: string }) {
     };
 
     renderPage();
-    return () => {
-      cancelled = true;
-    };
-  }, [pdfDoc, currentPage, scale]);
+    return () => { cancelled = true; };
+  }, [pdfDoc, currentPage, zoomLevel]);
 
   const goToPrevPage = () => setCurrentPage(p => Math.max(p - 1, 1));
   const goToNextPage = () => setCurrentPage(p => Math.min(p + 1, numPages));
-  const zoomIn = () => setScale(prev => Math.min(prev + 0.2, 3));
-  const zoomOut = () => setScale(prev => Math.max(prev - 0.2, 0.6));
+
+  // Zoom: %20 adım, 0.5x – 3x arası
+  const zoomIn  = () => setZoomLevel(prev => Math.min(+(prev + 0.2).toFixed(1), 3));
+  const zoomOut = () => setZoomLevel(prev => Math.max(+(prev - 0.2).toFixed(1), 0.5));
 
   const handleDownload = () => {
     const link = document.createElement('a');
@@ -239,14 +249,19 @@ function PDFViewerDesktop({ url }: { url: string }) {
         </button>
       </div>
 
-      {/* Canvas alanı */}
+      {/* Canvas alanı — dış div scroll sağlar, iç div (wrapperRef) canvas'ı ortalar */}
       <div
-        ref={containerRef}
-        className="flex justify-center w-full overflow-auto"
-        style={{ maxHeight: '60vh', minHeight: '350px' }}
+        className="w-full overflow-auto"
+        style={{ maxHeight: '65vh', minHeight: '350px', background: '#f5f5f5' }}
         role="img"
         aria-label={`PDF page ${currentPage} of ${numPages}`}
-      />
+      >
+        <div
+          ref={wrapperRef}
+          className="flex justify-center items-start py-4"
+          style={{ width: '100%' }}
+        />
+      </div>
 
       <div className="text-xs text-muted-foreground mt-3">
         <a
