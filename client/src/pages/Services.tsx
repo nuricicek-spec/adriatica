@@ -125,6 +125,7 @@ const services = [
       "Dry‑Docking Specification & Management",
       "On‑site Technical Troubleshooting",
       "Cost & Schedule Control",
+      "Yacht Survey & Inspection",
     ],
     outcome: "On‑time, on‑budget project delivery with verified quality and complete as‑built records.",
     references: "Industry best practices, IACS UR Z10",

@@ -36,6 +36,7 @@ export default function ProjectManagement() {
               <li>Dry‑Docking Specification & Management</li>
               <li>On‑site Technical Troubleshooting</li>
               <li>Cost & Schedule Control</li>
+              <li>Yacht Survey & Inspection</li>
             </ul>
 
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Outcome</h2>
