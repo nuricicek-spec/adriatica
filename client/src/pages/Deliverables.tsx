@@ -13,6 +13,7 @@ export default function Deliverables() {
   const [previewItem, setPreviewItem] = useState<typeof deliverables[0] | null>(null);
   const categories = ['All', 'Engineering', 'Compliance', 'Operations'];
 
+  // Filtreleme ve alfabetik sıralama
   const filtered = (category === 'All'
     ? deliverables
     : deliverables.filter(d => d.category === category)
@@ -56,6 +57,7 @@ export default function Deliverables() {
             subtitle="What you receive when you work with us"
           />
 
+          {/* Filtre butonları */}
           <div className="flex flex-wrap justify-center gap-4 my-8">
             {categories.map(cat => (
               <button
@@ -72,6 +74,7 @@ export default function Deliverables() {
             ))}
           </div>
 
+          {/* Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map(item => (
               <div
@@ -114,6 +117,7 @@ export default function Deliverables() {
             ))}
           </div>
 
+          {/* Alt CTA */}
           <div className="mt-16 text-center p-6 bg-neutral-50 border border-border/10 rounded-sm">
             <p className="text-muted-foreground mb-3">
               Don’t see what you need?
@@ -128,41 +132,50 @@ export default function Deliverables() {
         </main>
         <Footer />
 
+        {/* Preview Modal */}
         {previewItem && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={() => setPreviewItem(null)}>
-            <div className="bg-white rounded-sm max-w-3xl w-full max-h-[90vh] overflow-auto p-6 relative" onClick={e => e.stopPropagation()}>
-              <button
-                onClick={() => setPreviewItem(null)}
-                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
-              >
-                ✕
-              </button>
-              <div className="flex items-center gap-4 mb-4">
-                {previewItem.previewImage && (
-                  <img src={previewItem.previewImage} alt="" className="h-16 w-16 object-contain" />
-                )}
-                <div>
-                  <h3 className="font-display text-2xl font-bold text-primary">{previewItem.title}</h3>
-                  <span className="text-xs uppercase text-primary bg-primary/10 px-2 py-0.5 rounded">
-                    {previewItem.category}
-                  </span>
+            <div className="bg-white rounded-sm max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col relative" onClick={e => e.stopPropagation()}>
+              {/* Header (sticky) */}
+              <div className="p-4 border-b flex items-start justify-between sticky top-0 bg-white z-10">
+                <div className="flex items-center gap-3">
+                  {previewItem.previewImage && (
+                    <img src={previewItem.previewImage} alt="" className="h-10 w-10 object-contain" />
+                  )}
+                  <div>
+                    <h3 className="font-display text-xl font-bold text-primary">{previewItem.title}</h3>
+                    <span className="text-xs uppercase text-primary bg-primary/10 px-2 py-0.5 rounded">
+                      {previewItem.category}
+                    </span>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setPreviewItem(null)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  ✕
+                </button>
+              </div>
+
+              {/* İçerik (scroll alanı) */}
+              <div className="flex-1 overflow-auto p-4">
+                <div className="bg-neutral-50 p-4 rounded-sm">
+                  {/* Örnek uyarısı */}
+                  <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 mb-4 text-sm text-yellow-800">
+                    <p className="font-semibold">📄 This is a sample document.</p>
+                    <p>The full version is delivered upon project start or service purchase.</p>
+                  </div>
+
+                  {previewItem.previewPdf ? (
+                    <PDFViewer url={previewItem.previewPdf} />
+                  ) : (
+                    <p className="text-center text-muted-foreground">Preview not available yet.</p>
+                  )}
                 </div>
               </div>
 
-              <div className="bg-neutral-50 p-4 rounded-sm">
-                <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 mb-4 text-sm text-yellow-800">
-                  <p className="font-semibold">📄 This is a sample document.</p>
-                  <p>The full version is delivered upon project start or service purchase.</p>
-                </div>
-
-                {previewItem.previewPdf ? (
-                  <PDFViewer url={previewItem.previewPdf} />
-                ) : (
-                  <p className="text-center text-muted-foreground">Preview not available yet.</p>
-                )}
-              </div>
-
-              <div className="mt-6 flex justify-end gap-4">
+              {/* Footer (sticky butonlar) */}
+              <div className="p-4 border-t flex justify-end gap-4 sticky bottom-0 bg-white z-10">
                 <HashLink
                   href={`/services/${previewItem.serviceSlug}`}
                   className="bg-primary text-white px-4 py-2 rounded-sm hover:bg-primary/90 transition"

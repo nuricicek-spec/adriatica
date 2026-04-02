@@ -1,17 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
+import { Download, Share2, Minus, Plus } from 'lucide-react';
 
-// Worker'ı lokal dosyadan al (kesin yol)
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/js/pdf.worker.min.js';
-
-// iOS tespiti (iPhone, iPad, iPod)
-const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
 
 interface PDFViewerProps {
   url: string;
+  onDownload?: () => void;
+  onShare?: () => void;
 }
 
-export function PDFViewer({ url }: PDFViewerProps) {
+export function PDFViewer({ url, onDownload, onShare }: PDFViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [numPages, setNumPages] = useState(0);
@@ -20,29 +19,6 @@ export function PDFViewer({ url }: PDFViewerProps) {
   const [error, setError] = useState<string | null>(null);
   const [scale, setScale] = useState(1.2);
 
-  // iOS için butonlu basit gösterim
-  if (isIOS) {
-    return (
-      <div className="flex flex-col items-center justify-center p-8 bg-neutral-50 rounded-sm">
-        <p className="text-center text-muted-foreground mb-4">
-          To view all pages and zoom, open PDF in full screen.
-        </p>
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-sm hover:bg-primary/90 transition"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-          </svg>
-          Open PDF in Full Screen
-        </a>
-      </div>
-    );
-  }
-
-  // Android / Masaüstü için PDF.js viewer
   useEffect(() => {
     const loadPdf = async () => {
       setLoading(true);
@@ -103,6 +79,37 @@ export function PDFViewer({ url }: PDFViewerProps) {
   const zoomIn = () => setScale(prev => Math.min(prev + 0.2, 3));
   const zoomOut = () => setScale(prev => Math.max(prev - 0.2, 0.6));
 
+  const handleDownload = () => {
+    if (onDownload) {
+      onDownload();
+    } else {
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = url.split('/').pop() || 'document.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
+
+  const handleShare = async () => {
+    if (onShare) {
+      onShare();
+    } else if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Document',
+          url: url,
+        });
+      } catch (err) {
+        console.log('Paylaşım iptal edildi:', err);
+      }
+    } else {
+      navigator.clipboard.writeText(url);
+      alert('Link copied!');
+    }
+  };
+
   if (loading) {
     return <div className="text-center py-8 text-muted-foreground">Loading PDF...</div>;
   }
@@ -124,31 +131,41 @@ export function PDFViewer({ url }: PDFViewerProps) {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="flex flex-wrap justify-center gap-3 mb-4">
+      <div className="flex flex-wrap justify-center gap-2 mb-4">
         <button
           onClick={goToPrevPage}
           disabled={currentPage <= 1}
           className="px-3 py-1 bg-primary text-white rounded disabled:opacity-50"
         >
-          Previous
+          ← Prev
         </button>
         <span className="text-sm text-muted-foreground">
-          Page {currentPage} of {numPages}
+          {currentPage} / {numPages}
         </span>
         <button
           onClick={goToNextPage}
           disabled={currentPage >= numPages}
           className="px-3 py-1 bg-primary text-white rounded disabled:opacity-50"
         >
-          Next
+          Next →
         </button>
-        <button onClick={zoomOut} className="px-3 py-1 bg-gray-200 rounded">Zoom Out</button>
-        <button onClick={zoomIn} className="px-3 py-1 bg-gray-200 rounded">Zoom In</button>
+        <button onClick={zoomOut} className="p-1 bg-gray-200 rounded" title="Zoom Out">
+          <Minus className="w-5 h-5" />
+        </button>
+        <button onClick={zoomIn} className="p-1 bg-gray-200 rounded" title="Zoom In">
+          <Plus className="w-5 h-5" />
+        </button>
+        <button onClick={handleDownload} className="p-1 bg-gray-200 rounded" title="Download PDF">
+          <Download className="w-5 h-5" />
+        </button>
+        <button onClick={handleShare} className="p-1 bg-gray-200 rounded" title="Share PDF">
+          <Share2 className="w-5 h-5" />
+        </button>
       </div>
       <div
         ref={containerRef}
         className="border border-gray-300 rounded shadow-sm overflow-auto max-w-full"
-        style={{ maxHeight: '550px' }}
+        style={{ maxHeight: '60vh', minHeight: '400px' }}
       />
       <div className="text-xs text-muted-foreground mt-2">
         <a href={url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
