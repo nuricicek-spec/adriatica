@@ -1,14 +1,39 @@
 import { useEffect, useRef, useState } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
-import { Download, Share2, Minus, Plus, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Download, Share2, Minus, Plus, ExternalLink } from 'lucide-react';
 
+// Worker'ı lokal dosyadan al
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/js/pdf.worker.min.js';
+
+// iOS tespiti (iPhone, iPad, iPod)
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
 
 interface PDFViewerProps {
   url: string;
 }
 
 export function PDFViewer({ url }: PDFViewerProps) {
+  // iOS için butonlu basit gösterim
+  if (isIOS) {
+    return (
+      <div className="flex flex-col items-center justify-center p-6 bg-neutral-50 rounded-sm text-center">
+        <p className="text-muted-foreground mb-4">
+          This PDF is best viewed in full screen on your device.
+        </p>
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-sm hover:bg-primary/90 transition shadow-sm"
+        >
+          <ExternalLink className="w-4 h-4" />
+          Open PDF in Full Screen
+        </a>
+      </div>
+    );
+  }
+
+  // Android / Masaüstü için PDF.js viewer (önceki kod)
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [numPages, setNumPages] = useState(0);
@@ -123,69 +148,42 @@ export function PDFViewer({ url }: PDFViewerProps) {
 
   return (
     <div className="flex flex-col items-center">
-      {/* Kontrol çubuğu - responsive, ikon + metin */}
-      <div className="flex flex-wrap justify-center items-center gap-2 mb-4 bg-gray-50 p-2 rounded-lg shadow-sm">
+      <div className="flex flex-wrap justify-center gap-2 mb-4">
         <button
           onClick={goToPrevPage}
           disabled={currentPage <= 1}
-          className="flex items-center gap-1 px-3 py-1.5 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition"
+          className="px-3 py-1 bg-primary text-white rounded-sm disabled:opacity-50 text-sm"
         >
-          <ChevronLeft className="w-4 h-4" />
-          <span className="hidden sm:inline">Prev</span>
+          ← Prev
         </button>
-        <span className="text-sm text-gray-700 px-2">
+        <span className="text-sm text-muted-foreground">
           {currentPage} / {numPages}
         </span>
         <button
           onClick={goToNextPage}
           disabled={currentPage >= numPages}
-          className="flex items-center gap-1 px-3 py-1.5 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition"
+          className="px-3 py-1 bg-primary text-white rounded-sm disabled:opacity-50 text-sm"
         >
-          <span className="hidden sm:inline">Next</span>
-          <ChevronRight className="w-4 h-4" />
+          Next →
         </button>
-        <div className="w-px h-6 bg-gray-300 mx-1 hidden sm:block" />
-        <button
-          onClick={zoomOut}
-          className="p-1.5 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100 transition"
-          title="Zoom Out"
-        >
+        <button onClick={zoomOut} className="p-1.5 bg-gray-100 rounded-sm hover:bg-gray-200 transition" title="Zoom Out">
           <Minus className="w-4 h-4" />
         </button>
-        <button
-          onClick={zoomIn}
-          className="p-1.5 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100 transition"
-          title="Zoom In"
-        >
+        <button onClick={zoomIn} className="p-1.5 bg-gray-100 rounded-sm hover:bg-gray-200 transition" title="Zoom In">
           <Plus className="w-4 h-4" />
         </button>
-        <div className="w-px h-6 bg-gray-300 mx-1 hidden sm:block" />
-        <button
-          onClick={handleDownload}
-          className="flex items-center gap-1 px-3 py-1.5 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 transition"
-          title="Download PDF"
-        >
+        <button onClick={handleDownload} className="p-1.5 bg-gray-100 rounded-sm hover:bg-gray-200 transition" title="Download PDF">
           <Download className="w-4 h-4" />
-          <span className="hidden sm:inline">Download</span>
         </button>
-        <button
-          onClick={handleShare}
-          className="flex items-center gap-1 px-3 py-1.5 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 transition"
-          title="Share PDF"
-        >
+        <button onClick={handleShare} className="p-1.5 bg-gray-100 rounded-sm hover:bg-gray-200 transition" title="Share PDF">
           <Share2 className="w-4 h-4" />
-          <span className="hidden sm:inline">Share</span>
         </button>
       </div>
-
-      {/* Canvas alanı */}
       <div
         ref={containerRef}
-        className="border border-gray-300 rounded-lg shadow-sm overflow-auto max-w-full bg-white"
-        style={{ maxHeight: '60vh', minHeight: '400px' }}
+        className="border border-gray-200 rounded-sm shadow-sm overflow-auto w-full"
+        style={{ maxHeight: '60vh', minHeight: '350px' }}
       />
-
-      {/* Alt link */}
       <div className="text-xs text-muted-foreground mt-3">
         <a href={url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
           Open PDF in new tab
