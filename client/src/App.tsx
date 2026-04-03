@@ -1,64 +1,81 @@
 import { Switch, Route } from "wouter";
-import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
+import { lazy, Suspense } from "react";
+import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ScrollToTop } from "@/components/ScrollToTop";
-import { CookieConsent } from "@/components/CookieConsent"; // Eklendi
-import Home from "@/pages/Home";
-import Careers from "@/pages/Careers";
-import News from "@/pages/News";
-import Insights from "@/pages/Insights";
-import InsightDetail from "@/pages/InsightDetail";
-import Services from "@/pages/Services";
-import CaseStudies from "@/pages/CaseStudies";
-import CaseStudyDetail from "@/pages/CaseStudyDetail";
-import About from "@/pages/About";
-import Deliverables from "@/pages/Deliverables";
+import { CookieConsent } from "@/components/CookieConsent";
+
+// Lazy loading ile sayfaları yükle
+const Home = lazy(() => import("@/pages/Home"));
+const Careers = lazy(() => import("@/pages/Careers"));
+const News = lazy(() => import("@/pages/News"));
+const Insights = lazy(() => import("@/pages/Insights"));
+const InsightDetail = lazy(() => import("@/pages/InsightDetail"));
+const Services = lazy(() => import("@/pages/Services"));
+const CaseStudies = lazy(() => import("@/pages/CaseStudies"));
+const CaseStudyDetail = lazy(() => import("@/pages/CaseStudyDetail"));
+const About = lazy(() => import("@/pages/About"));
+const Deliverables = lazy(() => import("@/pages/Deliverables"));
 
 // Service detail pages
-import EngineeringPlans from "@/pages/services/EngineeringPlans";
-import EngineeringDocs from "@/pages/services/EngineeringDocs";
-import StructuralIntegrity from "@/pages/services/StructuralIntegrity";
-import SustainableTech from "@/pages/services/SustainableTech";
-import RegulatoryCompliance from "@/pages/services/RegulatoryCompliance";
-import ProjectManagement from "@/pages/services/ProjectManagement";
-import YachtSurvey from "@/pages/services/YachtSurvey";
+const EngineeringPlans = lazy(() => import("@/pages/services/EngineeringPlans"));
+const EngineeringDocs = lazy(() => import("@/pages/services/EngineeringDocs"));
+const StructuralIntegrity = lazy(() => import("@/pages/services/StructuralIntegrity"));
+const SustainableTech = lazy(() => import("@/pages/services/SustainableTech"));
+const RegulatoryCompliance = lazy(() => import("@/pages/services/RegulatoryCompliance"));
+const ProjectManagement = lazy(() => import("@/pages/services/ProjectManagement"));
+const YachtSurvey = lazy(() => import("@/pages/services/YachtSurvey"));
 
-import PrivacyPolicy from "@/pages/PrivacyPolicy";
-import TermsOfService from "@/pages/TermsOfService";
-import CookiePolicy from "@/pages/CookiePolicy";
-import NotFound from "@/pages/not-found";
+const PrivacyPolicy = lazy(() => import("@/pages/PrivacyPolicy"));
+const TermsOfService = lazy(() => import("@/pages/TermsOfService"));
+const CookiePolicy = lazy(() => import("@/pages/CookiePolicy"));
+const NotFound = lazy(() => import("@/pages/not-found"));
+
+// Gelişmiş loading fallback bileşeni
+function PageLoader() {
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-background">
+      <div className="text-center">
+        <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+        <p className="text-muted-foreground animate-pulse">Loading Adriatica...</p>
+      </div>
+    </div>
+  );
+}
 
 function Router() {
   return (
-    <Switch>
-      {/* Spesifik route'lar üstte */}
-      <Route path="/services/engineering-plans" component={EngineeringPlans} />
-      <Route path="/services/engineering-documentation" component={EngineeringDocs} />
-      <Route path="/services/structural-integrity" component={StructuralIntegrity} />
-      <Route path="/services/sustainable-technologies" component={SustainableTech} />
-      <Route path="/services/regulatory-compliance" component={RegulatoryCompliance} />
-      <Route path="/services/project-management" component={ProjectManagement} />
-      <Route path="/services/yacht-survey" component={YachtSurvey} />
+    <Suspense fallback={<PageLoader />}>
+      <Switch>
+        {/* Spesifik route'lar üstte */}
+        <Route path="/services/engineering-plans" component={EngineeringPlans} />
+        <Route path="/services/engineering-documentation" component={EngineeringDocs} />
+        <Route path="/services/structural-integrity" component={StructuralIntegrity} />
+        <Route path="/services/sustainable-technologies" component={SustainableTech} />
+        <Route path="/services/regulatory-compliance" component={RegulatoryCompliance} />
+        <Route path="/services/project-management" component={ProjectManagement} />
+        <Route path="/services/yacht-survey" component={YachtSurvey} />
 
-      <Route path="/services" component={Services} />
-      <Route path="/insights/:slug" component={InsightDetail} />
-      <Route path="/insights" component={Insights} />
-      <Route path="/case-studies/:slug" component={CaseStudyDetail} />
-      <Route path="/case-studies" component={CaseStudies} />
-      <Route path="/careers" component={Careers} />
-      <Route path="/news" component={News} />
-      <Route path="/about" component={About} />
-      <Route path="/deliverables" component={Deliverables} />
-      <Route path="/privacy-policy" component={PrivacyPolicy} />
-      <Route path="/terms-of-service" component={TermsOfService} />
-      <Route path="/cookie-policy" component={CookiePolicy} />
+        <Route path="/services" component={Services} />
+        <Route path="/insights/:slug" component={InsightDetail} />
+        <Route path="/insights" component={Insights} />
+        <Route path="/case-studies/:slug" component={CaseStudyDetail} />
+        <Route path="/case-studies" component={CaseStudies} />
+        <Route path="/careers" component={Careers} />
+        <Route path="/news" component={News} />
+        <Route path="/about" component={About} />
+        <Route path="/deliverables" component={Deliverables} />
+        <Route path="/privacy-policy" component={PrivacyPolicy} />
+        <Route path="/terms-of-service" component={TermsOfService} />
+        <Route path="/cookie-policy" component={CookiePolicy} />
 
-      {/* En genel route en altta */}
-      <Route path="/" component={Home} />
-      <Route component={NotFound} />
-    </Switch>
+        {/* En genel route en altta */}
+        <Route path="/" component={Home} />
+        <Route component={NotFound} />
+      </Switch>
+    </Suspense>
   );
 }
 
@@ -69,7 +86,7 @@ function App() {
         <ScrollToTop />
         <Toaster />
         <Router />
-        <CookieConsent /> {/* Eklendi */}
+        <CookieConsent />
       </TooltipProvider>
     </QueryClientProvider>
   );
