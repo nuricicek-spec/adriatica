@@ -166,13 +166,6 @@ function ServiceCard({ service }: { service: typeof services[number] }) {
   );
 }
 
-// ─── Diagram A: Structural Life‑Cycle Inspection Timeline ────────────────────
-// Placed in the empty grid slot beside "Structural Integrity" (Engineering row)
-//
-// Concept: horizontal timeline showing key structural intervention points
-// across a vessel's operational life — Survey → Mid-life → Special Survey →
-// Life Extension. Reinforces the "life extension studies" deliverable.
-
 function StructuralTimelineDiagram() {
   // Timeline milestones
   const milestones = [
