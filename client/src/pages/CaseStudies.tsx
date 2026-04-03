@@ -59,13 +59,14 @@ export default function CaseStudies() {
             title="Operational Case Studies"
             subtitle="Engineering in Action"
           />
-          <div className="space-y-12 mt-12">
+          {/* Daha fazla boşluk için space-y-16 kullanıldı (önceki space-y-12) */}
+          <div className="space-y-16 mt-12">
             {caseStudies.map((study) => (
               <Link key={study.slug} href={`/case-studies/${study.slug}`}>
                 <a className="block border-l-2 border-primary/20 pl-6 hover:border-primary transition-colors group">
-                  <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-3 group-hover:text-primary transition-colors">
+                  <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mb-3 group-hover:text-primary transition-colors">
                     {study.title}
-                  </h3>
+                  </h2>
                   <div className="space-y-3 text-muted-foreground">
                     <p>
                       <span className="font-semibold text-[#0B3B5C]">Challenge:</span>{" "}
