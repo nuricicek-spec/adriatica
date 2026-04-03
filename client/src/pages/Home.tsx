@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import type { FormEvent } from "react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
@@ -13,10 +14,146 @@ import { SEO } from "@/components/SEO";
 
 const COMMISSIONS_TEXT = "We are currently accepting commissions for Q2 2026.";
 
+// Philosophy section inline style — component dışında sabit, her render'da yeniden oluşturulmuyor
+const PHILOSOPHY_STYLES = `
+  .container-visual {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(15,25,45,0.95) 0%, rgba(10,17,40,0.98) 100%);
+    border-radius: 0; position: relative; overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 1px 1px rgba(212,175,55,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+  }
+  .container-visual::before {
+    content: ''; position: absolute; inset: 0; border-radius: 0; padding: 2px;
+    background: linear-gradient(135deg, rgba(212,175,55,0.4) 0%, rgba(201,169,97,0.2) 25%, rgba(27,58,107,0.3) 50%, rgba(212,175,55,0.4) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    pointer-events: none; opacity: 0.6; transition: opacity 0.6s;
+  }
+  .container-visual:hover::before { opacity: 1; }
+  .logo-svg-custom {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0.88);
+    width: 96%; height: 96%;
+    transition: all 0.8s cubic-bezier(0.4,0,0.2,1);
+    filter: drop-shadow(0 0 20px rgba(42,95,138,0.4));
+  }
+  .container-visual:hover .logo-svg-custom {
+    transform: translate(-50%, -50%) scale(0.92);
+    filter: drop-shadow(0 0 30px rgba(42,95,138,0.6)) drop-shadow(0 0 10px rgba(212,175,55,0.2));
+  }
+  .logo-svg-custom polygon:nth-child(2)  { fill: #0B3B5C; }
+  .logo-svg-custom polygon:nth-child(3)  { fill: #3A74A0; }
+  .logo-svg-custom polygon:nth-child(4)  { fill: #2A5F8A; }
+  .logo-svg-custom polygon:nth-child(5)  { fill: #1A4B7A; }
+  .logo-svg-custom polygon:nth-child(6)  { fill: #0B3B5C; }
+  .logo-svg-custom polygon:nth-child(7)  { fill: #0B3B5C; }
+  .logo-svg-custom polygon:nth-child(8)  { fill: #3A74A0; }
+  .logo-svg-custom polygon:nth-child(9)  { fill: #2A5F8A; }
+  .logo-svg-custom polygon:nth-child(10) { fill: #1A4B7A; }
+  .logo-svg-custom polygon:nth-child(11) { fill: #2A5F8A; }
+  .logo-svg-custom polygon:nth-child(12) { fill: #1A4B7A; }
+  .logo-svg-custom polygon:nth-child(13) { fill: #0B3B5C; }
+  .logo-svg-custom polygon:nth-child(14) { fill: #0B3B5C; }
+  .logo-svg-custom polygon:nth-child(15) { fill: #3A74A0; }
+  .logo-svg-custom polygon:nth-child(16) { fill: #2A5F8A; }
+  .logo-svg-custom polygon:nth-child(17) { fill: #1A4B7A; }
+  .logo-svg-custom polygon:nth-child(18) { fill: #2A5F8A; }
+  .logo-svg-custom polygon:nth-child(19) { fill: #1A4B7A; }
+  .logo-svg-custom polygon:nth-child(20) { fill: #0B3B5C; }
+  .logo-svg-custom polygon:nth-child(21) { fill: #0B3B5C; }
+  .logo-svg-custom polygon:nth-child(22) { fill: #3A74A0; }
+  .logo-svg-custom polygon:nth-child(23) { fill: #2A5F8A; }
+  .logo-svg-custom polygon:nth-child(24) { fill: #1A4B7A; }
+  .logo-svg-custom polygon:nth-child(25) { fill: #2A5F8A; }
+  .logo-svg-custom polygon:nth-child(26) { fill: #1A4B7A; }
+  .logo-svg-custom polygon:nth-child(27) { fill: #0B3B5C; }
+  .logo-svg-custom polygon:nth-child(28) { fill: #0B3B5C; }
+  .logo-svg-custom polygon:nth-child(29) { fill: #3A74A0; }
+  .logo-svg-custom polygon:nth-child(30) { fill: #2A5F8A; }
+  .logo-svg-custom polygon { transition: all 0.4s ease; }
+  .container-visual:hover .logo-svg-custom polygon:nth-child(6),
+  .container-visual:hover .logo-svg-custom polygon:nth-child(14),
+  .container-visual:hover .logo-svg-custom polygon:nth-child(22) {
+    fill: #c9a961; filter: drop-shadow(0 0 8px rgba(212,175,55,0.6));
+  }
+  .label-custom {
+    position: absolute;
+    background: linear-gradient(135deg, rgba(10,17,40,0.85), rgba(15,25,45,0.9));
+    backdrop-filter: blur(12px); border: none; color: #e8e4d9;
+    padding: 8px 14px; border-radius: 0; font-size: 11px; font-weight: 400;
+    letter-spacing: 2px; text-transform: uppercase; opacity: 0.75; z-index: 10;
+    transition: all 0.4s ease; font-family: 'Cinzel', serif;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .container-visual:hover .label-custom {
+    opacity: 1; box-shadow: 0 6px 16px rgba(0,0,0,0.4), 0 0 20px rgba(212,175,55,0.15);
+  }
+  .label-custom::before {
+    content: ''; position: absolute; inset: -1px;
+    background: linear-gradient(135deg, rgba(212,175,55,0.1), transparent);
+    border-radius: 0; opacity: 0; transition: opacity 0.4s; z-index: -1;
+  }
+  .container-visual:hover .label-custom::before { opacity: 1; }
+  .top-left    { top: 24px; left: 24px; }
+  .top-right   { top: 24px; right: 24px; }
+  .bottom-left { bottom: 90px; left: 24px; }
+  .bottom-right{ bottom: 90px; right: 24px; }
+  .diamond {
+    position: absolute; width: 42px; height: 60px; opacity: 0.8; z-index: 5;
+    transition: all 0.5s ease; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+  }
+  .container-visual:hover .diamond { opacity: 1; transform: scale(1.05); }
+  .diamond svg { width: 100%; height: 100%; }
+  .diamond-wisdom    { top: 54px; left: 28px; }
+  .diamond-resilience{ top: 54px; right: 28px; }
+  .diamond-renewal   { bottom: 118px; left: 28px; }
+  .diamond-seed      { bottom: 118px; right: 28px; }
+  .container-visual:hover .diamond-resilience,
+  .container-visual:hover .diamond-renewal {
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4)) drop-shadow(0 0 16px rgba(212,175,55,0.4));
+  }
+  .bottom-text {
+    position: absolute; bottom: 24px; width: 100%; text-align: center;
+    color: #e8e4d9; font-size: 13px; letter-spacing: 4px; opacity: 0.85;
+    z-index: 20; font-family: 'Cinzel', serif; font-weight: 600;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5); transition: all 0.4s;
+  }
+  .container-visual:hover .bottom-text {
+    opacity: 1; letter-spacing: 5px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.6), 0 0 20px rgba(212,175,55,0.3);
+  }
+  .border-overlay {
+    position: absolute; inset: 20px; border: 1px solid rgba(232,228,217,0.15);
+    border-radius: 0; pointer-events: none; z-index: 25; transition: border-color 0.6s;
+  }
+  .container-visual:hover .border-overlay {
+    border-color: rgba(232,228,217,0.25);
+    box-shadow: inset 0 0 20px rgba(232,228,217,0.05), 0 0 30px rgba(42,95,138,0.2);
+  }
+  .container-visual::after {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(42,95,138,0.15) 0%, transparent 70%);
+    transform: translate(-50%, -50%); pointer-events: none; opacity: 0.5; transition: opacity 0.8s;
+  }
+  .container-visual:hover::after {
+    opacity: 1; animation: pulseCustom 3s ease-in-out infinite;
+  }
+  @keyframes pulseCustom {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+    50%       { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
+  }
+  @media (max-width: 500px) {
+    .container-visual { width: 90vw; height: 110vw; }
+  }
+`;
+
 export default function Home() {
   const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  // FormEvent: React namespace yerine named import kullanıldı
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormStatus("submitting");
 
@@ -36,13 +173,12 @@ export default function Home() {
       } else {
         setFormStatus("error");
       }
-    } catch (error) {
-      console.error("Form submission error:", error);
+    } catch {
+      // Ağ hatası — kullanıcıya hata mesajı gösteriliyor
       setFormStatus("error");
     }
   };
 
-  // scrollIntoView handler'ları memoize edildi
   const scrollToContact = useCallback(() => {
     document.getElementById("begin-voyage")?.scrollIntoView({ behavior: "smooth" });
   }, []);
@@ -61,6 +197,15 @@ export default function Home() {
       />
 
       <Helmet>
+        {/* Cinzel font — @import yerine link tag: render-blocking engellenir */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap"
+        />
+
+        {/* Schema.org — LocalBusiness + ProfessionalService */}
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
@@ -71,28 +216,29 @@ export default function Home() {
             "logo": "https://www.adriaticadoo.me/logo.svg",
             "image": "https://www.adriaticadoo.me/og-image-default.png",
             "description": "Marine engineering consultancy specializing in structural integrity, regulatory compliance, and sustainable technologies.",
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": "Budva",
-              "addressCountry": "ME"
-            },
-            "geo": {
-              "@type": "GeoCoordinates",
-              "latitude": "42.2864",
-              "longitude": "18.8400"
-            },
             "taxID": "03612807",
             "telephone": "+382 68 591 757",
             "email": "info@adriaticadoo.me",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Budva",
+              "addressCountry": "ME",
+            },
+            // geo koordinatları number tipinde — string değil
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": 42.2864,
+              "longitude": 18.8400,
+            },
+            "hasMap": "https://www.google.com/maps/place/Budva,+Montenegro/",
             "openingHoursSpecification": [{
               "@type": "OpeningHoursSpecification",
               "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
               "opens": "09:00",
-              "closes": "18:00"
+              "closes": "18:00",
             }],
-            "hasMap": "https://www.google.com/maps/place/Budva,+Montenegro/",
             "sameAs": [
-              "https://www.linkedin.com/company/adriatica-d-o-o"
+              "https://www.linkedin.com/company/adriatica-d-o-o",
             ],
             "areaServed": ["Montenegro", "Adriatic Coast", "Europe"],
             "serviceType": [
@@ -105,8 +251,8 @@ export default function Home() {
               "Project Management",
               "Yacht Survey & Inspection",
               "MRV Reporting",
-              "Biofouling Management"
-            ]
+              "Biofouling Management",
+            ],
           })}
         </script>
       </Helmet>
@@ -187,6 +333,8 @@ export default function Home() {
                   <img
                     src="/logo.svg"
                     alt="Adriatica D.O.O. Symbol"
+                    width={400}
+                    height={400}
                     className="w-full h-auto drop-shadow-2xl"
                   />
                 </div>
@@ -461,140 +609,8 @@ export default function Home() {
               </div>
 
               <div className="relative">
-                <style>{`
-                  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Montserrat:wght@300;400&display=swap');
-                  .container-visual {
-                    width: 100%; height: 100%;
-                    background: linear-gradient(135deg, rgba(15,25,45,0.95) 0%, rgba(10,17,40,0.98) 100%);
-                    border-radius: 0; position: relative; overflow: hidden;
-                    box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 1px 1px rgba(212,175,55,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
-                    backdrop-filter: blur(10px);
-                  }
-                  .container-visual::before {
-                    content: ''; position: absolute; inset: 0; border-radius: 0; padding: 2px;
-                    background: linear-gradient(135deg, rgba(212,175,55,0.4) 0%, rgba(201,169,97,0.2) 25%, rgba(27,58,107,0.3) 50%, rgba(212,175,55,0.4) 100%);
-                    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-                    -webkit-mask-composite: xor; mask-composite: exclude;
-                    pointer-events: none; opacity: 0.6; transition: opacity 0.6s;
-                  }
-                  .container-visual:hover::before { opacity: 1; }
-                  .logo-svg-custom {
-                    position: absolute; top: 50%; left: 50%;
-                    transform: translate(-50%, -50%) scale(0.88);
-                    width: 96%; height: 96%;
-                    transition: all 0.8s cubic-bezier(0.4,0,0.2,1);
-                    filter: drop-shadow(0 0 20px rgba(42,95,138,0.4));
-                  }
-                  .container-visual:hover .logo-svg-custom {
-                    transform: translate(-50%, -50%) scale(0.92);
-                    filter: drop-shadow(0 0 30px rgba(42,95,138,0.6)) drop-shadow(0 0 10px rgba(212,175,55,0.2));
-                  }
-                  .logo-svg-custom polygon:nth-child(2)  { fill: #0B3B5C; }
-                  .logo-svg-custom polygon:nth-child(3)  { fill: #3A74A0; }
-                  .logo-svg-custom polygon:nth-child(4)  { fill: #2A5F8A; }
-                  .logo-svg-custom polygon:nth-child(5)  { fill: #1A4B7A; }
-                  .logo-svg-custom polygon:nth-child(6)  { fill: #0B3B5C; }
-                  .logo-svg-custom polygon:nth-child(7)  { fill: #0B3B5C; }
-                  .logo-svg-custom polygon:nth-child(8)  { fill: #3A74A0; }
-                  .logo-svg-custom polygon:nth-child(9)  { fill: #2A5F8A; }
-                  .logo-svg-custom polygon:nth-child(10) { fill: #1A4B7A; }
-                  .logo-svg-custom polygon:nth-child(11) { fill: #2A5F8A; }
-                  .logo-svg-custom polygon:nth-child(12) { fill: #1A4B7A; }
-                  .logo-svg-custom polygon:nth-child(13) { fill: #0B3B5C; }
-                  .logo-svg-custom polygon:nth-child(14) { fill: #0B3B5C; }
-                  .logo-svg-custom polygon:nth-child(15) { fill: #3A74A0; }
-                  .logo-svg-custom polygon:nth-child(16) { fill: #2A5F8A; }
-                  .logo-svg-custom polygon:nth-child(17) { fill: #1A4B7A; }
-                  .logo-svg-custom polygon:nth-child(18) { fill: #2A5F8A; }
-                  .logo-svg-custom polygon:nth-child(19) { fill: #1A4B7A; }
-                  .logo-svg-custom polygon:nth-child(20) { fill: #0B3B5C; }
-                  .logo-svg-custom polygon:nth-child(21) { fill: #0B3B5C; }
-                  .logo-svg-custom polygon:nth-child(22) { fill: #3A74A0; }
-                  .logo-svg-custom polygon:nth-child(23) { fill: #2A5F8A; }
-                  .logo-svg-custom polygon:nth-child(24) { fill: #1A4B7A; }
-                  .logo-svg-custom polygon:nth-child(25) { fill: #2A5F8A; }
-                  .logo-svg-custom polygon:nth-child(26) { fill: #1A4B7A; }
-                  .logo-svg-custom polygon:nth-child(27) { fill: #0B3B5C; }
-                  .logo-svg-custom polygon:nth-child(28) { fill: #0B3B5C; }
-                  .logo-svg-custom polygon:nth-child(29) { fill: #3A74A0; }
-                  .logo-svg-custom polygon:nth-child(30) { fill: #2A5F8A; }
-                  .logo-svg-custom polygon { transition: all 0.4s ease; }
-                  .container-visual:hover .logo-svg-custom polygon:nth-child(6),
-                  .container-visual:hover .logo-svg-custom polygon:nth-child(14),
-                  .container-visual:hover .logo-svg-custom polygon:nth-child(22) {
-                    fill: #c9a961; filter: drop-shadow(0 0 8px rgba(212,175,55,0.6));
-                  }
-                  .label-custom {
-                    position: absolute;
-                    background: linear-gradient(135deg, rgba(10,17,40,0.85), rgba(15,25,45,0.9));
-                    backdrop-filter: blur(12px); border: none; color: #e8e4d9;
-                    padding: 8px 14px; border-radius: 0; font-size: 11px; font-weight: 400;
-                    letter-spacing: 2px; text-transform: uppercase; opacity: 0.75; z-index: 10;
-                    transition: all 0.4s ease; font-family: 'Cinzel', serif;
-                    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-                  }
-                  .container-visual:hover .label-custom {
-                    opacity: 1; box-shadow: 0 6px 16px rgba(0,0,0,0.4), 0 0 20px rgba(212,175,55,0.15);
-                  }
-                  .label-custom::before {
-                    content: ''; position: absolute; inset: -1px;
-                    background: linear-gradient(135deg, rgba(212,175,55,0.1), transparent);
-                    border-radius: 0; opacity: 0; transition: opacity 0.4s; z-index: -1;
-                  }
-                  .container-visual:hover .label-custom::before { opacity: 1; }
-                  .top-left    { top: 24px; left: 24px; }
-                  .top-right   { top: 24px; right: 24px; }
-                  .bottom-left { bottom: 90px; left: 24px; }
-                  .bottom-right{ bottom: 90px; right: 24px; }
-                  .diamond {
-                    position: absolute; width: 42px; height: 60px; opacity: 0.8; z-index: 5;
-                    transition: all 0.5s ease; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
-                  }
-                  .container-visual:hover .diamond { opacity: 1; transform: scale(1.05); }
-                  .diamond svg { width: 100%; height: 100%; }
-                  .diamond-wisdom    { top: 54px; left: 28px; }
-                  .diamond-resilience{ top: 54px; right: 28px; }
-                  .diamond-renewal   { bottom: 118px; left: 28px; }
-                  .diamond-seed      { bottom: 118px; right: 28px; }
-                  .container-visual:hover .diamond-resilience,
-                  .container-visual:hover .diamond-renewal {
-                    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4)) drop-shadow(0 0 16px rgba(212,175,55,0.4));
-                  }
-                  .bottom-text {
-                    position: absolute; bottom: 24px; width: 100%; text-align: center;
-                    color: #e8e4d9; font-size: 13px; letter-spacing: 4px; opacity: 0.85;
-                    z-index: 20; font-family: 'Cinzel', serif; font-weight: 600;
-                    text-shadow: 0 2px 8px rgba(0,0,0,0.5); transition: all 0.4s;
-                  }
-                  .container-visual:hover .bottom-text {
-                    opacity: 1; letter-spacing: 5px;
-                    text-shadow: 0 2px 12px rgba(0,0,0,0.6), 0 0 20px rgba(212,175,55,0.3);
-                  }
-                  .border-overlay {
-                    position: absolute; inset: 20px; border: 1px solid rgba(232,228,217,0.15);
-                    border-radius: 0; pointer-events: none; z-index: 25; transition: border-color 0.6s;
-                  }
-                  .container-visual:hover .border-overlay {
-                    border-color: rgba(232,228,217,0.25);
-                    box-shadow: inset 0 0 20px rgba(232,228,217,0.05), 0 0 30px rgba(42,95,138,0.2);
-                  }
-                  .container-visual::after {
-                    content: ''; position: absolute; top: 50%; left: 50%;
-                    width: 300px; height: 300px;
-                    background: radial-gradient(circle, rgba(42,95,138,0.15) 0%, transparent 70%);
-                    transform: translate(-50%, -50%); pointer-events: none; opacity: 0.5; transition: opacity 0.8s;
-                  }
-                  .container-visual:hover::after {
-                    opacity: 1; animation: pulseCustom 3s ease-in-out infinite;
-                  }
-                  @keyframes pulseCustom {
-                    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-                    50%       { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
-                  }
-                  @media (max-width: 500px) {
-                    .container-visual { width: 90vw; height: 110vw; }
-                  }
-                `}</style>
+                {/* style string component dışında sabit olarak tanımlandı — render'da yeniden oluşturulmuyor */}
+                <style>{PHILOSOPHY_STYLES}</style>
                 <div className="aspect-[4/5] mx-auto">
                   <div className="container-visual">
                     <div className="logo-svg-custom">
