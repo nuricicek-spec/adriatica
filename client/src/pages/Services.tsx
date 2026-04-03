@@ -1,5 +1,3 @@
-// client/src/pages/Services.tsx
-
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -8,7 +6,7 @@ import { SEO } from "@/components/SEO";
 import ProcessWheel from "@/components/ProcessWheel";
 import { HashLink } from "@/components/HashLink";
 
-// ─── Organisation-level structured data (same as homepage) ─────────────────
+// ─── Organisation-level structured data ──────────────────────────────────────
 const organizationData = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
@@ -19,29 +17,23 @@ const organizationData = {
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Budva",
-    "addressCountry": "ME"
+    "addressCountry": "ME",
   },
   "serviceType": [
     "Marine Engineering",
     "Regulatory Compliance",
     "MRV Reporting",
     "Biofouling Management",
-    "Structural Integrity"
+    "Structural Integrity",
   ],
   "description": "Marine engineering consultancy specializing in EU MRV, IMO DCS, and Biofouling compliance.",
   "areaServed": [
-    "Bar",
-    "Budva",
-    "Kotor",
-    "Tivat",
-    "Montenegro",
-    "Adriatic Coast",
-    "Europe"
-  ]
+    "Bar", "Budva", "Kotor", "Tivat",
+    "Montenegro", "Adriatic Coast", "Europe",
+  ],
 };
 
 // ─── Service data ─────────────────────────────────────────────────────────────
-
 const services = [
   {
     title: "Engineering Plans",
@@ -132,9 +124,10 @@ const services = [
   },
 ];
 
-// ─── Reusable service card ────────────────────────────────────────────────────
+type Service = typeof services[number];
 
-function ServiceCard({ service }: { service: typeof services[number] }) {
+// ─── Service Card ─────────────────────────────────────────────────────────────
+function ServiceCard({ service }: { service: Service }) {
   return (
     <div className="border-l-2 border-primary/20 pl-6 py-2">
       <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-2">
@@ -166,8 +159,8 @@ function ServiceCard({ service }: { service: typeof services[number] }) {
   );
 }
 
+// ─── Diagram A: Structural Life‑Cycle Timeline ───────────────────────────────
 function StructuralTimelineDiagram() {
-  // Timeline milestones
   const milestones = [
     { year: "Yr 0",   label: "Newbuild /\nBaseline Survey",  sub: "Initial condition\nestablished" },
     { year: "Yr 2.5", label: "Intermediate\nSurvey",         sub: "Hull & coating\ncondition check" },
@@ -176,22 +169,19 @@ function StructuralTimelineDiagram() {
     { year: "Yr 15+", label: "Life Extension\nStudy",         sub: "Integrity analysis,\nclass acceptance" },
   ];
 
-  // SVG layout constants
-  const W          = 500;          // wider so first/last labels don't clip
-  const H          = 230;          // taller to give above-labels more room
-  const lineY      = 130;          // axis lower → above-labels have more space at top
-  const startX     = 52;           // more left margin — prevents "B" clipping
-  const endX       = W - 52;       // symmetric right margin
-  const step       = (endX - startX) / (milestones.length - 1);
-  const nodeR      = 10;
-  const accentCol  = "#3A74A0";
-  const navyCol    = "#0B3B5C";
-  const muteCol    = "#8FA8BC";
-  const bgCol      = "#F8FAFB";
+  const W         = 500;
+  const H         = 230;
+  const lineY     = 130;
+  const startX    = 52;
+  const endX      = W - 52;
+  const step      = (endX - startX) / (milestones.length - 1);
+  const nodeR     = 10;
+  const accentCol = "#3A74A0";
+  const navyCol   = "#0B3B5C";
+  const muteCol   = "#8FA8BC";
 
   return (
     <div className="border-l-2 border-primary/20 pl-6 py-2 flex flex-col justify-between h-full">
-      {/* Header matches service card style */}
       <div>
         <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-2">
           Structural Life‑Cycle Milestones
@@ -203,50 +193,37 @@ function StructuralTimelineDiagram() {
         </p>
       </div>
 
-      {/* SVG timeline */}
       <svg
         viewBox={`0 0 ${W} ${H}`}
         className="w-full h-auto"
         aria-label="Structural Life-Cycle Inspection Timeline"
       >
-        {/* Horizontal baseline */}
         <line
-          x1={startX} y1={lineY}
-          x2={endX}   y2={lineY}
+          x1={startX} y1={lineY} x2={endX} y2={lineY}
           stroke={accentCol} strokeWidth="2" strokeLinecap="round"
         />
 
         {milestones.map((m, i) => {
-          const x      = startX + i * step;
-          const isLast = i === milestones.length - 1;
-          // Alternate label above / below line for readability
-          const above  = i % 2 === 0;
-          // "above" labels: push far enough up to clear the node (nodeR=10) + gap
-          const labelY = above ? lineY - 34 : lineY + 28;
-          const subY   = above ? lineY - 68 : lineY + 56;
-
-          // Split label on \n
+          const x          = startX + i * step;
+          const isLast     = i === milestones.length - 1;
+          const above      = i % 2 === 0;
+          const labelY     = above ? lineY - 34 : lineY + 28;
+          const subY       = above ? lineY - 68 : lineY + 56;
           const labelLines = m.label.split("\n");
           const subLines   = m.sub.split("\n");
 
           return (
             <g key={i}>
-              {/* Connector tick — runs from node edge to just below/above the label */}
               <line
                 x1={x} y1={above ? lineY - nodeR : lineY + nodeR}
                 x2={x} y2={above ? labelY + 14 : lineY + nodeR + 8}
                 stroke={accentCol} strokeWidth="1.5" strokeDasharray="3 2"
               />
-
-              {/* Node circle */}
               <circle
-                cx={x} cy={lineY}
-                r={nodeR}
+                cx={x} cy={lineY} r={nodeR}
                 fill={isLast ? navyCol : accentCol}
                 stroke="white" strokeWidth="2"
               />
-
-              {/* Year label inside circle */}
               <text
                 x={x} y={lineY + 1}
                 textAnchor="middle" dominantBaseline="middle"
@@ -256,8 +233,6 @@ function StructuralTimelineDiagram() {
               >
                 {m.year}
               </text>
-
-              {/* Milestone label (2 lines) */}
               {labelLines.map((line, li) => (
                 <text
                   key={li}
@@ -270,8 +245,6 @@ function StructuralTimelineDiagram() {
                   {line}
                 </text>
               ))}
-
-              {/* Sub-label (muted, smaller) */}
               {subLines.map((line, li) => (
                 <text
                   key={li}
@@ -288,14 +261,10 @@ function StructuralTimelineDiagram() {
           );
         })}
 
-        {/* Arrow tip — placed on the line, well before the last node so they don't overlap.
-            Tip sits at endX-22, base at endX-32. Last node is at endX (x=448). */}
         <polygon
           points={`${endX - 22},${lineY} ${endX - 32},${lineY - 5} ${endX - 32},${lineY + 5}`}
           fill={accentCol}
         />
-
-        {/* Bottom caption */}
         <text
           x={W / 2} y={H - 6}
           textAnchor="middle"
@@ -310,53 +279,34 @@ function StructuralTimelineDiagram() {
   );
 }
 
-// ─── Diagram B: Operating Model (fixed Venn) ─────────────────────────────────
-// Placed in the empty grid slot beside "Project Management" (Operations row)
-//
-// Fixed from the original: corrected circle positions, text anchoring,
-// intersection labels moved into actual overlap zones, overall proportions.
-
+// ─── Diagram B: Operating Model Venn ─────────────────────────────────────────
 function OperatingModelDiagram() {
-  // Three circles arranged in equilateral triangle formation
-  // Centre of triangle at (200, 195); each circle offset by r_offset
-  const CX  = 200;
-  const CY  = 190;
-  const R   = 90;          // circle radius
-  const OFF = 48;          // offset from triangle centre to each circle centre
+  const CX    = 200;
+  const CY    = 190;
+  const R     = 90;
+  const OFF   = 48;
   const SQRT3 = Math.sqrt(3);
 
-  // Circle centres: top, bottom-left, bottom-right
+  // label/labelDy alanları kaldırıldı — render'da kullanılmıyordu
   const circles = [
-    { cx: CX,                  cy: CY - OFF,               label: "Engineering",  labelDy: -OFF - R + 14 },
-    { cx: CX - OFF * SQRT3/2,  cy: CY + OFF / 2,           label: "Compliance",   labelDy: 0 },
-    { cx: CX + OFF * SQRT3/2,  cy: CY + OFF / 2,           label: "Operations",   labelDy: 0 },
+    { cx: CX,                  cy: CY - OFF         },
+    { cx: CX - OFF * SQRT3 / 2, cy: CY + OFF / 2    },
+    { cx: CX + OFF * SQRT3 / 2, cy: CY + OFF / 2    },
   ];
 
   const navyCol   = "#0B3B5C";
-  const accentCol = "#3A74A0";
   const muteCol   = "#6B8FA8";
   const fillCol   = "rgba(58,116,160,0.10)";
   const strokeCol = "#3A74A0";
 
-  // Intersection label positions
-  // CX=200, CY=190, OFF=48, SQRT3≈1.732
-  // Circle centres: top=(200,142), BL=(158.4,214), BR=(241.6,214)
-  //
-  // "Technical Compliance"  lives in the TOP-LEFT overlap (Engineering ∩ Compliance)
-  //   → push left and UP, clear of centre text
-  // "Regulatory Oversight"  lives in the TOP-RIGHT overlap (Engineering ∩ Operations)
-  //   → push right and UP, clear of centre text
-  // "Execution Control"     lives in the BOTTOM overlap (Compliance ∩ Operations)
-  //   → keep below centre, already clear
   const intersections = [
-    { x: CX - 34,  y: CY - 28,        text: "Technical\nCompliance"  },
-    { x: CX + 34,  y: CY - 28,        text: "Regulatory\nOversight"  },
-    { x: CX,       y: CY + OFF/2 + 14, text: "Execution\nControl"    },
+    { x: CX - 34,  y: CY - 28,           text: "Technical\nCompliance" },
+    { x: CX + 34,  y: CY - 28,           text: "Regulatory\nOversight" },
+    { x: CX,       y: CY + OFF / 2 + 14, text: "Execution\nControl"   },
   ];
 
   return (
     <div className="border-l-2 border-primary/20 pl-6 py-2 flex flex-col justify-between h-full">
-      {/* Header matches service card style */}
       <div>
         <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-2">
           Our Operating Model
@@ -368,13 +318,11 @@ function OperatingModelDiagram() {
         </p>
       </div>
 
-      {/* SVG Venn */}
       <svg
         viewBox="0 0 400 340"
         className="w-full h-auto"
         aria-label="Adriatica Operating Model – Engineering, Compliance, Operations"
       >
-        {/* Three overlapping circles */}
         {circles.map((c, i) => (
           <circle
             key={i}
@@ -384,48 +332,43 @@ function OperatingModelDiagram() {
           />
         ))}
 
-        {/* Circle labels — positioned outside overlap zone */}
-        {/* Engineering – top */}
-        <text x={CX} y={CY - OFF - R + 18}
-          textAnchor="middle"
-          fill={navyCol}
+        {/* Engineering — top */}
+        <text
+          x={CX} y={CY - OFF - R + 18}
+          textAnchor="middle" fill={navyCol}
           fontFamily="var(--font-display, 'Playfair Display', serif)"
           fontSize="13" fontWeight="600"
         >
           Engineering
         </text>
 
-        {/* Compliance – bottom left */}
+        {/* Compliance — bottom left */}
         <text
-          x={CX - OFF * SQRT3/2 - R + 18} y={CY + OFF / 2 + R - 12}
-          textAnchor="middle"
-          fill={navyCol}
+          x={CX - OFF * SQRT3 / 2 - R + 18} y={CY + OFF / 2 + R - 12}
+          textAnchor="middle" fill={navyCol}
           fontFamily="var(--font-display, 'Playfair Display', serif)"
           fontSize="13" fontWeight="600"
         >
           Compliance
         </text>
 
-        {/* Operations – bottom right */}
+        {/* Operations — bottom right */}
         <text
-          x={CX + OFF * SQRT3/2 + R - 18} y={CY + OFF / 2 + R - 12}
-          textAnchor="middle"
-          fill={navyCol}
+          x={CX + OFF * SQRT3 / 2 + R - 18} y={CY + OFF / 2 + R - 12}
+          textAnchor="middle" fill={navyCol}
           fontFamily="var(--font-display, 'Playfair Display', serif)"
           fontSize="13" fontWeight="600"
         >
           Operations
         </text>
 
-        {/* Intersection labels */}
         {intersections.map((n, i) => {
           const lines = n.text.split("\n");
           return (
             <text
               key={i}
               x={n.x} y={n.y}
-              textAnchor="middle"
-              fill={muteCol}
+              textAnchor="middle" fill={muteCol}
               fontFamily="var(--font-body, 'Inter', sans-serif)"
               fontSize="8" fontWeight="500"
             >
@@ -436,10 +379,10 @@ function OperatingModelDiagram() {
           );
         })}
 
-        {/* Central label — "Integrated Management" */}
-        <text x={CX} y={CY + 4}
-          textAnchor="middle"
-          fill={navyCol}
+        {/* Centre label */}
+        <text
+          x={CX} y={CY + 4}
+          textAnchor="middle" fill={navyCol}
           fontFamily="var(--font-display, 'Playfair Display', serif)"
           fontSize="12" fontWeight="700"
         >
@@ -447,11 +390,9 @@ function OperatingModelDiagram() {
           <tspan x={CX} dy="18">Management</tspan>
         </text>
 
-        {/* Bottom caption */}
         <text
           x={CX} y={330}
-          textAnchor="middle"
-          fill={muteCol}
+          textAnchor="middle" fill={muteCol}
           fontFamily="var(--font-body, 'Inter', sans-serif)"
           fontSize="8" fontStyle="italic"
         >
@@ -463,7 +404,6 @@ function OperatingModelDiagram() {
 }
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
-
 export default function Services() {
   return (
     <>
@@ -483,16 +423,14 @@ export default function Services() {
 
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
 
-          {/* ── Page heading ── */}
           <SectionHeading
             title="Engineering Services"
             subtitle="Marine Engineering & Consultancy"
           />
 
-          {/* ── Interactive process diagram ── */}
           <ProcessWheel />
 
-          {/* ── What you get / How we work ── */}
+          {/* What You Get / How We Work */}
           <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="border-l-2 border-primary/20 pl-6">
               <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">
@@ -518,41 +456,27 @@ export default function Services() {
             </div>
           </div>
 
-          {/* ── Positioning statement ── */}
+          {/* Positioning statement */}
           <div className="mt-10 p-6 bg-neutral-50 border border-border/50 rounded-sm text-center">
             <p className="text-lg text-[#0B3B5C] font-medium">
               You get independent engineering management, technical oversight, and compliance assurance – from initial assessment to final documentation. We don't just advise; we deliver actionable, auditable results.
             </p>
           </div>
 
-          {/* ══════════════════════════════════════════════════════════════════
-              ENGINEERING CATEGORY
-              Grid: [Card 1] [Card 2] on row 1
-                    [Card 3 – Structural Integrity] [Diagram A – Timeline] on row 2
-          ══════════════════════════════════════════════════════════════════ */}
+          {/* Engineering */}
           <div className="mt-12">
             <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-4 border-l-2 border-primary/20 pl-4">
               Engineering
             </h3>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-
-              {/* Cards 0 & 1: Engineering Plans, Engineering Documentation */}
               <ServiceCard service={services[0]} />
               <ServiceCard service={services[1]} />
-
-              {/* Card 2: Structural Integrity */}
               <ServiceCard service={services[2]} />
-
-              {/* DIAGRAM A — fills the empty slot beside Structural Integrity */}
               <StructuralTimelineDiagram />
-
             </div>
           </div>
 
-          {/* ══════════════════════════════════════════════════════════════════
-              COMPLIANCE & REGULATORY CATEGORY
-              Grid: [Card 4] [Card 5] — both slots filled, no gaps
-          ══════════════════════════════════════════════════════════════════ */}
+          {/* Compliance & Regulatory */}
           <div className="mt-12">
             <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-4 border-l-2 border-primary/20 pl-4">
               Compliance & Regulatory
@@ -563,22 +487,14 @@ export default function Services() {
             </div>
           </div>
 
-          {/* ══════════════════════════════════════════════════════════════════
-              OPERATIONS CATEGORY
-              Grid: [Card 6 – Project Management] [Diagram B – Operating Model]
-          ══════════════════════════════════════════════════════════════════ */}
+          {/* Operations */}
           <div className="mt-12">
             <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-4 border-l-2 border-primary/20 pl-4">
               Operations
             </h3>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-
-              {/* Card 6: Project Management & Owner's Representation */}
               <ServiceCard service={services[5]} />
-
-              {/* DIAGRAM B — fills the empty slot beside Project Management */}
               <OperatingModelDiagram />
-
             </div>
           </div>
 
