@@ -36,7 +36,8 @@ export default function Home() {
       } else {
         setFormStatus('error');
       }
-    } catch (_error) {
+    } catch (error) {
+      console.error('Form submission error:', error);
       setFormStatus('error');
     }
   };
@@ -314,7 +315,6 @@ export default function Home() {
                 delay={0.1}
                 linkTo="engineering-plans"
               />
-              <p className="hidden">Specializing in Adriatic shipyard projects and new building designs.</p>
               <FeatureCard 
                 number="02" 
                 title="Engineering Documentation" 
@@ -339,7 +339,6 @@ export default function Home() {
                 delay={0.3}
                 linkTo="structural-integrity"
               />
-              <p className="hidden">For yachts, commercial vessels, and European fleet operators.</p>
               <FeatureCard 
                 number="04" 
                 title="Sustainable Tech" 
@@ -365,7 +364,6 @@ export default function Home() {
                 delay={0.5}
                 linkTo="regulatory-compliance"
               />
-              <p className="hidden">IMO standards for Montenegro and Adriatic Coast operators.</p>
               <FeatureCard 
                 number="06" 
                 title="Project Management" 
@@ -373,7 +371,7 @@ export default function Home() {
                   "Owner's Rep & Refit Supervision",
                   "Dry-Docking Specification & Management",
                   "On-site Technical Troubleshooting",
-                  "Yacht Survey & Inspection"   // Bu satırı ekleyin
+                  "Yacht Survey & Inspection"
                 ]}
                 delay={0.6}
                 linkTo="project-management"
