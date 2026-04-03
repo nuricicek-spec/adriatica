@@ -1,8 +1,7 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { SectionHeading } from "@/components/SectionHeading";
-import { Helmet } from "react-helmet-async";
 import { SEO } from "@/components/SEO";
 import { Link } from "wouter";
 import { insights } from "@/data/insights";
@@ -15,18 +14,15 @@ export default function InsightsPage() {
   const [category, setCategory] = useState("All");
   const [sortBy, setSortBy] = useState<SortOption>("newest");
 
-  // Kategori listesini veriden çıkar
+  // "i" → "insight" olarak yeniden adlandırıldı (belirsiz parametre adı)
   const categories = useMemo(() => {
-    const cats = new Set(insights.map(i => i.category));
+    const cats = new Set(insights.map(insight => insight.category));
     return ["All", ...Array.from(cats).sort()];
   }, []);
 
-  // Filtreleme + sıralama
   const filteredAndSorted = useMemo(() => {
-    let filtered = insights.filter(insight => {
-      // Kategori filtresi
+    const filtered = insights.filter(insight => {
       if (category !== "All" && insight.category !== category) return false;
-      // Arama filtresi
       if (searchTerm.trim() !== "") {
         const term = searchTerm.toLowerCase();
         return (
@@ -37,7 +33,6 @@ export default function InsightsPage() {
       return true;
     });
 
-    // Sıralama
     if (sortBy === "newest") {
       filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     } else if (sortBy === "oldest") {
@@ -49,7 +44,12 @@ export default function InsightsPage() {
     return filtered;
   }, [searchTerm, category, sortBy]);
 
-  const clearSearch = () => setSearchTerm("");
+  const clearSearch = useCallback(() => setSearchTerm(""), []);
+
+  const clearFilters = useCallback(() => {
+    setSearchTerm("");
+    setCategory("All");
+  }, []);
 
   return (
     <>
@@ -58,9 +58,6 @@ export default function InsightsPage() {
         description="Technical articles, case studies, and regulatory updates from Adriatica D.O.O. Marine Engineering Consultancy."
         canonical="https://www.adriaticadoo.me/insights"
       />
-      <Helmet>
-        {/* Ekstra meta etiketleri istenirse eklenebilir */}
-      </Helmet>
 
       <div className="min-h-screen bg-background font-body">
         <Navigation />
@@ -71,9 +68,8 @@ export default function InsightsPage() {
             subtitle="Technical articles and updates from Adriatica D.O.O."
           />
 
-          {/* Filtre ve arama bölümü */}
+          {/* Filtre ve arama */}
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-between items-center">
-            {/* Arama kutusu */}
             <div className="relative w-full sm:w-80">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <input
@@ -86,6 +82,7 @@ export default function InsightsPage() {
               {searchTerm && (
                 <button
                   onClick={clearSearch}
+                  aria-label="Clear search"
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary"
                 >
                   <X className="w-4 h-4" />
@@ -94,7 +91,6 @@ export default function InsightsPage() {
             </div>
 
             <div className="flex gap-3 w-full sm:w-auto">
-              {/* Kategori filtresi */}
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
@@ -105,7 +101,6 @@ export default function InsightsPage() {
                 ))}
               </select>
 
-              {/* Sıralama seçeneği */}
               <div className="relative">
                 <select
                   value={sortBy}
@@ -122,39 +117,38 @@ export default function InsightsPage() {
           </div>
 
           {/* Sonuç sayısı */}
-          <p className="text-sm text-muted-foreground mt-4">
-            {filteredAndSorted.length} article{filteredAndSorted.length !== 1 ? 's' : ''} found
+          <p className="text-sm text-muted-foreground mt-4" aria-live="polite">
+            {filteredAndSorted.length} article{filteredAndSorted.length !== 1 ? "s" : ""} found
           </p>
 
-          {/* Grid */}
+          {/* Grid — Wouter'da <Link> zaten <a> render eder, iç <a> kaldırıldı */}
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
             {filteredAndSorted.map(insight => (
-              <Link key={insight.slug} href={`/insights/${insight.slug}`}>
-                <a className="block group p-6 bg-white border border-border/40 rounded-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                  <div className="text-sm text-primary font-medium mb-2">{insight.category}</div>
-                  <h2 className="text-xl font-display font-bold mb-2 group-hover:text-primary transition-colors">
-                    {insight.title}
-                  </h2>
-                  <p className="text-muted-foreground text-sm mb-3">{insight.description}</p>
-                  <div className="flex items-center text-xs text-muted-foreground">
-                    <span>{new Date(insight.date).toLocaleDateString('en-GB')}</span>
-                    <span className="mx-2">•</span>
-                    <span>{insight.readTime} min read</span>
-                  </div>
-                </a>
+              <Link
+                key={insight.slug}
+                href={`/insights/${insight.slug}`}
+                className="block group p-6 bg-white border border-border/40 rounded-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="text-sm text-primary font-medium mb-2">{insight.category}</div>
+                <h2 className="text-xl font-display font-bold mb-2 group-hover:text-primary transition-colors">
+                  {insight.title}
+                </h2>
+                <p className="text-muted-foreground text-sm mb-3">{insight.description}</p>
+                <div className="flex items-center text-xs text-muted-foreground">
+                  <span>{new Date(insight.date).toLocaleDateString("en-GB")}</span>
+                  <span className="mx-2">•</span>
+                  <span>{insight.readTime} min read</span>
+                </div>
               </Link>
             ))}
           </div>
 
-          {/* Sonuç yoksa mesaj */}
+          {/* Sonuç yok */}
           {filteredAndSorted.length === 0 && (
             <div className="text-center py-12">
               <p className="text-muted-foreground">No articles match your criteria.</p>
               <button
-                onClick={() => {
-                  setSearchTerm("");
-                  setCategory("All");
-                }}
+                onClick={clearFilters}
                 className="mt-2 text-primary hover:underline"
               >
                 Clear filters
@@ -162,15 +156,17 @@ export default function InsightsPage() {
             </div>
           )}
 
-          {/* CTA Bölümü */}
+          {/* CTA */}
           <div className="mt-16 p-6 bg-neutral-50 border border-border/10 text-center rounded-sm">
             <p className="text-lg text-muted-foreground mb-4">
               Have a specific technical challenge? We're ready to solve it.
             </p>
-            <Link href="/#begin-voyage">
-              <a className="inline-block px-6 py-3 bg-[#0B3B5C] text-white font-medium rounded-sm hover:bg-[#1A4B7A] transition-colors">
-                Request Technical Consultation
-              </a>
+            {/* Wouter <Link> — iç <a> kaldırıldı */}
+            <Link
+              href="/#begin-voyage"
+              className="inline-block px-6 py-3 bg-[#0B3B5C] text-white font-medium rounded-sm hover:bg-[#1A4B7A] transition-colors"
+            >
+              Request Technical Consultation
             </Link>
           </div>
         </main>

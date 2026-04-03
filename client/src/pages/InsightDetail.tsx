@@ -1,5 +1,5 @@
 import { useRoute } from "wouter";
-import { insights } from '@/data/insights/index';
+import { insights } from "@/data/insights/index";
 import { recommendedSlugs } from "@/data/recommended";
 import { Helmet } from "react-helmet-async";
 import { Share2, Download, Star } from "lucide-react";
@@ -12,7 +12,9 @@ import { RelatedContent } from "@/components/RelatedContent";
 export default function InsightDetail() {
   const [, params] = useRoute("/insights/:slug");
   const slug = params?.slug;
-  const insight = insights.find(i => i.slug === slug);
+
+  // "i" → "item" olarak yeniden adlandırıldı (belirsiz parametre adı)
+  const insight = insights.find(item => item.slug === slug);
 
   const [rating, setRating] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
@@ -20,32 +22,35 @@ export default function InsightDetail() {
   useEffect(() => {
     if (slug) {
       const hasVoted = localStorage.getItem(`rated_${slug}`);
-      if (hasVoted === 'true') setSubmitted(true);
+      if (hasVoted === "true") setSubmitted(true);
     }
   }, [slug]);
 
+  // "slug" → "recSlug" olarak yeniden adlandırıldı (outer slug'ı gölgeliyordu)
   const popular = recommendedSlugs
-    .map(slug => insights.find(i => i.slug === slug))
-    .filter((i): i is typeof insights[0] => i !== undefined && i.slug !== insight?.slug)
+    .map(recSlug => insights.find(item => item.slug === recSlug))
+    .filter((item): item is typeof insights[number] => item !== undefined && item.slug !== insight?.slug)
     .slice(0, 5);
 
   const shareOnLinkedIn = () => {
     const url = encodeURIComponent(window.location.href);
-    window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${encodeURIComponent(insight?.title || '')}`, '_blank');
+    window.open(
+      `https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${encodeURIComponent(insight?.title ?? "")}`,
+      "_blank"
+    );
   };
 
   const handleRating = (value: number) => {
     if (submitted) return;
     setRating(value);
     setSubmitted(true);
-    if (slug) localStorage.setItem(`rated_${slug}`, 'true');
-    if (typeof window.gtag !== 'undefined') {
-      window.gtag('event', 'article_rating', {
-        event_category: 'engagement',
-        event_label: insight?.slug,
-        value: value,
-      });
-    }
+    if (slug) localStorage.setItem(`rated_${slug}`, "true");
+    // optional chaining ile güvenli çağrı — typeof kontrolüne gerek yok
+    window.gtag?.("event", "article_rating", {
+      event_category: "engagement",
+      event_label: insight?.slug,
+      value,
+    });
   };
 
   if (!insight) {
@@ -53,8 +58,10 @@ export default function InsightDetail() {
       <div className="min-h-screen bg-background">
         <Navigation />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-12 text-center">
-          <h1 className="text-2xl font-bold">Article not found</h1>
-          <Link href="/insights" className="text-primary underline">← All insights</Link>
+          <h1 className="text-2xl font-bold mb-4">Article not found</h1>
+          <Link href="/insights" className="text-primary underline">
+            ← All insights
+          </Link>
         </div>
         <Footer />
       </div>
@@ -78,8 +85,8 @@ export default function InsightDetail() {
             "datePublished": insight.date,
             "author": {
               "@type": "Organization",
-              "name": "Adriatica D.O.O."
-            }
+              "name": "Adriatica D.O.O.",
+            },
           })}
         </script>
       </Helmet>
@@ -89,12 +96,17 @@ export default function InsightDetail() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-12 md:pt-40">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
             <article className="lg:col-span-2">
               <div className="mb-4">
-                <Link href="/insights" className="text-sm text-primary hover:underline inline-flex items-center gap-1">
+                <Link
+                  href="/insights"
+                  className="text-sm text-primary hover:underline inline-flex items-center gap-1"
+                >
                   ← Back to all insights
                 </Link>
               </div>
+
               <div className="text-sm text-primary font-medium mb-2">{insight.category}</div>
               <h1 className="text-4xl font-display font-bold mb-4">{insight.title}</h1>
               <div className="flex items-center gap-4 text-muted-foreground text-sm mb-8">
@@ -109,13 +121,17 @@ export default function InsightDetail() {
                 >
                   <Share2 className="w-4 h-4" /> Share on LinkedIn
                 </button>
-                <a
-                  href={insight.pdfUrl}
-                  download
-                  className="flex items-center gap-2 px-4 py-2 border rounded hover:bg-gray-50 transition"
-                >
-                  <Download className="w-4 h-4" /> Download PDF
-                </a>
+
+                {/* pdfUrl opsiyonel olabilir — guard eklendi */}
+                {insight.pdfUrl && (
+                  <a
+                    href={insight.pdfUrl}
+                    download
+                    className="flex items-center gap-2 px-4 py-2 border rounded hover:bg-gray-50 transition"
+                  >
+                    <Download className="w-4 h-4" /> Download PDF
+                  </a>
+                )}
               </div>
 
               <div
@@ -131,6 +147,7 @@ export default function InsightDetail() {
             </article>
 
             <aside className="space-y-8">
+              {/* Rating */}
               <div className="p-6 bg-neutral-50 rounded">
                 <h3 className="font-display text-lg font-bold mb-4">Was this article useful?</h3>
                 {!submitted ? (
@@ -139,7 +156,10 @@ export default function InsightDetail() {
                       <button
                         key={value}
                         onClick={() => handleRating(value)}
-                        className={`p-1 focus:outline-none ${rating === value ? 'text-yellow-500' : 'text-gray-300 hover:text-yellow-400'}`}
+                        aria-label={`Rate ${value} out of 5`}
+                        className={`p-1 focus:outline-none ${
+                          rating === value ? "text-yellow-500" : "text-gray-300 hover:text-yellow-400"
+                        }`}
                       >
                         <Star className="w-6 h-6 fill-current" />
                       </button>
@@ -150,6 +170,7 @@ export default function InsightDetail() {
                 )}
               </div>
 
+              {/* Popular insights — <Link><a> anti-pattern kaldırıldı */}
               {popular.length > 0 && (
                 <div className="p-6 bg-white border border-border/40 rounded max-h-96 overflow-y-auto">
                   <h3 className="font-display text-lg font-bold mb-4 sticky top-0 bg-white pb-2">
@@ -158,11 +179,12 @@ export default function InsightDetail() {
                   <ul className="space-y-4">
                     {popular.map(pop => (
                       <li key={pop.slug}>
-                        <Link href={`/insights/${pop.slug}`}>
-                          <a className="block hover:text-primary hover:underline transition">
-                            <h4 className="font-semibold text-base">{pop.title}</h4>
-                            <p className="text-sm text-muted-foreground line-clamp-2">{pop.description}</p>
-                          </a>
+                        <Link
+                          href={`/insights/${pop.slug}`}
+                          className="block hover:text-primary hover:underline transition"
+                        >
+                          <h4 className="font-semibold text-base">{pop.title}</h4>
+                          <p className="text-sm text-muted-foreground line-clamp-2">{pop.description}</p>
                         </Link>
                       </li>
                     ))}
@@ -170,17 +192,20 @@ export default function InsightDetail() {
                 </div>
               )}
 
+              {/* CTA — <Link><a> anti-pattern kaldırıldı */}
               <div className="p-6 bg-primary/5 border border-primary/20 rounded text-center">
                 <p className="text-muted-foreground mb-4 text-sm">
                   Have a specific technical challenge?
                 </p>
-                <Link href="/#begin-voyage">
-                  <a className="inline-block w-full px-4 py-2 bg-primary text-white font-medium rounded-sm hover:bg-primary/90 transition-colors">
-                    Get Support
-                  </a>
+                <Link
+                  href="/#begin-voyage"
+                  className="inline-block w-full px-4 py-2 bg-primary text-white font-medium rounded-sm hover:bg-primary/90 transition-colors"
+                >
+                  Get Support
                 </Link>
               </div>
             </aside>
+
           </div>
         </div>
 
