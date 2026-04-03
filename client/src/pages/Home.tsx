@@ -36,8 +36,8 @@ export default function Home() {
       } else {
         setFormStatus("error");
       }
-    } catch {
-      // fetch ağ hatası — kullanıcıya hata mesajı gösterilir
+    } catch (error) {
+      console.error("Form submission error:", error);
       setFormStatus("error");
     }
   };
