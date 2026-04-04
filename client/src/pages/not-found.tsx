@@ -2,8 +2,34 @@ import { Card, CardContent } from "@/components/ui/card";
 import { AlertCircle } from "lucide-react";
 import { Link } from "wouter";
 import { SEO } from "@/components/SEO";
+import { Helmet } from "react-helmet-async";
 
 export default function NotFound() {
+  const notFoundSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.adriaticadoo.me/404/#webpage",
+        "url": "https://www.adriaticadoo.me/404",
+        "name": "Page Not Found | Adriatica D.O.O.",
+        "description": "The page you are looking for does not exist. Return to Adriatica D.O.O. homepage.",
+        "isPartOf": { "@id": "https://www.adriaticadoo.me/#website" },
+        "about": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "inLanguage": "en"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.adriaticadoo.me/#website",
+        "url": "https://www.adriaticadoo.me/",
+        "name": "Adriatica D.O.O.",
+        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://www.adriaticadoo.me/#organization" }
+      }
+    ]
+  };
+
   return (
     <>
       <SEO
@@ -12,6 +38,12 @@ export default function NotFound() {
         canonical="https://www.adriaticadoo.me/404"
         noindex={true}
       />
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(notFoundSchema).replace(/</g, '\\u003c')}
+        </script>
+      </Helmet>
+
       <div className="min-h-screen w-full flex items-center justify-center bg-background p-4">
         <Card className="w-full max-w-md mx-auto border-border/50 shadow-xl bg-white/50 backdrop-blur-sm">
           <CardContent className="pt-6">

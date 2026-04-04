@@ -2,8 +2,36 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { motion } from "framer-motion";
 import { SEO } from "@/components/SEO";
+import { Helmet } from "react-helmet-async";
 
 export default function PrivacyPolicy() {
+  const privacyPolicySchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.adriaticadoo.me/privacy-policy/#webpage",
+        "url": "https://www.adriaticadoo.me/privacy-policy",
+        "name": "Privacy Policy | Adriatica D.O.O.",
+        "description": "Privacy policy of Adriatica D.O.O. – how we collect, use, and protect your personal information.",
+        "isPartOf": { "@id": "https://www.adriaticadoo.me/#website" },
+        "about": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "inLanguage": "en",
+        "datePublished": "2025-01-01",
+        "dateModified": "2025-03-15"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.adriaticadoo.me/#website",
+        "url": "https://www.adriaticadoo.me/",
+        "name": "Adriatica D.O.O.",
+        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://www.adriaticadoo.me/#organization" }
+      }
+    ]
+  };
+
   return (
     <>
       <SEO
@@ -12,6 +40,12 @@ export default function PrivacyPolicy() {
         canonical="https://www.adriaticadoo.me/privacy-policy"
         noindex={true}
       />
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(privacyPolicySchema).replace(/</g, '\\u003c')}
+        </script>
+      </Helmet>
+
       <div className="min-h-screen bg-background font-body">
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
@@ -31,7 +65,12 @@ export default function PrivacyPolicy() {
                 <p><strong>Adriatica D.O.O.</strong></p>
                 <p>Podgorica, Montenegro</p>
                 <p>Tax ID (PIB): 03612807</p>
-                <p>Email: info@adriaticadoo.me</p>
+                <p>
+                  Email:{" "}
+                  <a href="mailto:info@adriaticadoo.me" className="text-primary hover:underline transition-colors">
+                    info@adriaticadoo.me
+                  </a>
+                </p>
               </div>
             </div>
 
