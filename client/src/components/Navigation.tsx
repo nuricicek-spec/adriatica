@@ -65,11 +65,13 @@ export function Navigation() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
             <HashLink href="/" className="flex items-center space-x-3 group">
-              <img
-                src="/logo.svg"
-                alt="Logo"
-                className="h-10 w-auto transition-transform duration-500 group-hover:scale-105"
-              />
+<img
+  src="/logo.svg"
+  alt="Adriatica D.O.O. Logo"
+  className="h-10 w-auto transition-transform duration-500 group-hover:scale-105"
+  width="40"
+  height="40"
+/>
               <span className="font-display font-bold text-xl tracking-widest text-primary uppercase">
                 ADRIATICA D.O.O.
               </span>
