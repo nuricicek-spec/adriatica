@@ -201,7 +201,7 @@ export default function InsightDetail() {
                   href="/#begin-voyage"
                   className="inline-block w-full px-4 py-2 bg-primary text-white font-medium rounded-sm hover:bg-primary/90 transition-colors"
                 >
-                  Get Support
+                  Request Assessment
                 </Link>
               </div>
             </aside>
