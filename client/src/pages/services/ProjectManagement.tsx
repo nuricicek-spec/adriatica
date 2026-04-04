@@ -3,13 +3,91 @@ import { Footer } from "@/components/Footer";
 import { Helmet } from "react-helmet-async";
 import { SEO } from "@/components/SEO";
 import { HashLink } from "@/components/HashLink";
-import { useRoute } from "wouter";
 import { services } from "@/data/services";
 import { RelatedContent } from "@/components/RelatedContent";
 
 export default function ProjectManagement() {
-  const [match] = useRoute("/services/project-management");
   const service = services.find(s => s.slug === "project-management");
+
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.adriaticadoo.me/services/project-management/#webpage",
+        "url": "https://www.adriaticadoo.me/services/project-management",
+        "name": "Project Management & Owner’s Representation | Adriatica D.O.O.",
+        "description": "Full technical management of dry‑dockings, refits, and modifications. Acting as Owner’s Technical Representative to supervise yard works, ensure quality, and deliver on schedule.",
+        "isPartOf": { "@id": "https://www.adriaticadoo.me/#website" },
+        "about": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "inLanguage": "en",
+        "datePublished": "2025-01-01",
+        "dateModified": "2025-03-15"
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.adriaticadoo.me/services/project-management/#service",
+        "name": "Project Management & Owner’s Representation",
+        "description": "Full technical management of dry‑dockings, refits, and modifications. Acting as Owner’s Technical Representative to supervise yard works, ensure quality, and deliver on schedule.",
+        "url": "https://www.adriaticadoo.me/services/project-management",
+        "provider": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "areaServed": [
+          { "@type": "Place", "name": "Montenegro" },
+          { "@type": "Place", "name": "Adriatic Sea" },
+          { "@type": "Place", "name": "Mediterranean Sea" },
+          { "@type": "Place", "name": "Europe" }
+        ],
+        "serviceType": "Project Management & Owner’s Representation",
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Project Management Deliverables",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Owner's Rep & Refit Supervision",
+                "description": "On‑site technical representation, daily progress meetings, and quality control during refits."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Dry‑Docking Specification & Management",
+                "description": "Detailed specifications, tender management, and critical path oversight to minimise off‑hire time."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "On‑site Technical Troubleshooting",
+                "description": "Immediate engineering support for unexpected issues, including structural damage, machinery malfunctions, or installation problems."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Cost & Schedule Control",
+                "description": "Continuous monitoring of budget and timeline, deviation identification, and change order management."
+              }
+            }
+          ]
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.adriaticadoo.me/#website",
+        "url": "https://www.adriaticadoo.me/",
+        "name": "Adriatica D.O.O.",
+        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://www.adriaticadoo.me/#organization" }
+      }
+    ]
+  };
 
   return (
     <>
@@ -18,6 +96,12 @@ export default function ProjectManagement() {
         description="Full technical management of dry‑dockings, refits, and modifications. Acting as Owner’s Technical Representative to supervise yard works, ensure quality, and deliver on schedule."
         canonical="https://www.adriaticadoo.me/services/project-management"
       />
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(serviceSchema).replace(/</g, '\\u003c')}
+        </script>
+      </Helmet>
+
       <div className="min-h-screen bg-background font-body">
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
@@ -32,11 +116,11 @@ export default function ProjectManagement() {
 
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Deliverables</h2>
             <ul className="list-disc pl-6 space-y-2">
-              <li>Owner's Rep & Refit Supervision</li>
-              <li>Dry‑Docking Specification & Management</li>
+              <li>Owner's Rep &amp; Refit Supervision</li>
+              <li>Dry‑Docking Specification &amp; Management</li>
               <li>On‑site Technical Troubleshooting</li>
-              <li>Cost & Schedule Control</li>
-              <li>Yacht Survey & Inspection</li>
+              <li>Cost &amp; Schedule Control</li>
+              <li>Yacht Survey &amp; Inspection</li>
             </ul>
 
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Outcome</h2>
@@ -45,20 +129,20 @@ export default function ProjectManagement() {
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">References</h2>
             <p>Industry best practices, IACS UR Z10</p>
 
-            {/* SVG Şeması – 4 aşamalı proje akışı */}
             <div className="flex justify-center my-6">
               <img
                 src="/images/services/project-management-schema.svg"
                 alt="Project management 4-phase process: brief, planning, execution, documentation"
                 className="w-full max-w-2xl mx-auto"
                 loading="lazy"
+                width={672}
+                height={400}
               />
             </div>
 
-            {/* Detailed sections – enhanced depth */}
             <div className="mt-8 space-y-6">
               <div className="border-l-2 border-primary/20 pl-6">
-                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Owner's Rep & Refit Supervision</h3>
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Owner's Rep &amp; Refit Supervision</h3>
                 <p className="text-muted-foreground">
                   We act as your dedicated technical representative, present on‑site to oversee all phases of the refit. Our role includes attending daily progress meetings, reviewing contractor work, and ensuring that specifications are met. We document all activities, flag deviations, and provide you with daily or weekly reports. Our presence ensures your interests are protected throughout the project.
                 </p>
@@ -68,7 +152,7 @@ export default function ProjectManagement() {
               </div>
 
               <div className="border-l-2 border-primary/20 pl-6">
-                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Dry‑Docking Specification & Management</h3>
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Dry‑Docking Specification &amp; Management</h3>
                 <p className="text-muted-foreground">
                   We prepare detailed dry‑docking specifications that clearly define the scope of work, acceptance criteria, and responsibilities. We then coordinate with shipyards, manage the tender process, and assist in contract negotiations. During the docking, we oversee the work, verify block arrangements, and manage the critical path to minimise your vessel’s off‑hire time.
                 </p>
@@ -88,7 +172,7 @@ export default function ProjectManagement() {
               </div>
 
               <div className="border-l-2 border-primary/20 pl-6">
-                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Cost & Schedule Control</h3>
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Cost &amp; Schedule Control</h3>
                 <p className="text-muted-foreground">
                   We monitor project costs and schedules against the baseline plan, identifying deviations early and implementing corrective actions. Our detailed reporting gives you full visibility into budget performance and timeline status, allowing informed decisions throughout the project. We also manage change orders and ensure that any additional work is properly justified and documented.
                 </p>
@@ -98,10 +182,9 @@ export default function ProjectManagement() {
               </div>
             </div>
 
-            {/* Yacht Survey Services – yeni blok (Cost & Schedule Control altına eklendi) */}
             <div className="mt-12 p-8 bg-neutral-50 border-l-4 border-primary rounded-sm">
               <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-3">
-                Yacht Survey & Inspection
+                Yacht Survey &amp; Inspection
               </h3>
               <p className="text-muted-foreground mb-4">
                 In addition to project management, we offer independent technical surveys for yachts: pre-purchase, damage assessment, insurance valuation, charter inspection, and off-hire surveys. All reports are IACS‑aligned and accepted by class societies and insurers.

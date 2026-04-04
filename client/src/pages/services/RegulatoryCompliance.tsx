@@ -3,13 +3,99 @@ import { Footer } from "@/components/Footer";
 import { Helmet } from "react-helmet-async";
 import { SEO } from "@/components/SEO";
 import { HashLink } from "@/components/HashLink";
-import { useRoute } from "wouter";
 import { services } from "@/data/services";
 import { RelatedContent } from "@/components/RelatedContent";
 
 export default function RegulatoryCompliance() {
-  const [match] = useRoute("/services/regulatory-compliance");
   const service = services.find(s => s.slug === "regulatory-compliance");
+
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.adriaticadoo.me/services/regulatory-compliance/#webpage",
+        "url": "https://www.adriaticadoo.me/services/regulatory-compliance",
+        "name": "Regulatory Compliance | Adriatica D.O.O.",
+        "description": "Preparation and updating of mandatory shipboard plans and manuals: BWMP, SoPEP, SEEMP, Garbage Management Plan, Emergency Response Manuals – tailored to your vessel’s configuration.",
+        "isPartOf": { "@id": "https://www.adriaticadoo.me/#website" },
+        "about": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "inLanguage": "en",
+        "datePublished": "2025-01-01",
+        "dateModified": "2025-03-15"
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.adriaticadoo.me/services/regulatory-compliance/#service",
+        "name": "Regulatory Compliance",
+        "description": "Preparation and updating of mandatory shipboard plans and manuals: BWMP, SoPEP, SEEMP, Garbage Management Plan, Emergency Response Manuals – tailored to your vessel’s configuration.",
+        "url": "https://www.adriaticadoo.me/services/regulatory-compliance",
+        "provider": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "areaServed": [
+          { "@type": "Place", "name": "Montenegro" },
+          { "@type": "Place", "name": "Adriatic Sea" },
+          { "@type": "Place", "name": "Mediterranean Sea" },
+          { "@type": "Place", "name": "Europe" }
+        ],
+        "serviceType": "Regulatory Compliance",
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Regulatory Compliance Deliverables",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Ballast Water Management Plan (BWMP)",
+                "description": "Plan describing ballast water management system, operational procedures, and record-keeping per Ballast Water Management Convention."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Shipboard Oil Pollution Emergency Plan (SoPEP)",
+                "description": "IMO‑compliant plan outlining actions in the event of an oil spill, with contact lists and response strategies."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Ship Energy Efficiency Management Plan (SEEMP)",
+                "description": "Structured plan to improve energy efficiency, supporting IMO DCS and EU MRV requirements."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Garbage Management Plan",
+                "description": "Procedures for garbage handling, segregation, storage, and disposal in accordance with MARPOL Annex V."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Emergency Response Manuals",
+                "description": "Customised manuals covering fire, flooding, man overboard, and cargo spills with checklists and communication protocols."
+              }
+            }
+          ]
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.adriaticadoo.me/#website",
+        "url": "https://www.adriaticadoo.me/",
+        "name": "Adriatica D.O.O.",
+        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://www.adriaticadoo.me/#organization" }
+      }
+    ]
+  };
 
   return (
     <>
@@ -18,6 +104,12 @@ export default function RegulatoryCompliance() {
         description="Preparation and updating of mandatory shipboard plans and manuals: BWMP, SoPEP, SEEMP, Garbage Management Plan, Emergency Response Manuals – tailored to your vessel’s configuration."
         canonical="https://www.adriaticadoo.me/services/regulatory-compliance"
       />
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(serviceSchema).replace(/</g, '\\u003c')}
+        </script>
+      </Helmet>
+
       <div className="min-h-screen bg-background font-body">
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
@@ -45,17 +137,17 @@ export default function RegulatoryCompliance() {
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">References</h2>
             <p>IMO, MARPOL, flag state administrations</p>
 
-            {/* SVG Şeması – Düzenleyici matris */}
             <div className="flex justify-center my-6">
               <img
                 src="/images/services/regulatory-compliance-schema.svg"
                 alt="Regulatory compliance matrix – IMO, MARPOL, EU MRV, Paris MoU, HELCOM, Flag State, IACS"
                 className="w-full max-w-2xl mx-auto"
                 loading="lazy"
+                width={672}
+                height={400}
               />
             </div>
 
-            {/* Detailed sections – enhanced depth */}
             <div className="mt-8 space-y-6">
               <div className="border-l-2 border-primary/20 pl-6">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Ballast Water Management Plan (BWMP)</h3>

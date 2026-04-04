@@ -3,13 +3,91 @@ import { Footer } from "@/components/Footer";
 import { Helmet } from "react-helmet-async";
 import { SEO } from "@/components/SEO";
 import { HashLink } from "@/components/HashLink";
-import { useRoute } from "wouter";
 import { services } from "@/data/services";
 import { RelatedContent } from "@/components/RelatedContent";
 
 export default function SustainableTech() {
-  const [match] = useRoute("/services/sustainable-technologies");
   const service = services.find(s => s.slug === "sustainable-technologies");
+
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.adriaticadoo.me/services/sustainable-technologies/#webpage",
+        "url": "https://www.adriaticadoo.me/services/sustainable-technologies",
+        "name": "Sustainable Technologies & Compliance | Adriatica D.O.O.",
+        "description": "Biofouling management plans (IMO MEPC.378(80)), eco‑friendly coating advisory, energy audits, MRV monitoring plans – helping vessels meet environmental regulations.",
+        "isPartOf": { "@id": "https://www.adriaticadoo.me/#website" },
+        "about": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "inLanguage": "en",
+        "datePublished": "2025-01-01",
+        "dateModified": "2025-03-15"
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.adriaticadoo.me/services/sustainable-technologies/#service",
+        "name": "Sustainable Technologies & Compliance",
+        "description": "Biofouling management plans (IMO MEPC.378(80)), eco‑friendly coating advisory, energy audits, MRV monitoring plans – helping vessels meet environmental regulations.",
+        "url": "https://www.adriaticadoo.me/services/sustainable-technologies",
+        "provider": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "areaServed": [
+          { "@type": "Place", "name": "Montenegro" },
+          { "@type": "Place", "name": "Adriatic Sea" },
+          { "@type": "Place", "name": "Mediterranean Sea" },
+          { "@type": "Place", "name": "Europe" }
+        ],
+        "serviceType": "Sustainable Technologies & Compliance",
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Sustainable Technologies Deliverables",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Biofouling Management Plan (IMO MEPC.378(80))",
+                "description": "Vessel‑specific biofouling assessment, cleaning execution plan, certified diver coordination, compliance verification, and Biofouling Record Book support."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Eco‑friendly Coating Advisory",
+                "description": "Selection of anti‑fouling coatings based on operational profile, trading area, and environmental regulations."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Energy Audit & Efficiency Surveys",
+                "description": "Comprehensive assessment of energy consumption, identification of inefficiencies, and cost‑benefit analysis of retrofits."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "MRV Monitoring Plan (EU MRV Regulation)",
+                "description": "Plan for Monitoring, Reporting, and Verification in full compliance with EU Regulation 2015/757."
+              }
+            }
+          ]
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.adriaticadoo.me/#website",
+        "url": "https://www.adriaticadoo.me/",
+        "name": "Adriatica D.O.O.",
+        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://www.adriaticadoo.me/#organization" }
+      }
+    ]
+  };
 
   return (
     <>
@@ -18,11 +96,17 @@ export default function SustainableTech() {
         description="Biofouling management plans (IMO MEPC.378(80)), eco‑friendly coating advisory, energy audits, MRV monitoring plans – helping vessels meet environmental regulations."
         canonical="https://www.adriaticadoo.me/services/sustainable-technologies"
       />
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(serviceSchema).replace(/</g, '\\u003c')}
+        </script>
+      </Helmet>
+
       <div className="min-h-screen bg-background font-body">
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
           <h1 className="font-display text-4xl md:text-5xl font-bold text-[#0B3B5C] mb-6">
-            Sustainable Technologies & Compliance
+            Sustainable Technologies &amp; Compliance
           </h1>
 
           <div className="prose prose-lg max-w-none text-muted-foreground">
@@ -34,7 +118,7 @@ export default function SustainableTech() {
             <ul className="list-disc pl-6 space-y-2">
               <li>Biofouling Management Plan (IMO MEPC.378(80))</li>
               <li>Eco‑friendly Coating Advisory</li>
-              <li>Energy Audit & Efficiency Surveys</li>
+              <li>Energy Audit &amp; Efficiency Surveys</li>
               <li>MRV Monitoring Plan (EU MRV Regulation)</li>
             </ul>
 
@@ -44,17 +128,17 @@ export default function SustainableTech() {
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">References</h2>
             <p>IMO, EU MRV, Paris MoU</p>
 
-            {/* SVG Şeması – Biofouling yönetim döngüsü */}
             <div className="flex justify-center my-6">
               <img
                 src="/images/services/sustainable-tech-schema.svg"
                 alt="Biofouling management cycle – risk assessment, cleaning execution, documentation, PSC ready"
                 className="w-full max-w-2xl mx-auto"
                 loading="lazy"
+                width={672}
+                height={400}
               />
             </div>
 
-            {/* Detailed sections for each deliverable */}
             <div className="mt-8 space-y-6">
               {/* Biofouling Management – detailed block */}
               <div className="bg-neutral-50 border-l-2 border-primary/20 p-6 rounded-sm">
@@ -76,7 +160,7 @@ export default function SustainableTech() {
                 <ul className="list-disc pl-5 text-muted-foreground space-y-2">
                   <li>Vessel‑specific biofouling assessment (coating condition, niche areas)</li>
                   <li>Cleaning execution plan with method selection (non‑abrasive, vacuum‑supported)</li>
-                  <li>Certified diver coordination & operation management</li>
+                  <li>Certified diver coordination &amp; operation management</li>
                   <li>Environmental compliance verification (debris containment, local regulations)</li>
                   <li>Before/after photographic evidence and inspection records</li>
                   <li>Biofouling Record Book (BFRB) entry support</li>
@@ -106,7 +190,7 @@ export default function SustainableTech() {
 
               {/* Energy Audit & Efficiency Surveys */}
               <div className="bg-neutral-50 border-l-2 border-primary/20 p-6 rounded-sm">
-                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Energy Audit & Efficiency Surveys</h3>
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Energy Audit &amp; Efficiency Surveys</h3>
                 <p className="text-muted-foreground mb-2">
                   Our energy audits provide a comprehensive assessment of your vessel’s energy consumption and identify opportunities for improvement. The service includes:
                 </p>
