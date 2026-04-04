@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 interface SEOProps {
   title?: string;
   description?: string;
-  canonical?: string;
+  canonical: string; // artık zorunlu — her sayfada explicit geçilmeli
   ogImage?: string;
   ogImageAlt?: string;
   ogType?: 'website' | 'article';
@@ -18,32 +18,29 @@ const defaultOgImage = "/og-image-default.png";
 const defaultOgImageAlt = "Adriatica D.O.O. - Marine Engineering & Consultancy";
 const siteUrl = "https://www.adriaticadoo.me";
 
-// Normalize URL: remove trailing slash if present (except root)
 function normalizeUrl(url: string): string {
   if (url === siteUrl || url === siteUrl + '/') return siteUrl;
   return url.replace(/\/$/, '');
 }
 
-export function SEO({ 
-  title, 
-  description, 
-  canonical, 
+export function SEO({
+  title,
+  description,
+  canonical,
   ogImage,
   ogImageAlt,
   ogType = 'website',
   publishedTime,
   modifiedTime,
-  noindex = false 
+  noindex = false
 }: SEOProps) {
   const pageTitle = title ? `${title} | Adriatica D.O.O.` : defaultTitle;
   const metaDescription = description || defaultDescription;
-  const metaOgImage = ogImage || defaultOgImage;
+  const metaOgImage = ogImage
+    ? (ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`)
+    : `${siteUrl}${defaultOgImage}`;
   const metaOgImageAlt = ogImageAlt || defaultOgImageAlt;
-
-  const currentUrl = typeof window !== 'undefined' 
-    ? window.location.origin + window.location.pathname 
-    : siteUrl;
-  const canonicalUrl = normalizeUrl(canonical || currentUrl);
+  const canonicalUrl = normalizeUrl(canonical);
 
   return (
     <Helmet>
@@ -51,6 +48,9 @@ export function SEO({
       <meta name="description" content={metaDescription} />
       <link rel="canonical" href={canonicalUrl} />
       <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
+      <meta name="author" content="Adriatica D.O.O." />
+      <meta name="theme-color" content="#0B3B5C" />
+      <meta name="format-detection" content="telephone=no" />
 
       {/* Open Graph */}
       <meta property="og:type" content={ogType} />
@@ -71,16 +71,16 @@ export function SEO({
       <meta name="twitter:image" content={metaOgImage} />
       <meta name="twitter:image:alt" content={metaOgImageAlt} />
 
-      {/* Article specific (if ogType is 'article') */}
+      {/* Article specific */}
       {ogType === 'article' && publishedTime && (
         <>
           <meta property="article:published_time" content={publishedTime} />
-          {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+          {modifiedTime && (
+            <meta property="article:modified_time" content={modifiedTime} />
+          )}
           <meta property="article:author" content="Adriatica D.O.O." />
         </>
       )}
-
-      <meta name="author" content="Adriatica D.O.O." />
     </Helmet>
   );
 }

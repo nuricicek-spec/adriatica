@@ -197,65 +197,150 @@ export default function Home() {
       />
 
       <Helmet>
-        {/* Cinzel font — @import yerine link tag: render-blocking engellenir */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap"
-        />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap"
+  />
 
-        {/* Schema.org — LocalBusiness + ProfessionalService */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": ["LocalBusiness", "ProfessionalService"],
-            "@id": "https://www.adriaticadoo.me/#organization",
-            "name": "Adriatica D.O.O.",
-            "url": "https://www.adriaticadoo.me/",
-            "logo": "https://www.adriaticadoo.me/logo.svg",
-            "image": "https://www.adriaticadoo.me/og-image-default.png",
-            "description": "Marine engineering consultancy specializing in structural integrity, regulatory compliance, and sustainable technologies.",
-            "taxID": "03612807",
-            "telephone": "+382 68 591 757",
-            "email": "info@adriaticadoo.me",
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": "Budva",
-              "addressCountry": "ME",
-            },
-            // geo koordinatları number tipinde — string değil
-            "geo": {
-              "@type": "GeoCoordinates",
-              "latitude": 42.2864,
-              "longitude": 18.8400,
-            },
-            "hasMap": "https://www.google.com/maps/place/Budva,+Montenegro/",
-            "openingHoursSpecification": [{
-              "@type": "OpeningHoursSpecification",
-              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-              "opens": "09:00",
-              "closes": "18:00",
-            }],
-            "sameAs": [
-              "https://www.linkedin.com/company/adriatica-d-o-o",
-            ],
-            "areaServed": ["Montenegro", "Adriatic Coast", "Europe"],
-            "serviceType": [
-              "Marine Engineering",
-              "Engineering Plans",
-              "Engineering Documentation",
-              "Structural Integrity",
-              "Sustainable Tech",
-              "Regulatory Compliance",
-              "Project Management",
-              "Yacht Survey & Inspection",
-              "MRV Reporting",
-              "Biofouling Management",
-            ],
-          })}
-        </script>
-      </Helmet>
+  <script type="application/ld+json">
+    {JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": ["LocalBusiness", "ProfessionalService"],
+      "@id": "https://www.adriaticadoo.me/#organization",
+      "name": "Adriatica D.O.O.",
+      "url": "https://www.adriaticadoo.me/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.adriaticadoo.me/logo.svg",
+        "width": 400,
+        "height": 400
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://www.adriaticadoo.me/og-image-default.png",
+        "width": 1200,
+        "height": 630
+      },
+      "description": "Marine engineering consultancy specialising in structural integrity, regulatory compliance, and sustainable technologies for yachts, commercial vessels, and fishing boats in the Adriatic and Mediterranean.",
+      "taxID": "03612807",
+      "telephone": "+382 68 591 757",
+      "email": "info@adriaticadoo.me",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Budva",
+        "addressRegion": "Budva Municipality",
+        "addressCountry": "ME"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 42.2864,
+        "longitude": 18.8400
+      },
+      "hasMap": "https://www.google.com/maps/place/Budva,+Montenegro/",
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+          ],
+          "opens": "09:00",
+          "closes": "18:00"
+        }
+      ],
+      "knowsLanguage": ["en", "hr", "sr", "tr", "ru"],
+      "currenciesAccepted": "EUR, USD, GBP",
+      "paymentAccepted": "Bank transfer, PayPal, Wise",
+      "priceSpecification": {
+        "@type": "PriceSpecification",
+        "priceCurrency": "EUR",
+        "valueAddedTaxIncluded": true,
+        "description": "Project-based pricing – contact for quote"
+      },
+      "areaServed": [
+        { "@type": "Place", "name": "Montenegro" },
+        { "@type": "Place", "name": "Adriatic Sea" },
+        { "@type": "Place", "name": "Mediterranean Sea" },
+        { "@type": "Place", "name": "Europe" }
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Marine Engineering Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Engineering Plans",
+              "description": "Structural drawings, as-built drawing sets, arrangement plans, fire and safety plans.",
+              "url": "https://www.adriaticadoo.me/services/engineering-plans"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Engineering Documentation",
+              "description": "As-built P&ID, system manuals, electrical load analysis, fuel management booklets, IHM.",
+              "url": "https://www.adriaticadoo.me/services/engineering-documentation"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Structural Integrity",
+              "description": "Structural integrity and life extension studies, hull condition analysis, modification consultancy.",
+              "url": "https://www.adriaticadoo.me/services/structural-integrity"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Sustainable Technologies",
+              "description": "Biofouling management plans, eco-friendly coating advisory, energy audits, MRV monitoring.",
+              "url": "https://www.adriaticadoo.me/services/sustainable-technologies"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Regulatory Compliance",
+              "description": "Ballast water management plans, SoPEP, SEEMP, garbage management plans, emergency response manuals.",
+              "url": "https://www.adriaticadoo.me/services/regulatory-compliance"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Project Management",
+              "description": "Owner's representative, refit supervision, dry-docking specification and management, yacht survey.",
+              "url": "https://www.adriaticadoo.me/services/project-management"
+            }
+          }
+        ]
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/adriatica-d-o-o"
+      ],
+      "foundingDate": "2025",
+      "numberOfEmployees": {
+        "@type": "QuantitativeValue",
+        "minValue": 1,
+        "maxValue": 10
+      }
+    }).replace(/</g, '\\u003c')}
+  </script>
+</Helmet>
 
       <div className="min-h-screen bg-background font-body selection:bg-primary/20">
         <Navigation />
