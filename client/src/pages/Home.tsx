@@ -567,6 +567,7 @@ export default function Home() {
                 ]}
                 delay={0.1}
                 linkTo="engineering-plans"
+                linkText="Learn more about Engineering Plans"
               />
               <FeatureCard
                 number="02"
@@ -579,6 +580,7 @@ export default function Home() {
                 ]}
                 delay={0.2}
                 linkTo="engineering-documentation"
+                linkText="Learn more about Engineering Documenation"
               />
               <FeatureCard
                 number="03"
@@ -591,6 +593,7 @@ export default function Home() {
                 ]}
                 delay={0.3}
                 linkTo="structural-integrity"
+                linkText="Learn more about Structural Integrity"
               />
               <FeatureCard
                 number="04"
@@ -603,6 +606,7 @@ export default function Home() {
                 ]}
                 delay={0.4}
                 linkTo="sustainable-technologies"
+                linkText="Learn more about Sustainable Technologies"
               />
               <FeatureCard
                 number="05"
@@ -616,6 +620,7 @@ export default function Home() {
                 ]}
                 delay={0.5}
                 linkTo="regulatory-compliance"
+                linkText="Learn more about Regulatory Compliance"
               />
               <FeatureCard
                 number="06"
@@ -628,6 +633,7 @@ export default function Home() {
                 ]}
                 delay={0.6}
                 linkTo="project-management"
+                linkText="Learn more about Project Management"
               />
             </div>
           </div>

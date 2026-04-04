@@ -8,6 +8,7 @@ interface FeatureCardProps {
   items?: string[];
   delay?: number;
   linkTo?: string;          // opsiyonel: servis detay sayfası slug'ı
+  linkText?: string;   // yeni
 }
 
 export function FeatureCard({ number, title, items, delay = 0, linkTo }: FeatureCardProps) {
