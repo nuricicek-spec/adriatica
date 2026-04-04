@@ -8,15 +8,21 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 border-b border-white/10 pb-16">
           <div className="md:col-span-4">
             <HashLink href="/" className="flex items-center space-x-3 mb-6">
-              <img src="/logo.svg" alt="Adriatica D.O.O. Logo" className="h-12 w-auto brightness-0 invert" />
+              <img 
+  src="/logo.svg" 
+  alt="Adriatica D.O.O. Logo" 
+  width="30" 
+  height="48" 
+  className="brightness-0 invert" 
+/>
               <span className="font-display font-bold text-2xl tracking-widest uppercase">
                 ADRIATICA D.O.O.
               </span>
             </HashLink>
-            <p className="text-white/80 leading-relaxed mb-4 max-w-sm">
+            <p className="text-white leading-relaxed mb-4 max-w-sm">
               Supporting yacht and commercial vessel operations across engineering, compliance, and technical project management.
             </p>
-            <div className="text-white/80 text-sm space-y-1 mb-6">
+            <div className="text-white text-sm space-y-1 mb-6">
               <p>📍 Serving the Montenegro Bay &amp; Adriatic Coast</p>
               <p>
                 <a href="mailto:info@adriaticadoo.me" className="hover:text-white transition-colors">
@@ -67,7 +73,7 @@ export function Footer() {
                 { name: 'Case Studies', href: '/case-studies' },
               ].map(item => (
                 <li key={item.name}>
-                  <HashLink href={item.href} className="text-white/80 hover:text-white transition-colors text-sm">
+                  <HashLink href={item.href} className="text-white hover:text-white transition-colors text-sm">
                     {item.name}
                   </HashLink>
                 </li>
@@ -85,7 +91,7 @@ export function Footer() {
                 { name: 'Contact', href: '/#begin-voyage' },
               ].map(item => (
                 <li key={item.name}>
-                  <HashLink href={item.href} className="text-white/80 hover:text-white transition-colors text-sm">
+                  <HashLink href={item.href} className="text-white hover:text-white transition-colors text-sm">
                     {item.name}
                   </HashLink>
                 </li>
@@ -102,7 +108,7 @@ export function Footer() {
                 { name: 'Cookie Policy', href: '/cookie-policy' },
               ].map(item => (
                 <li key={item.name}>
-                  <HashLink href={item.href} className="text-white/80 hover:text-white transition-colors text-sm">
+                  <HashLink href={item.href} className="text-white hover:text-white transition-colors text-sm">
                     {item.name}
                   </HashLink>
                 </li>
@@ -111,7 +117,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-white/80">
+        <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-white">
           <p>© 2026 ADRIATICA D.O.O. All rights reserved.</p>
 
           <div className="flex flex-wrap justify-center items-center gap-6">
