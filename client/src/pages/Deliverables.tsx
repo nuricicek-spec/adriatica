@@ -144,7 +144,7 @@ export default function Deliverables() {
               href="/#begin-voyage"
               className="inline-block bg-primary text-white px-6 py-3 rounded-sm font-medium hover:bg-primary/90 transition"
             >
-              Speak with Engineer
+              Request Custom Deliverable
             </HashLink>
           </div>
         </main>
@@ -198,8 +198,8 @@ export default function Deliverables() {
               <div className="flex-1 overflow-auto p-4">
                 <div className="bg-neutral-50 p-4 rounded-sm">
                   <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 mb-4 text-sm text-yellow-800">
-                    <p className="font-semibold">📄 This is a sample document.</p>
-                    <p>The full version is delivered upon project start or service purchase.</p>
+                    <p className="font-semibold">📄 Sample from a real project (redacted).</p>
+                    <p>Your version will be custom‑prepared for your vessel after service agreement.</p>
                   </div>
 
                   {previewItem.previewPdf ? (
