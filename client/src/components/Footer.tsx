@@ -9,12 +9,12 @@ export function Footer() {
           <div className="md:col-span-4">
             <HashLink href="/" className="flex items-center space-x-3 mb-6">
               <img 
-  src="/logo.svg" 
-  alt="Adriatica D.O.O. Logo" 
-  width="30" 
-  height="48" 
-  className="brightness-0 invert" 
-/>
+                src="/logo.svg" 
+                alt="Adriatica D.O.O. Logo" 
+                width="30" 
+                height="48" 
+                className="brightness-0 invert" 
+              />
               <span className="font-display font-bold text-2xl tracking-widest uppercase">
                 ADRIATICA D.O.O.
               </span>
@@ -73,7 +73,7 @@ export function Footer() {
                 { name: 'Case Studies', href: '/case-studies' },
               ].map(item => (
                 <li key={item.name}>
-                  <HashLink href={item.href} className="text-white hover:text-white transition-colors text-sm">
+                  <HashLink href={item.href} className="text-[#C8D6E5] hover:text-white transition-colors text-sm">
                     {item.name}
                   </HashLink>
                 </li>
@@ -91,7 +91,7 @@ export function Footer() {
                 { name: 'Contact', href: '/#begin-voyage' },
               ].map(item => (
                 <li key={item.name}>
-                  <HashLink href={item.href} className="text-white hover:text-white transition-colors text-sm">
+                  <HashLink href={item.href} className="text-[#C8D6E5] hover:text-white transition-colors text-sm">
                     {item.name}
                   </HashLink>
                 </li>
@@ -108,7 +108,7 @@ export function Footer() {
                 { name: 'Cookie Policy', href: '/cookie-policy' },
               ].map(item => (
                 <li key={item.name}>
-                  <HashLink href={item.href} className="text-white hover:text-white transition-colors text-sm">
+                  <HashLink href={item.href} className="text-[#C8D6E5] hover:text-white transition-colors text-sm">
                     {item.name}
                   </HashLink>
                 </li>
