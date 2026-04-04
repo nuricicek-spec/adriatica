@@ -3,13 +3,91 @@ import { Footer } from "@/components/Footer";
 import { Helmet } from "react-helmet-async";
 import { SEO } from "@/components/SEO";
 import { HashLink } from "@/components/HashLink";
-import { useRoute } from "wouter";
 import { services } from "@/data/services";
 import { RelatedContent } from "@/components/RelatedContent";
 
 export default function EngineeringPlans() {
-  const [match] = useRoute("/services/engineering-plans");
   const service = services.find(s => s.slug === "engineering-plans");
+
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.adriaticadoo.me/services/engineering-plans/#webpage",
+        "url": "https://www.adriaticadoo.me/services/engineering-plans",
+        "name": "Engineering Plans | Adriatica D.O.O.",
+        "description": "Detailed engineering drawings and plan sets for new constructions, conversions, and refits – structural drawings, as‑built sets, arrangement plans, fire & safety plans.",
+        "isPartOf": { "@id": "https://www.adriaticadoo.me/#website" },
+        "about": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "inLanguage": "en",
+        "datePublished": "2025-01-01",
+        "dateModified": "2025-03-15"
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.adriaticadoo.me/services/engineering-plans/#service",
+        "name": "Engineering Plans",
+        "description": "Detailed engineering drawings and plan sets for new constructions, conversions, and refits. All documentation produced in accordance with classification society rules and flag state requirements.",
+        "url": "https://www.adriaticadoo.me/services/engineering-plans",
+        "provider": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "areaServed": [
+          { "@type": "Place", "name": "Montenegro" },
+          { "@type": "Place", "name": "Adriatic Sea" },
+          { "@type": "Place", "name": "Mediterranean Sea" },
+          { "@type": "Place", "name": "Europe" }
+        ],
+        "serviceType": "Marine Engineering Plans",
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Engineering Plans Deliverables",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Structural Drawings",
+                "description": "Complete structural drawings covering primary and secondary steelwork, framing, plating, and connections per classification society rules."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "As‑Built Drawing Sets",
+                "description": "Updated drawings reflecting the actual condition of the vessel after construction or major modifications, verified on‑site."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Arrangement Plans",
+                "description": "General arrangement, machinery arrangement, piping isometrics, and accommodation layouts in 2D and 3D formats."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Fire & Safety Plans",
+                "description": "Fire control plans, emergency escape routes, and safety equipment location drawings compliant with SOLAS and flag state requirements."
+              }
+            }
+          ]
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.adriaticadoo.me/#website",
+        "url": "https://www.adriaticadoo.me/",
+        "name": "Adriatica D.O.O.",
+        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://www.adriaticadoo.me/#organization" }
+      }
+    ]
+  };
 
   return (
     <>
@@ -18,6 +96,12 @@ export default function EngineeringPlans() {
         description="Detailed engineering drawings and plan sets for new constructions, conversions, and refits – structural drawings, as‑built sets, arrangement plans, fire & safety plans."
         canonical="https://www.adriaticadoo.me/services/engineering-plans"
       />
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(serviceSchema).replace(/</g, '\\u003c')}
+        </script>
+      </Helmet>
+
       <div className="min-h-screen bg-background font-body">
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
@@ -35,7 +119,7 @@ export default function EngineeringPlans() {
               <li>Structural Drawings</li>
               <li>As‑Built Drawing Sets</li>
               <li>Arrangement Plans</li>
-              <li>Fire & Safety Plans</li>
+              <li>Fire &amp; Safety Plans</li>
               <li>General Arrangement (optional)</li>
             </ul>
 
@@ -45,22 +129,22 @@ export default function EngineeringPlans() {
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">References</h2>
             <p>Class society rules (RINA, BV, DNV), flag state regulations</p>
 
-            {/* SVG şeması – References'ten sonra, detaylı bölümlerden önce */}
             <div className="flex justify-center my-6">
-              <img 
-                src="/images/services/engineering-plans-schema.svg" 
-                alt="Engineering plans hierarchy – structural drawings, as-built sets, arrangement plans, fire & safety plans leading to class approval"
+              <img
+                src="/images/services/engineering-plans-schema.svg"
+                alt="Engineering plans hierarchy – structural drawings, as-built sets, arrangement plans, fire and safety plans leading to class approval"
                 className="w-full max-w-2xl h-auto"
                 loading="lazy"
+                width={672}
+                height={400}
               />
             </div>
 
-            {/* Detailed sections for each deliverable – enhanced depth */}
             <div className="mt-8 space-y-6">
               <div className="border-l-2 border-primary/20 pl-6">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Structural Drawings</h3>
                 <p className="text-muted-foreground">
-                  You receive complete structural drawings covering your vessel’s primary and secondary steelwork, including framing, plating, and connections. All drawings are prepared in accordance with the applicable classification society rules (RINA, BV, DNV) and include fabrication details, material specifications, and welding procedures. We also provide 3D models and finite element analysis (FEA) results when required for complex structures.
+                  You receive complete structural drawings covering your vessel's primary and secondary steelwork, including framing, plating, and connections. All drawings are prepared in accordance with the applicable classification society rules (RINA, BV, DNV) and include fabrication details, material specifications, and welding procedures. We also provide 3D models and finite element analysis (FEA) results when required for complex structures.
                 </p>
                 <p className="text-muted-foreground mt-2">
                   <span className="font-medium">Outcome:</span> Approval‑ready documentation that minimises back‑and‑forth with class and ensures a smooth construction process.
@@ -88,7 +172,7 @@ export default function EngineeringPlans() {
               </div>
 
               <div className="border-l-2 border-primary/20 pl-6">
-                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Fire & Safety Plans</h3>
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Fire &amp; Safety Plans</h3>
                 <p className="text-muted-foreground">
                   Fire control plans, emergency escape routes, and safety equipment location drawings, compliant with SOLAS and flag state requirements. These plans are designed to be easily understood by crew and port state control officers. We provide both shipboard copies and the required electronic version for the fire control plan folder.
                 </p>
@@ -111,7 +195,6 @@ export default function EngineeringPlans() {
             </div>
           </div>
 
-          {/* İçerik bağlantıları */}
           {service && (
             <RelatedContent
               serviceSlugs={service.relatedServices}

@@ -3,13 +3,91 @@ import { Footer } from "@/components/Footer";
 import { Helmet } from "react-helmet-async";
 import { SEO } from "@/components/SEO";
 import { HashLink } from "@/components/HashLink";
-import { useRoute } from "wouter";
 import { services } from "@/data/services";
 import { RelatedContent } from "@/components/RelatedContent";
 
 export default function EngineeringDocs() {
-  const [match] = useRoute("/services/engineering-documentation");
   const service = services.find(s => s.slug === "engineering-documentation");
+
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.adriaticadoo.me/services/engineering-documentation/#webpage",
+        "url": "https://www.adriaticadoo.me/services/engineering-documentation",
+        "name": "Engineering Documentation | Adriatica D.O.O.",
+        "description": "Vessel‑specific technical manuals and analyses: as‑built P&IDs, electrical load analysis, fuel management booklets, IHM – ensuring crew training and port state control readiness.",
+        "isPartOf": { "@id": "https://www.adriaticadoo.me/#website" },
+        "about": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "inLanguage": "en",
+        "datePublished": "2025-01-01",
+        "dateModified": "2025-03-15"
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.adriaticadoo.me/services/engineering-documentation/#service",
+        "name": "Engineering Documentation",
+        "description": "Vessel‑specific technical manuals and analyses including as‑built P&IDs, electrical load analysis, fuel management booklets, and IHM – fully aligned with IMO conventions, EU MRV, and class requirements.",
+        "url": "https://www.adriaticadoo.me/services/engineering-documentation",
+        "provider": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "areaServed": [
+          { "@type": "Place", "name": "Montenegro" },
+          { "@type": "Place", "name": "Adriatic Sea" },
+          { "@type": "Place", "name": "Mediterranean Sea" },
+          { "@type": "Place", "name": "Europe" }
+        ],
+        "serviceType": "Marine Engineering Documentation",
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Engineering Documentation Deliverables",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "As‑Built P&ID / System Manuals",
+                "description": "Complete piping and instrumentation diagrams reflecting final installed systems, compiled into operational system manuals."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Electrical Load Analysis (EAB)",
+                "description": "Detailed assessment of vessel electrical power balance, generator sizing, and distribution system capacity submitted to class for approval."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Fuel Management & Quality Booklet",
+                "description": "Structured guide to fuel handling, storage, consumption, and MARPOL Annex VI compliance procedures."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Inventory of Hazardous Materials (IHM)",
+                "description": "Comprehensive hazardous materials inventory prepared per Hong Kong Convention and EU Ship Recycling Regulation."
+              }
+            }
+          ]
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.adriaticadoo.me/#website",
+        "url": "https://www.adriaticadoo.me/",
+        "name": "Adriatica D.O.O.",
+        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://www.adriaticadoo.me/#organization" }
+      }
+    ]
+  };
 
   return (
     <>
@@ -18,6 +96,12 @@ export default function EngineeringDocs() {
         description="Vessel‑specific technical manuals and analyses: as‑built P&IDs, electrical load analysis, fuel management booklets, IHM – ensuring crew training and port state control readiness."
         canonical="https://www.adriaticadoo.me/services/engineering-documentation"
       />
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(serviceSchema).replace(/</g, '\\u003c')}
+        </script>
+      </Helmet>
+
       <div className="min-h-screen bg-background font-body">
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
@@ -32,9 +116,9 @@ export default function EngineeringDocs() {
 
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Deliverables</h2>
             <ul className="list-disc pl-6 space-y-2">
-              <li>As‑Built P&ID / System Manuals</li>
+              <li>As‑Built P&amp;ID / System Manuals</li>
               <li>Electrical Load Analysis (EAB)</li>
-              <li>Fuel Management & Quality Booklet</li>
+              <li>Fuel Management &amp; Quality Booklet</li>
               <li>Inventory of Hazardous Materials (IHM)</li>
             </ul>
 
@@ -44,22 +128,22 @@ export default function EngineeringDocs() {
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">References</h2>
             <p>IMO, EU MRV, MARPOL</p>
 
-            {/* SVG şeması – References'ten hemen sonra, detaylı bölümlerden önce */}
             <div className="my-6 flex justify-center">
               <img
                 src="/images/services/engineering-docs-schema.svg"
-                alt="Engineering documentation flow: vessel data to P&ID, EAB, Fuel booklet, then IHM/Class submission"
+                alt="Engineering documentation flow: vessel data to P&ID, EAB, Fuel booklet, then IHM and Class submission"
                 className="w-full max-w-2xl"
                 loading="lazy"
+                width={672}
+                height={400}
               />
             </div>
 
-            {/* Detailed sections – enhanced depth */}
             <div className="mt-8 space-y-6">
               <div className="border-l-2 border-primary/20 pl-6">
-                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">As‑Built P&ID / System Manuals</h3>
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">As‑Built P&amp;ID / System Manuals</h3>
                 <p className="text-muted-foreground">
-                  You receive complete piping and instrumentation diagrams (P&IDs) that reflect the final installed systems, including all valves, pumps, sensors, and control loops. These are compiled into system manuals that also include operational descriptions, troubleshooting guides, and maintenance schedules – delivered in both printed and digital formats for easy access.
+                  You receive complete piping and instrumentation diagrams (P&amp;IDs) that reflect the final installed systems, including all valves, pumps, sensors, and control loops. These are compiled into system manuals that also include operational descriptions, troubleshooting guides, and maintenance schedules – delivered in both printed and digital formats for easy access.
                 </p>
                 <p className="text-muted-foreground mt-2">
                   <span className="font-medium">Outcome:</span> A comprehensive reference that supports crew training, reduces downtime, and simplifies future modifications.
@@ -69,7 +153,7 @@ export default function EngineeringDocs() {
               <div className="border-l-2 border-primary/20 pl-6">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Electrical Load Analysis (EAB)</h3>
                 <p className="text-muted-foreground">
-                  A detailed assessment of your vessel’s electrical power balance, identifying peak loads, generator sizing, and distribution system capacity. We use advanced calculation tools and consider all operational modes (navigation, manoeuvring, harbour, emergency). The analysis is submitted to class for approval – essential for generator scheduling and future electrical upgrades.
+                  A detailed assessment of your vessel's electrical power balance, identifying peak loads, generator sizing, and distribution system capacity. We use advanced calculation tools and consider all operational modes (navigation, manoeuvring, harbour, emergency). The analysis is submitted to class for approval – essential for generator scheduling and future electrical upgrades.
                 </p>
                 <p className="text-muted-foreground mt-2">
                   <span className="font-medium">Outcome:</span> Class‑approved load analysis, optimised generator operation, and a solid basis for any electrical system changes.
@@ -77,7 +161,7 @@ export default function EngineeringDocs() {
               </div>
 
               <div className="border-l-2 border-primary/20 pl-6">
-                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Fuel Management & Quality Booklet</h3>
+                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Fuel Management &amp; Quality Booklet</h3>
                 <p className="text-muted-foreground">
                   A structured guide to fuel handling, storage, and consumption. It includes procedures for bunkering, sampling, and reporting, as well as guidance on maintaining fuel quality to avoid engine damage and ensure compliance with MARPOL Annex VI. We also incorporate fuel‑oil changeover procedures and sulphur content recording requirements.
                 </p>
@@ -99,7 +183,7 @@ export default function EngineeringDocs() {
 
             <div className="mt-12 p-8 bg-neutral-50 border-l-2 border-primary/20 rounded-sm text-center">
               <p className="text-lg font-medium text-[#0B3B5C] mb-2">
-                Ready to get your vessel’s technical manuals in order?
+                Ready to get your vessel's technical manuals in order?
               </p>
               <HashLink
                 href="/#begin-voyage"
