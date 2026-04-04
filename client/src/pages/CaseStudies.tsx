@@ -6,49 +6,57 @@ import { SEO } from "@/components/SEO";
 import { Link } from "wouter";
 import { caseStudies } from "@/data/caseStudies";
 
-// Organisation-level structured data (same as homepage)
-const organizationData = {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "Adriatica D.O.O.",
-  "image": "https://www.adriaticadoo.me/og-image-default.png",
-  "url": "https://www.adriaticadoo.me",
-  "taxID": "03612807",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Budva",
-    "addressCountry": "ME"
-  },
-  "serviceType": [
-    "Marine Engineering",
-    "Regulatory Compliance",
-    "MRV Reporting",
-    "Biofouling Management",
-    "Structural Integrity"
-  ],
-  "description": "Marine engineering consultancy specializing in EU MRV, IMO DCS, and Biofouling compliance.",
-  "areaServed": [
-    "Bar",
-    "Budva",
-    "Kotor",
-    "Tivat",
-    "Montenegro",
-    "Adriatic Coast",
-    "Europe"
-  ]
-};
-
 export default function CaseStudies() {
+  const caseStudiesSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": "https://www.adriaticadoo.me/case-studies/#webpage",
+        "url": "https://www.adriaticadoo.me/case-studies",
+        "name": "Case Studies | Adriatica D.O.O.",
+        "description": "Real-world marine engineering results: biofouling compliance, cost savings with in-water cleaning, and on-time refit supervision.",
+        "isPartOf": { "@id": "https://www.adriaticadoo.me/#website" },
+        "about": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "inLanguage": "en",
+        "datePublished": "2025-01-01",
+        "dateModified": "2025-03-15"
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://www.adriaticadoo.me/case-studies/#itemlist",
+        "name": "Marine Engineering Case Studies",
+        "description": "Operational case studies demonstrating Adriatica D.O.O. engineering outcomes.",
+        "numberOfItems": caseStudies.length,
+        "itemListElement": caseStudies.map((study, index) => ({
+          "@type": "ListItem",
+          "position": index + 1,
+          "url": `https://www.adriaticadoo.me/case-studies/${study.slug}`,
+          "name": study.title
+        }))
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.adriaticadoo.me/#website",
+        "url": "https://www.adriaticadoo.me/",
+        "name": "Adriatica D.O.O.",
+        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://www.adriaticadoo.me/#organization" }
+      }
+    ]
+  };
+
   return (
     <>
       <SEO
-        title="Case Studies | Marine Engineering Success Stories | Adriatica"
+        title="Case Studies"
         description="Real-world marine engineering results: biofouling compliance, 80% cost savings with in‑water cleaning, and on‑time refit supervision. See how Adriatica delivers measurable outcomes for superyachts."
         canonical="https://www.adriaticadoo.me/case-studies"
       />
       <Helmet>
         <script type="application/ld+json">
-          {JSON.stringify(organizationData)}
+          {JSON.stringify(caseStudiesSchema).replace(/</g, '\\u003c')}
         </script>
       </Helmet>
 
@@ -62,28 +70,28 @@ export default function CaseStudies() {
           <div className="mt-12">
             {caseStudies.map((study, index) => (
               <div key={study.slug}>
-                <Link href={`/case-studies/${study.slug}`}>
-                  <a className="block border-l-2 border-primary/20 pl-6 hover:border-primary transition-colors group">
-                    <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mb-3 group-hover:text-primary transition-colors">
-                      {study.title}
-                    </h2>
-                    <div className="space-y-3 text-muted-foreground">
-                      <p>
-                        <span className="font-semibold text-[#0B3B5C]">Challenge:</span>{" "}
-                        {study.challenge}
-                      </p>
-                      <p>
-                        <span className="font-semibold text-[#0B3B5C]">Solution:</span>{" "}
-                        {study.solution}
-                      </p>
-                      <p>
-                        <span className="font-semibold text-[#0B3B5C]">Result:</span>{" "}
-                        {study.result}
-                      </p>
-                    </div>
-                  </a>
+                <Link
+                  href={`/case-studies/${study.slug}`}
+                  className="block border-l-2 border-primary/20 pl-6 hover:border-primary transition-colors group"
+                >
+                  <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mb-3 group-hover:text-primary transition-colors">
+                    {study.title}
+                  </h2>
+                  <div className="space-y-3 text-muted-foreground">
+                    <p>
+                      <span className="font-semibold text-[#0B3B5C]">Challenge:</span>{" "}
+                      {study.challenge}
+                    </p>
+                    <p>
+                      <span className="font-semibold text-[#0B3B5C]">Solution:</span>{" "}
+                      {study.solution}
+                    </p>
+                    <p>
+                      <span className="font-semibold text-[#0B3B5C]">Result:</span>{" "}
+                      {study.result}
+                    </p>
+                  </div>
                 </Link>
-                {/* Her karttan sonra ayırıcı çizgi (son kart hariç) */}
                 {index < caseStudies.length - 1 && (
                   <hr className="border-t border-border/30 my-10" />
                 )}
@@ -95,10 +103,11 @@ export default function CaseStudies() {
             <p className="text-lg text-muted-foreground mb-4">
               Have a specific technical challenge? We're ready to solve it.
             </p>
-            <Link href="/#begin-voyage">
-              <a className="inline-block px-6 py-3 bg-[#0B3B5C] text-white font-medium rounded-sm hover:bg-[#1A4B7A] transition-colors">
-                Request Technical Consultation – Avoid Delays
-              </a>
+            <Link
+              href="/#begin-voyage"
+              className="inline-block px-6 py-3 bg-[#0B3B5C] text-white font-medium rounded-sm hover:bg-[#1A4B7A] transition-colors"
+            >
+              Request Technical Consultation – Avoid Delays
             </Link>
           </div>
         </main>

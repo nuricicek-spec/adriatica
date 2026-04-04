@@ -2,8 +2,36 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { motion } from "framer-motion";
 import { SEO } from "@/components/SEO";
+import { Helmet } from "react-helmet-async";
 
 export default function Careers() {
+  const careersSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://www.adriaticadoo.me/careers/#webpage",
+        "url": "https://www.adriaticadoo.me/careers",
+        "name": "Careers | Adriatica D.O.O.",
+        "description": "Join Adriatica D.O.O. – marine engineering careers in Montenegro. We're looking for naval architects, marine engineers, and technical specialists.",
+        "isPartOf": { "@id": "https://www.adriaticadoo.me/#website" },
+        "about": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "inLanguage": "en",
+        "datePublished": "2025-01-01",
+        "dateModified": "2025-03-15"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.adriaticadoo.me/#website",
+        "url": "https://www.adriaticadoo.me/",
+        "name": "Adriatica D.O.O.",
+        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://www.adriaticadoo.me/#organization" }
+      }
+    ]
+  };
+
   return (
     <>
       <SEO
@@ -11,6 +39,12 @@ export default function Careers() {
         description="Join Adriatica D.O.O. – marine engineering careers in Montenegro. We're looking for naval architects, marine engineers, and technical specialists."
         canonical="https://www.adriaticadoo.me/careers"
       />
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(careersSchema).replace(/</g, '\\u003c')}
+        </script>
+      </Helmet>
+
       <div className="min-h-screen bg-background font-body">
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
@@ -24,16 +58,21 @@ export default function Careers() {
             </h1>
             <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
               <p>
-                We’re always looking for passionate marine engineers, naval architects, and technical consultants to join our growing team in Montenegro.
+                We're always looking for passionate marine engineers, naval architects, and technical consultants to join our growing team in Montenegro.
               </p>
               <p>
                 If you share our values of independence, practicality, and technical excellence, send your CV and cover letter to:
               </p>
               <p className="font-bold text-[#0B3B5C]">
-                info@adriaticadoo.me
+                <a
+                  href="mailto:info@adriaticadoo.me"
+                  className="hover:underline transition-colors"
+                >
+                  info@adriaticadoo.me
+                </a>
               </p>
               <p className="text-sm italic">
-                We’ll respond to suitable candidates within two weeks.
+                We'll respond to suitable candidates within two weeks.
               </p>
             </div>
           </motion.div>
