@@ -455,6 +455,8 @@ export default function Home() {
                   src="/map.svg"
                   alt="Adriatic and Mediterranean region outline"
                   className="w-full max-w-[300px] h-auto"
+                  width={300}
+                  height={215}
                 />
               </div>
             </div>
