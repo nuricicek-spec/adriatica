@@ -8,10 +8,10 @@ interface FeatureCardProps {
   items?: string[];
   delay?: number;
   linkTo?: string;          // opsiyonel: servis detay sayfası slug'ı
-  linkText?: string;   // yeni
+  linkText?: string;        // opsiyonel: bağlantı metni (varsayılan "Learn more")
 }
 
-export function FeatureCard({ number, title, items, delay = 0, linkTo }: FeatureCardProps) {
+export function FeatureCard({ number, title, items, delay = 0, linkTo, linkText }: FeatureCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -50,7 +50,7 @@ export function FeatureCard({ number, title, items, delay = 0, linkTo }: Feature
               href={`/services/${linkTo}`}
               className="inline-flex items-center gap-1 text-primary hover:underline text-sm font-medium transition-colors"
             >
-              Learn more <ArrowRight className="w-4 h-4" />
+              {linkText || "Learn more"} <ArrowRight className="w-4 h-4" />
             </HashLink>
           </div>
         )}
