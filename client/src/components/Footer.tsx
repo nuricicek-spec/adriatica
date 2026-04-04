@@ -19,10 +19,10 @@ export function Footer() {
                 ADRIATICA D.O.O.
               </span>
             </HashLink>
-            <p className="text-white leading-relaxed mb-4 max-w-sm">
+            <p className="text-[#C8D6E5] leading-relaxed mb-4 max-w-sm">
               Supporting yacht and commercial vessel operations across engineering, compliance, and technical project management.
             </p>
-            <div className="text-white text-sm space-y-1 mb-6">
+            <div className="text-[#C8D6E5] text-sm space-y-1 mb-6">
               <p>📍 Serving the Montenegro Bay &amp; Adriatic Coast</p>
               <p>
                 <a href="mailto:info@adriaticadoo.me" className="hover:text-white transition-colors">
@@ -117,7 +117,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-white">
+        <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-[#C8D6E5]">
           <p>© 2026 ADRIATICA D.O.O. All rights reserved.</p>
 
           <div className="flex flex-wrap justify-center items-center gap-6">
