@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 interface SEOProps {
   title?: string;
   description?: string;
-  canonical: string; // artık zorunlu — her sayfada explicit geçilmeli
+  canonical: string;
   ogImage?: string;
   ogImageAlt?: string;
   ogType?: 'website' | 'article';
@@ -13,14 +13,23 @@ interface SEOProps {
 }
 
 const defaultTitle = "Adriatica D.O.O. - Marine Engineering & Consultancy";
-const defaultDescription = "Adriatica D.O.O. provides independent marine engineering consultancy, technical project management, and regulatory compliance services for yachts, commercial vessels, and fishing boats.";
+const defaultDescription =
+  "Adriatica D.O.O. provides independent marine engineering consultancy, technical project management, and regulatory compliance services for yachts, commercial vessels, and fishing boats.";
 const defaultOgImage = "/og-image-default.png";
 const defaultOgImageAlt = "Adriatica D.O.O. - Marine Engineering & Consultancy";
 const siteUrl = "https://www.adriaticadoo.com";
 
 function normalizeUrl(url: string): string {
-  if (url === siteUrl || url === siteUrl + '/') return siteUrl;
-  return url.replace(/\/$/, '');
+  // Ana domain'i koru, diğerlerinden trailing slash'ı temizle
+  const stripped = url.replace(/\/$/, '');
+  return stripped === '' ? siteUrl : stripped;
+}
+
+function resolveImageUrl(image: string): string {
+  // Absolute URL (http/https veya protocol-relative) ise dokunma
+  if (/^(https?:)?\/\//.test(image)) return image;
+  // Relative path ise site URL ile birleştir
+  return `${siteUrl}${image.startsWith('/') ? '' : '/'}${image}`;
 }
 
 export function SEO({
@@ -32,25 +41,26 @@ export function SEO({
   ogType = 'website',
   publishedTime,
   modifiedTime,
-  noindex = false
+  noindex = false,
 }: SEOProps) {
   const pageTitle = title ? `${title} | Adriatica D.O.O.` : defaultTitle;
   const metaDescription = description || defaultDescription;
-  const metaOgImage = ogImage
-    ? (ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`)
-    : `${siteUrl}${defaultOgImage}`;
+  const metaOgImage = resolveImageUrl(ogImage ?? defaultOgImage);
   const metaOgImageAlt = ogImageAlt || defaultOgImageAlt;
   const canonicalUrl = normalizeUrl(canonical);
+
+  const isArticle = ogType === 'article';
 
   return (
     <Helmet>
       <title>{pageTitle}</title>
       <meta name="description" content={metaDescription} />
       <link rel="canonical" href={canonicalUrl} />
-      <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
+      <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
       <meta name="author" content="Adriatica D.O.O." />
       <meta name="theme-color" content="#0B3B5C" />
       <meta name="format-detection" content="telephone=no" />
+      <meta name="yandex-verification" content="78380f2e02e78f12" />
 
       {/* Open Graph */}
       <meta property="og:type" content={ogType} />
@@ -71,15 +81,15 @@ export function SEO({
       <meta name="twitter:image" content={metaOgImage} />
       <meta name="twitter:image:alt" content={metaOgImageAlt} />
 
-      {/* Article specific */}
-      {ogType === 'article' && publishedTime && (
-        <>
-          <meta property="article:published_time" content={publishedTime} />
-          {modifiedTime && (
-            <meta property="article:modified_time" content={modifiedTime} />
-          )}
-          <meta property="article:author" content="Adriatica D.O.O." />
-        </>
+      {/* Article specific — fragment yerine tekil koşullar */}
+      {isArticle && publishedTime && (
+        <meta property="article:published_time" content={publishedTime} />
+      )}
+      {isArticle && publishedTime && modifiedTime && (
+        <meta property="article:modified_time" content={modifiedTime} />
+      )}
+      {isArticle && (
+        <meta property="article:author" content="Adriatica D.O.O." />
       )}
     </Helmet>
   );
