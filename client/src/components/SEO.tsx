@@ -16,7 +16,7 @@ const defaultTitle = "Adriatica D.O.O. - Marine Engineering & Consultancy";
 const defaultDescription = "Adriatica D.O.O. provides independent marine engineering consultancy, technical project management, and regulatory compliance services for yachts, commercial vessels, and fishing boats.";
 const defaultOgImage = "/og-image-default.png";
 const defaultOgImageAlt = "Adriatica D.O.O. - Marine Engineering & Consultancy";
-const siteUrl = "https://www.adriaticadoo.me";
+const siteUrl = "https://www.adriaticadoo.com";
 
 function normalizeUrl(url: string): string {
   if (url === siteUrl || url === siteUrl + '/') return siteUrl;
