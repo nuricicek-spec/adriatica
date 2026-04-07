@@ -192,7 +192,7 @@ export default function Home() {
       <SEO
         title="Home"
         description="Adriatica D.O.O. - Marine engineering consultancy specializing in structural integrity, regulatory compliance, and sustainable technologies. Serving Montenegro, Adriatic Coast, and European maritime industry."
-        canonical="https://www.adriaticadoo.me/"
+        canonical="https://www.adriaticadoo.com/"
         ogImage="/og-image-default.png"
       />
 
@@ -208,25 +208,25 @@ export default function Home() {
     {JSON.stringify({
       "@context": "https://schema.org",
       "@type": ["LocalBusiness", "ProfessionalService"],
-      "@id": "https://www.adriaticadoo.me/#organization",
+      "@id": "https://www.adriaticadoo.com/#organization",
       "name": "Adriatica D.O.O.",
-      "url": "https://www.adriaticadoo.me/",
+      "url": "https://www.adriaticadoo.com/",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://www.adriaticadoo.me/logo.svg",
+        "url": "https://www.adriaticadoo.com/logo.svg",
         "width": 400,
         "height": 400
       },
       "image": {
         "@type": "ImageObject",
-        "url": "https://www.adriaticadoo.me/og-image-default.png",
+        "url": "https://www.adriaticadoo.com/og-image-default.png",
         "width": 1200,
         "height": 630
       },
       "description": "Marine engineering consultancy specialising in structural integrity, regulatory compliance, and sustainable technologies for yachts, commercial vessels, and fishing boats in the Adriatic and Mediterranean.",
       "taxID": "03612807",
       "telephone": "+382 68 591 757",
-      "email": "info@adriaticadoo.me",
+      "email": "info@adriaticadoo.com",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Budva",
@@ -279,7 +279,7 @@ export default function Home() {
               "@type": "Service",
               "name": "Engineering Plans",
               "description": "Structural drawings, as-built drawing sets, arrangement plans, fire and safety plans.",
-              "url": "https://www.adriaticadoo.me/services/engineering-plans"
+              "url": "https://www.adriaticadoo.com/services/engineering-plans"
             }
           },
           {
@@ -288,7 +288,7 @@ export default function Home() {
               "@type": "Service",
               "name": "Engineering Documentation",
               "description": "As-built P&ID, system manuals, electrical load analysis, fuel management booklets, IHM.",
-              "url": "https://www.adriaticadoo.me/services/engineering-documentation"
+              "url": "https://www.adriaticadoo.com/services/engineering-documentation"
             }
           },
           {
@@ -297,7 +297,7 @@ export default function Home() {
               "@type": "Service",
               "name": "Structural Integrity",
               "description": "Structural integrity and life extension studies, hull condition analysis, modification consultancy.",
-              "url": "https://www.adriaticadoo.me/services/structural-integrity"
+              "url": "https://www.adriaticadoo.com/services/structural-integrity"
             }
           },
           {
@@ -306,7 +306,7 @@ export default function Home() {
               "@type": "Service",
               "name": "Sustainable Technologies",
               "description": "Biofouling management plans, eco-friendly coating advisory, energy audits, MRV monitoring.",
-              "url": "https://www.adriaticadoo.me/services/sustainable-technologies"
+              "url": "https://www.adriaticadoo.com/services/sustainable-technologies"
             }
           },
           {
@@ -315,7 +315,7 @@ export default function Home() {
               "@type": "Service",
               "name": "Regulatory Compliance",
               "description": "Ballast water management plans, SoPEP, SEEMP, garbage management plans, emergency response manuals.",
-              "url": "https://www.adriaticadoo.me/services/regulatory-compliance"
+              "url": "https://www.adriaticadoo.com/services/regulatory-compliance"
             }
           },
           {
@@ -324,7 +324,7 @@ export default function Home() {
               "@type": "Service",
               "name": "Project Management",
               "description": "Owner's representative, refit supervision, dry-docking specification and management, yacht survey.",
-              "url": "https://www.adriaticadoo.me/services/project-management"
+              "url": "https://www.adriaticadoo.com/services/project-management"
             }
           }
         ]

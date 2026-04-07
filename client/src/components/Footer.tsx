@@ -25,8 +25,8 @@ export function Footer() {
             <div className="text-[#C8D6E5] text-sm space-y-1 mb-6">
               <p>📍 Serving the Montenegro Bay &amp; Adriatic Coast</p>
               <p>
-                <a href="mailto:info@adriaticadoo.me" className="hover:text-white transition-colors">
-                  info@adriaticadoo.me
+                <a href="mailto:info@adriaticadoo.com" className="hover:text-white transition-colors">
+                  info@adriaticadoo.com
                 </a>
               </p>
               <p>
