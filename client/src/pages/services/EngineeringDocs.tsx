@@ -14,23 +14,23 @@ export default function EngineeringDocs() {
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": "https://www.adriaticadoo.me/services/engineering-documentation/#webpage",
-        "url": "https://www.adriaticadoo.me/services/engineering-documentation",
+        "@id": "https://www.adriaticadoo.com/services/engineering-documentation/#webpage",
+        "url": "https://www.adriaticadoo.com/services/engineering-documentation",
         "name": "Engineering Documentation | Adriatica D.O.O.",
         "description": "Vessel‑specific technical manuals and analyses: as‑built P&IDs, electrical load analysis, fuel management booklets, IHM – ensuring crew training and port state control readiness.",
-        "isPartOf": { "@id": "https://www.adriaticadoo.me/#website" },
-        "about": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
+        "about": { "@id": "https://www.adriaticadoo.com/#organization" },
         "inLanguage": "en",
         "datePublished": "2025-01-01",
         "dateModified": "2025-03-15"
       },
       {
         "@type": "Service",
-        "@id": "https://www.adriaticadoo.me/services/engineering-documentation/#service",
+        "@id": "https://www.adriaticadoo.com/services/engineering-documentation/#service",
         "name": "Engineering Documentation",
         "description": "Vessel‑specific technical manuals and analyses including as‑built P&IDs, electrical load analysis, fuel management booklets, and IHM – fully aligned with IMO conventions, EU MRV, and class requirements.",
-        "url": "https://www.adriaticadoo.me/services/engineering-documentation",
-        "provider": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "url": "https://www.adriaticadoo.com/services/engineering-documentation",
+        "provider": { "@id": "https://www.adriaticadoo.com/#organization" },
         "areaServed": [
           { "@type": "Place", "name": "Montenegro" },
           { "@type": "Place", "name": "Adriatic Sea" },
@@ -79,12 +79,12 @@ export default function EngineeringDocs() {
       },
       {
         "@type": "WebSite",
-        "@id": "https://www.adriaticadoo.me/#website",
-        "url": "https://www.adriaticadoo.me/",
+        "@id": "https://www.adriaticadoo.com/#website",
+        "url": "https://www.adriaticadoo.com/",
         "name": "Adriatica D.O.O.",
         "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
         "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.me/#organization" }
+        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
       }
     ]
   };
@@ -94,7 +94,7 @@ export default function EngineeringDocs() {
       <SEO
         title="Engineering Documentation"
         description="Vessel‑specific technical manuals and analyses: as‑built P&IDs, electrical load analysis, fuel management booklets, IHM – ensuring crew training and port state control readiness."
-        canonical="https://www.adriaticadoo.me/services/engineering-documentation"
+        canonical="https://www.adriaticadoo.com/services/engineering-documentation"
       />
       <Helmet>
         <script type="application/ld+json">

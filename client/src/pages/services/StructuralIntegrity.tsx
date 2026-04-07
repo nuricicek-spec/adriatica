@@ -14,23 +14,23 @@ export default function StructuralIntegrity() {
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": "https://www.adriaticadoo.me/services/structural-integrity/#webpage",
-        "url": "https://www.adriaticadoo.me/services/structural-integrity",
+        "@id": "https://www.adriaticadoo.com/services/structural-integrity/#webpage",
+        "url": "https://www.adriaticadoo.com/services/structural-integrity",
         "name": "Structural Integrity | Adriatica D.O.O.",
         "description": "Hull condition assessments, life extension studies, modification consultancy, vibration/noise diagnostics – IACS‑aligned evaluations for vessel safety and longevity.",
-        "isPartOf": { "@id": "https://www.adriaticadoo.me/#website" },
-        "about": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
+        "about": { "@id": "https://www.adriaticadoo.com/#organization" },
         "inLanguage": "en",
         "datePublished": "2025-01-01",
         "dateModified": "2025-03-15"
       },
       {
         "@type": "Service",
-        "@id": "https://www.adriaticadoo.me/services/structural-integrity/#service",
+        "@id": "https://www.adriaticadoo.com/services/structural-integrity/#service",
         "name": "Structural Integrity",
         "description": "Hull condition assessments, life extension studies, modification consultancy, vibration/noise diagnostics – IACS‑aligned evaluations for vessel safety and longevity.",
-        "url": "https://www.adriaticadoo.me/services/structural-integrity",
-        "provider": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "url": "https://www.adriaticadoo.com/services/structural-integrity",
+        "provider": { "@id": "https://www.adriaticadoo.com/#organization" },
         "areaServed": [
           { "@type": "Place", "name": "Montenegro" },
           { "@type": "Place", "name": "Adriatic Sea" },
@@ -79,12 +79,12 @@ export default function StructuralIntegrity() {
       },
       {
         "@type": "WebSite",
-        "@id": "https://www.adriaticadoo.me/#website",
-        "url": "https://www.adriaticadoo.me/",
+        "@id": "https://www.adriaticadoo.com/#website",
+        "url": "https://www.adriaticadoo.com/",
         "name": "Adriatica D.O.O.",
         "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
         "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.me/#organization" }
+        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
       }
     ]
   };
@@ -94,7 +94,7 @@ export default function StructuralIntegrity() {
       <SEO
         title="Structural Integrity"
         description="Hull condition assessments, life extension studies, modification consultancy, vibration/noise diagnostics – IACS‑aligned evaluations for vessel safety and longevity."
-        canonical="https://www.adriaticadoo.me/services/structural-integrity"
+        canonical="https://www.adriaticadoo.com/services/structural-integrity"
       />
       <Helmet>
         <script type="application/ld+json">

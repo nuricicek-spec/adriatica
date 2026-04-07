@@ -14,23 +14,23 @@ export default function YachtSurvey() {
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": "https://www.adriaticadoo.me/services/yacht-survey/#webpage",
-        "url": "https://www.adriaticadoo.me/services/yacht-survey",
+        "@id": "https://www.adriaticadoo.com/services/yacht-survey/#webpage",
+        "url": "https://www.adriaticadoo.com/services/yacht-survey",
         "name": "Yacht Survey & Inspection | Adriatica D.O.O.",
         "description": "Independent technical surveys for yachts: pre-purchase, damage assessment, insurance valuation, charter inspection, and off-hire surveys. IACS‑aligned, class‑recognized reports.",
-        "isPartOf": { "@id": "https://www.adriaticadoo.me/#website" },
-        "about": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
+        "about": { "@id": "https://www.adriaticadoo.com/#organization" },
         "inLanguage": "en",
         "datePublished": "2025-01-01",
         "dateModified": "2025-03-15"
       },
       {
         "@type": "Service",
-        "@id": "https://www.adriaticadoo.me/services/yacht-survey/#service",
+        "@id": "https://www.adriaticadoo.com/services/yacht-survey/#service",
         "name": "Yacht Survey & Inspection",
         "description": "Independent technical surveys for yachts: pre-purchase, damage assessment, insurance valuation, charter inspection, and off-hire surveys. IACS‑aligned, class‑recognized reports.",
-        "url": "https://www.adriaticadoo.me/services/yacht-survey",
-        "provider": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "url": "https://www.adriaticadoo.com/services/yacht-survey",
+        "provider": { "@id": "https://www.adriaticadoo.com/#organization" },
         "areaServed": [
           { "@type": "Place", "name": "Montenegro" },
           { "@type": "Place", "name": "Adriatic Sea" },
@@ -87,12 +87,12 @@ export default function YachtSurvey() {
       },
       {
         "@type": "WebSite",
-        "@id": "https://www.adriaticadoo.me/#website",
-        "url": "https://www.adriaticadoo.me/",
+        "@id": "https://www.adriaticadoo.com/#website",
+        "url": "https://www.adriaticadoo.com/",
         "name": "Adriatica D.O.O.",
         "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
         "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.me/#organization" }
+        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
       }
     ]
   };
@@ -102,7 +102,7 @@ export default function YachtSurvey() {
       <SEO
         title="Yacht Survey & Inspection"
         description="Independent technical surveys for yachts: pre-purchase, damage assessment, insurance valuation, charter inspection, and off-hire surveys. IACS‑aligned, class‑recognized reports."
-        canonical="https://www.adriaticadoo.me/services/yacht-survey"
+        canonical="https://www.adriaticadoo.com/services/yacht-survey"
       />
       <Helmet>
         <script type="application/ld+json">

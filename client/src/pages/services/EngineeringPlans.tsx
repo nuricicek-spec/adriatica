@@ -14,23 +14,23 @@ export default function EngineeringPlans() {
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": "https://www.adriaticadoo.me/services/engineering-plans/#webpage",
-        "url": "https://www.adriaticadoo.me/services/engineering-plans",
+        "@id": "https://www.adriaticadoo.com/services/engineering-plans/#webpage",
+        "url": "https://www.adriaticadoo.com/services/engineering-plans",
         "name": "Engineering Plans | Adriatica D.O.O.",
         "description": "Detailed engineering drawings and plan sets for new constructions, conversions, and refits – structural drawings, as‑built sets, arrangement plans, fire & safety plans.",
-        "isPartOf": { "@id": "https://www.adriaticadoo.me/#website" },
-        "about": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
+        "about": { "@id": "https://www.adriaticadoo.com/#organization" },
         "inLanguage": "en",
         "datePublished": "2025-01-01",
         "dateModified": "2025-03-15"
       },
       {
         "@type": "Service",
-        "@id": "https://www.adriaticadoo.me/services/engineering-plans/#service",
+        "@id": "https://www.adriaticadoo.com/services/engineering-plans/#service",
         "name": "Engineering Plans",
         "description": "Detailed engineering drawings and plan sets for new constructions, conversions, and refits. All documentation produced in accordance with classification society rules and flag state requirements.",
-        "url": "https://www.adriaticadoo.me/services/engineering-plans",
-        "provider": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "url": "https://www.adriaticadoo.com/services/engineering-plans",
+        "provider": { "@id": "https://www.adriaticadoo.com/#organization" },
         "areaServed": [
           { "@type": "Place", "name": "Montenegro" },
           { "@type": "Place", "name": "Adriatic Sea" },
@@ -79,12 +79,12 @@ export default function EngineeringPlans() {
       },
       {
         "@type": "WebSite",
-        "@id": "https://www.adriaticadoo.me/#website",
-        "url": "https://www.adriaticadoo.me/",
+        "@id": "https://www.adriaticadoo.com/#website",
+        "url": "https://www.adriaticadoo.com/",
         "name": "Adriatica D.O.O.",
         "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
         "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.me/#organization" }
+        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
       }
     ]
   };
@@ -94,7 +94,7 @@ export default function EngineeringPlans() {
       <SEO
         title="Engineering Plans"
         description="Detailed engineering drawings and plan sets for new constructions, conversions, and refits – structural drawings, as‑built sets, arrangement plans, fire & safety plans."
-        canonical="https://www.adriaticadoo.me/services/engineering-plans"
+        canonical="https://www.adriaticadoo.com/services/engineering-plans"
       />
       <Helmet>
         <script type="application/ld+json">

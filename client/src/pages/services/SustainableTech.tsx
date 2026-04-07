@@ -14,23 +14,23 @@ export default function SustainableTech() {
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": "https://www.adriaticadoo.me/services/sustainable-technologies/#webpage",
-        "url": "https://www.adriaticadoo.me/services/sustainable-technologies",
+        "@id": "https://www.adriaticadoo.com/services/sustainable-technologies/#webpage",
+        "url": "https://www.adriaticadoo.com/services/sustainable-technologies",
         "name": "Sustainable Technologies & Compliance | Adriatica D.O.O.",
         "description": "Biofouling management plans (IMO MEPC.378(80)), eco‑friendly coating advisory, energy audits, MRV monitoring plans – helping vessels meet environmental regulations.",
-        "isPartOf": { "@id": "https://www.adriaticadoo.me/#website" },
-        "about": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
+        "about": { "@id": "https://www.adriaticadoo.com/#organization" },
         "inLanguage": "en",
         "datePublished": "2025-01-01",
         "dateModified": "2025-03-15"
       },
       {
         "@type": "Service",
-        "@id": "https://www.adriaticadoo.me/services/sustainable-technologies/#service",
+        "@id": "https://www.adriaticadoo.com/services/sustainable-technologies/#service",
         "name": "Sustainable Technologies & Compliance",
         "description": "Biofouling management plans (IMO MEPC.378(80)), eco‑friendly coating advisory, energy audits, MRV monitoring plans – helping vessels meet environmental regulations.",
-        "url": "https://www.adriaticadoo.me/services/sustainable-technologies",
-        "provider": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "url": "https://www.adriaticadoo.com/services/sustainable-technologies",
+        "provider": { "@id": "https://www.adriaticadoo.com/#organization" },
         "areaServed": [
           { "@type": "Place", "name": "Montenegro" },
           { "@type": "Place", "name": "Adriatic Sea" },
@@ -79,12 +79,12 @@ export default function SustainableTech() {
       },
       {
         "@type": "WebSite",
-        "@id": "https://www.adriaticadoo.me/#website",
-        "url": "https://www.adriaticadoo.me/",
+        "@id": "https://www.adriaticadoo.com/#website",
+        "url": "https://www.adriaticadoo.com/",
         "name": "Adriatica D.O.O.",
         "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
         "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.me/#organization" }
+        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
       }
     ]
   };
@@ -94,7 +94,7 @@ export default function SustainableTech() {
       <SEO
         title="Sustainable Technologies & Compliance"
         description="Biofouling management plans (IMO MEPC.378(80)), eco‑friendly coating advisory, energy audits, MRV monitoring plans – helping vessels meet environmental regulations."
-        canonical="https://www.adriaticadoo.me/services/sustainable-technologies"
+        canonical="https://www.adriaticadoo.com/services/sustainable-technologies"
       />
       <Helmet>
         <script type="application/ld+json">

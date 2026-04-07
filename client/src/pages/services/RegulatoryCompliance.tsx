@@ -14,23 +14,23 @@ export default function RegulatoryCompliance() {
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": "https://www.adriaticadoo.me/services/regulatory-compliance/#webpage",
-        "url": "https://www.adriaticadoo.me/services/regulatory-compliance",
+        "@id": "https://www.adriaticadoo.com/services/regulatory-compliance/#webpage",
+        "url": "https://www.adriaticadoo.com/services/regulatory-compliance",
         "name": "Regulatory Compliance | Adriatica D.O.O.",
         "description": "Preparation and updating of mandatory shipboard plans and manuals: BWMP, SoPEP, SEEMP, Garbage Management Plan, Emergency Response Manuals – tailored to your vessel’s configuration.",
-        "isPartOf": { "@id": "https://www.adriaticadoo.me/#website" },
-        "about": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
+        "about": { "@id": "https://www.adriaticadoo.com/#organization" },
         "inLanguage": "en",
         "datePublished": "2025-01-01",
         "dateModified": "2025-03-15"
       },
       {
         "@type": "Service",
-        "@id": "https://www.adriaticadoo.me/services/regulatory-compliance/#service",
+        "@id": "https://www.adriaticadoo.com/services/regulatory-compliance/#service",
         "name": "Regulatory Compliance",
         "description": "Preparation and updating of mandatory shipboard plans and manuals: BWMP, SoPEP, SEEMP, Garbage Management Plan, Emergency Response Manuals – tailored to your vessel’s configuration.",
-        "url": "https://www.adriaticadoo.me/services/regulatory-compliance",
-        "provider": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "url": "https://www.adriaticadoo.com/services/regulatory-compliance",
+        "provider": { "@id": "https://www.adriaticadoo.com/#organization" },
         "areaServed": [
           { "@type": "Place", "name": "Montenegro" },
           { "@type": "Place", "name": "Adriatic Sea" },
@@ -87,12 +87,12 @@ export default function RegulatoryCompliance() {
       },
       {
         "@type": "WebSite",
-        "@id": "https://www.adriaticadoo.me/#website",
-        "url": "https://www.adriaticadoo.me/",
+        "@id": "https://www.adriaticadoo.com/#website",
+        "url": "https://www.adriaticadoo.com/",
         "name": "Adriatica D.O.O.",
         "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
         "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.me/#organization" }
+        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
       }
     ]
   };
@@ -102,7 +102,7 @@ export default function RegulatoryCompliance() {
       <SEO
         title="Regulatory Compliance"
         description="Preparation and updating of mandatory shipboard plans and manuals: BWMP, SoPEP, SEEMP, Garbage Management Plan, Emergency Response Manuals – tailored to your vessel’s configuration."
-        canonical="https://www.adriaticadoo.me/services/regulatory-compliance"
+        canonical="https://www.adriaticadoo.com/services/regulatory-compliance"
       />
       <Helmet>
         <script type="application/ld+json">

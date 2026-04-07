@@ -14,23 +14,23 @@ export default function ProjectManagement() {
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": "https://www.adriaticadoo.me/services/project-management/#webpage",
-        "url": "https://www.adriaticadoo.me/services/project-management",
+        "@id": "https://www.adriaticadoo.com/services/project-management/#webpage",
+        "url": "https://www.adriaticadoo.com/services/project-management",
         "name": "Project Management & Owner’s Representation | Adriatica D.O.O.",
         "description": "Full technical management of dry‑dockings, refits, and modifications. Acting as Owner’s Technical Representative to supervise yard works, ensure quality, and deliver on schedule.",
-        "isPartOf": { "@id": "https://www.adriaticadoo.me/#website" },
-        "about": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
+        "about": { "@id": "https://www.adriaticadoo.com/#organization" },
         "inLanguage": "en",
         "datePublished": "2025-01-01",
         "dateModified": "2025-03-15"
       },
       {
         "@type": "Service",
-        "@id": "https://www.adriaticadoo.me/services/project-management/#service",
+        "@id": "https://www.adriaticadoo.com/services/project-management/#service",
         "name": "Project Management & Owner’s Representation",
         "description": "Full technical management of dry‑dockings, refits, and modifications. Acting as Owner’s Technical Representative to supervise yard works, ensure quality, and deliver on schedule.",
-        "url": "https://www.adriaticadoo.me/services/project-management",
-        "provider": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "url": "https://www.adriaticadoo.com/services/project-management",
+        "provider": { "@id": "https://www.adriaticadoo.com/#organization" },
         "areaServed": [
           { "@type": "Place", "name": "Montenegro" },
           { "@type": "Place", "name": "Adriatic Sea" },
@@ -79,12 +79,12 @@ export default function ProjectManagement() {
       },
       {
         "@type": "WebSite",
-        "@id": "https://www.adriaticadoo.me/#website",
-        "url": "https://www.adriaticadoo.me/",
+        "@id": "https://www.adriaticadoo.com/#website",
+        "url": "https://www.adriaticadoo.com/",
         "name": "Adriatica D.O.O.",
         "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
         "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.me/#organization" }
+        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
       }
     ]
   };
@@ -94,7 +94,7 @@ export default function ProjectManagement() {
       <SEO
         title="Project Management & Owner’s Representation"
         description="Full technical management of dry‑dockings, refits, and modifications. Acting as Owner’s Technical Representative to supervise yard works, ensure quality, and deliver on schedule."
-        canonical="https://www.adriaticadoo.me/services/project-management"
+        canonical="https://www.adriaticadoo.com/services/project-management"
       />
       <Helmet>
         <script type="application/ld+json">
