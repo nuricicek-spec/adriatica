@@ -28,19 +28,19 @@ export default function News() {
     "@graph": [
       {
         "@type": "CollectionPage",
-        "@id": "https://www.adriaticadoo.me/news/#webpage",
-        "url": "https://www.adriaticadoo.me/news",
+        "@id": "https://www.adriaticadoo.com/news/#webpage",
+        "url": "https://www.adriaticadoo.com/news",
         "name": "News | Adriatica D.O.O.",
         "description": "Latest news and updates from Adriatica D.O.O. – marine engineering insights, industry developments, and company announcements.",
-        "isPartOf": { "@id": "https://www.adriaticadoo.me/#website" },
-        "about": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
+        "about": { "@id": "https://www.adriaticadoo.com/#organization" },
         "inLanguage": "en",
         "datePublished": "2025-01-01",
         "dateModified": newsItems[0].dateIso
       },
       {
         "@type": "ItemList",
-        "@id": "https://www.adriaticadoo.me/news/#itemlist",
+        "@id": "https://www.adriaticadoo.com/news/#itemlist",
         "name": "Adriatica D.O.O. News",
         "numberOfItems": newsItems.length,
         "itemListElement": newsItems.map((item, index) => ({
@@ -51,19 +51,19 @@ export default function News() {
             "headline": item.title,
             "description": item.excerpt,
             "datePublished": item.dateIso,
-            "author": { "@id": "https://www.adriaticadoo.me/#organization" },
-            "publisher": { "@id": "https://www.adriaticadoo.me/#organization" }
+            "author": { "@id": "https://www.adriaticadoo.com/#organization" },
+            "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
           }
         }))
       },
       {
         "@type": "WebSite",
-        "@id": "https://www.adriaticadoo.me/#website",
-        "url": "https://www.adriaticadoo.me/",
+        "@id": "https://www.adriaticadoo.com/#website",
+        "url": "https://www.adriaticadoo.com/",
         "name": "Adriatica D.O.O.",
         "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
         "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.me/#organization" }
+        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
       }
     ]
   };
@@ -73,7 +73,7 @@ export default function News() {
       <SEO
         title="News"
         description="Latest news and updates from Adriatica D.O.O. – marine engineering insights, industry developments, and company announcements."
-        canonical="https://www.adriaticadoo.me/news"
+        canonical="https://www.adriaticadoo.com/news"
       />
       <Helmet>
         <script type="application/ld+json">
@@ -127,10 +127,10 @@ export default function News() {
               <p className="text-center text-muted-foreground">
                 For media inquiries or interview requests, please contact us at{" "}
                 <a
-                  href="mailto:info@adriaticadoo.me"
+                  href="mailto:info@adriaticadoo.com"
                   className="text-[#0B3B5C] font-medium hover:underline"
                 >
-                  info@adriaticadoo.me
+                  info@adriaticadoo.com
                 </a>
               </p>
             </div>

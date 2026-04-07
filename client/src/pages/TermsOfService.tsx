@@ -10,24 +10,24 @@ export default function TermsOfService() {
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": "https://www.adriaticadoo.me/terms-of-service/#webpage",
-        "url": "https://www.adriaticadoo.me/terms-of-service",
+        "@id": "https://www.adriaticadoo.com/terms-of-service/#webpage",
+        "url": "https://www.adriaticadoo.com/terms-of-service",
         "name": "Terms of Service | Adriatica D.O.O.",
         "description": "Terms of service for Adriatica D.O.O. – by accessing our website, you agree to these terms.",
-        "isPartOf": { "@id": "https://www.adriaticadoo.me/#website" },
-        "about": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
+        "about": { "@id": "https://www.adriaticadoo.com/#organization" },
         "inLanguage": "en",
         "datePublished": "2025-01-01",
         "dateModified": "2025-03-15"
       },
       {
         "@type": "WebSite",
-        "@id": "https://www.adriaticadoo.me/#website",
-        "url": "https://www.adriaticadoo.me/",
+        "@id": "https://www.adriaticadoo.com/#website",
+        "url": "https://www.adriaticadoo.com/",
         "name": "Adriatica D.O.O.",
         "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
         "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.me/#organization" }
+        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
       }
     ]
   };
@@ -37,7 +37,7 @@ export default function TermsOfService() {
       <SEO
         title="Terms of Service"
         description="Terms of service for Adriatica D.O.O. – by accessing our website, you agree to these terms."
-        canonical="https://www.adriaticadoo.me/terms-of-service"
+        canonical="https://www.adriaticadoo.com/terms-of-service"
         noindex={true}
       />
       <Helmet>
@@ -67,8 +67,8 @@ export default function TermsOfService() {
                 <p>Tax ID (PIB): 03612807</p>
                 <p>
                   Email:{" "}
-                  <a href="mailto:info@adriaticadoo.me" className="text-primary hover:underline transition-colors">
-                    info@adriaticadoo.me
+                  <a href="mailto:info@adriaticadoo.com" className="text-primary hover:underline transition-colors">
+                    info@adriaticadoo.com
                   </a>
                 </p>
               </div>

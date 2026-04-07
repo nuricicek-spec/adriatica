@@ -56,7 +56,7 @@ export default function InsightsPage() {
       <SEO
         title="Insights"
         description="Technical articles, case studies, and regulatory updates from Adriatica D.O.O. Marine Engineering Consultancy."
-        canonical="https://www.adriaticadoo.me/insights"
+        canonical="https://www.adriaticadoo.com/insights"
       />
 
       <div className="min-h-screen bg-background font-body">

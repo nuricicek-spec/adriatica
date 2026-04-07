@@ -11,8 +11,8 @@ const organizationData = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   "name": "Adriatica D.O.O.",
-  "image": "https://www.adriaticadoo.me/og-image-default.png",
-  "url": "https://www.adriaticadoo.me",
+  "image": "https://www.adriaticadoo.com/og-image-default.png",
+  "url": "https://www.adriaticadoo.com",
   "taxID": "03612807",
   "address": {
     "@type": "PostalAddress",
@@ -410,7 +410,7 @@ export default function Services() {
       <SEO
         title="Services"
         description="Adriatica D.O.O. provides marine engineering services: engineering plans, documentation, structural integrity, sustainable technologies, regulatory compliance, and project management for all vessel types."
-        canonical="https://www.adriaticadoo.me/services"
+        canonical="https://www.adriaticadoo.com/services"
       />
       <Helmet>
         <script type="application/ld+json">

@@ -11,25 +11,25 @@ export default function About() {
     "@graph": [
       {
         "@type": "AboutPage",
-        "@id": "https://www.adriaticadoo.me/about/#webpage",
-        "url": "https://www.adriaticadoo.me/about",
+        "@id": "https://www.adriaticadoo.com/about/#webpage",
+        "url": "https://www.adriaticadoo.com/about",
         "name": "About Adriatica D.O.O. | Marine Engineering Consultancy",
         "description": "Adriatica D.O.O. is an independent marine engineering consultancy based in Montenegro, serving superyachts and commercial vessels across the Adriatic and Mediterranean.",
-        "isPartOf": { "@id": "https://www.adriaticadoo.me/#website" },
-        "about": { "@id": "https://www.adriaticadoo.me/#organization" },
-        "mainEntity": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
+        "about": { "@id": "https://www.adriaticadoo.com/#organization" },
+        "mainEntity": { "@id": "https://www.adriaticadoo.com/#organization" },
         "inLanguage": "en",
         "datePublished": "2025-01-01",
         "dateModified": "2025-03-15"
       },
       {
         "@type": "WebSite",
-        "@id": "https://www.adriaticadoo.me/#website",
-        "url": "https://www.adriaticadoo.me/",
+        "@id": "https://www.adriaticadoo.mcom/#website",
+        "url": "https://www.adriaticadoo.com/",
         "name": "Adriatica D.O.O.",
         "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
         "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.me/#organization" }
+        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
       }
     ]
   };
@@ -39,7 +39,7 @@ export default function About() {
       <SEO
         title="About"
         description="Adriatica D.O.O. – independent marine engineering consultancy for superyachts and commercial vessels. Biofouling management, regulatory compliance, and technical project management in the Adriatic and Mediterranean."
-        canonical="https://www.adriaticadoo.me/about"
+        canonical="https://www.adriaticadoo.com/about"
       />
       <Helmet>
         <script type="application/ld+json">
@@ -135,8 +135,8 @@ export default function About() {
                 <p>Tax ID (PIB): 03612807</p>
                 <p>
                   Email:{" "}
-                  <a href="mailto:info@adriaticadoo.me" className="text-primary hover:underline">
-                    info@adriaticadoo.me
+                  <a href="mailto:info@adriaticadoo.com" className="text-primary hover:underline">
+                    info@adriaticadoo.com
                   </a>
                 </p>
               </div>

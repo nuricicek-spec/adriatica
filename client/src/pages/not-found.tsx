@@ -10,22 +10,22 @@ export default function NotFound() {
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": "https://www.adriaticadoo.me/404/#webpage",
-        "url": "https://www.adriaticadoo.me/404",
+        "@id": "https://www.adriaticadoo.com/404/#webpage",
+        "url": "https://www.adriaticadoo.com/404",
         "name": "Page Not Found | Adriatica D.O.O.",
         "description": "The page you are looking for does not exist. Return to Adriatica D.O.O. homepage.",
-        "isPartOf": { "@id": "https://www.adriaticadoo.me/#website" },
-        "about": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
+        "about": { "@id": "https://www.adriaticadoo.com/#organization" },
         "inLanguage": "en"
       },
       {
         "@type": "WebSite",
-        "@id": "https://www.adriaticadoo.me/#website",
-        "url": "https://www.adriaticadoo.me/",
+        "@id": "https://www.adriaticadoo.com/#website",
+        "url": "https://www.adriaticadoo.com/",
         "name": "Adriatica D.O.O.",
         "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
         "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.me/#organization" }
+        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
       }
     ]
   };
@@ -35,7 +35,7 @@ export default function NotFound() {
       <SEO
         title="Page Not Found"
         description="The page you are looking for does not exist. Return to Adriatica D.O.O. homepage."
-        canonical="https://www.adriaticadoo.me/404"
+        canonical="https://www.adriaticadoo.com/404"
         noindex={true}
       />
       <Helmet>

@@ -10,24 +10,24 @@ export default function Careers() {
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": "https://www.adriaticadoo.me/careers/#webpage",
-        "url": "https://www.adriaticadoo.me/careers",
+        "@id": "https://www.adriaticadoo.com/careers/#webpage",
+        "url": "https://www.adriaticadoo.com/careers",
         "name": "Careers | Adriatica D.O.O.",
         "description": "Join Adriatica D.O.O. – marine engineering careers in Montenegro. We're looking for naval architects, marine engineers, and technical specialists.",
-        "isPartOf": { "@id": "https://www.adriaticadoo.me/#website" },
-        "about": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
+        "about": { "@id": "https://www.adriaticadoo.com/#organization" },
         "inLanguage": "en",
         "datePublished": "2025-01-01",
         "dateModified": "2025-03-15"
       },
       {
         "@type": "WebSite",
-        "@id": "https://www.adriaticadoo.me/#website",
-        "url": "https://www.adriaticadoo.me/",
+        "@id": "https://www.adriaticadoo.com/#website",
+        "url": "https://www.adriaticadoo.com/",
         "name": "Adriatica D.O.O.",
         "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
         "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.me/#organization" }
+        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
       }
     ]
   };
@@ -37,7 +37,7 @@ export default function Careers() {
       <SEO
         title="Careers"
         description="Join Adriatica D.O.O. – marine engineering careers in Montenegro. We're looking for naval architects, marine engineers, and technical specialists."
-        canonical="https://www.adriaticadoo.me/careers"
+        canonical="https://www.adriaticadoo.com/careers"
       />
       <Helmet>
         <script type="application/ld+json">
@@ -65,10 +65,10 @@ export default function Careers() {
               </p>
               <p className="font-bold text-[#0B3B5C]">
                 <a
-                  href="mailto:info@adriaticadoo.me"
+                  href="mailto:info@adriaticadoo.com"
                   className="hover:underline transition-colors"
                 >
-                  info@adriaticadoo.me
+                  info@adriaticadoo.com
                 </a>
               </p>
               <p className="text-sm italic">

@@ -40,7 +40,7 @@ export default function Deliverables() {
       <SEO
         title="Deliverables"
         description="Explore the complete list of engineering deliverables we provide: structural drawings, technical manuals, compliance plans, project documentation, and more – all tailored to marine projects."
-        canonical="https://www.adriaticadoo.me/deliverables"
+        canonical="https://www.adriaticadoo.com/deliverables"
         ogType="website"
       />
       <Helmet>

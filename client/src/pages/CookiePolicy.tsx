@@ -10,24 +10,24 @@ export default function CookiePolicy() {
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": "https://www.adriaticadoo.me/cookie-policy/#webpage",
-        "url": "https://www.adriaticadoo.me/cookie-policy",
+        "@id": "https://www.adriaticadoo.com/cookie-policy/#webpage",
+        "url": "https://www.adriaticadoo.com/cookie-policy",
         "name": "Cookie Policy | Adriatica D.O.O.",
         "description": "Cookie policy of Adriatica D.O.O. – how we use cookies and similar technologies on our website.",
-        "isPartOf": { "@id": "https://www.adriaticadoo.me/#website" },
-        "about": { "@id": "https://www.adriaticadoo.me/#organization" },
+        "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
+        "about": { "@id": "https://www.adriaticadoo.com/#organization" },
         "inLanguage": "en",
         "datePublished": "2025-01-01",
         "dateModified": "2025-03-15"
       },
       {
         "@type": "WebSite",
-        "@id": "https://www.adriaticadoo.me/#website",
-        "url": "https://www.adriaticadoo.me/",
+        "@id": "https://www.adriaticadoo.com/#website",
+        "url": "https://www.adriaticadoo.com/",
         "name": "Adriatica D.O.O.",
         "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
         "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.me/#organization" }
+        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
       }
     ]
   };
@@ -37,7 +37,7 @@ export default function CookiePolicy() {
       <SEO
         title="Cookie Policy"
         description="Cookie policy of Adriatica D.O.O. – how we use cookies and similar technologies on our website."
-        canonical="https://www.adriaticadoo.me/cookie-policy"
+        canonical="https://www.adriaticadoo.com/cookie-policy"
         noindex={true}
       />
       <Helmet>
@@ -67,8 +67,8 @@ export default function CookiePolicy() {
                 <p>Tax ID (PIB): 03612807</p>
                 <p>
                   Email:{" "}
-                  <a href="mailto:info@adriaticadoo.me" className="text-primary hover:underline transition-colors">
-                    info@adriaticadoo.me
+                  <a href="mailto:info@adriaticadoo.com" className="text-primary hover:underline transition-colors">
+                    info@adriaticadoo.com
                   </a>
                 </p>
               </div>
