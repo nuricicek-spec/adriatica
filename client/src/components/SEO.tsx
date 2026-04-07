@@ -60,7 +60,6 @@ export function SEO({
       <meta name="author" content="Adriatica D.O.O." />
       <meta name="theme-color" content="#0B3B5C" />
       <meta name="format-detection" content="telephone=no" />
-      <meta name="yandex-verification" content="78380f2e02e78f12" />
 
       {/* Open Graph */}
       <meta property="og:type" content={ogType} />
