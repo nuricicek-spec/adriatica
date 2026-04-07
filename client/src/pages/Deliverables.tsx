@@ -55,10 +55,15 @@ export default function Deliverables() {
               "@type": "ListItem",
               "position": idx + 1,
               "item": {
-                "@type": "Product",
+                "@type": "Service",
                 "name": item.title,
                 "description": item.description,
-                "category": item.category,
+                "serviceType": item.category,
+                "provider": {
+                  "@type": "Organization",
+                  "name": "Adriatica D.O.O.",
+                  "url": "https://www.adriaticadoo.com"
+                },
               },
             })),
           })}
