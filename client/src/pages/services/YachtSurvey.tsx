@@ -5,6 +5,7 @@ import { SEO } from "@/components/SEO";
 import { HashLink } from "@/components/HashLink";
 import { services } from "@/data/services";
 import { RelatedContent } from "@/components/RelatedContent";
+import { Link } from "wouter";
 
 export default function YachtSurvey() {
   const service = services.find(s => s.slug === "yacht-survey");
@@ -113,6 +114,20 @@ export default function YachtSurvey() {
       <div className="min-h-screen bg-background font-body">
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+          <div className="flex flex-wrap items-center gap-4 mb-4">
+    <Link
+      href="/services"
+      className="inline-flex items-center text-sm text-primary hover:underline"
+    >
+      ← Back to all services
+    </Link>
+    <Link
+      href="/services/project-management"
+      className="inline-flex items-center text-sm text-primary hover:underline"
+    >
+      ← Back to Project Management
+    </Link>
+  </div>
           <h1 className="font-display text-4xl md:text-5xl font-bold text-[#0B3B5C] mb-6">
             Yacht Survey &amp; Inspection
           </h1>

@@ -5,6 +5,7 @@ import { SEO } from "@/components/SEO";
 import { HashLink } from "@/components/HashLink";
 import { services } from "@/data/services";
 import { RelatedContent } from "@/components/RelatedContent";
+import { Link } from "wouter";
 
 export default function StructuralIntegrity() {
   const service = services.find(s => s.slug === "structural-integrity");
@@ -105,6 +106,9 @@ export default function StructuralIntegrity() {
       <div className="min-h-screen bg-background font-body">
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+          <Link href="/services" className="inline-flex items-center text-sm text-primary hover:underline mb-4">
+    ← Back to all services
+  </Link>
           <h1 className="font-display text-4xl md:text-5xl font-bold text-[#0B3B5C] mb-6">
             Structural Integrity
           </h1>
