@@ -6,30 +6,64 @@ import { SEO } from "@/components/SEO";
 import ProcessWheel from "@/components/ProcessWheel";
 import { HashLink } from "@/components/HashLink";
 
-// ─── Organisation-level structured data ──────────────────────────────────────
-const organizationData = {
+// ─── Structured data ──────────────────────────────────────────────────────────
+const pageSchema = {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "Adriatica D.O.O.",
-  "image": "https://www.adriaticadoo.com/og-image-default.png",
-  "url": "https://www.adriaticadoo.com",
-  "taxID": "03612807",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Budva",
-    "addressCountry": "ME",
-  },
-  "serviceType": [
-    "Marine Engineering",
-    "Regulatory Compliance",
-    "MRV Reporting",
-    "Biofouling Management",
-    "Structural Integrity",
-  ],
-  "description": "Marine engineering consultancy specializing in EU MRV, IMO DCS, and Biofouling compliance.",
-  "areaServed": [
-    "Bar", "Budva", "Kotor", "Tivat",
-    "Montenegro", "Adriatic Coast", "Europe",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.adriaticadoo.com/#organization",
+      "name": "Adriatica D.O.O.",
+      "url": "https://www.adriaticadoo.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.adriaticadoo.com/logo.png",
+      },
+      "taxID": "03612807",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Budva",
+        "addressCountry": "ME",
+      },
+      "description": "Marine engineering consultancy specializing in EU MRV, IMO DCS, and Biofouling compliance.",
+      "areaServed": [
+        "Bar", "Budva", "Kotor", "Tivat",
+        "Montenegro", "Adriatic Coast", "Europe",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.adriaticadoo.com/#website",
+      "url": "https://www.adriaticadoo.com/",
+      "name": "Adriatica D.O.O.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://www.adriaticadoo.com/#organization" },
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.adriaticadoo.com/services/#webpage",
+      "url": "https://www.adriaticadoo.com/services",
+      "name": "Services | Adriatica D.O.O.",
+      "description": "Marine engineering services: engineering plans, documentation, structural integrity, sustainable technologies, regulatory compliance, and project management.",
+      "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
+      "about": { "@id": "https://www.adriaticadoo.com/#organization" },
+      "inLanguage": "en",
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://www.adriaticadoo.com/#professionalservice",
+      "name": "Adriatica D.O.O.",
+      "image": "https://www.adriaticadoo.com/og-image-default.png",
+      "url": "https://www.adriaticadoo.com",
+      "provider": { "@id": "https://www.adriaticadoo.com/#organization" },
+      "serviceType": [
+        "Marine Engineering",
+        "Regulatory Compliance",
+        "MRV Reporting",
+        "Biofouling Management",
+        "Structural Integrity",
+      ],
+    },
   ],
 };
 
@@ -103,6 +137,7 @@ const services = [
       "Ship Energy Efficiency Management Plan (SEEMP)",
       "Garbage Management Plan",
       "Emergency Response Manuals",
+      "Polar Water Operational Manual (PWOM)",
     ],
     outcome: "PSC‑ready documentation, reduced inspection risk, and full compliance with current regulations.",
     references: "IMO, MARPOL, flag state administrations",
@@ -137,8 +172,8 @@ function ServiceCard({ service }: { service: Service }) {
         {service.description}
       </p>
       <ul className="list-disc pl-5 mb-2 text-muted-foreground space-y-1 text-sm">
-        {service.deliverables.map((item, i) => (
-          <li key={i}>{item}</li>
+        {service.deliverables.map(item => (
+          <li key={item}>{item}</li>
         ))}
       </ul>
       <p className="text-sm text-primary font-medium mt-3">
@@ -164,9 +199,9 @@ function StructuralTimelineDiagram() {
   const milestones = [
     { year: "Yr 0",   label: "Newbuild /\nBaseline Survey",  sub: "Initial condition\nestablished" },
     { year: "Yr 2.5", label: "Intermediate\nSurvey",         sub: "Hull & coating\ncondition check" },
-    { year: "Yr 5",   label: "Special Survey\n(1st)",         sub: "Class renewal,\nfull inspection" },
-    { year: "Yr 10",  label: "Special Survey\n(2nd)",         sub: "Structural assessment\n& repair scope" },
-    { year: "Yr 15+", label: "Life Extension\nStudy",         sub: "Integrity analysis,\nclass acceptance" },
+    { year: "Yr 5",   label: "Special Survey\n(1st)",        sub: "Class renewal,\nfull inspection" },
+    { year: "Yr 10",  label: "Special Survey\n(2nd)",        sub: "Structural assessment\n& repair scope" },
+    { year: "Yr 15+", label: "Life Extension\nStudy",        sub: "Integrity analysis,\nclass acceptance" },
   ];
 
   const W         = 500;
@@ -213,7 +248,7 @@ function StructuralTimelineDiagram() {
           const subLines   = m.sub.split("\n");
 
           return (
-            <g key={i}>
+            <g key={m.year}>
               <line
                 x1={x} y1={above ? lineY - nodeR : lineY + nodeR}
                 x2={x} y2={above ? labelY + 14 : lineY + nodeR + 8}
@@ -235,7 +270,7 @@ function StructuralTimelineDiagram() {
               </text>
               {labelLines.map((line, li) => (
                 <text
-                  key={li}
+                  key={`${m.year}-label-${li}`}
                   x={x} y={labelY + li * 13}
                   textAnchor="middle"
                   fill={navyCol}
@@ -247,7 +282,7 @@ function StructuralTimelineDiagram() {
               ))}
               {subLines.map((line, li) => (
                 <text
-                  key={li}
+                  key={`${m.year}-sub-${li}`}
                   x={x} y={subY + li * 11}
                   textAnchor="middle"
                   fill={muteCol}
@@ -287,11 +322,10 @@ function OperatingModelDiagram() {
   const OFF   = 48;
   const SQRT3 = Math.sqrt(3);
 
-  // label/labelDy alanları kaldırıldı — render'da kullanılmıyordu
   const circles = [
-    { cx: CX,                  cy: CY - OFF         },
-    { cx: CX - OFF * SQRT3 / 2, cy: CY + OFF / 2    },
-    { cx: CX + OFF * SQRT3 / 2, cy: CY + OFF / 2    },
+    { cx: CX,                    cy: CY - OFF          },
+    { cx: CX - OFF * SQRT3 / 2,  cy: CY + OFF / 2      },
+    { cx: CX + OFF * SQRT3 / 2,  cy: CY + OFF / 2      },
   ];
 
   const navyCol   = "#0B3B5C";
@@ -300,9 +334,9 @@ function OperatingModelDiagram() {
   const strokeCol = "#3A74A0";
 
   const intersections = [
-    { x: CX - 34,  y: CY - 28,           text: "Technical\nCompliance" },
-    { x: CX + 34,  y: CY - 28,           text: "Regulatory\nOversight" },
-    { x: CX,       y: CY + OFF / 2 + 14, text: "Execution\nControl"   },
+    { id: "technical",  x: CX - 34,  y: CY - 28,           text: "Technical\nCompliance" },
+    { id: "regulatory", x: CX + 34,  y: CY - 28,           text: "Regulatory\nOversight"  },
+    { id: "execution",  x: CX,       y: CY + OFF / 2 + 14, text: "Execution\nControl"     },
   ];
 
   return (
@@ -362,18 +396,20 @@ function OperatingModelDiagram() {
           Operations
         </text>
 
-        {intersections.map((n, i) => {
+        {intersections.map(n => {
           const lines = n.text.split("\n");
           return (
             <text
-              key={i}
+              key={n.id}
               x={n.x} y={n.y}
               textAnchor="middle" fill={muteCol}
               fontFamily="var(--font-body, 'Inter', sans-serif)"
               fontSize="8" fontWeight="500"
             >
               {lines.map((line, li) => (
-                <tspan key={li} x={n.x} dy={li === 0 ? 0 : 11}>{line}</tspan>
+                <tspan key={`${n.id}-${li}`} x={n.x} dy={li === 0 ? 0 : 11}>
+                  {line}
+                </tspan>
               ))}
             </text>
           );
@@ -414,7 +450,7 @@ export default function Services() {
       />
       <Helmet>
         <script type="application/ld+json">
-          {JSON.stringify(organizationData)}
+          {JSON.stringify(pageSchema).replace(/</g, '\\u003c')}
         </script>
       </Helmet>
 
