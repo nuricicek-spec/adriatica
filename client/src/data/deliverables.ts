@@ -282,7 +282,7 @@ export const deliverables: Deliverable[] = [
     description: 'General health check for owners or potential buyers, focusing on maintenance needs and safety compliance.',
     category: 'Operations',
     serviceSlug: 'yacht-survey',
-    previewImage: '/images/deliverables/report.svg',
+    previewImage: '/images/deliverables/reportttt.svg',
     previewPdf: '/pdfs/deliverables/technical-condition-report.pdf',
   },
 ];
