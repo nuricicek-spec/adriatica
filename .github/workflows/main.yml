@@ -1,0 +1,13 @@
+name: Deploy to Cloudflare Pages
+on:
+  push:
+    branches:
+      - main  # Senin ana branch adın neyse (master ise master yap)
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Cloudflare Deploy Hook
+        run: |
+          curl -d "" "https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/d529d0e8-0d25-4cff-aa97-22637cda8022"
