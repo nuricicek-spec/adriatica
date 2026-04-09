@@ -11,9 +11,9 @@ export function Footer() {
   };
 
   return (
-    <footer id="footer" className="bg-[#0B3B5C] text-white pt-24 pb-8">
+    <footer id="footer" className="bg-[#0B3B5C] text-white pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Üst Bölüm: 3 Sütun (Legal kaldırıldı) */}
+        {/* Üst Bölüm: 3 Sütun */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 border-b border-white/10 pb-16">
           
           {/* Sol Sütun: Logo + İletişim + Sosyal */}
@@ -127,8 +127,8 @@ export function Footer() {
                 </ul>
               </div>
 
-              {/* Butonlar (Shipnet tarzı altlı üstlü) */}
-              <div className="flex flex-col space-y-3 pt-9">
+              {/* Butonlar - üst hiza düzeltildi (pt kaldırıldı) */}
+              <div className="flex flex-col space-y-3">
                 <HashLink
                   href="/request-consultation"
                   className="inline-block bg-[#D4AF37] text-black font-medium px-5 py-2.5 rounded-sm text-sm uppercase tracking-wide shadow-lg hover:bg-[#C9A961] transition-all duration-300 text-center"
@@ -153,7 +153,7 @@ export function Footer() {
             <p>© 2026 ADRIATICA D.O.O. All rights reserved.</p>
           </div>
 
-          {/* Orta: Logolar (eski boyutlarına yakın) */}
+          {/* Orta: Logolar */}
           <div className="order-1 lg:order-2 flex flex-wrap justify-center items-center gap-5">
             <a
               href="https://www.imo.org"
@@ -232,25 +232,25 @@ export function Footer() {
             </a>
           </div>
 
-          {/* Sağ: Legal Linkler */}
-          <div className="order-3 flex flex-wrap justify-center gap-x-5 gap-y-1 text-xs">
+          {/* Sağ: Legal Linkler - yazı boyutu text-sm yapıldı */}
+          <div className="order-3 flex flex-wrap justify-center gap-x-5 gap-y-1">
             <HashLink
               href="/privacy-policy"
-              className="hover:text-white transition-colors"
+              className="hover:text-white transition-colors text-sm"
             >
               Privacy Policy
             </HashLink>
             <span className="text-white/30">·</span>
             <HashLink
               href="/terms-of-service"
-              className="hover:text-white transition-colors"
+              className="hover:text-white transition-colors text-sm"
             >
               Terms of Service
             </HashLink>
             <span className="text-white/30">·</span>
             <HashLink
               href="/cookie-policy"
-              className="hover:text-white transition-colors"
+              className="hover:text-white transition-colors text-sm"
             >
               Cookie Policy
             </HashLink>
