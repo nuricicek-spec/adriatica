@@ -104,10 +104,10 @@ export default function RequestConsultation() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              {/* Sayfa Başlığı */}
+              {/* Sayfa Başlığı - GÜÇLENDİRİLMİŞ */}
               <div className="text-center mb-8">
                 <h1 className="font-display text-4xl md:text-5xl font-bold text-[#0B3B5C] mb-4">
-                  Turn Technical Complexity into Operational Clarity
+                  Stay Compliant. Reduce Downtime. Operate with Confidence.
                 </h1>
                 <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
                   Request a technical consultation to address your vessel's
@@ -115,48 +115,45 @@ export default function RequestConsultation() {
                 </p>
               </div>
 
-              {/* 3 Maddelik Değer Önerisi */}
+              {/* 3 Maddelik Değer Önerisi - KISALTILMIŞ */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-5xl mx-auto">
                 <div className="bg-neutral-50 border-l-2 border-primary p-5 rounded-sm">
                   <div className="flex items-center gap-3 mb-2">
-                    <FileCheck className="h-6 w-6 text-primary" />
-                    <h3 className="font-display font-bold text-[#0B3B5C]">
-                      Stay PSC-Ready & Avoid Detentions
+                    <FileCheck className="h-6 w-6 text-primary shrink-0" />
+                    <h3 className="font-display font-bold text-[#0B3B5C] text-base">
+                      Stay PSC‑Ready
                     </h3>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    Identify compliance gaps before inspections and keep your
-                    vessel operating without interruptions.
+                    Identify compliance gaps before inspections.
                   </p>
                 </div>
                 <div className="bg-neutral-50 border-l-2 border-primary p-5 rounded-sm">
                   <div className="flex items-center gap-3 mb-2">
-                    <Anchor className="h-6 w-6 text-primary" />
-                    <h3 className="font-display font-bold text-[#0B3B5C]">
-                      Reduce Yard Time & Budget Surprises
+                    <Anchor className="h-6 w-6 text-primary shrink-0" />
+                    <h3 className="font-display font-bold text-[#0B3B5C] text-base">
+                      Reduce Yard Time
                     </h3>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    Optimize dry‑dock and refit planning with clear technical
-                    specifications and owner's representation.
+                    Optimize dry‑dock with clear technical specs.
                   </p>
                 </div>
                 <div className="bg-neutral-50 border-l-2 border-primary p-5 rounded-sm">
                   <div className="flex items-center gap-3 mb-2">
-                    <ClipboardCheck className="h-6 w-6 text-primary" />
-                    <h3 className="font-display font-bold text-[#0B3B5C]">
-                      Survey-Ready Documentation
+                    <ClipboardCheck className="h-6 w-6 text-primary shrink-0" />
+                    <h3 className="font-display font-bold text-[#0B3B5C] text-base">
+                      Survey‑Ready Docs
                     </h3>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    Ensure as‑built drawings, manuals, and plans meet all
-                    requirements — first time, every time.
+                    Ensure drawings and plans meet all requirements.
                   </p>
                 </div>
               </div>
 
-              {/* Mobil Güven Çizgisi (sadece mobilde görünür) */}
-              <div className="lg:hidden mb-6 flex items-center justify-center gap-4 text-xs text-muted-foreground bg-neutral-50/80 py-3 px-4 rounded-sm border border-border/20">
+              {/* Mobil Güven Çizgisi */}
+              <div className="lg:hidden mb-4 flex items-center justify-center gap-4 text-xs text-muted-foreground bg-neutral-50/80 py-3 px-4 rounded-sm border border-border/20">
                 <span className="flex items-center gap-1">
                   <Clock className="h-3.5 w-3.5" /> Response within 24h
                 </span>
@@ -167,6 +164,12 @@ export default function RequestConsultation() {
                   <Lock className="h-3.5 w-3.5" /> No obligation
                 </span>
               </div>
+
+              {/* Friction Breaker - HEMEN FORM ÖNCESİ */}
+              <p className="text-sm text-center text-muted-foreground mb-6 lg:hidden">
+                This is a focused technical consultation — not a generic contact
+                request.
+              </p>
 
               {/* İki Sütun: Form + Bilgi Paneli — 7/5 Oranında */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
@@ -409,7 +412,7 @@ export default function RequestConsultation() {
                             : "Submit Consultation Request"}
                         </button>
 
-                        {/* Urgency Notu (ince ayar) */}
+                        {/* Urgency Notu */}
                         <p className="text-xs text-center text-muted-foreground mt-3">
                           We recommend addressing compliance gaps at least 4–6
                           weeks before your next survey.
@@ -422,7 +425,12 @@ export default function RequestConsultation() {
                 {/* SAĞ: Bilgi Paneli - 5 sütun */}
                 <div className="lg:col-span-5">
                   <div className="bg-neutral-50 border border-border/20 rounded-sm p-6 md:p-8 shadow-sm sticky top-24">
-                    {/* Hedef Kitle - Pain-point soruları eklendi */}
+                    {/* Friction breaker masaüstü için */}
+                    <p className="text-sm text-muted-foreground mb-4 pb-2 border-b border-border/20">
+                      This is a focused technical consultation — not a generic
+                      contact request.
+                    </p>
+
                     <h2 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">
                       Who This Is For
                     </h2>
@@ -445,7 +453,6 @@ export default function RequestConsultation() {
                       <li>You receive initial technical feedback and options.</li>
                     </ol>
 
-                    {/* Güven Vurgusu */}
                     <div className="mt-6 pt-6 border-t border-border/30">
                       <div className="flex items-start gap-3">
                         <div className="bg-primary/10 p-2 rounded-full">
