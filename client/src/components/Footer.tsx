@@ -13,17 +13,17 @@ export function Footer() {
   return (
     <footer id="footer" className="bg-[#0B3B5C] text-white pt-24 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Üst Bölüm: 4 Sütun */}
+        {/* Üst Bölüm: 3 Sütun (Legal kaldırıldı) */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 border-b border-white/10 pb-16">
           
-          {/* Sol Sütun: Logo + İletişim + Sosyal + Buton */}
+          {/* Sol Sütun: Logo + İletişim + Sosyal */}
           <div className="md:col-span-5">
             <HashLink href="/" className="flex items-center space-x-3 mb-5">
               <img
                 src="/logo.svg"
                 alt="Adriatica D.O.O. Logo"
-                width="36"
-                height="36"
+                width="40"
+                height="40"
                 className="brightness-0 invert"
               />
               <span className="font-display font-bold text-2xl tracking-widest uppercase">
@@ -35,7 +35,7 @@ export function Footer() {
               compliance, and technical project management.
             </p>
             <div className="text-[#C8D6E5] text-sm space-y-1 mb-6">
-              <p>📍 Serving the Montenegro Bay & Adriatic Coast</p>
+              <p>📍 Serving the Montenegro Bay &amp; Adriatic Coast</p>
               <p>
                 <a
                   href="mailto:info@adriaticadoo.com"
@@ -53,40 +53,30 @@ export function Footer() {
                 </a>
               </p>
             </div>
-            <div className="flex flex-wrap items-center gap-4">
-              {/* Sosyal Medya */}
-              <div className="flex gap-3 items-center">
-                <a
-                  href="#"
-                  aria-label="Adriatica D.O.O. on Facebook"
-                  className="text-[#e8e4d9] hover:text-[#1877F2] transition-all duration-300 hover:-translate-y-1"
-                >
-                  <Facebook size={20} aria-hidden="true" />
-                </a>
-                <a
-                  href="#"
-                  aria-label="Adriatica D.O.O. on Instagram"
-                  className="text-[#e8e4d9] hover:text-[#E1306C] transition-all duration-300 hover:-translate-y-1"
-                >
-                  <Instagram size={20} aria-hidden="true" />
-                </a>
-                <a
-                  href="https://www.linkedin.com/company/adriatica-d-o-o"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Adriatica D.O.O. on LinkedIn"
-                  className="text-[#e8e4d9] hover:text-[#0077b5] transition-all duration-300 hover:-translate-y-1"
-                >
-                  <Linkedin size={20} aria-hidden="true" />
-                </a>
-              </div>
-              {/* Request Consultation Butonu */}
-              <HashLink
-                href="/request-consultation"
-                className="inline-block bg-[#D4AF37] text-black font-medium px-5 py-2.5 rounded-sm text-sm uppercase tracking-wide shadow-lg hover:bg-[#C9A961] transition-all duration-300"
+            <div className="flex gap-4 items-center">
+              <a
+                href="#"
+                aria-label="Adriatica D.O.O. on Facebook"
+                className="text-[#e8e4d9] hover:text-[#1877F2] transition-all duration-300 hover:-translate-y-1"
               >
-                Request Consultation
-              </HashLink>
+                <Facebook size={20} aria-hidden="true" />
+              </a>
+              <a
+                href="#"
+                aria-label="Adriatica D.O.O. on Instagram"
+                className="text-[#e8e4d9] hover:text-[#E1306C] transition-all duration-300 hover:-translate-y-1"
+              >
+                <Instagram size={20} aria-hidden="true" />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/adriatica-d-o-o"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Adriatica D.O.O. on LinkedIn"
+                className="text-[#e8e4d9] hover:text-[#0077b5] transition-all duration-300 hover:-translate-y-1"
+              >
+                <Linkedin size={20} aria-hidden="true" />
+              </a>
             </div>
           </div>
 
@@ -113,146 +103,136 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Company Sütunu */}
-          <div className="md:col-span-2">
-            <h3 className="font-display font-bold text-lg mb-5">Company</h3>
-            <ul className="space-y-3">
-              {[
-                { name: "About", href: "/about" },
-                { name: "Careers", href: "/careers" },
-                { name: "News", href: "/news" },
-                { name: "Client Access", href: "#", isButton: true },
-              ].map((item) => (
-                <li key={item.name}>
-                  {item.isButton ? (
-                    <button
-                      onClick={handleClientAccess}
-                      className="text-[#C8D6E5] hover:text-white transition-colors text-sm flex items-center gap-1"
-                    >
-                      {item.name} <ExternalLink size={12} />
-                    </button>
-                  ) : (
-                    <HashLink
-                      href={item.href}
-                      className="text-[#C8D6E5] hover:text-white transition-colors text-sm"
-                    >
-                      {item.name}
-                    </HashLink>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Company + Butonlar Sütunu */}
+          <div className="md:col-span-5">
+            <div className="grid grid-cols-2 gap-6">
+              {/* Company Linkleri */}
+              <div>
+                <h3 className="font-display font-bold text-lg mb-5">Company</h3>
+                <ul className="space-y-3">
+                  {[
+                    { name: "About", href: "/about" },
+                    { name: "Careers", href: "/careers" },
+                    { name: "News", href: "/news" },
+                  ].map((item) => (
+                    <li key={item.name}>
+                      <HashLink
+                        href={item.href}
+                        className="text-[#C8D6E5] hover:text-white transition-colors text-sm"
+                      >
+                        {item.name}
+                      </HashLink>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-          {/* Legal Sütunu */}
-          <div className="md:col-span-3">
-            <h3 className="font-display font-bold text-lg mb-5">Legal</h3>
-            <ul className="space-y-3">
-              {[
-                { name: "Privacy Policy", href: "/privacy-policy" },
-                { name: "Terms of Service", href: "/terms-of-service" },
-                { name: "Cookie Policy", href: "/cookie-policy" },
-              ].map((item) => (
-                <li key={item.name}>
-                  <HashLink
-                    href={item.href}
-                    className="text-[#C8D6E5] hover:text-white transition-colors text-sm"
-                  >
-                    {item.name}
-                  </HashLink>
-                </li>
-              ))}
-            </ul>
+              {/* Butonlar (Shipnet tarzı altlı üstlü) */}
+              <div className="flex flex-col space-y-3 pt-9">
+                <HashLink
+                  href="/request-consultation"
+                  className="inline-block bg-[#D4AF37] text-black font-medium px-5 py-2.5 rounded-sm text-sm uppercase tracking-wide shadow-lg hover:bg-[#C9A961] transition-all duration-300 text-center"
+                >
+                  Request Consultation
+                </HashLink>
+                <button
+                  onClick={handleClientAccess}
+                  className="inline-flex items-center justify-center gap-1 border border-white/30 text-white font-medium px-5 py-2.5 rounded-sm text-sm uppercase tracking-wide hover:bg-white/10 transition-all duration-300"
+                >
+                  Client Access <ExternalLink size={14} />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Alt Şerit: Copyright + Logolar + Legal Linkler */}
         <div className="pt-6 flex flex-col lg:flex-row justify-between items-center gap-5 text-sm text-[#C8D6E5]">
           {/* Sol: Copyright */}
-          <div className="order-2 lg:order-1">
+          <div className="order-2 lg:order-1 text-center lg:text-left">
             <p>© 2026 ADRIATICA D.O.O. All rights reserved.</p>
           </div>
 
-          {/* Orta: Logolar */}
-          <div className="order-1 lg:order-2 flex flex-wrap justify-center items-center gap-4">
+          {/* Orta: Logolar (eski boyutlarına yakın) */}
+          <div className="order-1 lg:order-2 flex flex-wrap justify-center items-center gap-5">
             <a
               href="https://www.imo.org"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="IMO – International Maritime Organization"
+              aria-label="IMO"
               className="hover:opacity-80 hover:scale-105 transition-transform duration-200"
             >
               <img
                 src="/logos/imo_logo.png"
                 alt="IMO"
-                width={70}
-                height={30}
-                className="h-7 w-auto bg-white/10 rounded-sm p-0.5"
+                width="93"
+                height="40"
+                className="h-10 w-auto bg-white/10 rounded-sm p-0.5"
               />
             </a>
             <a
               href="https://www.parismou.org"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Paris MoU on Port State Control"
+              aria-label="Paris MoU"
               className="hover:opacity-80 hover:scale-105 transition-transform duration-200"
             >
               <img
                 src="/logos/parismou-logo.png"
                 alt="Paris MoU"
-                width={130}
-                height={30}
-                className="h-7 w-auto"
+                width="182"
+                height="40"
+                className="h-10 w-auto"
               />
             </a>
             <a
               href="https://helcom.fi"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="HELCOM – Baltic Marine Environment Protection Commission"
+              aria-label="HELCOM"
               className="hover:opacity-80 hover:scale-105 transition-transform duration-200"
             >
               <img
                 src="/logos/helcom_logo.png"
                 alt="HELCOM"
-                width={30}
-                height={30}
-                className="h-7 w-auto"
+                width="41"
+                height="40"
+                className="h-10 w-auto"
               />
             </a>
             <a
               href="https://www.gov.me/uprava-pomorske-sigurnosti"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Montenegro Maritime Safety Administration"
+              aria-label="Montenegro MSA"
               className="hover:opacity-80 hover:scale-105 transition-transform duration-200"
             >
               <img
                 src="/logos/me-flag-round-circle-icon.svg"
                 alt="Montenegro MSA"
-                width={30}
-                height={30}
-                className="h-7 w-7"
+                width="40"
+                height="40"
+                className="h-10 w-10"
               />
             </a>
             <a
               href="https://www.emsa.europa.eu"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="EMSA – European Maritime Safety Agency"
+              aria-label="EMSA"
               className="hover:opacity-80 hover:scale-105 transition-transform duration-200"
             >
               <img
                 src="/logos/eu-union-flag-round-circle-icon.svg"
                 alt="EMSA"
-                width={30}
-                height={30}
-                className="h-7 w-7"
+                width="40"
+                height="40"
+                className="h-10 w-10"
               />
             </a>
           </div>
 
-          {/* Sağ: Legal Linkler (tekrarlı, alt şeritte) */}
+          {/* Sağ: Legal Linkler */}
           <div className="order-3 flex flex-wrap justify-center gap-x-5 gap-y-1 text-xs">
             <HashLink
               href="/privacy-policy"
