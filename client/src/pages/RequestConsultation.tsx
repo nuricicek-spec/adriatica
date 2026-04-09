@@ -5,12 +5,20 @@ import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
-import { CheckCircle2, Ship, FileText, Clock, Shield } from "lucide-react";
+import {
+  CheckCircle2,
+  FileCheck,
+  Anchor,
+  ClipboardCheck,
+  Clock,
+  Shield,
+} from "lucide-react";
 
 // Sayfa sabit metinleri
-const PAGE_TITLE = "Request Technical Consultation";
+const PAGE_TITLE =
+  "Request Technical Consultation | Compliance & Engineering Management";
 const PAGE_DESCRIPTION =
-  "Request a personalised consultation with Adriatica D.O.O. marine engineering experts. We'll respond within one business day to discuss your project requirements.";
+  "Request a technical consultation to address your vessel's specific compliance, structural, or documentation challenges. PSC readiness, dry-dock planning, and technical audits.";
 
 export default function RequestConsultation() {
   const [formStatus, setFormStatus] = useState<
@@ -24,10 +32,10 @@ export default function RequestConsultation() {
     const form = e.currentTarget;
     const formData = new FormData(form);
 
-    // İsteğe bağlı: _subject alanını dinamik olarak ekleyelim
+    // Dinamik email konusu
     const fullName = formData.get("fullName") as string;
     if (fullName) {
-      formData.append("_subject", `New Consultation Request: ${fullName}`);
+      formData.append("_subject", `New Technical Consultation: ${fullName}`);
     }
 
     try {
@@ -48,32 +56,31 @@ export default function RequestConsultation() {
     }
   };
 
-  // Schema.org yapısı (ContactPage)
+  // Schema.org (ContactPage)
   const consultationSchema = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "ContactPage",
         "@id": "https://www.adriaticadoo.com/request-consultation/#webpage",
-        "url": "https://www.adriaticadoo.com/request-consultation",
-        "name": PAGE_TITLE,
-        "description": PAGE_DESCRIPTION,
-        "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
-        "about": { "@id": "https://www.adriaticadoo.com/#organization" },
-        "inLanguage": "en",
-        "datePublished": "2025-01-01",
-        "dateModified": "2025-03-20"
+        url: "https://www.adriaticadoo.com/request-consultation",
+        name: PAGE_TITLE,
+        description: PAGE_DESCRIPTION,
+        isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
+        about: { "@id": "https://www.adriaticadoo.com/#organization" },
+        inLanguage: "en",
       },
       {
         "@type": "WebSite",
         "@id": "https://www.adriaticadoo.com/#website",
-        "url": "https://www.adriaticadoo.com/",
-        "name": "Adriatica D.O.O.",
-        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
-        "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
-      }
-    ]
+        url: "https://www.adriaticadoo.com/",
+        name: "Adriatica D.O.O.",
+        description:
+          "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        inLanguage: "en",
+        publisher: { "@id": "https://www.adriaticadoo.com/#organization" },
+      },
+    ],
   };
 
   return (
@@ -85,7 +92,7 @@ export default function RequestConsultation() {
       />
       <Helmet>
         <script type="application/ld+json">
-          {JSON.stringify(consultationSchema).replace(/</g, '\\u003c')}
+          {JSON.stringify(consultationSchema).replace(/</g, "\\u003c")}
         </script>
       </Helmet>
 
@@ -99,17 +106,58 @@ export default function RequestConsultation() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              {/* Sayfa Başlığı */}
-              <div className="text-center mb-12">
+              {/* Sayfa Başlığı - YENİ, SİTEYLE UYUMLU */}
+              <div className="text-center mb-8">
                 <h1 className="font-display text-4xl md:text-5xl font-bold text-[#0B3B5C] mb-4">
-                  {PAGE_TITLE}
+                  Turn Technical Complexity into Operational Clarity
                 </h1>
-                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                  Tell us about your vessel and technical needs. Our principal engineers will respond within one business day.
+                <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+                  Request a technical consultation to address your vessel's
+                  specific compliance, structural, or documentation challenges.
                 </p>
               </div>
 
-              {/* İki Sütunlu İçerik: Form + Bilgi Paneli */}
+              {/* 3 Maddelik Değer Önerisi - FORM ÜSTÜNDE */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-5xl mx-auto">
+                <div className="bg-neutral-50 border-l-2 border-primary p-5 rounded-sm">
+                  <div className="flex items-center gap-3 mb-2">
+                    <FileCheck className="h-6 w-6 text-primary" />
+                    <h3 className="font-display font-bold text-[#0B3B5C]">
+                      PSC & Regulatory Readiness
+                    </h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Identify gaps in your current documentation and compliance
+                    status before inspections.
+                  </p>
+                </div>
+                <div className="bg-neutral-50 border-l-2 border-primary p-5 rounded-sm">
+                  <div className="flex items-center gap-3 mb-2">
+                    <Anchor className="h-6 w-6 text-primary" />
+                    <h3 className="font-display font-bold text-[#0B3B5C]">
+                      Dry‑Dock & Refit Planning
+                    </h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Optimize your yard period with clear technical
+                    specifications and owner's representation.
+                  </p>
+                </div>
+                <div className="bg-neutral-50 border-l-2 border-primary p-5 rounded-sm">
+                  <div className="flex items-center gap-3 mb-2">
+                    <ClipboardCheck className="h-6 w-6 text-primary" />
+                    <h3 className="font-display font-bold text-[#0B3B5C]">
+                      Technical Documentation Audit
+                    </h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Ensure your as-built drawings, manuals, and plans are
+                    survey‑ready.
+                  </p>
+                </div>
+              </div>
+
+              {/* İki Sütun: Form + Bilgi Paneli */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
                 {/* SOL: Form */}
                 <div className="lg:col-span-2">
@@ -120,7 +168,9 @@ export default function RequestConsultation() {
                         Request Received
                       </h2>
                       <p className="text-muted-foreground mb-6">
-                        Thank you for reaching out. A member of our team will contact you shortly to discuss your requirements.
+                        Thank you for reaching out. A member of our technical
+                        team will respond within one business day to discuss
+                        your requirements.
                       </p>
                       <button
                         onClick={() => setFormStatus("idle")}
@@ -137,7 +187,10 @@ export default function RequestConsultation() {
                       <div className="space-y-5">
                         {/* Tam İsim */}
                         <div>
-                          <label htmlFor="fullName" className="block text-sm font-medium text-[#0B3B5C] mb-1">
+                          <label
+                            htmlFor="fullName"
+                            className="block text-sm font-medium text-[#0B3B5C] mb-1"
+                          >
                             Full Name <span className="text-red-500">*</span>
                           </label>
                           <input
@@ -147,13 +200,16 @@ export default function RequestConsultation() {
                             required
                             disabled={formStatus === "submitting"}
                             className="w-full px-4 py-3 bg-neutral-50 border border-border rounded-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all disabled:opacity-50"
-                            placeholder="Captain / Owner / Manager"
+                            placeholder="Captain / Owner / Technical Manager"
                           />
                         </div>
 
                         {/* Email */}
                         <div>
-                          <label htmlFor="email" className="block text-sm font-medium text-[#0B3B5C] mb-1">
+                          <label
+                            htmlFor="email"
+                            className="block text-sm font-medium text-[#0B3B5C] mb-1"
+                          >
                             Email Address <span className="text-red-500">*</span>
                           </label>
                           <input
@@ -167,10 +223,16 @@ export default function RequestConsultation() {
                           />
                         </div>
 
-                        {/* Telefon (Opsiyonel) */}
+                        {/* Telefon */}
                         <div>
-                          <label htmlFor="phone" className="block text-sm font-medium text-[#0B3B5C] mb-1">
-                            Phone Number <span className="text-muted-foreground text-xs">(optional)</span>
+                          <label
+                            htmlFor="phone"
+                            className="block text-sm font-medium text-[#0B3B5C] mb-1"
+                          >
+                            Phone Number{" "}
+                            <span className="text-muted-foreground text-xs">
+                              (optional)
+                            </span>
                           </label>
                           <input
                             type="tel"
@@ -182,10 +244,16 @@ export default function RequestConsultation() {
                           />
                         </div>
 
-                        {/* Şirket / Gemi Adı */}
+                        {/* Şirket / Gemi */}
                         <div>
-                          <label htmlFor="company" className="block text-sm font-medium text-[#0B3B5C] mb-1">
-                            Company / Vessel Name <span className="text-muted-foreground text-xs">(optional)</span>
+                          <label
+                            htmlFor="company"
+                            className="block text-sm font-medium text-[#0B3B5C] mb-1"
+                          >
+                            Company / Vessel Name{" "}
+                            <span className="text-muted-foreground text-xs">
+                              (optional)
+                            </span>
                           </label>
                           <input
                             type="text"
@@ -199,8 +267,14 @@ export default function RequestConsultation() {
 
                         {/* Ülke */}
                         <div>
-                          <label htmlFor="country" className="block text-sm font-medium text-[#0B3B5C] mb-1">
-                            Country <span className="text-muted-foreground text-xs">(optional)</span>
+                          <label
+                            htmlFor="country"
+                            className="block text-sm font-medium text-[#0B3B5C] mb-1"
+                          >
+                            Country{" "}
+                            <span className="text-muted-foreground text-xs">
+                              (optional)
+                            </span>
                           </label>
                           <input
                             type="text"
@@ -212,10 +286,16 @@ export default function RequestConsultation() {
                           />
                         </div>
 
-                        {/* Hizmet İlgi Alanı */}
+                        {/* Hizmet Alanı */}
                         <div>
-                          <label htmlFor="serviceInterest" className="block text-sm font-medium text-[#0B3B5C] mb-1">
-                            Area of Interest <span className="text-muted-foreground text-xs">(optional)</span>
+                          <label
+                            htmlFor="serviceInterest"
+                            className="block text-sm font-medium text-[#0B3B5C] mb-1"
+                          >
+                            Area of Interest{" "}
+                            <span className="text-muted-foreground text-xs">
+                              (optional)
+                            </span>
                           </label>
                           <select
                             name="serviceInterest"
@@ -224,19 +304,36 @@ export default function RequestConsultation() {
                             className="w-full px-4 py-3 bg-neutral-50 border border-border rounded-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all disabled:opacity-50"
                           >
                             <option value="">-- Please select --</option>
-                            <option value="Engineering Plans">Engineering Plans</option>
-                            <option value="Engineering Documentation">Engineering Documentation</option>
-                            <option value="Structural Integrity">Structural Integrity</option>
-                            <option value="Sustainable Technologies">Sustainable Technologies</option>
-                            <option value="Regulatory Compliance">Regulatory Compliance</option>
-                            <option value="Project Management">Project Management</option>
-                            <option value="Other / Not Sure">Other / Not Sure</option>
+                            <option value="Engineering Plans">
+                              Engineering Plans
+                            </option>
+                            <option value="Engineering Documentation">
+                              Engineering Documentation
+                            </option>
+                            <option value="Structural Integrity">
+                              Structural Integrity
+                            </option>
+                            <option value="Sustainable Technologies">
+                              Sustainable Technologies
+                            </option>
+                            <option value="Regulatory Compliance">
+                              Regulatory Compliance
+                            </option>
+                            <option value="Project Management">
+                              Project Management
+                            </option>
+                            <option value="Other / Not Sure">
+                              Other / Not Sure
+                            </option>
                           </select>
                         </div>
 
                         {/* Mesaj */}
                         <div>
-                          <label htmlFor="message" className="block text-sm font-medium text-[#0B3B5C] mb-1">
+                          <label
+                            htmlFor="message"
+                            className="block text-sm font-medium text-[#0B3B5C] mb-1"
+                          >
                             Message <span className="text-red-500">*</span>
                           </label>
                           <textarea
@@ -250,7 +347,7 @@ export default function RequestConsultation() {
                           />
                         </div>
 
-                        {/* GDPR Onay */}
+                        {/* GDPR */}
                         <div className="flex items-start gap-3 pt-2">
                           <input
                             type="checkbox"
@@ -260,9 +357,16 @@ export default function RequestConsultation() {
                             disabled={formStatus === "submitting"}
                             className="mt-1 h-4 w-4 rounded border-border text-primary focus:ring-primary"
                           />
-                          <label htmlFor="gdprConsent" className="text-sm text-muted-foreground leading-relaxed">
-                            I agree that Adriatica D.O.O. may process my personal data to respond to this inquiry in accordance with the{" "}
-                            <a href="/privacy-policy" className="text-primary hover:underline">
+                          <label
+                            htmlFor="gdprConsent"
+                            className="text-sm text-muted-foreground leading-relaxed"
+                          >
+                            I agree that Adriatica D.O.O. may process my personal
+                            data to respond to this inquiry in accordance with the{" "}
+                            <a
+                              href="/privacy-policy"
+                              className="text-primary hover:underline"
+                            >
                               Privacy Policy
                             </a>
                             . <span className="text-red-500">*</span>
@@ -272,64 +376,67 @@ export default function RequestConsultation() {
                         {/* Hata Mesajı */}
                         {formStatus === "error" && (
                           <div className="bg-red-50 border border-red-200 rounded-sm p-4 text-red-700 text-sm">
-                            Something went wrong. Please try again or contact us directly at{" "}
-                            <a href="mailto:info@adriaticadoo.com" className="underline font-medium">
+                            Something went wrong. Please try again or contact us
+                            directly at{" "}
+                            <a
+                              href="mailto:info@adriaticadoo.com"
+                              className="underline font-medium"
+                            >
                               info@adriaticadoo.com
                             </a>
                             .
                           </div>
                         )}
 
-                        {/* Submit Butonu */}
+                        {/* Submit */}
                         <button
                           type="submit"
                           disabled={formStatus === "submitting"}
                           className="w-full py-4 bg-[#D4AF37] text-black font-medium rounded-sm shadow-lg shadow-[#D4AF37]/20 hover:bg-[#C9A961] transition-all duration-300 uppercase tracking-wide text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                          {formStatus === "submitting" ? "Sending Request..." : "Submit Consultation Request"}
+                          {formStatus === "submitting"
+                            ? "Sending Request..."
+                            : "Submit Consultation Request"}
                         </button>
                       </div>
                     </form>
                   )}
                 </div>
 
-                {/* SAĞ: Bilgi Paneli (Değer Önerisi) */}
+                {/* SAĞ: Bilgi Paneli (Güncellendi) */}
                 <div className="lg:col-span-1">
                   <div className="bg-neutral-50 border border-border/20 rounded-sm p-6 md:p-8 sticky top-24">
-                    <h2 className="font-display text-xl font-bold text-[#0B3B5C] mb-6 flex items-center gap-2">
-                      <Ship className="h-5 w-5 text-primary" />
-                      Why Request a Consultation?
+                    <h2 className="font-display text-xl font-bold text-[#0B3B5C] mb-4">
+                      Who This Is For
                     </h2>
-                    <ul className="space-y-4 text-sm text-muted-foreground">
-                      <li className="flex gap-3">
-                        <FileText className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <span>Receive a tailored technical assessment for your specific vessel.</span>
-                      </li>
-                      <li className="flex gap-3">
-                        <Clock className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <span>Response within one business day from our principal engineers.</span>
-                      </li>
-                      <li className="flex gap-3">
-                        <Shield className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                        <span>No obligation – we'll discuss your needs and propose a clear scope of work.</span>
-                      </li>
+                    <ul className="space-y-2 text-sm text-muted-foreground mb-8 list-disc list-inside">
+                      <li>Superyacht captains & chief engineers</li>
+                      <li>Commercial fleet technical managers</li>
+                      <li>Owners preparing for surveys or refits</li>
                     </ul>
 
-                    <div className="mt-8 pt-6 border-t border-border/30">
-                      <h3 className="font-display font-bold text-[#0B3B5C] mb-2">What happens next?</h3>
-                      <ol className="space-y-3 text-sm text-muted-foreground list-decimal list-inside">
-                        <li>We'll review your request and contact you within 24 hours.</li>
-                        <li>Brief initial discussion to clarify your requirements.</li>
-                        <li>If needed, we'll propose a detailed scope and timeline.</li>
-                      </ol>
-                    </div>
+                    <h3 className="font-display font-bold text-[#0B3B5C] mb-2">
+                      What Happens Next
+                    </h3>
+                    <ol className="space-y-3 text-sm text-muted-foreground list-decimal list-inside">
+                      <li>We'll review your request and contact you within 24h.</li>
+                      <li>Brief initial discussion to clarify requirements.</li>
+                      <li>If needed, we'll propose a clear scope and timeline.</li>
+                    </ol>
 
-                    <div className="mt-6 text-xs text-muted-foreground italic">
-                      Your information is handled according to our{" "}
-                      <a href="/privacy-policy" className="text-primary hover:underline">
-                        Privacy Policy
-                      </a>
-                      . We never share your data with third parties.
+                    <div className="mt-8 pt-6 border-t border-border/30 flex items-start gap-2 text-xs text-muted-foreground italic">
+                      <Shield className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                      <span>
+                        Confidential and no obligation. Your data is handled per
+                        our{" "}
+                        <a
+                          href="/privacy-policy"
+                          className="text-primary hover:underline"
+                        >
+                          Privacy Policy
+                        </a>
+                        .
+                      </span>
                     </div>
                   </div>
                 </div>
