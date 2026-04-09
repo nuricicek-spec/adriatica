@@ -40,14 +40,7 @@ export function Navigation() {
   ];
 
   const handleInquireClick = () => {
-    if (location === "/") {
-      document.getElementById("begin-voyage")?.scrollIntoView({ behavior: "smooth" });
-    } else {
-      setLocation("/#begin-voyage");
-      setTimeout(() => {
-        document.getElementById("begin-voyage")?.scrollIntoView({ behavior: "smooth" });
-      }, 150);
-    }
+  setLocation("/request-consultation");
   };
 
   const closeMenu = () => setIsMobileMenuOpen(false);
