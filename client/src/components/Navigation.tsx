@@ -1,52 +1,52 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { useLocation } from "wouter";
 import { HashLink } from "@/components/HashLink";
 import { cn } from "@/lib/utils";
 
 export function Navigation() {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrolled, setIsScrolled]         = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [location, setLocation] = useLocation();
-  const menuRef = useRef<HTMLDivElement>(null);
+  const [, setLocation] = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Mobil menü açıkken body kaydırmasını engelle
+  // Mobil menü açıkken body scroll'u engelle
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
+    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
   }, [isMobileMenuOpen]);
 
   const navLinks = [
-    { name: "Services", href: "/services" },
-    { name: "Deliverables", href: "/deliverables" }, // YENİ LİNK
-    { name: "Insights", href: "/insights" },
-    { name: "Case Studies", href: "/case-studies" },
-    { name: "About", href: "/about" },
-    { name: "Contact", href: "/#begin-voyage" },
+    { name: "Services",     href: "/services"      },
+    { name: "Deliverables", href: "/deliverables"   },
+    { name: "Insights",     href: "/insights"       },
+    { name: "Case Studies", href: "/case-studies"   },
+    { name: "About",        href: "/about"          },
+    { name: "Contact",      href: "/#begin-voyage"  },
   ];
-
-  const handleInquireClick = () => {
-  setLocation("/request-consultation");
-  };
 
   const closeMenu = () => setIsMobileMenuOpen(false);
 
+  const handleInquireClick = () => {
+    setLocation("/request-consultation");
+    closeMenu();
+  };
+
   return (
     <>
+      {/* Overlay — nav dışında, kendi stacking context'inde */}
+      {isMobileMenuOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
+          onClick={closeMenu}
+        />
+      )}
+
       <nav
         className={cn(
           "fixed w-full z-50 transition-all duration-300 border-b border-transparent",
@@ -57,14 +57,16 @@ export function Navigation() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
+
+            {/* Logo */}
             <HashLink href="/" className="flex items-center space-x-3 group">
-<img
-  src="/logo.svg"
-  alt="Adriatica D.O.O. Logo"
-  className="h-10 w-auto transition-transform duration-500 group-hover:scale-105"
-  width="40"
-  height="40"
-/>
+              <img
+                src="/logo.svg"
+                alt="Adriatica D.O.O. Logo"
+                className="h-10 w-auto transition-transform duration-500 group-hover:scale-105"
+                width="40"
+                height="40"
+              />
               <span className="font-display font-bold text-xl tracking-widest text-primary uppercase">
                 ADRIATICA D.O.O.
               </span>
@@ -72,7 +74,7 @@ export function Navigation() {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
-              {navLinks.map((link) => (
+              {navLinks.map(link => (
                 <HashLink
                   key={link.name}
                   href={link.href}
@@ -92,9 +94,9 @@ export function Navigation() {
             {/* Mobile Menu Button */}
             <div className="md:hidden">
               <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                onClick={() => setIsMobileMenuOpen(prev => !prev)}
                 className="text-primary p-2"
-                aria-label="Menu"
+                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isMobileMenuOpen}
               >
                 {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -103,15 +105,7 @@ export function Navigation() {
           </div>
         </div>
 
-        {/* Mobil Menü – arka plan karartma (overlay) */}
-        {isMobileMenuOpen && (
-          <div
-            className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
-            onClick={closeMenu}
-          />
-        )}
-
-        {/* Mobil Menü – panel (nav bar'ın hemen altında) */}
+        {/* Mobile Menu Panel */}
         <div
           className={cn(
             "md:hidden absolute top-full left-0 w-full z-50 bg-background border-b border-border/10 shadow-xl py-4 px-4 flex flex-col space-y-4 transition-all duration-200",
@@ -120,7 +114,7 @@ export function Navigation() {
               : "opacity-0 -translate-y-4 pointer-events-none"
           )}
         >
-          {navLinks.map((link) => (
+          {navLinks.map(link => (
             <HashLink
               key={link.name}
               href={link.href}
@@ -131,10 +125,7 @@ export function Navigation() {
             </HashLink>
           ))}
           <button
-            onClick={() => {
-              handleInquireClick();
-              closeMenu();
-            }}
+            onClick={handleInquireClick}
             className="w-full bg-primary text-primary-foreground px-6 py-3 rounded-sm font-medium mt-4"
           >
             Request Consultation
