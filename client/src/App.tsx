@@ -1,6 +1,6 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
@@ -46,11 +46,32 @@ function PageLoader() {
   );
 }
 
+// GA4 sayfa görüntüleme takibi
+function GAPageTracker() {
+  const [location] = useLocation();
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !(window as any).gtag) return;
+
+    const timer = setTimeout(() => {
+      (window as any).gtag("event", "page_view", {
+        page_path: location,
+        page_title: document.title,
+        page_location: window.location.href,
+        send_to: "G-WPWD3K7JHR",
+      });
+    }, 0);
+
+    return () => clearTimeout(timer);
+  }, [location]);
+
+  return null;
+}
+
 function Router() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Switch>
-        {/* Spesifik route'lar üstte */}
         <Route path="/services/engineering-plans" component={EngineeringPlans} />
         <Route path="/services/engineering-documentation" component={EngineeringDocs} />
         <Route path="/services/structural-integrity" component={StructuralIntegrity} />
@@ -73,7 +94,6 @@ function Router() {
         <Route path="/terms-of-service" component={TermsOfService} />
         <Route path="/cookie-policy" component={CookiePolicy} />
 
-        {/* En genel route en altta */}
         <Route path="/" component={Home} />
         <Route component={NotFound} />
       </Switch>
@@ -89,6 +109,7 @@ function App() {
           <ScrollToTop />
           <Toaster />
           <Router />
+          <GAPageTracker />
           <CookieConsent />
         </TooltipProvider>
       </QueryClientProvider>

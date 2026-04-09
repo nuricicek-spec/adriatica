@@ -2,10 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- Mobile viewport: zoom enabled (kaldırıldı maximum-scale=1) -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Default title & description — react-helmet-async overrides these per page -->
     <title>Adriatica D.O.O. - Marine Engineering & Consultancy</title>
-    <meta name="description" content="Adriatica D.O.O. - Marine engineering consultancy specializing in structural integrity, regulatory compliance, and sustainable technologies. Serving Montenegro, Adriatic Coast, and European maritime industry." />
+    <meta name="description" content="Adriatica D.O.O. provides independent marine engineering consultancy, technical project management, and regulatory compliance services for yachts, commercial vessels, and fishing boats." />
+
     <meta name="author" content="Adriatica D.O.O." />
     <meta name="robots" content="index, follow" />
     <meta name="geo.region" content="ME" />
@@ -14,47 +16,43 @@
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- ========== 1. LCP İYİLEŞTİRMESİ: Logo'yu preload et ========== -->
+    <!-- ========== GA4 (SPA — manual page_view in main.tsx) ========== -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WPWD3K7JHR"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-WPWD3K7JHR', { send_page_view: false });
+    </script>
+
+    <!-- ========== LCP: preload logo ========== -->
     <link rel="preload" as="image" href="/logo.svg" fetchpriority="high" />
 
-    <!-- ========== 2. RENDER-BLOCKING KALDIRMA: Sadece kritik fontları yükle, gerisini async yap ========== -->
-    <!-- Kritik fontları önceden bağlan (preconnect) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <!-- ========== Font preconnect — crossorigin required on both ========== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <!-- SADECE KULLANILAN FONTLAR (Cinzel, Manrope, Montserrat) - Diğer 40+ font kaldırıldı -->
-    <!-- Bu CSS render-blocking yapmaz çünkü media="print" ile yüklenip sonra değiştiriliyor -->
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Manrope:wght@200;300;400;500;600;700;800&family=Montserrat:wght@300;400&display=swap"
-          media="print"
-          onload="this.media='all'"
-          fetchpriority="low" />
+    <!-- Async font load (print→all trick eliminates render-blocking) -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Manrope:wght@200;300;400;500;600;700;800&family=Montserrat:wght@300;400&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
     <noscript>
-      <link rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Manrope:wght@200;300;400;500;600;700;800&family=Montserrat:wght@300;400&display=swap" />
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Manrope:wght@200;300;400;500;600;700;800&family=Montserrat:wght@300;400&display=swap"
+      />
     </noscript>
 
-    <!-- ========== 3. KRİTİK CSS (isteğe bağlı, above-the-fold için) ==========
-         İleride buraya kritik stilleri inline ekleyebilirsiniz.
-         Şimdilik boş. 
-    -->
+    <!-- Minimal critical CSS — prevents FOUC before Tailwind loads -->
     <style>
-      /* Geçici olarak FOUC önlemek için minimal stiller – opsiyonel */
       body { margin: 0; font-family: 'Manrope', sans-serif; }
-      img[fetchpriority="high"] { content-visibility: auto; }
     </style>
-
-    <!-- Ana CSS dosyası – kritik değil, async yüklenebilir. 
-         Ancak build sonrası asset'lerin hash'i değişir, o yüzden bu satırı olduğu gibi bırakıyorum.
-         Build sırasında bu satır otomatik ekleniyorsa sorun yok.
-    -->
-    <!-- <link rel="stylesheet" href="/assets/index-xxx.css" media="print" onload="this.media='all'"> -->
-    <!-- Not: Build sistemi (Vite) bu satırı kendi ekliyorsa, yukarıdaki gibi async yapacak şekilde ayarlamalısınız.
-         Aşağıdaki satır örnek amaçlıdır. Gerçek build'de bu satır yoksa eklemenize gerek yok. -->
   </head>
   <body>
     <div id="root"></div>
-    <!-- Ana JS dosyası – defer ile yükleniyor (zaten Vite böyle yapar) -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
