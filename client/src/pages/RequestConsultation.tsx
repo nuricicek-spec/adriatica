@@ -12,6 +12,7 @@ import {
   ClipboardCheck,
   Shield,
   Lock,
+  Clock,
 } from "lucide-react";
 
 const PAGE_TITLE =
@@ -114,7 +115,7 @@ export default function RequestConsultation() {
                 </p>
               </div>
 
-              {/* 3 Maddelik Değer Önerisi - Revize Başlıklar */}
+              {/* 3 Maddelik Değer Önerisi */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-5xl mx-auto">
                 <div className="bg-neutral-50 border-l-2 border-primary p-5 rounded-sm">
                   <div className="flex items-center gap-3 mb-2">
@@ -152,6 +153,19 @@ export default function RequestConsultation() {
                     requirements — first time, every time.
                   </p>
                 </div>
+              </div>
+
+              {/* Mobil Güven Çizgisi (sadece mobilde görünür) */}
+              <div className="lg:hidden mb-6 flex items-center justify-center gap-4 text-xs text-muted-foreground bg-neutral-50/80 py-3 px-4 rounded-sm border border-border/20">
+                <span className="flex items-center gap-1">
+                  <Clock className="h-3.5 w-3.5" /> Response within 24h
+                </span>
+                <span className="flex items-center gap-1">
+                  <Shield className="h-3.5 w-3.5" /> Confidential
+                </span>
+                <span className="flex items-center gap-1">
+                  <Lock className="h-3.5 w-3.5" /> No obligation
+                </span>
               </div>
 
               {/* İki Sütun: Form + Bilgi Paneli — 7/5 Oranında */}
@@ -394,18 +408,27 @@ export default function RequestConsultation() {
                             ? "Sending Request..."
                             : "Submit Consultation Request"}
                         </button>
+
+                        {/* Urgency Notu (ince ayar) */}
+                        <p className="text-xs text-center text-muted-foreground mt-3">
+                          We recommend addressing compliance gaps at least 4–6
+                          weeks before your next survey.
+                        </p>
                       </div>
                     </form>
                   )}
                 </div>
 
-                {/* SAĞ: Bilgi Paneli - 5 sütun, Revize İçerik */}
+                {/* SAĞ: Bilgi Paneli - 5 sütun */}
                 <div className="lg:col-span-5">
                   <div className="bg-neutral-50 border border-border/20 rounded-sm p-6 md:p-8 shadow-sm sticky top-24">
-                    {/* Hedef Kitle - Genişletilmiş */}
+                    {/* Hedef Kitle - Pain-point soruları eklendi */}
                     <h2 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">
                       Who This Is For
                     </h2>
+                    <p className="text-sm text-muted-foreground mb-2 leading-relaxed">
+                      Facing a PSC inspection? Preparing for dry‑dock?
+                    </p>
                     <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
                       Whether you're a superyacht captain, a commercial fleet
                       technical manager, or an owner preparing for a survey —
@@ -422,7 +445,7 @@ export default function RequestConsultation() {
                       <li>You receive initial technical feedback and options.</li>
                     </ol>
 
-                    {/* Güven Vurgusu - Güçlendirilmiş */}
+                    {/* Güven Vurgusu */}
                     <div className="mt-6 pt-6 border-t border-border/30">
                       <div className="flex items-start gap-3">
                         <div className="bg-primary/10 p-2 rounded-full">
