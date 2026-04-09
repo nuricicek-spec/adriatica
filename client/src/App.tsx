@@ -19,6 +19,7 @@ const CaseStudies = lazy(() => import("@/pages/CaseStudies"));
 const CaseStudyDetail = lazy(() => import("@/pages/CaseStudyDetail"));
 const About = lazy(() => import("@/pages/About"));
 const Deliverables = lazy(() => import("@/pages/Deliverables"));
+const RequestConsultation = lazy(() => import("@/pages/RequestConsultation"));
 
 // Service detail pages
 const EngineeringPlans = lazy(() => import("@/pages/services/EngineeringPlans"));
@@ -67,6 +68,7 @@ function Router() {
         <Route path="/news" component={News} />
         <Route path="/about" component={About} />
         <Route path="/deliverables" component={Deliverables} />
+        <Route path="/request-consultation" component={RequestConsultation} />
         <Route path="/privacy-policy" component={PrivacyPolicy} />
         <Route path="/terms-of-service" component={TermsOfService} />
         <Route path="/cookie-policy" component={CookiePolicy} />
