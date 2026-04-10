@@ -1,20 +1,29 @@
 import { HashLink } from "@/components/HashLink";
 import { Instagram, Facebook, Linkedin, ExternalLink } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export function Footer() {
   const [showComingSoon, setShowComingSoon] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleClientAccess = () => {
     setShowComingSoon(true);
-    setTimeout(() => setShowComingSoon(false), 3000);
+    timerRef.current = setTimeout(() => setShowComingSoon(false), 3000);
   };
+
+  // Unmount'ta timer'ı temizle
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   return (
     <footer id="footer" className="bg-[#0B3B5C] text-white pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Üst Bölüm: 3 Sütun */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 border-b border-white/10 pb-16">
+
           {/* Sol Sütun: Logo + Slogan + Adres + İletişim + Sosyal */}
           <div className="md:col-span-5">
             <HashLink href="/" className="flex items-center space-x-3 mb-4">
@@ -38,15 +47,11 @@ export function Footer() {
                 <span>Adriatic Coast & Montenegro</span>
               </p>
               <div>
-                <p className="text-xs uppercase tracking-wider text-white/50 mb-0.5">
-                  Address
-                </p>
+                <p className="text-xs uppercase tracking-wider text-white/50 mb-0.5">Address</p>
                 <p>Budva, Montenegro</p>
               </div>
               <div>
-                <p className="text-xs uppercase tracking-wider text-white/50 mb-0.5">
-                  Contact
-                </p>
+                <p className="text-xs uppercase tracking-wider text-white/50 mb-0.5">Contact</p>
                 <p>
                   <a
                     href="mailto:info@adriaticadoo.com"
@@ -58,15 +63,21 @@ export function Footer() {
               </div>
             </div>
             <div className="flex gap-4 items-center">
+              {/* Facebook — URL hazır olduğunda href'i güncelle */}
               <a
-                href="#"
+                href="https://www.facebook.com/adriaticadoo"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Adriatica D.O.O. on Facebook"
                 className="text-[#e8e4d9] hover:text-[#1877F2] transition-all duration-300 hover:-translate-y-1"
               >
                 <Facebook size={18} aria-hidden="true" />
               </a>
+              {/* Instagram — URL hazır olduğunda href'i güncelle */}
               <a
-                href="#"
+                href="https://www.instagram.com/adriaticadoo"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Adriatica D.O.O. on Instagram"
                 className="text-[#e8e4d9] hover:text-[#E1306C] transition-all duration-300 hover:-translate-y-1"
               >
@@ -89,12 +100,12 @@ export function Footer() {
             <h3 className="font-display font-bold text-lg mb-5">Explore</h3>
             <ul className="space-y-3">
               {[
-                { name: "Home", href: "/" },
-                { name: "Services", href: "/services" },
+                { name: "Home",         href: "/"             },
+                { name: "Services",     href: "/services"     },
                 { name: "Deliverables", href: "/deliverables" },
-                { name: "Insights", href: "/insights" },
+                { name: "Insights",     href: "/insights"     },
                 { name: "Case Studies", href: "/case-studies" },
-              ].map((item) => (
+              ].map(item => (
                 <li key={item.name}>
                   <HashLink
                     href={item.href}
@@ -114,10 +125,10 @@ export function Footer() {
                 <h3 className="font-display font-bold text-lg mb-5">Company</h3>
                 <ul className="space-y-3">
                   {[
-                    { name: "About", href: "/about" },
+                    { name: "About",   href: "/about"   },
                     { name: "Careers", href: "/careers" },
-                    { name: "News", href: "/news" },
-                  ].map((item) => (
+                    { name: "News",    href: "/news"    },
+                  ].map(item => (
                     <li key={item.name}>
                       <HashLink
                         href={item.href}
@@ -233,30 +244,22 @@ export function Footer() {
           </div>
 
           <div className="order-3 flex flex-wrap justify-center gap-x-5 gap-y-1">
-            <HashLink
-              href="/privacy-policy"
-              className="hover:text-white transition-colors text-sm"
-            >
+            <HashLink href="/privacy-policy" className="hover:text-white transition-colors text-sm">
               Privacy Policy
             </HashLink>
             <span className="text-white/30">·</span>
-            <HashLink
-              href="/terms-of-service"
-              className="hover:text-white transition-colors text-sm"
-            >
+            <HashLink href="/terms-of-service" className="hover:text-white transition-colors text-sm">
               Terms of Service
             </HashLink>
             <span className="text-white/30">·</span>
-            <HashLink
-              href="/cookie-policy"
-              className="hover:text-white transition-colors text-sm"
-            >
+            <HashLink href="/cookie-policy" className="hover:text-white transition-colors text-sm">
               Cookie Policy
             </HashLink>
           </div>
         </div>
       </div>
 
+      {/* Coming Soon Toast */}
       {showComingSoon && (
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-[#1A4B7A] text-white px-6 py-3 rounded-sm shadow-xl text-sm font-medium animate-in fade-in slide-in-from-bottom-4 duration-300">
           Client Portal — Coming Soon
