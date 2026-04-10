@@ -35,7 +35,7 @@ export function Footer() {
                 className="brightness-0 invert"
               />
               {/* x1.1: text-xl (1.25rem) → 1.375rem */}
-              <span className="font-display font-bold text-[1.375rem] tracking-widest uppercase">
+              <span className="font-display font-bold text-[1.5rem] tracking-widest uppercase">
                 ADRIATICA D.O.O.
               </span>
             </HashLink>
