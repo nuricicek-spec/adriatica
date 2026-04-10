@@ -12,6 +12,12 @@
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
+    <url>
+    <loc>https://www.adriaticadoo.com/request-consultation</loc>
+    <lastmod>2026-04-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
   <url>
     <loc>https://www.adriaticadoo.com/insights</loc>
     <lastmod>2026-04-02</lastmod>
