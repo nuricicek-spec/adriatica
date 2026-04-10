@@ -16,40 +16,35 @@ export function Footer() {
         {/* Üst Bölüm: 3 Sütun */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 border-b border-white/10 pb-16">
           
-          {/* Sol Sütun: Logo + İletişim + Sosyal */}
+          {/* Sol Sütun: Logo + Slogan + İletişim + Sosyal (SADELEŞTİRİLDİ) */}
           <div className="md:col-span-5">
-            <HashLink href="/" className="flex items-center space-x-3 mb-5">
+            <HashLink href="/" className="flex items-center space-x-3 mb-4">
               <img
                 src="/logo.svg"
                 alt="Adriatica D.O.O. Logo"
-                width="40"
-                height="40"
+                width="32"
+                height="32"
                 className="brightness-0 invert"
               />
-              <span className="font-display font-bold text-2xl tracking-widest uppercase">
+              <span className="font-display font-bold text-lg tracking-widest uppercase">
                 ADRIATICA D.O.O.
               </span>
             </HashLink>
-            <p className="text-[#C8D6E5] leading-relaxed mb-5 max-w-md">
-              Supporting yacht and commercial vessel operations across engineering,
-              compliance, and technical project management.
+            <p className="text-[#C8D6E5] text-sm italic mb-4">
+              Engineering clarity for the Adriatic.
             </p>
-            <div className="text-[#C8D6E5] text-sm space-y-1 mb-6">
-              <p>📍 Serving the Montenegro Bay &amp; Adriatic Coast</p>
-              <p>
+            <div className="text-[#C8D6E5] text-sm space-y-1 mb-5">
+              <p className="flex items-start gap-2">
+                <span className="shrink-0">📍</span>
+                <span>Adriatic Coast & Montenegro</span>
+              </p>
+              <p className="pl-6">Budva, Montenegro</p>
+              <p className="pl-6">
                 <a
                   href="mailto:info@adriaticadoo.com"
                   className="hover:text-white transition-colors"
                 >
                   info@adriaticadoo.com
-                </a>
-              </p>
-              <p>
-                <a
-                  href="tel:+38268591757"
-                  className="hover:text-white transition-colors"
-                >
-                  +382 68 591 757
                 </a>
               </p>
             </div>
@@ -59,14 +54,14 @@ export function Footer() {
                 aria-label="Adriatica D.O.O. on Facebook"
                 className="text-[#e8e4d9] hover:text-[#1877F2] transition-all duration-300 hover:-translate-y-1"
               >
-                <Facebook size={20} aria-hidden="true" />
+                <Facebook size={18} aria-hidden="true" />
               </a>
               <a
                 href="#"
                 aria-label="Adriatica D.O.O. on Instagram"
                 className="text-[#e8e4d9] hover:text-[#E1306C] transition-all duration-300 hover:-translate-y-1"
               >
-                <Instagram size={20} aria-hidden="true" />
+                <Instagram size={18} aria-hidden="true" />
               </a>
               <a
                 href="https://www.linkedin.com/company/adriatica-d-o-o"
@@ -75,7 +70,7 @@ export function Footer() {
                 aria-label="Adriatica D.O.O. on LinkedIn"
                 className="text-[#e8e4d9] hover:text-[#0077b5] transition-all duration-300 hover:-translate-y-1"
               >
-                <Linkedin size={20} aria-hidden="true" />
+                <Linkedin size={18} aria-hidden="true" />
               </a>
             </div>
           </div>
@@ -127,7 +122,7 @@ export function Footer() {
                 </ul>
               </div>
 
-              {/* Butonlar - üst hiza düzeltildi (pt kaldırıldı) */}
+              {/* Butonlar */}
               <div className="flex flex-col space-y-3">
                 <HashLink
                   href="/request-consultation"
@@ -148,12 +143,10 @@ export function Footer() {
 
         {/* Alt Şerit: Copyright + Logolar + Legal Linkler */}
         <div className="pt-6 flex flex-col lg:flex-row justify-between items-center gap-5 text-sm text-[#C8D6E5]">
-          {/* Sol: Copyright */}
           <div className="order-2 lg:order-1 text-center lg:text-left">
             <p>© 2026 ADRIATICA D.O.O. All rights reserved.</p>
           </div>
 
-          {/* Orta: Logolar */}
           <div className="order-1 lg:order-2 flex flex-wrap justify-center items-center gap-5">
             <a
               href="https://www.imo.org"
@@ -232,7 +225,6 @@ export function Footer() {
             </a>
           </div>
 
-          {/* Sağ: Legal Linkler - yazı boyutu text-sm yapıldı */}
           <div className="order-3 flex flex-wrap justify-center gap-x-5 gap-y-1">
             <HashLink
               href="/privacy-policy"
@@ -258,7 +250,6 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Coming Soon Popup */}
       {showComingSoon && (
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-[#1A4B7A] text-white px-6 py-3 rounded-sm shadow-xl text-sm font-medium animate-in fade-in slide-in-from-bottom-4 duration-300">
           Client Portal — Coming Soon
