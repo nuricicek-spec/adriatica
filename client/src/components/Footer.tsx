@@ -34,7 +34,8 @@ export function Footer() {
                 height="36"
                 className="brightness-0 invert"
               />
-              <span className="font-display font-bold text-xl tracking-widest uppercase">
+              {/* x1.1: text-xl (1.25rem) → 1.375rem */}
+              <span className="font-display font-bold text-[1.375rem] tracking-widest uppercase">
                 ADRIATICA D.O.O.
               </span>
             </HashLink>
@@ -142,15 +143,17 @@ export function Footer() {
               </div>
 
               <div className="flex flex-col space-y-3">
+                {/* md:w-auto kaldırıldı — mobilde w-full kalıyor */}
                 <HashLink
                   href="/request-consultation"
-                  className="w-full md:w-auto inline-block bg-[#D4AF37] text-black font-medium px-5 py-2.5 rounded-sm text-sm uppercase tracking-wide shadow-lg hover:bg-[#C9A961] transition-all duration-300 text-center"
+                  className="w-full inline-block bg-[#D4AF37] text-black font-medium px-5 py-2.5 rounded-sm text-sm uppercase tracking-wide shadow-lg hover:bg-[#C9A961] transition-all duration-300 text-center"
                 >
                   Request Consultation
                 </HashLink>
+                {/* md:w-auto kaldırıldı — mobilde w-full kalıyor */}
                 <button
                   onClick={handleClientAccess}
-                  className="w-full md:w-auto inline-flex items-center justify-center gap-1 border border-white/30 text-white font-medium px-5 py-2.5 rounded-sm text-sm uppercase tracking-wide hover:bg-white/10 transition-all duration-300"
+                  className="w-full inline-flex items-center justify-center gap-1 border border-white/30 text-white font-medium px-5 py-2.5 rounded-sm text-sm uppercase tracking-wide hover:bg-white/10 transition-all duration-300"
                 >
                   Client Access <ExternalLink size={14} />
                 </button>
