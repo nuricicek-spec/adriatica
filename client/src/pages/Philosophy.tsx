@@ -180,10 +180,21 @@ export default function Philosophy() {
         </script>
       </Helmet>
 
-      <div className="min-h-screen bg-[#0B3B5C] font-body selection:bg-primary/20">
+      <div className="min-h-screen bg-[#0B3B5C] font-body selection:bg-primary/20 relative overflow-hidden">
+        {/* Çapraz Arka Plan Blokları (Home.tsx'teki gibi) */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute top-0 right-0 w-2/3 h-full bg-[#1A4B7A]/5 -skew-x-12 transform origin-top" />
+          <div className="absolute bottom-0 left-0 w-1/3 h-2/3 bg-[#0B3B5C]/5 skew-x-12 transform origin-bottom" />
+          <div className="absolute inset-0 opacity-10">
+            <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <path d="M0 100 L100 0 L100 100 Z" fill="white" />
+            </svg>
+          </div>
+        </div>
+
         <Navigation />
 
-        <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
+        <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-7xl mx-auto">
             {/* Başlık: ADRIATICA D.O.O. STANDART ve Philosophy */}
             <div className="mb-16">
