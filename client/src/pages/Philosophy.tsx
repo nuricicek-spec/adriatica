@@ -180,182 +180,184 @@ export default function Philosophy() {
         </script>
       </Helmet>
 
-      <div className="min-h-screen bg-[#0B3B5C] font-body selection:bg-primary/20 relative overflow-hidden">
-        {/* Çapraz Arka Plan Blokları (Home.tsx'teki birebir aynı) */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-2/3 h-full bg-[#1A4B7A]/5 -skew-x-12 transform origin-top" />
-          <div className="absolute bottom-0 left-0 w-1/3 h-2/3 bg-[#0B3B5C]/5 skew-x-12 transform origin-bottom" />
-          <div className="absolute inset-0 opacity-10">
-            <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-              <path d="M0 100 L100 0 L100 100 Z" fill="white" />
-            </svg>
-          </div>
-        </div>
-
+      <div className="min-h-screen bg-background font-body selection:bg-primary/20">
         <Navigation />
 
-        <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-7xl mx-auto">
-            {/* Başlık: ADRIATICA D.O.O. STANDARD ve Philosophy */}
-            <div className="mb-16">
+        <main>
+          {/* Üst Kısım: Açık Gri Arka Plan + Başlık */}
+          <div className="pt-32 pb-16 px-4 sm:px-6 lg:px-8 bg-background">
+            <div className="max-w-7xl mx-auto">
               <SectionHeading
                 title="ADRIATICA D.O.O. STANDARD"
                 subtitle="Philosophy"
-                light={true}
               />
             </div>
+          </div>
 
-            {/* İçerik: iki sütun */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              {/* Sol: metinler ve istatistikler */}
-              <div>
-                <p className="text-lg text-white/80 leading-relaxed mb-6">
-                  Our logo, the Sumerian pinecone, symbolizes wisdom and
-                  resilience. We approach every engineering challenge as an
-                  opportunity to create lasting value.
-                </p>
-                <p className="text-lg text-white/80 leading-relaxed mb-8">
-                  Our approach is reductive: we remove the unnecessary to reveal
-                  the essential structure. This discipline results in
-                  engineering that is not only functional but resilient and
-                  timeless.
-                </p>
-                <p className="text-lg text-white/80 leading-relaxed mb-6">
-                  Precision is not just a method—it is our philosophy. Every
-                  project is executed with uncompromising attention to detail,
-                  ensuring safety and compliance beyond standards.
-                </p>
+          {/* Alt Kısım: Lacivert Felsefe Bloğu (Home.tsx'teki birebir yapı) */}
+          <section className="bg-[#0B3B5C] text-white py-16 md:py-24 overflow-hidden relative">
+            {/* Çapraz arka plan blokları ve SVG desen */}
+            <div className="absolute inset-0 z-0 pointer-events-none">
+              <div className="absolute top-0 right-0 w-2/3 h-full bg-[#1A4B7A]/5 -skew-x-12 transform origin-top" />
+              <div className="absolute bottom-0 left-0 w-1/3 h-2/3 bg-[#0B3B5C]/5 skew-x-12 transform origin-bottom" />
+              <div className="absolute inset-0 opacity-10">
+                <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                  <path d="M0 100 L100 0 L100 100 Z" fill="white" />
+                </svg>
+              </div>
+            </div>
 
-                {/* İstatistikler */}
-                <div className="grid grid-cols-2 gap-8 mt-12">
-                  <div>
-                    <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">
-                      20+
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                {/* Sol Sütun: Metinler ve İstatistikler */}
+                <div>
+                  <p className="text-lg text-white/80 leading-relaxed mb-6">
+                    Our logo, the Sumerian pinecone, symbolizes wisdom and
+                    resilience. We approach every engineering challenge as an
+                    opportunity to create lasting value.
+                  </p>
+                  <p className="text-lg text-white/80 leading-relaxed mb-8">
+                    Our approach is reductive: we remove the unnecessary to reveal
+                    the essential structure. This discipline results in
+                    engineering that is not only functional but resilient and
+                    timeless.
+                  </p>
+                  <p className="text-lg text-white/80 leading-relaxed mb-6">
+                    Precision is not just a method—it is our philosophy. Every
+                    project is executed with uncompromising attention to detail,
+                    ensuring safety and compliance beyond standards.
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-8 mt-12">
+                    <div>
+                      <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">
+                        20+
+                      </div>
+                      <div className="text-sm uppercase tracking-wider text-white/60">
+                        Years Experience
+                      </div>
                     </div>
-                    <div className="text-sm uppercase tracking-wider text-white/60">
-                      Years Experience
+                    <div>
+                      <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">
+                        25+
+                      </div>
+                      <div className="text-sm uppercase tracking-wider text-white/60">
+                        Clients Worldwide
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">
-                      25+
+                    <div>
+                      <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">
+                        8+
+                      </div>
+                      <div className="text-sm uppercase tracking-wider text-white/60">
+                        Countries
+                      </div>
                     </div>
-                    <div className="text-sm uppercase tracking-wider text-white/60">
-                      Clients Worldwide
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">
-                      8+
-                    </div>
-                    <div className="text-sm uppercase tracking-wider text-white/60">
-                      Countries
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">
-                      0
-                    </div>
-                    <div className="text-sm uppercase tracking-wider text-white/60">
-                      Compromises
+                    <div>
+                      <div className="text-4xl font-display font-bold text-[#3A74A0] mb-2">
+                        0
+                      </div>
+                      <div className="text-sm uppercase tracking-wider text-white/60">
+                        Compromises
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Sağ: Pinecone görseli */}
-              <div className="relative">
-                <style>{PHILOSOPHY_STYLES}</style>
-                <div className="aspect-[4/5] mx-auto">
-                  <div className="container-visual">
-                    <div className="logo-svg-custom">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 100 160"
-                        width="100%"
-                        height="100%"
-                      >
-                        <defs>
-                          <linearGradient
-                            id="goldGradientCustom"
-                            x1="0%"
-                            y1="0%"
-                            x2="100%"
-                            y2="100%"
-                          >
-                            <stop offset="0%" stopColor="#D4AF37" stopOpacity="1" />
-                            <stop offset="50%" stopColor="#C9A961" stopOpacity="1" />
-                            <stop offset="100%" stopColor="#B8964F" stopOpacity="1" />
-                          </linearGradient>
-                        </defs>
-                        <polygon points="40,1 49,14 40,27 31,14" />
-                        <polygon points="60,1 69,14 60,27 51,14" />
-                        <polygon points="30,15 39,28 30,41 21,28" />
-                        <polygon points="50,15 59,28 50,41 41,28" />
-                        <polygon points="70,15 79,28 70,41 61,28" />
-                        <polygon points="20,29 29,42 20,55 11,42" />
-                        <polygon points="40,29 49,42 40,55 31,42" />
-                        <polygon points="60,29 69,42 60,55 51,42" />
-                        <polygon points="80,29 89,42 80,55 71,42" />
-                        <polygon points="30,43 39,56 30,69 21,56" />
-                        <polygon points="50,43 59,56 50,69 41,56" />
-                        <polygon points="70,43 79,56 70,69 61,56" />
-                        <polygon points="20,57 29,70 20,83 11,70" />
-                        <polygon points="40,57 49,70 40,83 31,70" />
-                        <polygon points="60,57 69,70 60,83 51,70" />
-                        <polygon points="80,57 89,70 80,83 71,70" />
-                        <polygon points="30,71 39,84 30,97 21,84" />
-                        <polygon points="50,71 59,84 50,97 41,84" />
-                        <polygon points="70,71 79,84 70,97 61,84" />
-                        <polygon points="20,85 29,98 20,111 11,98" />
-                        <polygon points="40,85 49,98 40,111 31,98" />
-                        <polygon points="60,85 69,98 60,111 51,98" />
-                        <polygon points="80,85 89,98 80,111 71,98" />
-                        <polygon points="30,99 39,112 30,125 21,112" />
-                        <polygon points="50,99 59,112 50,125 41,112" />
-                        <polygon points="70,99 79,112 70,125 61,112" />
-                        <polygon points="40,113 49,126 40,139 31,126" />
-                        <polygon points="60,113 69,126 60,139 51,126" />
-                        <polygon points="50,127 59,140 50,153 41,140" />
-                      </svg>
+                {/* Sağ Sütun: Pinecone Görseli */}
+                <div className="relative">
+                  <style>{PHILOSOPHY_STYLES}</style>
+                  <div className="aspect-[4/5] mx-auto">
+                    <div className="container-visual">
+                      <div className="logo-svg-custom">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 100 160"
+                          width="100%"
+                          height="100%"
+                        >
+                          <defs>
+                            <linearGradient
+                              id="goldGradientCustom"
+                              x1="0%"
+                              y1="0%"
+                              x2="100%"
+                              y2="100%"
+                            >
+                              <stop offset="0%" stopColor="#D4AF37" stopOpacity="1" />
+                              <stop offset="50%" stopColor="#C9A961" stopOpacity="1" />
+                              <stop offset="100%" stopColor="#B8964F" stopOpacity="1" />
+                            </linearGradient>
+                          </defs>
+                          <polygon points="40,1 49,14 40,27 31,14" />
+                          <polygon points="60,1 69,14 60,27 51,14" />
+                          <polygon points="30,15 39,28 30,41 21,28" />
+                          <polygon points="50,15 59,28 50,41 41,28" />
+                          <polygon points="70,15 79,28 70,41 61,28" />
+                          <polygon points="20,29 29,42 20,55 11,42" />
+                          <polygon points="40,29 49,42 40,55 31,42" />
+                          <polygon points="60,29 69,42 60,55 51,42" />
+                          <polygon points="80,29 89,42 80,55 71,42" />
+                          <polygon points="30,43 39,56 30,69 21,56" />
+                          <polygon points="50,43 59,56 50,69 41,56" />
+                          <polygon points="70,43 79,56 70,69 61,56" />
+                          <polygon points="20,57 29,70 20,83 11,70" />
+                          <polygon points="40,57 49,70 40,83 31,70" />
+                          <polygon points="60,57 69,70 60,83 51,70" />
+                          <polygon points="80,57 89,70 80,83 71,70" />
+                          <polygon points="30,71 39,84 30,97 21,84" />
+                          <polygon points="50,71 59,84 50,97 41,84" />
+                          <polygon points="70,71 79,84 70,97 61,84" />
+                          <polygon points="20,85 29,98 20,111 11,98" />
+                          <polygon points="40,85 49,98 40,111 31,98" />
+                          <polygon points="60,85 69,98 60,111 51,98" />
+                          <polygon points="80,85 89,98 80,111 71,98" />
+                          <polygon points="30,99 39,112 30,125 21,112" />
+                          <polygon points="50,99 59,112 50,125 41,112" />
+                          <polygon points="70,99 79,112 70,125 61,112" />
+                          <polygon points="40,113 49,126 40,139 31,126" />
+                          <polygon points="60,113 69,126 60,139 51,126" />
+                          <polygon points="50,127 59,140 50,153 41,140" />
+                        </svg>
+                      </div>
+                      <div className="label-custom top-left">Wisdom</div>
+                      <div className="label-custom top-right">Resilience</div>
+                      <div className="label-custom bottom-left">Renewal</div>
+                      <div className="label-custom bottom-right">Seed of Life</div>
+                      <div className="diamond diamond-wisdom">
+                        <svg viewBox="0 0 18 26">
+                          <polygon points="9,0 18,13 9,26 0,13" fill="#0B3B5C" />
+                        </svg>
+                      </div>
+                      <div className="diamond diamond-resilience">
+                        <svg viewBox="0 0 18 26">
+                          <polygon
+                            points="9,0 18,13 9,26 0,13"
+                            fill="url(#goldGradientCustom)"
+                          />
+                        </svg>
+                      </div>
+                      <div className="diamond diamond-renewal">
+                        <svg viewBox="0 0 18 26">
+                          <polygon
+                            points="9,0 18,13 9,26 0,13"
+                            fill="url(#goldGradientCustom)"
+                          />
+                        </svg>
+                      </div>
+                      <div className="diamond diamond-seed">
+                        <svg viewBox="0 0 18 26">
+                          <polygon points="9,0 18,13 9,26 0,13" fill="#1A4B7A" />
+                        </svg>
+                      </div>
+                      <div className="bottom-text">SUMERIAN PINECONE</div>
+                      <div className="border-overlay" />
                     </div>
-                    <div className="label-custom top-left">Wisdom</div>
-                    <div className="label-custom top-right">Resilience</div>
-                    <div className="label-custom bottom-left">Renewal</div>
-                    <div className="label-custom bottom-right">Seed of Life</div>
-                    <div className="diamond diamond-wisdom">
-                      <svg viewBox="0 0 18 26">
-                        <polygon points="9,0 18,13 9,26 0,13" fill="#0B3B5C" />
-                      </svg>
-                    </div>
-                    <div className="diamond diamond-resilience">
-                      <svg viewBox="0 0 18 26">
-                        <polygon
-                          points="9,0 18,13 9,26 0,13"
-                          fill="url(#goldGradientCustom)"
-                        />
-                      </svg>
-                    </div>
-                    <div className="diamond diamond-renewal">
-                      <svg viewBox="0 0 18 26">
-                        <polygon
-                          points="9,0 18,13 9,26 0,13"
-                          fill="url(#goldGradientCustom)"
-                        />
-                      </svg>
-                    </div>
-                    <div className="diamond diamond-seed">
-                      <svg viewBox="0 0 18 26">
-                        <polygon points="9,0 18,13 9,26 0,13" fill="#1A4B7A" />
-                      </svg>
-                    </div>
-                    <div className="bottom-text">SUMERIAN PINECONE</div>
-                    <div className="border-overlay" />
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </section>
         </main>
 
         <Footer />
