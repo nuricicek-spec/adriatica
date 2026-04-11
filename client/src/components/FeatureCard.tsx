@@ -29,13 +29,13 @@ export function FeatureCard({
       transition={{ duration: 0.5, delay }}
       className="group relative p-8 bg-white border border-border/40 hover:border-primary/20 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 h-full"
     >
-      {/* Sağ üstte büyük numara – aynen kalıyor */}
+      {/* Sağ üstte büyük numara */}
       <div className="absolute top-0 right-0 p-6 opacity-10 font-display text-6xl font-bold text-primary select-none group-hover:opacity-20 transition-opacity">
         {number}
       </div>
 
       <div className="relative z-10 h-full flex flex-col">
-        {/* Sol üstte ikon – deliverable/advisory ayrımı (nokta kalktı) */}
+        {/* Sol üstte ikon — deliverable/advisory ayrımı */}
         <div className="mb-6">
           {isDeliverable ? (
             <div
@@ -60,8 +60,8 @@ export function FeatureCard({
 
         {items && items.length > 0 && (
           <ul className="space-y-2 mb-4">
-            {items.map((item, idx) => (
-              <li key={idx} className="flex items-start text-sm text-muted-foreground/80">
+            {items.map(item => (
+              <li key={item} className="flex items-start text-sm text-muted-foreground/80">
                 <span className="mr-2 text-primary/40 mt-1.5">•</span>
                 <span>{item}</span>
               </li>
