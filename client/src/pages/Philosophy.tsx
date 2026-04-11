@@ -483,7 +483,7 @@ export default function Philosophy() {
                   href="/request-consultation"
                   className="inline-block bg-[#0B3B5C] text-white px-8 py-4 rounded-sm font-medium text-sm uppercase tracking-wide hover:bg-[#1A4B7A] transition-all duration-300 shadow-lg"
                 >
-                  Request Consultation
+                  Request Consultatio
                 </a>
               </motion.div>
             </div>
