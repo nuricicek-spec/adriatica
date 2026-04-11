@@ -47,12 +47,10 @@ export function Footer() {
                 <span>Adriatic Coast & Montenegro</span>
               </p>
               <div>
-                {/* text-white/50 → text-white/70 — WCAG AA kontrast düzeltmesi */}
                 <p className="text-xs uppercase tracking-wider text-white/70 mb-0.5">Address</p>
                 <p>Budva, Montenegro</p>
               </div>
               <div>
-                {/* text-white/50 → text-white/70 — WCAG AA kontrast düzeltmesi */}
                 <p className="text-xs uppercase tracking-wider text-white/70 mb-0.5">Contact</p>
                 <p>
                   <a
@@ -65,7 +63,6 @@ export function Footer() {
               </div>
             </div>
             <div className="flex gap-4 items-center">
-              {/* Facebook — URL hazır olduğunda href'i güncelle */}
               <a
                 href="https://www.facebook.com/adriaticadoo"
                 target="_blank"
@@ -75,7 +72,6 @@ export function Footer() {
               >
                 <Facebook size={18} aria-hidden="true" />
               </a>
-              {/* Instagram — URL hazır olduğunda href'i güncelle */}
               <a
                 href="https://www.instagram.com/adriaticadoo"
                 target="_blank"
@@ -127,9 +123,10 @@ export function Footer() {
                 <h3 className="font-display font-bold text-lg mb-5">Company</h3>
                 <ul className="space-y-3">
                   {[
-                    { name: "About",   href: "/about"   },
-                    { name: "Careers", href: "/careers" },
-                    { name: "News",    href: "/news"    },
+                    { name: "About",       href: "/about"       },
+                    { name: "Careers",     href: "/careers"     },
+                    { name: "News",        href: "/news"        },
+                    { name: "Philosophy",  href: "/philosophy"  },
                   ].map(item => (
                     <li key={item.name}>
                       <HashLink
