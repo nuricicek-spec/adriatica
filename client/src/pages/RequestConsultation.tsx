@@ -335,6 +335,9 @@ export default function RequestConsultation() {
                             <option value="Project Management">
                               Project Management
                             </option>
+                             <option value="Project Management">
+                              Yacht Survey & Inspection
+                            </option>
                             <option value="Other / Not Sure">
                               Other / Not Sure
                             </option>
