@@ -296,10 +296,12 @@ export default function Philosophy() {
       <Helmet>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap"
-        />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap"
+  media="print"
+  onLoad={(e) => { (e.currentTarget as HTMLLinkElement).media = 'all'; }}
+/>
         <script type="application/ld+json">
           {JSON.stringify(schema).replace(/</g, "\\u003c")}
         </script>
