@@ -5,7 +5,7 @@ import { HashLink } from "@/components/HashLink";
 import { cn } from "@/lib/utils";
 
 export function Navigation() {
-  const [isScrolled, setIsScrolled]         = useState(false);
+  const [isScrolled, setIsScrolled]             = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [, setLocation] = useLocation();
 
@@ -67,7 +67,8 @@ export function Navigation() {
                 width="40"
                 height="40"
               />
-              <span className="font-display font-bold text-xl tracking-widest text-primary uppercase">
+              {/* x1.1: text-xl (1.25rem) → 1.375rem */}
+              <span className="font-display font-bold text-[1.375rem] tracking-widest text-primary uppercase">
                 ADRIATICA D.O.O.
               </span>
             </HashLink>

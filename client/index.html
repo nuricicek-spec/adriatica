@@ -16,7 +16,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- ========== GA4 (SPA — manual page_view in main.tsx) ========== -->
+    <!-- ========== GA4 (SPA — manual page_view in App.tsx) ========== -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WPWD3K7JHR"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -28,21 +28,28 @@
     <!-- ========== LCP: preload logo ========== -->
     <link rel="preload" as="image" href="/logo.svg" fetchpriority="high" />
 
-    <!-- ========== Font preconnect — crossorigin required on both ========== -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <!-- ========== Font preconnect ========== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <!-- Async font load (print→all trick eliminates render-blocking) -->
+    <!--
+      Cinzel buradan KALDIRILDI.
+      Sadece Philosophy ve Home sayfasında kullanılıyor.
+      İlgili sayfalarda <Helmet> içinde yükleniyor — böylece
+      diğer sayfalarda render-blocking yaratmıyor.
+    -->
+
+    <!-- Manrope + Montserrat — site genelinde kullanılan fontlar -->
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Manrope:wght@200;300;400;500;600;700;800&family=Montserrat:wght@300;400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Montserrat:wght@300;400&display=swap"
       media="print"
       onload="this.media='all'"
     />
     <noscript>
       <link
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Manrope:wght@200;300;400;500;600;700;800&family=Montserrat:wght@300;400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Montserrat:wght@300;400&display=swap"
       />
     </noscript>
 

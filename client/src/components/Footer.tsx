@@ -34,7 +34,6 @@ export function Footer() {
                 height="36"
                 className="brightness-0 invert"
               />
-              {/* x1.1: text-xl (1.25rem) → 1.375rem */}
               <span className="font-display font-bold text-[1.5rem] tracking-widest uppercase">
                 ADRIATICA D.O.O.
               </span>
@@ -48,11 +47,13 @@ export function Footer() {
                 <span>Adriatic Coast & Montenegro</span>
               </p>
               <div>
-                <p className="text-xs uppercase tracking-wider text-white/50 mb-0.5">Address</p>
+                {/* text-white/50 → text-white/70 — WCAG AA kontrast düzeltmesi */}
+                <p className="text-xs uppercase tracking-wider text-white/70 mb-0.5">Address</p>
                 <p>Budva, Montenegro</p>
               </div>
               <div>
-                <p className="text-xs uppercase tracking-wider text-white/50 mb-0.5">Contact</p>
+                {/* text-white/50 → text-white/70 — WCAG AA kontrast düzeltmesi */}
+                <p className="text-xs uppercase tracking-wider text-white/70 mb-0.5">Contact</p>
                 <p>
                   <a
                     href="mailto:info@adriaticadoo.com"
@@ -143,14 +144,12 @@ export function Footer() {
               </div>
 
               <div className="flex flex-col space-y-3">
-                {/* md:w-auto kaldırıldı — mobilde w-full kalıyor */}
                 <HashLink
                   href="/request-consultation"
                   className="w-full inline-block bg-[#D4AF37] text-black font-medium px-5 py-2.5 rounded-sm text-sm uppercase tracking-wide shadow-lg hover:bg-[#C9A961] transition-all duration-300 text-center"
                 >
                   Request Consultation
                 </HashLink>
-                {/* md:w-auto kaldırıldı — mobilde w-full kalıyor */}
                 <button
                   onClick={handleClientAccess}
                   className="w-full inline-flex items-center justify-center gap-1 border border-white/30 text-white font-medium px-5 py-2.5 rounded-sm text-sm uppercase tracking-wide hover:bg-white/10 transition-all duration-300"
@@ -169,80 +168,30 @@ export function Footer() {
           </div>
 
           <div className="order-1 lg:order-2 flex flex-wrap justify-center items-center gap-5">
-            <a
-              href="https://www.imo.org"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="IMO"
-              className="hover:opacity-80 hover:scale-105 transition-transform duration-200"
-            >
-              <img
-                src="/logos/imo_logo.png"
-                alt="IMO"
-                width="93"
-                height="40"
-                className="h-10 w-auto bg-white/10 rounded-sm p-0.5"
-              />
+            <a href="https://www.imo.org" target="_blank" rel="noopener noreferrer" aria-label="IMO"
+              className="hover:opacity-80 hover:scale-105 transition-transform duration-200">
+              <img src="/logos/imo_logo.png" alt="IMO" width="93" height="40"
+                className="h-10 w-auto bg-white/10 rounded-sm p-0.5" />
             </a>
-            <a
-              href="https://www.parismou.org"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Paris MoU"
-              className="hover:opacity-80 hover:scale-105 transition-transform duration-200"
-            >
-              <img
-                src="/logos/parismou-logo.png"
-                alt="Paris MoU"
-                width="182"
-                height="40"
-                className="h-10 w-auto"
-              />
+            <a href="https://www.parismou.org" target="_blank" rel="noopener noreferrer" aria-label="Paris MoU"
+              className="hover:opacity-80 hover:scale-105 transition-transform duration-200">
+              <img src="/logos/parismou-logo.png" alt="Paris MoU" width="182" height="40"
+                className="h-10 w-auto" />
             </a>
-            <a
-              href="https://helcom.fi"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="HELCOM"
-              className="hover:opacity-80 hover:scale-105 transition-transform duration-200"
-            >
-              <img
-                src="/logos/helcom_logo.png"
-                alt="HELCOM"
-                width="41"
-                height="40"
-                className="h-10 w-auto"
-              />
+            <a href="https://helcom.fi" target="_blank" rel="noopener noreferrer" aria-label="HELCOM"
+              className="hover:opacity-80 hover:scale-105 transition-transform duration-200">
+              <img src="/logos/helcom_logo.png" alt="HELCOM" width="41" height="40"
+                className="h-10 w-auto" />
             </a>
-            <a
-              href="https://www.gov.me/uprava-pomorske-sigurnosti"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Montenegro MSA"
-              className="hover:opacity-80 hover:scale-105 transition-transform duration-200"
-            >
-              <img
-                src="/logos/me-flag-round-circle-icon.svg"
-                alt="Montenegro MSA"
-                width="40"
-                height="40"
-                className="h-10 w-10"
-              />
+            <a href="https://www.gov.me/uprava-pomorske-sigurnosti" target="_blank" rel="noopener noreferrer" aria-label="Montenegro MSA"
+              className="hover:opacity-80 hover:scale-105 transition-transform duration-200">
+              <img src="/logos/me-flag-round-circle-icon.svg" alt="Montenegro MSA" width="40" height="40"
+                className="h-10 w-10" />
             </a>
-            <a
-              href="https://www.emsa.europa.eu"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="EMSA"
-              className="hover:opacity-80 hover:scale-105 transition-transform duration-200"
-            >
-              <img
-                src="/logos/eu-union-flag-round-circle-icon.svg"
-                alt="EMSA"
-                width="40"
-                height="40"
-                className="h-10 w-10"
-              />
+            <a href="https://www.emsa.europa.eu" target="_blank" rel="noopener noreferrer" aria-label="EMSA"
+              className="hover:opacity-80 hover:scale-105 transition-transform duration-200">
+              <img src="/logos/eu-union-flag-round-circle-icon.svg" alt="EMSA" width="40" height="40"
+                className="h-10 w-10" />
             </a>
           </div>
 
