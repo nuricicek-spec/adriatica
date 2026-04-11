@@ -190,7 +190,7 @@ export default function StructuralIntegrity() {
                 Concerned about your vessel’s structural condition? Let’s assess it.
               </p>
               <HashLink
-                href="/#begin-voyage"
+                href="/request-consultation"
                 className="inline-block mt-2 bg-[#0B3B5C] text-white px-6 py-3 rounded-sm font-medium hover:bg-[#1A4B7A] transition-colors"
               >
                 Request Technical Assessment

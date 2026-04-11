@@ -191,7 +191,7 @@ export default function EngineeringPlans() {
                 Ready to get your engineering plans in place?
               </p>
               <HashLink
-                href="/#begin-voyage"
+                href="/request-consultation"
                 className="inline-block mt-2 bg-[#0B3B5C] text-white px-6 py-3 rounded-sm font-medium hover:bg-[#1A4B7A] transition-colors"
               >
                 Request Technical Assessment
