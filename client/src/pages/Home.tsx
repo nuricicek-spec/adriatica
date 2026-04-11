@@ -231,7 +231,7 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5, duration: 1 }}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-primary/40"
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-primary/70"
           >
             <span className="text-xs uppercase tracking-widest mb-2">Scroll</span>
             <ArrowDown className="animate-bounce w-5 h-5" />
