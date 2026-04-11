@@ -3,6 +3,7 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { motion } from "framer-motion";
+import { TRUST_METRICS } from "@/config/trustMetrics";
 
 // ─── Pinecone styles — component dışında sabit ───────────────────────────────
 const PINECONE_STYLES = `
@@ -444,18 +445,18 @@ export default function Philosophy() {
                 </motion.div>
 
                 {/* Sağ: İstatistikler */}
-                <motion.div
-                  initial={{ opacity: 0, x: 24 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.7, delay: 0.15 }}
-                  className="grid grid-cols-2 gap-10"
-                >
-                  <Stat value="20+" label="Years Experience" />
-                  <Stat value="25+" label="Clients Worldwide" />
-                  <Stat value="8+"  label="Countries" />
-                  <Stat value="0"   label="Compromises" />
-                </motion.div>
+<motion.div
+  initial={{ opacity: 0, x: 24 }}
+  whileInView={{ opacity: 1, x: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.7, delay: 0.15 }}
+  className="grid grid-cols-2 gap-10"
+>
+  <Stat value={`${TRUST_METRICS.yearsExperience}+`} label={`Years ${TRUST_METRICS.field}`} />
+  <Stat value={`${TRUST_METRICS.vesselsSupported}+`} label="Vessels Supported" />
+  <Stat value={`${TRUST_METRICS.countries}+`} label="Countries" />
+  <Stat value={`${TRUST_METRICS.pscDetentions}`} label="PSC Detentions" />
+</motion.div>
 
               </div>
             </div>
