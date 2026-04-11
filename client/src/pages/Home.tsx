@@ -258,7 +258,7 @@ export default function Home() {
                 href="/philosophy"
                 className="text-white/60 hover:text-[#D4AF37] transition-colors uppercase tracking-wider text-xs font-medium"
               >
-                Our Standard →
+                Our Philosophy →
               </Link>
             </div>
           </div>
