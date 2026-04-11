@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { insights } from "@/data/insights";
+import { TRUST_METRICS } from "@/config/trustMetrics";
 
 // En son 3 makale — tarih sırasına göre otomatik
 const recentInsights = [...insights]
@@ -239,30 +240,33 @@ export default function Home() {
         </section>
 
         {/* ── TRUST STRIP ─────────────────────────────────────────────────────── */}
-        <section className="py-4 bg-[#0B3B5C] border-y border-white/10">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-2 text-sm text-white/70">
-              <span className="flex items-center gap-2">
-                <span className="text-[#D4AF37] font-bold">20+</span> Years Experience
-              </span>
-              <span className="text-white/20 hidden sm:inline">·</span>
-              <span className="flex items-center gap-2">
-                <span className="text-[#D4AF37] font-bold">25+</span> Clients Worldwide
-              </span>
-              <span className="text-white/20 hidden sm:inline">·</span>
-              <span className="flex items-center gap-2">
-                <span className="text-[#D4AF37] font-bold">0</span> Compromises
-              </span>
-              <span className="text-white/20 hidden sm:inline">·</span>
-              <Link
-                href="/philosophy"
-                className="text-white/60 hover:text-[#D4AF37] transition-colors uppercase tracking-wider text-xs font-medium"
-              >
-                Our Philosophy →
-              </Link>
-            </div>
-          </div>
-        </section>
+<section className="py-4 bg-[#0B3B5C] border-y border-white/10">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-2 text-sm text-white/70">
+      <span className="flex items-center gap-2">
+        <span className="text-[#D4AF37] font-bold">{TRUST_METRICS.yearsExperience}+</span>
+        Years {TRUST_METRICS.field}
+      </span>
+      <span className="text-white/20 hidden sm:inline">·</span>
+      <span className="flex items-center gap-2">
+        <span className="text-[#D4AF37] font-bold">{TRUST_METRICS.vesselsSupported}+</span>
+        Vessels Supported
+      </span>
+      <span className="text-white/20 hidden sm:inline">·</span>
+      <span className="flex items-center gap-2">
+        <span className="text-[#D4AF37] font-bold">{TRUST_METRICS.pscDetentions}</span>
+        PSC Detentions
+      </span>
+      <span className="text-white/20 hidden sm:inline">·</span>
+      <Link
+        href="/philosophy"
+        className="text-white/60 hover:text-[#D4AF37] transition-colors uppercase tracking-wider text-xs font-medium"
+      >
+        Our Philosophy →
+      </Link>
+    </div>
+  </div>
+</section>
 
         {/* ── VALUE PROPOSITION ───────────────────────────────────────────────── */}
         <section className="py-20 bg-white">
