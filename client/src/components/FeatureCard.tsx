@@ -29,26 +29,34 @@ export function FeatureCard({
       transition={{ duration: 0.5, delay }}
       className="group relative p-8 bg-white border border-border/40 hover:border-primary/20 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 h-full"
     >
+      {/* Sağ üstte büyük numara – aynen kalıyor */}
       <div className="absolute top-0 right-0 p-6 opacity-10 font-display text-6xl font-bold text-primary select-none group-hover:opacity-20 transition-opacity">
         {number}
       </div>
 
       <div className="relative z-10 h-full flex flex-col">
-        {/* Başlık satırı – ikon + başlık yan yana */}
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-display font-semibold text-foreground group-hover:text-primary transition-colors">
-            {title}
-          </h3>
+        {/* Sol üstte ikon – deliverable/advisory ayrımı (nokta kalktı) */}
+        <div className="mb-6">
           {isDeliverable ? (
-            <span title="Includes structured technical outputs (plans, documents, reports)">
-              <ArrowRight className="w-5 h-5 text-primary/60 group-hover:text-primary transition-colors" />
-            </span>
+            <div
+              className="h-12 w-12 bg-primary/5 flex items-center justify-center rounded-sm text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300"
+              title="Includes structured technical outputs (plans, documents, reports)"
+            >
+              <ArrowRight className="w-5 h-5" />
+            </div>
           ) : (
-            <span title="Advisory and technical guidance (compliance, strategy, project management)">
-              <ExternalLink className="w-5 h-5 text-primary/60 group-hover:text-primary transition-colors" />
-            </span>
+            <div
+              className="h-12 w-12 bg-primary/5 flex items-center justify-center rounded-sm text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300"
+              title="Advisory and technical guidance (compliance, strategy, project management)"
+            >
+              <ExternalLink className="w-5 h-5" />
+            </div>
           )}
         </div>
+
+        <h3 className="text-xl font-display font-semibold mb-3 text-foreground group-hover:text-primary transition-colors">
+          {title}
+        </h3>
 
         {items && items.length > 0 && (
           <ul className="space-y-2 mb-4">
