@@ -21,8 +21,6 @@ const recentInsights = [...insights]
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
   .slice(0, 3);
 
-const COMMISSIONS_TEXT = "We are currently accepting commissions for Q2 2026.";
-
 export default function Home() {
   const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
@@ -168,14 +166,17 @@ export default function Home() {
                   <span className="text-[#3A74A0]">ENGINEERING</span>
                 </h1>
 
-                <p className="text-lg md:text-xl font-semibold text-primary mb-2">
+                {/* YENİ HERO METNİ – hiyerarşik yapı */}
+                <p className="text-sm uppercase tracking-wide text-muted-foreground mt-2">
                   For Superyacht Owners & Commercial Fleet Operators in the Adriatic and Mediterranean
                 </p>
-                <p className="text-base md:text-lg lg:text-xl text-primary font-semibold mb-4">
-                  Engineering Management & Compliance Solutions
+
+                <p className="text-xl md:text-2xl font-bold text-[#0B3B5C] mt-4 mb-4 max-w-2xl">
+                  Engineering-grade outputs for compliance, documentation, and vessel performance.
                 </p>
-                <p className="text-base md:text-lg lg:text-xl font-medium text-primary leading-relaxed max-w-xl mx-auto lg:mx-0 mb-6">
-                  Reduce dry‑dock delays, stay PSC‑ready, and protect your charter schedule.
+
+                <p className="text-base text-muted-foreground mb-6 max-w-xl">
+                  We deliver technical plans, documentation, and assessments — enabling informed decisions, regulatory readiness, and operational clarity.
                 </p>
 
                 <div className="border-l-2 border-primary pl-6 mb-10">
@@ -192,7 +193,6 @@ export default function Home() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                  {/* → /request-consultation */}
                   <Link
                     href="/request-consultation"
                     className="px-8 py-4 bg-[#D4AF37] text-black font-medium rounded-sm shadow-lg shadow-[#D4AF37]/20 hover:bg-[#C9A961] transition-all duration-300 uppercase tracking-wide text-sm text-center"
@@ -240,33 +240,33 @@ export default function Home() {
         </section>
 
         {/* ── TRUST STRIP ─────────────────────────────────────────────────────── */}
-<section className="py-4 bg-[#0B3B5C] border-y border-white/10">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-2 text-sm text-white/70">
-      <span className="flex items-center gap-2">
-        <span className="text-[#D4AF37] font-bold">{TRUST_METRICS.yearsExperience}+</span>
-        Years {TRUST_METRICS.field}
-      </span>
-      <span className="text-white/20 hidden sm:inline">·</span>
-      <span className="flex items-center gap-2">
-        <span className="text-[#D4AF37] font-bold">{TRUST_METRICS.vesselsSupported}+</span>
-        Vessels Supported
-      </span>
-      <span className="text-white/20 hidden sm:inline">·</span>
-      <span className="flex items-center gap-2">
-        <span className="text-[#D4AF37] font-bold">{TRUST_METRICS.pscDetentions}</span>
-        PSC Detentions
-      </span>
-      <span className="text-white/20 hidden sm:inline">·</span>
-      <Link
-        href="/philosophy"
-        className="text-white/60 hover:text-[#D4AF37] transition-colors uppercase tracking-wider text-xs font-medium"
-      >
-        Our Philosophy →
-      </Link>
-    </div>
-  </div>
-</section>
+        <section className="py-4 bg-[#0B3B5C] border-y border-white/10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-2 text-sm text-white/70">
+              <span className="flex items-center gap-2">
+                <span className="text-[#D4AF37] font-bold">{TRUST_METRICS.yearsExperience}+</span>
+                Years {TRUST_METRICS.field}
+              </span>
+              <span className="text-white/20 hidden sm:inline">·</span>
+              <span className="flex items-center gap-2">
+                <span className="text-[#D4AF37] font-bold">{TRUST_METRICS.vesselsSupported}+</span>
+                Vessels Supported
+              </span>
+              <span className="text-white/20 hidden sm:inline">·</span>
+              <span className="flex items-center gap-2">
+                <span className="text-[#D4AF37] font-bold">{TRUST_METRICS.pscDetentions}</span>
+                PSC Detentions
+              </span>
+              <span className="text-white/20 hidden sm:inline">·</span>
+              <Link
+                href="/philosophy"
+                className="text-white/60 hover:text-[#D4AF37] transition-colors uppercase tracking-wider text-xs font-medium"
+              >
+                Our Philosophy →
+              </Link>
+            </div>
+          </div>
+        </section>
 
         {/* ── VALUE PROPOSITION ───────────────────────────────────────────────── */}
         <section className="py-20 bg-white">
@@ -479,7 +479,6 @@ export default function Home() {
           </div>
 
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Başlık */}
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-12 gap-4">
               <div>
                 <p className="text-xs uppercase tracking-[0.25em] text-white/40 mb-2">
@@ -497,7 +496,6 @@ export default function Home() {
               </Link>
             </div>
 
-            {/* Kartlar — otomatik, tarih sırası */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {recentInsights.map(insight => (
                 <InsightCard key={insight.slug} insight={insight} variant="dark" />
@@ -512,9 +510,10 @@ export default function Home() {
             <h2 className="font-display text-4xl md:text-5xl font-bold text-[#0B3B5C] mb-6">
               Begin Your Voyage
             </h2>
-<p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto">
-  Share your vessel’s technical challenge. Our principal engineers will review and respond within 24 hours. Accepting commissions for Q2 2026.
-</p>
+            <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto">
+              Share your vessel’s technical challenge. Our principal engineers will review and respond within 24 hours. Accepting commissions for Q2 2026.
+            </p>
+
             {formStatus === "success" ? (
               <div className="max-w-md mx-auto p-8 bg-white border border-green-200 rounded-sm shadow-sm">
                 <p className="text-green-800 text-lg font-medium mb-2">Thank you!</p>
