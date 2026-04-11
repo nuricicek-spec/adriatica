@@ -328,8 +328,8 @@ export default function Philosophy() {
                   Adriatica D.O.O. Standard
                 </p>
                 <h1 className="font-display text-5xl md:text-7xl font-bold text-[#0B3B5C] leading-[1.05] mb-6 uppercase">
-                  WISDOM IN<br />
-                  <span className="text-[#3A74A0]">ENGINEERING</span>
+                    THE ESSENTIAL<br />
+                  <span className="text-[#3A74A0]">STRUCTURE</span>
                 </h1>
                 <div className="w-16 h-0.5 bg-primary/30 mb-6" />
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl">
@@ -483,7 +483,7 @@ export default function Philosophy() {
                   href="/request-consultation"
                   className="inline-block bg-[#0B3B5C] text-white px-8 py-4 rounded-sm font-medium text-sm uppercase tracking-wide hover:bg-[#1A4B7A] transition-all duration-300 shadow-lg"
                 >
-                  Request Consultatio
+                  Request Consultation
                 </a>
               </motion.div>
             </div>
