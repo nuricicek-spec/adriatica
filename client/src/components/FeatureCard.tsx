@@ -1,17 +1,26 @@
 import { motion } from "framer-motion";
 import { HashLink } from "@/components/HashLink";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 
 interface FeatureCardProps {
   number: string;
   title: string;
   items?: string[];
   delay?: number;
-  linkTo?: string;          // opsiyonel: servis detay sayfası slug'ı
-  linkText?: string;        // opsiyonel: bağlantı metni (varsayılan "Learn more")
+  linkTo?: string;
+  linkText?: string;
+  isDeliverable?: boolean; // true = somut çıktı, false = danışmanlık
 }
 
-export function FeatureCard({ number, title, items, delay = 0, linkTo, linkText }: FeatureCardProps) {
+export function FeatureCard({
+  number,
+  title,
+  items,
+  delay = 0,
+  linkTo,
+  linkText,
+  isDeliverable = true,
+}: FeatureCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -25,13 +34,21 @@ export function FeatureCard({ number, title, items, delay = 0, linkTo, linkText 
       </div>
 
       <div className="relative z-10 h-full flex flex-col">
-        <div className="h-12 w-12 mb-6 bg-primary/5 flex items-center justify-center rounded-sm text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-          <div className="w-1.5 h-1.5 bg-current rounded-full" />
+        {/* Başlık satırı – ikon + başlık yan yana */}
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-xl font-display font-semibold text-foreground group-hover:text-primary transition-colors">
+            {title}
+          </h3>
+          {isDeliverable ? (
+            <span title="Includes structured technical outputs (plans, documents, reports)">
+              <ArrowRight className="w-5 h-5 text-primary/60 group-hover:text-primary transition-colors" />
+            </span>
+          ) : (
+            <span title="Advisory and technical guidance (compliance, strategy, project management)">
+              <ExternalLink className="w-5 h-5 text-primary/60 group-hover:text-primary transition-colors" />
+            </span>
+          )}
         </div>
-
-        <h3 className="text-xl font-display font-semibold mb-3 text-foreground group-hover:text-primary transition-colors">
-          {title}
-        </h3>
 
         {items && items.length > 0 && (
           <ul className="space-y-2 mb-4">

@@ -16,7 +16,7 @@ import { SEO } from "@/components/SEO";
 import { insights } from "@/data/insights";
 import { TRUST_METRICS } from "@/config/trustMetrics";
 
-// En son 3 makale — tarih sırasına göre otomatik
+// En son 3 makale
 const recentInsights = [...insights]
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
   .slice(0, 3);
@@ -166,7 +166,6 @@ export default function Home() {
                   <span className="text-[#3A74A0]">ENGINEERING</span>
                 </h1>
 
-                {/* YENİ HERO METNİ – hiyerarşik yapı */}
                 <p className="text-sm uppercase tracking-wide text-muted-foreground mt-2">
                   For Superyacht Owners & Commercial Fleet Operators in the Adriatic and Mediterranean
                 </p>
@@ -354,66 +353,70 @@ export default function Home() {
         </section>
 
         {/* ── CORE COMPETENCIES ───────────────────────────────────────────────── */}
-        <section id="core-competencies" className="py-24 md:py-32 bg-white relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionHeading
-              title="Marine Engineering"
-              subtitle="Core Competencies"
-            />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-              <FeatureCard
-                number="01"
-                title="Engineering Plans"
-                items={["Structural Drawings","As-Built Drawing Sets","Arrangement Plans","Fire & Safety Plans"]}
-                delay={0.1}
-                linkTo="engineering-plans"
-                linkText="Learn more about Engineering Plans"
-              />
-              <FeatureCard
-                number="02"
-                title="Engineering Documentation"
-                items={["As-Built P&ID / System Manuals","Electrical Load Analysis (EAB)","Fuel Management & Quality Booklet","IHM (Inventory of Hazardous Materials)"]}
-                delay={0.2}
-                linkTo="engineering-documentation"
-                linkText="Learn more about Engineering Documentation"
-              />
-              <FeatureCard
-                number="03"
-                title="Structural Integrity"
-                items={["Structural Integrity & Life Extension Studies","Hull Condition Analysis","Modification Consultancy","Vibration & Noise Diagnostic"]}
-                delay={0.3}
-                linkTo="structural-integrity"
-                linkText="Learn more about Structural Integrity"
-              />
-              <FeatureCard
-                number="04"
-                title="Sustainable Tech"
-                items={["Biofouling Management Plan (IMO MEPC.378(80))","Eco-friendly Coating Advisory","Energy Audit & Efficiency Surveys","MRV Monitoring Plan (EU MRV Regulation)"]}
-                delay={0.4}
-                linkTo="sustainable-technologies"
-                linkText="Learn more about Sustainable Technologies"
-              />
-              <FeatureCard
-                number="05"
-                title="Regulatory Compliance"
-                items={["Ballast Water Management Plan (BWMP)","Shipboard Oil Pollution Emergency Plan (SoPEP)","Ship Energy Efficiency Management Plan (SEEMP)","Garbage Management Plan","Emergency Response Manuals"]}
-                delay={0.5}
-                linkTo="regulatory-compliance"
-                linkText="Learn more about Regulatory Compliance"
-              />
-              <FeatureCard
-                number="06"
-                title="Project Management"
-                items={["Owner's Rep & Refit Supervision","Dry-Docking Specification & Management","On-site Technical Troubleshooting","Yacht Survey & Inspection"]}
-                delay={0.6}
-                linkTo="project-management"
-                linkText="Learn more about Project Management"
-              />
-            </div>
-          </div>
-        </section>
 
-        {/* ── MID-PAGE CTA — geniş lacivert bant ─────────────────────────────── */}
+<section id="core-competencies" className="py-24 md:py-32 bg-white relative">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <SectionHeading title="Marine Engineering" subtitle="Core Competencies" />
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+      <FeatureCard
+        number="01"
+        title="Engineering Plans"
+        items={["Structural Drawings","As-Built Drawing Sets","Arrangement Plans","Fire & Safety Plans"]}
+        delay={0.1}
+        linkTo="engineering-plans"
+        linkText="Learn more about Engineering Plans"
+        isDeliverable={true}
+      />
+      <FeatureCard
+        number="02"
+        title="Engineering Documentation"
+        items={["As-Built P&ID / System Manuals","Electrical Load Analysis (EAB)","Fuel Management & Quality Booklet","IHM (Inventory of Hazardous Materials)"]}
+        delay={0.2}
+        linkTo="engineering-documentation"
+        linkText="Learn more about Engineering Documentation"
+        isDeliverable={true}
+      />
+      <FeatureCard
+        number="03"
+        title="Structural Integrity"
+        items={["Structural Integrity & Life Extension Studies","Hull Condition Analysis","Modification Consultancy","Vibration & Noise Diagnostic"]}
+        delay={0.3}
+        linkTo="structural-integrity"
+        linkText="Learn more about Structural Integrity"
+        isDeliverable={true}
+      />
+      <FeatureCard
+        number="04"
+        title="Sustainable Tech"
+        items={["Biofouling Management Plan (IMO MEPC.378(80))","Eco-friendly Coating Advisory","Energy Audit & Efficiency Surveys","MRV Monitoring Plan (EU MRV Regulation)"]}
+        delay={0.4}
+        linkTo="sustainable-technologies"
+        linkText="Learn more about Sustainable Technologies"
+        isDeliverable={false}
+      />
+      <FeatureCard
+        number="05"
+        title="Regulatory Compliance"
+        items={["Ballast Water Management Plan (BWMP)","Shipboard Oil Pollution Emergency Plan (SoPEP)","Ship Energy Efficiency Management Plan (SEEMP)","Garbage Management Plan","Emergency Response Manuals"]}
+        delay={0.5}
+        linkTo="regulatory-compliance"
+        linkText="Learn more about Regulatory Compliance"
+        isDeliverable={false}
+      />
+      <FeatureCard
+        number="06"
+        title="Project Management"
+        items={["Owner's Rep & Refit Supervision","Dry-Docking Specification & Management","On-site Technical Troubleshooting","Yacht Survey & Inspection"]}
+        delay={0.6}
+        linkTo="project-management"
+        linkText="Learn more about Project Management"
+        isDeliverable={false}
+      />
+    </div>
+  </div>
+</section>
+
+        {/* ── MID-PAGE CTA ────────────────────────────────────────────────────── */}
         <section className="relative py-20 bg-[#0B3B5C] overflow-hidden">
           <div className="absolute inset-0 z-0 pointer-events-none">
             <div className="absolute top-0 right-0 w-2/3 h-full bg-[#1A4B7A]/20 -skew-x-12 transform origin-top" />
@@ -504,7 +507,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── BEGIN YOUR VOYAGE — form ─────────────────────────────────────────── */}
+        {/* ── BEGIN YOUR VOYAGE ────────────────────────────────────────────────── */}
         <section id="begin-voyage" className="py-24 bg-neutral-50 border-t border-border/10">
           <div className="max-w-4xl mx-auto px-4 text-center">
             <h2 className="font-display text-4xl md:text-5xl font-bold text-[#0B3B5C] mb-6">
