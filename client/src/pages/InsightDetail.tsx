@@ -198,7 +198,7 @@ export default function InsightDetail() {
                   Have a specific technical challenge?
                 </p>
                 <Link
-                  href="/#begin-voyage"
+                  href="/request-consultation"
                   className="inline-block w-full px-4 py-2 bg-primary text-white font-medium rounded-sm hover:bg-primary/90 transition-colors"
                 >
                   Request Assessment

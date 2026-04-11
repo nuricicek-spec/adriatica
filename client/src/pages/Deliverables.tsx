@@ -126,7 +126,7 @@ export default function Deliverables() {
 
                 <div className="flex flex-wrap gap-3">
                   <HashLink
-                    href="/#begin-voyage"
+                    href="/request-consultation"
                     className="text-primary text-sm hover:underline"
                   >
                     Request a quote →
@@ -146,7 +146,7 @@ export default function Deliverables() {
           <div className="mt-16 text-center p-6 bg-neutral-50 border border-border/10 rounded-sm">
             <p className="text-muted-foreground mb-3">Don't see what you need?</p>
             <HashLink
-              href="/#begin-voyage"
+              href="/request-consultation"
               className="inline-block bg-primary text-white px-6 py-3 rounded-sm font-medium hover:bg-primary/90 transition"
             >
               Request Custom Deliverable
@@ -224,7 +224,7 @@ export default function Deliverables() {
                   Learn more about this deliverable
                 </HashLink>
                 <HashLink
-                  href="/#begin-voyage"
+                  href="/request-consultation"
                   className="border border-primary text-primary px-4 py-2 rounded-sm hover:bg-primary/10 transition"
                 >
                   Request a quote

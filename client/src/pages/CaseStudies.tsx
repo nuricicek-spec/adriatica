@@ -104,7 +104,7 @@ export default function CaseStudies() {
               Have a specific technical challenge? We're ready to solve it.
             </p>
             <Link
-              href="/#begin-voyage"
+              href="/request-consultation"
               className="inline-block px-6 py-3 bg-[#0B3B5C] text-white font-medium rounded-sm hover:bg-[#1A4B7A] transition-colors"
             >
               Request Technical Consultation – Avoid Delays

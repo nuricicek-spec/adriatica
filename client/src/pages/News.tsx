@@ -113,7 +113,7 @@ export default function News() {
                   </p>
                   {item.showCta && (
                     <HashLink
-                      href="/#begin-voyage"
+                      href="/request-consultation"
                       className="inline-flex items-center gap-1 text-primary hover:underline text-sm font-medium"
                     >
                       Need support? Request a consultation →
