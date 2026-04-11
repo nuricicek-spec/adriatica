@@ -512,10 +512,9 @@ export default function Home() {
             <h2 className="font-display text-4xl md:text-5xl font-bold text-[#0B3B5C] mb-6">
               Begin Your Voyage
             </h2>
-            <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto">
-              Tell us your marine engineering requirements, and our principal architects will respond. {COMMISSIONS_TEXT}
-            </p>
-
+<p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto">
+  Share your vessel’s technical challenge. Our principal engineers will review and respond within 24 hours. Accepting commissions for Q2 2026.
+</p>
             {formStatus === "success" ? (
               <div className="max-w-md mx-auto p-8 bg-white border border-green-200 rounded-sm shadow-sm">
                 <p className="text-green-800 text-lg font-medium mb-2">Thank you!</p>
