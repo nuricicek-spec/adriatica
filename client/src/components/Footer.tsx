@@ -38,9 +38,9 @@ export function Footer() {
                 ADRIATICA D.O.O.
               </span>
             </HashLink>
-            <p className="text-[#C8D6E5] text-sm italic mb-4">
-              Engineering clarity for the Adriatic.
-            </p>
+<p className="text-[#C8D6E5] text-[15px] mb-4">
+  Engineering clarity for the Adriatic.
+</p>
             <div className="text-[#C8D6E5] text-sm space-y-3 mb-5">
               <p className="flex items-start gap-2">
                 <span className="shrink-0">📍</span>
