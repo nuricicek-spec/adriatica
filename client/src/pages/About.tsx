@@ -131,7 +131,7 @@ export default function About() {
               <h3 className="font-display text-lg font-bold text-[#0B3B5C] mb-2">Company Information</h3>
               <div className="space-y-1 text-sm text-muted-foreground">
                 <p><strong>Adriatica D.O.O.</strong></p>
-                <p>Podgorica, Montenegro</p>
+                <p>Tax Address: Podgorica, Montenegro</p>
                 <p>Tax ID (PIB): 03612807</p>
                 <p>
                   Email:{" "}
