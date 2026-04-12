@@ -38,7 +38,7 @@ export function Footer() {
                 ADRIATICA D.O.O.
               </span>
             </HashLink>
-<p className="text-[#C8D6E5] text-[15px] mb-4">
+<p className="text-[#C8D6E5] text-base italic mb-4">
   Engineering clarity for the Adriatic.
 </p>
             <div className="text-[#C8D6E5] text-sm space-y-3 mb-5">
