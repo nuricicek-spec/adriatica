@@ -241,7 +241,7 @@ export default function Home() {
         {/* ── TRUST STRIP ─────────────────────────────────────────────────────── */}
         <section className="py-4 bg-[#0B3B5C] border-y border-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-2 text-sm text-white/70">
+            <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-2 text-sm text-white/80">
               <span className="flex items-center gap-2">
                 <span className="text-[#D4AF37] font-bold">{TRUST_METRICS.yearsExperience}+</span>
                 Years {TRUST_METRICS.field}
@@ -259,7 +259,7 @@ export default function Home() {
               <span className="text-white/20 hidden sm:inline">·</span>
               <Link
                 href="/philosophy"
-                className="text-white/60 hover:text-[#D4AF37] transition-colors uppercase tracking-wider text-xs font-medium"
+                className="text-white/70 hover:text-[#D4AF37] transition-colors uppercase tracking-wider text-xs font-medium"
               >
                 Our Philosophy →
               </Link>
@@ -427,13 +427,13 @@ export default function Home() {
             </div>
           </div>
           <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p className="text-xs uppercase tracking-[0.25em] text-white/70 mb-4">
+            <p className="text-xs uppercase tracking-[0.25em] text-white/80 mb-4">
               Ready to solve it?
             </p>
             <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">
               Have a specific technical challenge?
             </h2>
-            <p className="text-white/70 mb-8 max-w-xl mx-auto">
+            <p className="text-white/80 mb-8 max-w-xl mx-auto">
               From PSC preparation to structural life extension — we assess, plan, and deliver. Tell us about your vessel.
             </p>
             <Link
@@ -484,7 +484,7 @@ export default function Home() {
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-12 gap-4">
               <div>
-                <p className="text-xs uppercase tracking-[0.25em] text-white/70 mb-2">
+                <p className="text-xs uppercase tracking-[0.25em] text-white/80 mb-2">
                   From the knowledge base
                 </p>
                 <h2 className="font-display text-3xl md:text-4xl font-bold text-white">
