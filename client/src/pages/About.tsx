@@ -109,7 +109,7 @@ export default function About() {
               Our philosophy is rooted in timeless principles — wisdom, resilience, and reduction to the essential.
             </p>
             <HashLink
-              href="/#philosophy"
+              href="/philosophy"
               className="inline-block text-primary hover:underline text-sm mb-6"
             >
               → Discover our Philosophy
