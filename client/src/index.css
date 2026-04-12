@@ -139,3 +139,9 @@ ol.list-decimal {
 .slide-in-from-top {
   animation: slide-in-from-top 0.2s ease-out forwards;
 }
+/* Toast/notification kütüphanelerinin boş listelerini gizle (erişilebilirlik) */
+ol:empty,
+ul:empty,
+[role="list"]:empty {
+  display: none !important;
+}
