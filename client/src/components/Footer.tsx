@@ -196,11 +196,11 @@ export function Footer() {
             <HashLink href="/privacy-policy" className="hover:text-white transition-colors text-sm">
               Privacy Policy
             </HashLink>
-            <span className="text-white/30">·</span>
+            <span className="text-white/70">·</span>
             <HashLink href="/terms-of-service" className="hover:text-white transition-colors text-sm">
               Terms of Service
             </HashLink>
-            <span className="text-white/30">·</span>
+            <span className="text-white/70">·</span>
             <HashLink href="/cookie-policy" className="hover:text-white transition-colors text-sm">
               Cookie Policy
             </HashLink>

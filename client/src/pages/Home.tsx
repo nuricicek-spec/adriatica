@@ -427,7 +427,7 @@ export default function Home() {
             </div>
           </div>
           <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p className="text-xs uppercase tracking-[0.25em] text-white/50 mb-4">
+            <p className="text-xs uppercase tracking-[0.25em] text-white/70 mb-4">
               Ready to solve it?
             </p>
             <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">
@@ -484,7 +484,7 @@ export default function Home() {
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-12 gap-4">
               <div>
-                <p className="text-xs uppercase tracking-[0.25em] text-white/40 mb-2">
+                <p className="text-xs uppercase tracking-[0.25em] text-white/70 mb-2">
                   From the knowledge base
                 </p>
                 <h2 className="font-display text-3xl md:text-4xl font-bold text-white">
