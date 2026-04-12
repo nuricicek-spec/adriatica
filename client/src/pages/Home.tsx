@@ -158,9 +158,9 @@ export default function Home() {
                 transition={{ duration: 0.8, ease: "easeOut" }}
                 className="text-center lg:text-left mb-10 lg:mb-0"
               >
-                <h2 className="text-primary font-medium tracking-[0.2em] uppercase mb-4">
+                <p className="text-primary font-medium tracking-[0.2em] uppercase mb-4">
                   Est. 2025
-                </h2>
+                </p>
                 <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-[#0B3B5C] leading-[1.1] mb-6 uppercase">
                   WISDOM IN <br />
                   <span className="text-[#3A74A0]">ENGINEERING</span>
