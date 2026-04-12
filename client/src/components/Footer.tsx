@@ -47,11 +47,11 @@ export function Footer() {
                 <span>Adriatic Coast & Montenegro</span>
               </p>
               <div>
-                <p className="text-xs uppercase tracking-wider text-white/80 mb-0.5">Address</p>
+                <p className="text-xs uppercase tracking-wider text-white/85 mb-0.5">Address</p>
                 <p>Budva, Montenegro</p>
               </div>
               <div>
-                <p className="text-xs uppercase tracking-wider text-white/80 mb-0.5">Contact</p>
+                <p className="text-xs uppercase tracking-wider text-white/85 mb-0.5">Contact</p>
                 <p>
                   <a
                     href="mailto:info@adriaticadoo.com"
