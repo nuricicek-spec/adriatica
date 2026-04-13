@@ -7,6 +7,9 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { CookieConsent } from "@/components/CookieConsent";
+import { AssistantProvider } from "@/components/assistant/AssistantProvider";
+import { AssistantBar }      from "@/components/assistant/AssistantBar";
+import { AssistantPanel }    from "@/components/assistant/AssistantPanel";
 
 // Lazy loading
 const Home                = lazy(() => import("@/pages/Home"));
@@ -73,13 +76,13 @@ function Router() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Switch>
-        <Route path="/services/engineering-plans"        component={EngineeringPlans} />
+        <Route path="/services/engineering-plans"         component={EngineeringPlans} />
         <Route path="/services/engineering-documentation" component={EngineeringDocs} />
-        <Route path="/services/structural-integrity"     component={StructuralIntegrity} />
-        <Route path="/services/sustainable-technologies" component={SustainableTech} />
-        <Route path="/services/regulatory-compliance"    component={RegulatoryCompliance} />
-        <Route path="/services/project-management"       component={ProjectManagement} />
-        <Route path="/services/yacht-survey"             component={YachtSurvey} />
+        <Route path="/services/structural-integrity"      component={StructuralIntegrity} />
+        <Route path="/services/sustainable-technologies"  component={SustainableTech} />
+        <Route path="/services/regulatory-compliance"     component={RegulatoryCompliance} />
+        <Route path="/services/project-management"        component={ProjectManagement} />
+        <Route path="/services/yacht-survey"              component={YachtSurvey} />
 
         <Route path="/services"             component={Services} />
         <Route path="/insights/:slug"       component={InsightDetail} />
@@ -106,15 +109,19 @@ function Router() {
 function App() {
   return (
     <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <ScrollToTop />
-          <Toaster />
-          <Router />
-          <GAPageTracker />
-          <CookieConsent />
-        </TooltipProvider>
-      </QueryClientProvider>
+      <AssistantProvider>
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <ScrollToTop />
+            <Toaster />
+            <Router />
+            <GAPageTracker />
+            <CookieConsent />
+            <AssistantBar />
+            <AssistantPanel />
+          </TooltipProvider>
+        </QueryClientProvider>
+      </AssistantProvider>
     </HelmetProvider>
   );
 }
