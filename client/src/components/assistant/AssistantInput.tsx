@@ -11,11 +11,14 @@ export function AssistantInput() {
   const handleSend = async () => {
     if ((!input.trim() && !attachment) || isLoading) return;
     await sendMessage(input.trim(), attachment ?? undefined);
-    if (textareaRef.current) textareaRef.current.style.height = "auto";
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+    }
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+    // Mobilde Enter yeni satır eklesin, masaüstünde göndersin
+    if (e.key === "Enter" && !e.shiftKey && window.innerWidth >= 768) {
       e.preventDefault();
       handleSend();
     }
@@ -43,7 +46,9 @@ export function AssistantInput() {
           placeholder="Ask about your vessel..."
           rows={1}
           disabled={isLoading}
-          className="flex-1 bg-transparent resize-none outline-none text-sm text-[#0B3B5C] placeholder:text-muted-foreground/50 py-1 max-h-[120px] disabled:opacity-50"
+          className="flex-1 bg-transparent resize-none outline-none text-[16px] leading-snug text-[#0B3B5C] placeholder:text-muted-foreground/50 py-1 max-h-[120px] disabled:opacity-50"
+          // font-size 16px — iOS'ta otomatik zoom'u engeller
+          style={{ fontSize: "16px" }}
         />
 
         <button

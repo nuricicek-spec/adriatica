@@ -8,7 +8,7 @@ export function AssistantPanel() {
   const { isOpen, close } = useAssistant();
   const panelRef          = useRef<HTMLDivElement>(null);
 
-  // Close on Escape
+  // Escape ile kapat
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isOpen) close();
@@ -17,9 +17,28 @@ export function AssistantPanel() {
     return () => document.removeEventListener("keydown", handleKey);
   }, [isOpen, close]);
 
+  // Mobil: panel açıkken body scroll'u kilitle
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+      // iOS safari için position fixed trick
+      document.body.style.position = "fixed";
+      document.body.style.width    = "100%";
+    } else {
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.width    = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.width    = "";
+    };
+  }, [isOpen]);
+
   return (
     <>
-      {/* Backdrop — mobile only */}
+      {/* Backdrop — mobile */}
       <div
         className={`
           fixed inset-0 z-[99] bg-black/30 backdrop-blur-[2px]
@@ -38,9 +57,12 @@ export function AssistantPanel() {
         aria-label="Adriatica Technical Assistant"
         className={`
           fixed z-[100]
-          bottom-0 right-0
-          w-full md:w-[400px] md:bottom-6 md:right-6
-          h-[72vh] md:h-[560px]
+          /* Mobil: tam genişlik, ekranın altından yukarı çıkar */
+          bottom-0 left-0 right-0
+          /* Desktop: sağ köşe sabit boyutlu kutu */
+          md:left-auto md:right-6 md:bottom-6 md:w-[400px]
+          /* Yükseklik: dvh — sanal klavyeyi hesaba katar */
+          h-[85dvh] md:h-[560px]
           bg-white
           rounded-t-2xl md:rounded-2xl
           shadow-2xl
@@ -48,7 +70,7 @@ export function AssistantPanel() {
           transition-all duration-300 ease-out
           ${isOpen
             ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-6 pointer-events-none"
+            : "opacity-0 translate-y-8 pointer-events-none"
           }
         `}
       >
