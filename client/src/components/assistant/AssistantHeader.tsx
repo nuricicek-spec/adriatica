@@ -1,4 +1,4 @@
-import { X } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { useAssistant } from "../../hooks/useAssistant";
 import { ASSISTANT_CONFIG } from "../../lib/assistantConfig";
 
@@ -30,7 +30,7 @@ export function AssistantHeader() {
         aria-label="Close assistant"
         className="text-white/50 hover:text-white transition-colors p-1 rounded"
       >
-        <X size={18} />
+        <ChevronDown size={20} />
       </button>
     </div>
   );
