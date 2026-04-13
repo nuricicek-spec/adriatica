@@ -22,7 +22,7 @@ export const ASSISTANT_CONFIG = {
   ASSISTANT_TAGLINE: "Marine engineering & compliance support",
 
   /** Scroll threshold (px) before bar goes compact */
-  SCROLL_THRESHOLD: 150,
+  SCROLL_THRESHOLD: 100,
 
   /** Debounce delay for scroll handler (ms) */
   SCROLL_DEBOUNCE: 120,
