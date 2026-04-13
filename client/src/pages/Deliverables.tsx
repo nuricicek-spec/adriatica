@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import type { KeyboardEvent } from 'react';
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -23,7 +24,7 @@ export default function Deliverables() {
 
   // Klavye ile modal kapatma (Escape)
   const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
+    (e: KeyboardEvent) => {
       if (e.key === 'Escape') closeModal();
     },
     [closeModal]

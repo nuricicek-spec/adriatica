@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import type { KeyboardEvent, ChangeEvent } from "react";
 import { ArrowUp } from "lucide-react";
 import { useAssistant } from "../../hooks/useAssistant";
 import { AssistantActions } from "./AssistantActions";
@@ -10,20 +11,18 @@ export function AssistantInput() {
   const handleSend = async () => {
     if ((!input.trim() && !attachment) || isLoading) return;
     await sendMessage(input.trim(), attachment ?? undefined);
-    // Reset textarea height
     if (textareaRef.current) textareaRef.current.style.height = "auto";
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
   };
 
-  const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
-    // Auto-grow textarea
     const el = e.target;
     el.style.height = "auto";
     el.style.height = `${Math.min(el.scrollHeight, 120)}px`;

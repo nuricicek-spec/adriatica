@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import type { ChangeEvent } from "react";
 import { MoreHorizontal, Paperclip, FileText, Image, X } from "lucide-react";
 import { useAssistant } from "../../hooks/useAssistant";
 
@@ -7,17 +8,15 @@ export function AssistantActions() {
   const fileInputRef            = useRef<HTMLInputElement>(null);
   const { attachment, setAttachment, clearAttachment } = useAssistant();
 
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileSelect = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] ?? null;
     setAttachment(file);
     setMenuOpen(false);
-    // Reset input so the same file can be re-selected
     e.target.value = "";
   };
 
   return (
     <div className="relative">
-      {/* Hidden file input */}
       <input
         ref={fileInputRef}
         type="file"
@@ -26,7 +25,6 @@ export function AssistantActions() {
         onChange={handleFileSelect}
       />
 
-      {/* Attachment preview chip */}
       {attachment && (
         <div className="absolute -top-9 left-0 flex items-center gap-1.5 bg-[#0B3B5C]/10 border border-[#0B3B5C]/20 rounded-full px-3 py-1 text-xs text-[#0B3B5C] max-w-[180px]">
           <Paperclip size={11} />
@@ -41,7 +39,6 @@ export function AssistantActions() {
         </div>
       )}
 
-      {/* "…" button */}
       <button
         onClick={() => setMenuOpen(p => !p)}
         aria-label="More options"
@@ -50,10 +47,8 @@ export function AssistantActions() {
         <MoreHorizontal size={18} />
       </button>
 
-      {/* Dropdown menu */}
       {menuOpen && (
         <>
-          {/* Backdrop */}
           <div
             className="fixed inset-0 z-10"
             onClick={() => setMenuOpen(false)}
@@ -67,9 +62,7 @@ export function AssistantActions() {
               Attach image or file
             </button>
             <button
-              onClick={() => {
-                window.location.href = "/request-consultation";
-              }}
+              onClick={() => { window.location.href = "/request-consultation"; }}
               className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-neutral-50 text-[#0B3B5C] transition-colors"
             >
               <FileText size={15} className="text-[#3A74A0]" />

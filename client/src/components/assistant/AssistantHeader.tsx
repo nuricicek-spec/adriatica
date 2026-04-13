@@ -1,4 +1,4 @@
-import { X, Minimize2 } from "lucide-react";
+import { X } from "lucide-react";
 import { useAssistant } from "../../hooks/useAssistant";
 import { ASSISTANT_CONFIG } from "../../lib/assistantConfig";
 

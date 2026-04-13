@@ -1,4 +1,4 @@
-import { createContext, useState, useCallback, useRef } from "react";
+import { createContext, useState, useCallback } from "react";
 import type { ReactNode } from "react";
 import type { Message, Attachment, AssistantContextType } from "../../lib/assistantTypes";
 import { sendToAssistant } from "../../lib/assistantClient";
@@ -11,8 +11,9 @@ function generateId() {
 }
 
 export function AssistantProvider({ children }: { children: ReactNode }) {
-  const [isOpen, setIsOpen]           = useState(false);
-  const [messages, setMessages]       = useState<Message[]>([
+  const [isOpen, setIsOpen]              = useState(false);
+  const [isCompact]                      = useState(false); // managed by AssistantBar via useScrollCompact
+  const [messages, setMessages]          = useState<Message[]>([
     {
       id: generateId(),
       role: "assistant",
@@ -20,32 +21,20 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
       timestamp: new Date(),
     },
   ]);
-  const [input, setInput]             = useState("");
-  const [isLoading, setIsLoading]     = useState(false);
+  const [input, setInput]                = useState("");
+  const [isLoading, setIsLoading]        = useState(false);
   const [attachment, setAttachmentState] = useState<Attachment | null>(null);
 
-  // isCompact is managed by AssistantBar via useScrollCompact — not stored here
-  const [isCompact] = useState(false); // placeholder, overridden in bar
-
-  const open   = useCallback(() => setIsOpen(true),  []);
-  const close  = useCallback(() => setIsOpen(false), []);
+  const open   = useCallback(() => setIsOpen(true),    []);
+  const close  = useCallback(() => setIsOpen(false),   []);
   const toggle = useCallback(() => setIsOpen(p => !p), []);
 
   const setAttachment = useCallback((file: File | null) => {
-    if (!file) {
-      setAttachmentState(null);
-      return;
-    }
+    if (!file) { setAttachmentState(null); return; }
     const preview = file.type.startsWith("image/")
       ? URL.createObjectURL(file)
       : undefined;
-
-    setAttachmentState({
-      name: file.name,
-      type: file.type,
-      size: file.size,
-      preview,
-    });
+    setAttachmentState({ name: file.name, type: file.type, size: file.size, preview });
   }, []);
 
   const clearAttachment = useCallback(() => setAttachmentState(null), []);
@@ -69,28 +58,19 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
 
       try {
         const history = messages.map(m => ({ role: m.role, content: m.content }));
-        const reply = await sendToAssistant({
+        const reply   = await sendToAssistant({
           messages: [...history, { role: "user", content }],
           attachment: att ?? attachment ?? undefined,
         });
 
-        const assistantMsg: Message = {
-          id: generateId(),
-          role: "assistant",
-          content: reply,
-          timestamp: new Date(),
-        };
-
-        setMessages(prev => [...prev, assistantMsg]);
+        setMessages(prev => [
+          ...prev,
+          { id: generateId(), role: "assistant", content: reply, timestamp: new Date() },
+        ]);
       } catch {
         setMessages(prev => [
           ...prev,
-          {
-            id: generateId(),
-            role: "assistant",
-            content: "Something went wrong. Please try again.",
-            timestamp: new Date(),
-          },
+          { id: generateId(), role: "assistant", content: "Something went wrong. Please try again.", timestamp: new Date() },
         ]);
       } finally {
         setIsLoading(false);
@@ -102,19 +82,8 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
   return (
     <AssistantContext.Provider
       value={{
-        isOpen,
-        isCompact,
-        messages,
-        input,
-        isLoading,
-        attachment,
-        open,
-        close,
-        toggle,
-        sendMessage,
-        setInput,
-        setAttachment,
-        clearAttachment,
+        isOpen, isCompact, messages, input, isLoading, attachment,
+        open, close, toggle, sendMessage, setInput, setAttachment, clearAttachment,
       }}
     >
       {children}
