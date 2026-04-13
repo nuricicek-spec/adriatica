@@ -37,31 +37,112 @@ The site features a clean, professional design, smooth hash‑based navigation, 
 ## 📁 Project Structure (simplified)
 
 ```
-adriatica/
-├── client/                 # Frontend source
-│   ├── public/             # Static assets (favicon, logo)
-│   └── src/
-│       ├── components/     # Reusable UI components
-│       │   ├── Navigation.tsx
-│       │   ├── Footer.tsx
-│       │   ├── HashLink.tsx
-│       │   ├── FeatureCard.tsx
-│       │   └── ...
-│       ├── pages/          # Page components
-│       │   ├── Home.tsx
-│       │   ├── Insights.tsx
-│       │   ├── Careers.tsx
-│       │   ├── News.tsx
-│       │   └── legal/*.tsx
-│       ├── hooks/          # Custom React hooks
-│       ├── lib/            # Utilities & config
-│       └── App.tsx         # Main router
-├── public/                 # Public root (pdfs, sitemap, robots)
-│   └── pdfs/               # Technical insight PDFs
-├── package.json
-├── vite.config.ts
-├── tailwind.config.ts
-└── README.md
+client/
+├── public/
+│   ├── images/
+│   │   ├── deliverables/        (15 adet SVG)
+│   │   ├── insights/            (2 dosya)
+│   │   └── services/            (6 adet SVG)
+│   ├── js/
+│   │   └── pdf.worker.min.js
+│   ├── logos/                   (5 adet logo)
+│   ├── pdfs/
+│   │   ├── deliverables/        (3 PDF)
+│   │   └── insights/            (4 PDF)
+│   ├── favicon.svg
+│   ├── logo.svg
+│   ├── map.svg
+│   ├── og-image-default.png
+│   ├── robots.txt
+│   ├── sitemap.xml
+│   ├── _headers
+│   └── _redirects
+├── src/
+│   ├── components/
+│   │   ├── assistant/
+│   │   │   ├── AssistantActions.tsx
+│   │   │   ├── AssistantBar.tsx
+│   │   │   ├── AssistantHeader.tsx
+│   │   │   ├── AssistantInput.tsx
+│   │   │   ├── AssistantMessageItem.tsx
+│   │   │   ├── AssistantMessages.tsx
+│   │   │   ├── AssistantPanel.tsx
+│   │   │   └── AssistantProvider.tsx
+│   │   ├── ui/                  (53 adet shadcn/ui bileşeni)
+│   │   ├── CookieConsent.tsx
+│   │   ├── FeatureCard.tsx
+│   │   ├── Footer.tsx
+│   │   ├── HashLink.tsx
+│   │   ├── InsightCard.tsx
+│   │   ├── Navigation.tsx
+│   │   ├── PDFViewer.tsx
+│   │   ├── ProcessWheel.tsx
+│   │   ├── RelatedContent.tsx
+│   │   ├── ScrollToTop.tsx
+│   │   ├── SectionHeading.tsx
+│   │   └── SEO.tsx
+│   ├── config/
+│   │   └── trustMetrics.ts
+│   ├── data/
+│   │   ├── insights/
+│   │   │   ├── biofouling-compliance.ts
+│   │   │   ├── index.ts
+│   │   │   ├── sustainable-cleaning.ts
+│   │   │   ├── technical-operations.ts
+│   │   │   └── zero-emission-zone.ts
+│   │   ├── caseStudies.ts
+│   │   ├── deliverables.ts
+│   │   ├── recommended.ts
+│   │   └── services.ts
+│   ├── hooks/
+│   │   ├── useAssistant.ts
+│   │   ├── useMediaQuery.ts
+│   │   ├── useScrollCompact.ts
+│   │   ├── use-toast.ts
+│   │   └── use-mobile.tsx
+│   ├── lib/
+│   │   ├── assistantClient.ts
+│   │   ├── assistantConfig.ts
+│   │   ├── assistantTypes.ts
+│   │   ├── queryClient.ts
+│   │   └── utils.ts
+│   ├── mocks/
+│   │   └── assistantMock.ts
+│   ├── pages/
+│   │   ├── services/
+│   │   │   ├── EngineeringDocs.tsx
+│   │   │   ├── EngineeringPlans.tsx
+│   │   │   ├── ProjectManagement.tsx
+│   │   │   ├── RegulatoryCompliance.tsx
+│   │   │   ├── StructuralIntegrity.tsx
+│   │   │   ├── SustainableTech.tsx
+│   │   │   └── YachtSurvey.tsx
+│   │   ├── About.tsx
+│   │   ├── Careers.tsx
+│   │   ├── CaseStudies.tsx
+│   │   ├── CaseStudyDetail.tsx
+│   │   ├── CookiePolicy.tsx
+│   │   ├── Deliverables.tsx
+│   │   ├── Home.tsx
+│   │   ├── InsightDetail.tsx
+│   │   ├── Insights.tsx
+│   │   ├── News.tsx
+│   │   ├── not-found.tsx
+│   │   ├── Philosophy.tsx
+│   │   ├── PrivacyPolicy.tsx
+│   │   ├── RequestConsultation.tsx
+│   │   ├── Services.tsx
+│   │   └── TermsOfService.tsx
+│   ├── style/
+│   │   └── (belirtilmemiş, ancak mevcut olabilir)
+│   ├── types/
+│   │   └── global.d.ts
+│   ├── App.tsx
+│   ├── index.css
+│   └── main.tsx
+├── index.html
+└── (diğer kök dosyalar: package.json, vite.config.ts, tailwind.config.ts, README.md)
+
 ```
 ## 🚀 Quick Start
 
