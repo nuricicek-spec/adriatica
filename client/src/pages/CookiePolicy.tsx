@@ -63,7 +63,7 @@ export default function CookiePolicy() {
               <h2 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Company Information</h2>
               <div className="space-y-1 text-muted-foreground">
                 <p><strong>Adriatica D.O.O.</strong></p>
-                <p>Podgorica, Montenegro</p>
+                <p>Tax Office: Podgorica, Montenegro</p>
                 <p>Tax ID (PIB): 03612807</p>
                 <p>
                   Email:{" "}
