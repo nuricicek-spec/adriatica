@@ -1,4 +1,4 @@
-import { Insight } from '.';
+import type { Insight } from '.';
 
 export const sustainableCleaning: Insight = {
   slug: 'sustainable-in-water-cleaning-yacht',
@@ -103,4 +103,31 @@ export const sustainableCleaning: Insight = {
   relatedSlugs: ['biofouling-compliance-imo-2026'],
   relatedServices: ['sustainable-technologies'],
   relatedCaseStudies: ['managed-in-water-cleaning'],
+
+  operationalImplications: {
+    heading: 'Operational Implications',
+    summary: 'If your vessel is operating in European coastal waters, reactive dry-docking is no longer the only option — or the smart one. Here is how to shift from reactive to proactive:',
+    points: [
+      {
+        point: 'Schedule in-water cleaning during guest turnaround or seasonal downtime. A managed operation takes one day versus 4–7 days for unscheduled dry-docking.',
+      },
+      {
+        point: 'For 25m+ vessels operating in Mediterranean and Baltic waters, ensure your diving contractor uses vacuum-assisted debris capture — not all cleaning methods meet local environmental standards.',
+      },
+      {
+        point: 'Every cleaning event must be logged in your Biofouling Record Book (BFRB) with photographic evidence. Without this, the cleaning has no regulatory value for PSC inspections.',
+        href: '/deliverables',
+      },
+      {
+        point: 'If you are in Monaco, Dubrovnik, or Baltic ports, verify debris containment requirements before scheduling any in-water work — enforcement varies by jurisdiction.',
+      },
+      {
+        point: 'The cost difference is significant: managed in-water cleaning averages €6,000 versus €30,000 for unscheduled dry-docking. Budget accordingly at the start of each season.',
+      },
+    ],
+    cta: {
+      label: 'Plan Your In-Water Cleaning Programme',
+      href: '/request-consultation',
+    },
+  },
 };

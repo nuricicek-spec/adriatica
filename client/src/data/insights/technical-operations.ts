@@ -1,4 +1,4 @@
-import { Insight } from '.';
+import type { Insight } from '.';
 
 export const technicalOperations: Insight = {
   slug: 'technical-operations-montenegro',
@@ -93,4 +93,32 @@ export const technicalOperations: Insight = {
   relatedSlugs: [],
   relatedServices: ['project-management'],
   relatedCaseStudies: ['refit-supervision-shipyard'],
+
+  operationalImplications: {
+    heading: 'Operational Implications',
+    summary: 'If you are planning a refit or dry-docking in Montenegro, remote engineering management is a significant risk. Here is what direct technical presence changes in practice:',
+    points: [
+      {
+        point: 'Appoint an on-site Owner\'s Technical Representative before your vessel enters any Montenegrin shipyard. Specification drift without physical oversight is the primary cause of timeline overruns.',
+        href: '/services/project-management',
+      },
+      {
+        point: 'Verify that your technical documentation meets UPSUL requirements before arrival — not after. Local Port Authority coordination takes time and affects your yard slot.',
+      },
+      {
+        point: 'For refits at Adriatic 42 (Bijela) or Navar (Tivat), ensure coating specifications, shaft alignment, and biofouling records are prepared in advance. Last-minute documentation requests delay class acceptance.',
+        href: '/services/engineering-documentation',
+      },
+      {
+        point: 'Build a 2-day buffer into your refit timeline for PSC or classification society responses. On-site representation reduces this buffer significantly.',
+      },
+      {
+        point: 'Vessels planning Mediterranean re-entry after Montenegro refit should align their technical records with Paris MoU inspection criteria — not just UPSUL compliance.',
+      },
+    ],
+    cta: {
+      label: 'Request On-Site Engineering Representation',
+      href: '/request-consultation',
+    },
+  },
 };

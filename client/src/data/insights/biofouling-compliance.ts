@@ -1,4 +1,4 @@
-import { Insight } from '.';
+import type { Insight } from '.';
 
 export const biofoulingCompliance: Insight = {
   slug: 'biofouling-compliance-imo-2026',
@@ -72,4 +72,32 @@ export const biofoulingCompliance: Insight = {
   relatedSlugs: ['sustainable-in-water-cleaning-yacht'],
   relatedServices: ['sustainable-technologies'],
   relatedCaseStudies: ['biofouling-management-mediterranean', 'managed-in-water-cleaning'],
+
+  operationalImplications: {
+    heading: 'Operational Implications',
+    summary: 'If your vessel is entering Mediterranean waters in 2026, biofouling documentation is no longer optional — it is a PSC readiness requirement. Here is what you should act on now:',
+    points: [
+      {
+        point: 'Assess your vessel\'s biofouling exposure index — idle duration in tropical waters, coating age, and niche-area configuration are the three key risk drivers.',
+      },
+      {
+        point: 'Commission a vessel-specific Biofouling Management Plan (BFMP) before your next Mediterranean transit. Generic plans are increasingly inadequate for PSC inspections.',
+        href: '/services/sustainable-technologies',
+      },
+      {
+        point: 'Start maintaining a Biofouling Record Book (BFRB) with photographic evidence for every inspection and cleaning event — this is your auditable trail.',
+      },
+      {
+        point: 'If your coating is older than 36 months or your vessel has been idle in high-fouling zones, schedule a niche-area inspection before entry.',
+        href: '/deliverables',
+      },
+      {
+        point: 'Charter operators should note: PSC delays cost more than proactive compliance. Regulatory readiness is now a charter market differentiator.',
+      },
+    ],
+    cta: {
+      label: 'Request a Biofouling Compliance Assessment',
+      href: '/request-consultation',
+    },
+  },
 };

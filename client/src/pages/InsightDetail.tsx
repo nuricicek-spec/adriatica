@@ -2,7 +2,7 @@ import { useRoute } from "wouter";
 import { insights } from "@/data/insights/index";
 import { recommendedSlugs } from "@/data/recommended";
 import { Helmet } from "react-helmet-async";
-import { Share2, Download, Star } from "lucide-react";
+import { Share2, Download, Star, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
@@ -13,10 +13,9 @@ export default function InsightDetail() {
   const [, params] = useRoute("/insights/:slug");
   const slug = params?.slug;
 
-  // "i" → "item" olarak yeniden adlandırıldı (belirsiz parametre adı)
   const insight = insights.find(item => item.slug === slug);
 
-  const [rating, setRating] = useState<number | null>(null);
+  const [rating, setRating]     = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
@@ -26,7 +25,6 @@ export default function InsightDetail() {
     }
   }, [slug]);
 
-  // "slug" → "recSlug" olarak yeniden adlandırıldı (outer slug'ı gölgeliyordu)
   const popular = recommendedSlugs
     .map(recSlug => insights.find(item => item.slug === recSlug))
     .filter((item): item is typeof insights[number] => item !== undefined && item.slug !== insight?.slug)
@@ -45,7 +43,6 @@ export default function InsightDetail() {
     setRating(value);
     setSubmitted(true);
     if (slug) localStorage.setItem(`rated_${slug}`, "true");
-    // optional chaining ile güvenli çağrı — typeof kontrolüne gerek yok
     window.gtag?.("event", "article_rating", {
       event_category: "engagement",
       event_label: insight?.slug,
@@ -67,6 +64,8 @@ export default function InsightDetail() {
       </div>
     );
   }
+
+  const impl = insight.operationalImplications;
 
   return (
     <>
@@ -122,7 +121,6 @@ export default function InsightDetail() {
                   <Share2 className="w-4 h-4" /> Share on LinkedIn
                 </button>
 
-                {/* pdfUrl opsiyonel olabilir — guard eklendi */}
                 {insight.pdfUrl && (
                   <a
                     href={insight.pdfUrl}
@@ -134,10 +132,67 @@ export default function InsightDetail() {
                 )}
               </div>
 
+              {/* Article body */}
               <div
                 className="prose prose-lg max-w-none"
                 dangerouslySetInnerHTML={{ __html: insight.contentHtml }}
               />
+
+              {/* ── Operational Implications block ─────────────────────────── */}
+              {impl && (
+                <div className="mt-12 border border-primary/20 rounded-sm overflow-hidden">
+                  {/* Header */}
+                  <div className="bg-[#0B3B5C] px-6 py-4">
+                    <h2 className="font-display text-xl font-bold text-white">
+                      {impl.heading ?? "Operational Implications"}
+                    </h2>
+                    {impl.summary && (
+                      <p className="text-white/70 text-sm mt-1 leading-relaxed">
+                        {impl.summary}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Points */}
+                  <div className="bg-neutral-50 px-6 py-5">
+                    <ul className="space-y-4">
+                      {impl.points.map((item, idx) => (
+                        <li key={idx} className="flex items-start gap-3">
+                          {/* Numbered marker */}
+                          <span className="shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold flex items-center justify-center mt-0.5">
+                            {idx + 1}
+                          </span>
+                          <span className="text-sm text-[#0B3B5C] leading-relaxed">
+                            {item.point}
+                            {item.href && (
+                              <Link
+                                href={item.href}
+                                className="ml-2 inline-flex items-center gap-0.5 text-primary font-medium hover:underline text-xs"
+                              >
+                                Learn more <ArrowRight size={11} />
+                              </Link>
+                            )}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* CTA */}
+                    {impl.cta && (
+                      <div className="mt-6 pt-5 border-t border-border/20">
+                        <Link
+                          href={impl.cta.href}
+                          className="inline-flex items-center gap-2 bg-[#0B3B5C] text-white px-5 py-2.5 rounded-sm text-sm font-medium hover:bg-[#1A4B7A] transition-colors"
+                        >
+                          {impl.cta.label}
+                          <ArrowRight size={14} />
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+              {/* ── End Operational Implications ───────────────────────────── */}
 
               <RelatedContent
                 serviceSlugs={insight.relatedServices}
@@ -170,7 +225,7 @@ export default function InsightDetail() {
                 )}
               </div>
 
-              {/* Popular insights — <Link><a> anti-pattern kaldırıldı */}
+              {/* Popular insights */}
               {popular.length > 0 && (
                 <div className="p-6 bg-white border border-border/40 rounded max-h-96 overflow-y-auto">
                   <h3 className="font-display text-lg font-bold mb-4 sticky top-0 bg-white pb-2">
@@ -192,7 +247,7 @@ export default function InsightDetail() {
                 </div>
               )}
 
-              {/* CTA — <Link><a> anti-pattern kaldırıldı */}
+              {/* CTA */}
               <div className="p-6 bg-primary/5 border border-primary/20 rounded text-center">
                 <p className="text-muted-foreground mb-4 text-sm">
                   Have a specific technical challenge?

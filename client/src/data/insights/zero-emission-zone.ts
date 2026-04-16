@@ -1,4 +1,4 @@
-import { Insight } from '.';
+import type { Insight } from '.';
 
 export const zeroEmissionZone: Insight = {
   slug: 'zero-emission-zone-boka-kotorska',
@@ -22,7 +22,7 @@ export const zeroEmissionZone: Insight = {
 
     <h2>1. Structural Sensitivity and Cultural Heritage</h2>
     <p>Boka Kotorska was inscribed on the UNESCO World Heritage list as the "Natural and Culturo-Historical Region of Kotor" in 1979 [1]. Its unique semi-enclosed fjord-like structure, connected by narrow straits (Verige), results in extremely limited water circulation and air exchange.</p>
-    <p>In critical zones such as the Blue Cave and the inner basins of Perast and Kotor, exhaust emissions (NOx, SOx, and Particulate Matter) from internal combustion engines and generators become trapped. Due to the bay’s restricted water exchange, even moderate emission loads can result in locally elevated pollutant concentrations, significantly exceeding open‑sea dispersion conditions. This anthropogenic pressure not only degrades marine biodiversity but also accelerates the physical erosion of historic limestone structures due to the acidic nature of soot and gas deposits.</p>
+    <p>In critical zones such as the Blue Cave and the inner basins of Perast and Kotor, exhaust emissions (NOx, SOx, and Particulate Matter) from internal combustion engines and generators become trapped. Due to the bay's restricted water exchange, even moderate emission loads can result in locally elevated pollutant concentrations, significantly exceeding open‑sea dispersion conditions. This anthropogenic pressure not only degrades marine biodiversity but also accelerates the physical erosion of historic limestone structures due to the acidic nature of soot and gas deposits.</p>
 
     <h2>2. Comparative Analysis: UNESCO Milestones vs. Regulatory Action</h2>
     <p>The following table illustrates the "protection gap" between Boka Kotorska and its global structural twins:</p>
@@ -79,11 +79,11 @@ export const zeroEmissionZone: Insight = {
     </ul>
 
     <h2>4. Administrative Action Plan: A Roadmap for Protection</h2>
-    <p>To ensure the preservation of this natural beauty for future generations, Montenegro’s maritime and coastal authorities should prioritize a structural protection discipline:</p>
+    <p>To ensure the preservation of this natural beauty for future generations, Montenegro's maritime and coastal authorities should prioritize a structural protection discipline:</p>
     <ol class="list-decimal pl-6 space-y-4">
       <li><strong>Phase 1 (2026-2027):</strong> Feasibility and baseline emission assessment. Conduct comprehensive monitoring of current emission levels and vessel activity to establish a reference point.</li>
       <li><strong>Phase 2 (2027-2028):</strong> Regulatory drafting and stakeholder consultation. Develop a draft ZEZ regulation; engage with local operators, marinas, and international experts to refine requirements.</li>
-      <li><strong>Phase 3 (2028-2030):</strong> Gradual enforcement and infrastructure deployment. Introduce the ZEZ in stages, initially for tourist vessels, supported by investments in shore-side charging and retrofitting incentives. Following the models of Girolata and Cinque Terre, dedicated monitoring and enforcement mechanisms may be required. These units will serve as the guardians of the bay’s prestige and ecological health.</li>
+      <li><strong>Phase 3 (2028-2030):</strong> Gradual enforcement and infrastructure deployment. Introduce the ZEZ in stages, initially for tourist vessels, supported by investments in shore-side charging and retrofitting incentives. Following the models of Girolata and Cinque Terre, dedicated monitoring and enforcement mechanisms may be required. These units will serve as the guardians of the bay's prestige and ecological health.</li>
     </ol>
 
     <figure class="my-8">
@@ -105,7 +105,7 @@ export const zeroEmissionZone: Insight = {
     </ul>
 
     <h2>6. Conclusion</h2>
-    <p>The protection of Boka Kotorska is not an environmental romance; it is a strategic necessity. Proactive engineering solutions such as active exhaust aftertreatment and hybrid conversions, combined with an EU-backed administrative roadmap, will secure the bay’s status as a world-class, "clean-sea" destination. Delaying structured intervention may result in irreversible environmental degradation and increased future regulatory burden. The time to act is not when the damage is permanent, but while the vision for a "Green Adriatic" is still within reach.</p>
+    <p>The protection of Boka Kotorska is not an environmental romance; it is a strategic necessity. Proactive engineering solutions such as active exhaust aftertreatment and hybrid conversions, combined with an EU-backed administrative roadmap, will secure the bay's status as a world-class, "clean-sea" destination. Delaying structured intervention may result in irreversible environmental degradation and increased future regulatory burden. The time to act is not when the damage is permanent, but while the vision for a "Green Adriatic" is still within reach.</p>
 
     <h2>References</h2>
     <ol class="list-decimal pl-6 space-y-1 text-sm">
@@ -122,4 +122,33 @@ export const zeroEmissionZone: Insight = {
   relatedSlugs: ['biofouling-compliance-imo-2026'],
   relatedServices: ['sustainable-technologies'],
   relatedCaseStudies: [],
+
+  operationalImplications: {
+    heading: 'Operational Implications',
+    summary: 'If you operate a vessel in or around Boka Kotorska, the regulatory landscape is shifting. Here is what the 2026–2030 roadmap means for your operations today:',
+    points: [
+      {
+        point: 'Vessels operating in Boka Kotorska should begin assessing emission profiles now. When a ZEZ framework is introduced, vessels without baseline documentation will face the steepest compliance burden.',
+        href: '/services/sustainable-technologies',
+      },
+      {
+        point: 'Charter operators positioning in Montenegro should monitor regulatory signals closely. The Geirangerfjord precedent shows that tourist vessel restrictions arrive first — often with 12–18 months notice.',
+      },
+      {
+        point: 'Hybrid propulsion retrofits and shore power compatibility assessments are long-lead items. If ZEZ enforcement arrives by 2028, engineering evaluations need to begin no later than 2026.',
+        href: '/services/structural-integrity',
+      },
+      {
+        point: 'EU IPA III and Horizon Europe funding is available for green maritime feasibility studies in candidate countries. Montenegro-based operators and marina investors should explore eligibility now.',
+      },
+      {
+        point: 'Building an energy efficiency profile for your vessel today — SEEMP, energy audits, CII tracking — positions you ahead of both ZEZ requirements and charter market expectations.',
+        href: '/deliverables',
+      },
+    ],
+    cta: {
+      label: 'Discuss Your Vessel\'s Emission Readiness',
+      href: '/request-consultation',
+    },
+  },
 };
