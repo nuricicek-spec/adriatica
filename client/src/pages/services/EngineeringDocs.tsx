@@ -2,17 +2,37 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Helmet } from "react-helmet-async";
 import { SEO } from "@/components/SEO";
-import { HashLink } from "@/components/HashLink";
 import { services } from "@/data/services";
 import { RelatedContent } from "@/components/RelatedContent";
-import { Link } from "wouter";
+import { Link, Redirect } from "wouter";
 
 export default function EngineeringDocs() {
   const service = services.find(s => s.slug === "engineering-documentation");
+  
+  if (!service) return <Redirect to="/404" />;
 
   const serviceSchema = {
     "@context": "https://schema.org",
     "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.adriaticadoo.com/#organization",
+        "name": "Adriatica D.O.O.",
+        "url": "https://www.adriaticadoo.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.adriaticadoo.com/logo.png"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.adriaticadoo.com/#website",
+        "url": "https://www.adriaticadoo.com/",
+        "name": "Adriatica D.O.O.",
+        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
+      },
       {
         "@type": "WebPage",
         "@id": "https://www.adriaticadoo.com/services/engineering-documentation/#webpage",
@@ -29,9 +49,10 @@ export default function EngineeringDocs() {
         "@type": "Service",
         "@id": "https://www.adriaticadoo.com/services/engineering-documentation/#service",
         "name": "Engineering Documentation",
-        "description": "Vessel‑specific technical manuals and analyses including as‑built P&IDs, electrical load analysis, fuel management booklets, and IHM – fully aligned with IMO conventions, EU MRV, and class requirements.",
+        "description": "Preparation of class‑compliant engineering documentation including P&ID system manuals, electrical load analysis (EAB), fuel management booklets per MARPOL Annex VI, and IHM according to Hong Kong Convention and EU Ship Recycling Regulation.",
         "url": "https://www.adriaticadoo.com/services/engineering-documentation",
         "provider": { "@id": "https://www.adriaticadoo.com/#organization" },
+        "isPartOf": { "@id": "https://www.adriaticadoo.com/services/engineering-documentation/#webpage" },
         "areaServed": [
           { "@type": "Place", "name": "Montenegro" },
           { "@type": "Place", "name": "Adriatic Sea" },
@@ -77,15 +98,6 @@ export default function EngineeringDocs() {
             }
           ]
         }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://www.adriaticadoo.com/#website",
-        "url": "https://www.adriaticadoo.com/",
-        "name": "Adriatica D.O.O.",
-        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
-        "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
       }
     ]
   };
@@ -107,13 +119,17 @@ export default function EngineeringDocs() {
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
           <Link href="/services" className="inline-flex items-center text-sm text-primary hover:underline mb-4">
-    ← Back to all services
-  </Link>
+            ← Back to all services
+          </Link>
           <h1 className="font-display text-4xl md:text-5xl font-bold text-[#0B3B5C] mb-6">
             Engineering Documentation
           </h1>
 
           <div className="prose prose-lg max-w-none text-muted-foreground">
+            <p className="text-lg font-medium text-primary italic border-l-4 border-primary pl-6 mb-6">
+              Incomplete or outdated documentation is one of the most common causes of failed inspections and operational inefficiencies. We produce vessel-specific engineering documentation aligned with IMO, EU MRV, and class requirements — ensuring audit readiness and technical clarity.
+            </p>
+
             <p>
               You get vessel‑specific technical manuals and analyses, fully aligned with IMO conventions, EU MRV, and class requirements. These documents facilitate crew training, maintenance planning, and port state control inspections – keeping you audit‑ready.
             </p>
@@ -135,7 +151,7 @@ export default function EngineeringDocs() {
             <div className="my-6 flex justify-center">
               <img
                 src="/images/services/engineering-docs-schema.svg"
-                alt="Engineering documentation flow: vessel data to P&ID, EAB, Fuel booklet, then IHM and Class submission"
+                alt="Vessel engineering documentation workflow: as‑built P&ID creation, electrical load analysis (EAB), fuel management booklet preparation, and IHM compilation for class submission"
                 className="w-full max-w-2xl"
                 loading="lazy"
                 width={672}
@@ -150,8 +166,10 @@ export default function EngineeringDocs() {
                   You receive complete piping and instrumentation diagrams (P&amp;IDs) that reflect the final installed systems, including all valves, pumps, sensors, and control loops. These are compiled into system manuals that also include operational descriptions, troubleshooting guides, and maintenance schedules – delivered in both printed and digital formats for easy access.
                 </p>
                 <p className="text-muted-foreground mt-2">
-                  <span className="font-medium">Outcome:</span> A comprehensive reference that supports crew training, reduces downtime, and simplifies future modifications.
+                  <span className="font-medium">Process:</span> On‑site verification and physical survey ensure accuracy of as‑built documentation.
                 </p>
+                <h4 className="font-display text-md font-bold text-[#0B3B5C] mt-4 mb-1">Outcome</h4>
+                <p className="text-muted-foreground">A comprehensive reference that supports crew training, reduces downtime, and simplifies future modifications.</p>
               </div>
 
               <div className="border-l-2 border-primary/20 pl-6">
@@ -159,9 +177,8 @@ export default function EngineeringDocs() {
                 <p className="text-muted-foreground">
                   A detailed assessment of your vessel's electrical power balance, identifying peak loads, generator sizing, and distribution system capacity. We use advanced calculation tools and consider all operational modes (navigation, manoeuvring, harbour, emergency). The analysis is submitted to class for approval – essential for generator scheduling and future electrical upgrades.
                 </p>
-                <p className="text-muted-foreground mt-2">
-                  <span className="font-medium">Outcome:</span> Class‑approved load analysis, optimised generator operation, and a solid basis for any electrical system changes.
-                </p>
+                <h4 className="font-display text-md font-bold text-[#0B3B5C] mt-4 mb-1">Outcome</h4>
+                <p className="text-muted-foreground">Class‑approved load analysis, optimised generator operation, and a solid basis for any electrical system changes.</p>
               </div>
 
               <div className="border-l-2 border-primary/20 pl-6">
@@ -169,9 +186,8 @@ export default function EngineeringDocs() {
                 <p className="text-muted-foreground">
                   A structured guide to fuel handling, storage, and consumption. It includes procedures for bunkering, sampling, and reporting, as well as guidance on maintaining fuel quality to avoid engine damage and ensure compliance with MARPOL Annex VI. We also incorporate fuel‑oil changeover procedures and sulphur content recording requirements.
                 </p>
-                <p className="text-muted-foreground mt-2">
-                  <span className="font-medium">Outcome:</span> Clear, enforceable procedures that help maintain fuel quality, reduce operational costs, and pass PSC inspections.
-                </p>
+                <h4 className="font-display text-md font-bold text-[#0B3B5C] mt-4 mb-1">Outcome</h4>
+                <p className="text-muted-foreground">Clear, enforceable procedures that help maintain fuel quality, reduce operational costs, and pass PSC inspections.</p>
               </div>
 
               <div className="border-l-2 border-primary/20 pl-6">
@@ -179,9 +195,8 @@ export default function EngineeringDocs() {
                 <p className="text-muted-foreground">
                   A comprehensive list of hazardous materials on board, prepared in accordance with the Hong Kong Convention and EU Ship Recycling Regulation. We conduct a thorough review of vessel documentation and, if necessary, on‑board sampling to identify materials such as asbestos, PCBs, and ozone‑depleting substances. The IHM is essential for end‑of‑life planning and demonstrates your environmental responsibility.
                 </p>
-                <p className="text-muted-foreground mt-2">
-                  <span className="font-medium">Outcome:</span> A complete, compliant IHM that facilitates recycling, protects crew health, and meets regulatory requirements.
-                </p>
+                <h4 className="font-display text-md font-bold text-[#0B3B5C] mt-4 mb-1">Outcome</h4>
+                <p className="text-muted-foreground">A complete, compliant IHM that facilitates recycling, protects crew health, and meets regulatory requirements.</p>
               </div>
             </div>
 
@@ -189,22 +204,20 @@ export default function EngineeringDocs() {
               <p className="text-lg font-medium text-[#0B3B5C] mb-2">
                 Ready to get your vessel's technical manuals in order?
               </p>
-              <HashLink
+              <Link
                 href="/request-consultation"
                 className="inline-block mt-2 bg-[#0B3B5C] text-white px-6 py-3 rounded-sm font-medium hover:bg-[#1A4B7A] transition-colors"
               >
                 Request Technical Assessment
-              </HashLink>
+              </Link>
             </div>
           </div>
 
-          {service && (
-            <RelatedContent
-              serviceSlugs={service.relatedServices}
-              caseStudySlugs={service.relatedCaseStudies}
-              insightSlugs={service.relatedInsights}
-            />
-          )}
+          <RelatedContent
+            serviceSlugs={service.relatedServices || []}
+            caseStudySlugs={service.relatedCaseStudies || []}
+            insightSlugs={service.relatedInsights || []}
+          />
         </main>
         <Footer />
       </div>
