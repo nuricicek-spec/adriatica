@@ -125,12 +125,12 @@ export default function EngineeringDocs() {
             Engineering Documentation
           </h1>
 
-          <div className="prose prose-lg max-w-none text-muted-foreground">
+          <div className="max-w-none text-muted-foreground">
             <p className="text-lg font-medium text-primary italic border-l-4 border-primary pl-6 mb-6">
               Incomplete or outdated documentation is one of the most common causes of failed inspections and operational inefficiencies. We produce vessel-specific engineering documentation aligned with IMO, EU MRV, and class requirements — ensuring audit readiness and technical clarity.
             </p>
 
-            <p>
+            <p className="text-lg mb-6">
               You get vessel‑specific technical manuals and analyses, fully aligned with IMO conventions, EU MRV, and class requirements. These documents facilitate crew training, maintenance planning, and port state control inspections – keeping you audit‑ready.
             </p>
 

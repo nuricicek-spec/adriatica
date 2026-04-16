@@ -125,12 +125,12 @@ export default function StructuralIntegrity() {
             Structural Integrity
           </h1>
 
-          <div className="prose prose-lg max-w-none text-muted-foreground">
+          <div className="max-w-none text-muted-foreground">
             <p className="text-lg font-medium text-primary italic border-l-4 border-primary pl-6 mb-6">
               Structural failures rarely happen suddenly — they develop over time through fatigue, corrosion, and unnoticed stress concentration. We provide engineering-grade structural assessments aligned with IACS requirements to identify risks early and extend vessel life.
             </p>
 
-            <p>
+            <p className="text-lg mb-6">
               Your vessel benefits from comprehensive hull condition assessments, life extension studies, modification consultancy, and vibration/noise diagnostics. Using advanced engineering methods and IACS unified requirements, we evaluate structural performance and recommend targeted repairs or reinforcements.
             </p>
 

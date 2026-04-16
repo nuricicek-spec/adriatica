@@ -2,17 +2,37 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Helmet } from "react-helmet-async";
 import { SEO } from "@/components/SEO";
-import { HashLink } from "@/components/HashLink";
 import { services } from "@/data/services";
 import { RelatedContent } from "@/components/RelatedContent";
-import { Link } from "wouter";
+import { Link, Redirect } from "wouter";
 
 export default function SustainableTech() {
   const service = services.find(s => s.slug === "sustainable-technologies");
+  
+  if (!service) return <Redirect to="/404" />;
 
   const serviceSchema = {
     "@context": "https://schema.org",
     "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.adriaticadoo.com/#organization",
+        "name": "Adriatica D.O.O.",
+        "url": "https://www.adriaticadoo.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.adriaticadoo.com/logo.png"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.adriaticadoo.com/#website",
+        "url": "https://www.adriaticadoo.com/",
+        "name": "Adriatica D.O.O.",
+        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
+      },
       {
         "@type": "WebPage",
         "@id": "https://www.adriaticadoo.com/services/sustainable-technologies/#webpage",
@@ -29,9 +49,10 @@ export default function SustainableTech() {
         "@type": "Service",
         "@id": "https://www.adriaticadoo.com/services/sustainable-technologies/#service",
         "name": "Sustainable Technologies & Compliance",
-        "description": "Biofouling management plans (IMO MEPC.378(80)), eco‑friendly coating advisory, energy audits, MRV monitoring plans – helping vessels meet environmental regulations.",
+        "description": "Biofouling management planning per IMO MEPC.378(80) with certified diver coordination, eco‑friendly coating selection, energy efficiency audits for SEEMP/CII, and EU MRV monitoring plan preparation.",
         "url": "https://www.adriaticadoo.com/services/sustainable-technologies",
         "provider": { "@id": "https://www.adriaticadoo.com/#organization" },
+        "isPartOf": { "@id": "https://www.adriaticadoo.com/services/sustainable-technologies/#webpage" },
         "areaServed": [
           { "@type": "Place", "name": "Montenegro" },
           { "@type": "Place", "name": "Adriatic Sea" },
@@ -77,15 +98,6 @@ export default function SustainableTech() {
             }
           ]
         }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://www.adriaticadoo.com/#website",
-        "url": "https://www.adriaticadoo.com/",
-        "name": "Adriatica D.O.O.",
-        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
-        "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
       }
     ]
   };
@@ -107,14 +119,19 @@ export default function SustainableTech() {
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
           <Link href="/services" className="inline-flex items-center text-sm text-primary hover:underline mb-4">
-    ← Back to all services
-  </Link>
+            ← Back to all services
+          </Link>
           <h1 className="font-display text-4xl md:text-5xl font-bold text-[#0B3B5C] mb-6">
             Sustainable Technologies &amp; Compliance
           </h1>
 
-          <div className="prose prose-lg max-w-none text-muted-foreground">
-            <p>
+          <div className="max-w-none text-muted-foreground">
+            {/* Pain-Point Girişi */}
+            <p className="text-lg font-medium text-primary italic border-l-4 border-primary pl-6 mb-6">
+              Environmental regulations are tightening — IMO 2026 biofouling enforcement and CII ratings are already impacting commercial operations. We bridge the gap between regulatory intent and vessel practicality with independent engineering oversight and auditable documentation.
+            </p>
+
+            <p className="text-lg mb-6">
               Your vessel gets advisory and planning services that help meet environmental regulations while improving efficiency. We work with you to implement practical, cost‑effective solutions that reduce emissions and biosecurity risks.
             </p>
 
@@ -135,7 +152,7 @@ export default function SustainableTech() {
             <div className="flex justify-center my-6">
               <img
                 src="/images/services/sustainable-tech-schema.svg"
-                alt="Biofouling management cycle – risk assessment, cleaning execution, documentation, PSC ready"
+                alt="Sustainable technology compliance cycle: biofouling risk assessment, certified cleaning coordination, documentation for IMO MEPC.378(80) and PSC readiness"
                 className="w-full max-w-2xl mx-auto"
                 loading="lazy"
                 width={672}
@@ -179,7 +196,7 @@ export default function SustainableTech() {
               <div className="bg-neutral-50 border-l-2 border-primary/20 p-6 rounded-sm">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Eco‑friendly Coating Advisory</h3>
                 <p className="text-muted-foreground mb-2">
-                  We help you select the most suitable anti‑fouling coating based on your vessel’s operational profile, trading area, and environmental regulations. Our advisory includes:
+                  We help you select the most suitable anti‑fouling coating based on your vessel's operational profile, trading area, and environmental regulations. Our advisory includes:
                 </p>
                 <ul className="list-disc pl-5 text-muted-foreground space-y-2">
                   <li>Review of coating specifications and performance data</li>
@@ -196,7 +213,7 @@ export default function SustainableTech() {
               <div className="bg-neutral-50 border-l-2 border-primary/20 p-6 rounded-sm">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Energy Audit &amp; Efficiency Surveys</h3>
                 <p className="text-muted-foreground mb-2">
-                  Our energy audits provide a comprehensive assessment of your vessel’s energy consumption and identify opportunities for improvement. The service includes:
+                  Our energy audits provide a comprehensive assessment of your vessel's energy consumption and identify opportunities for improvement. The service includes:
                 </p>
                 <ul className="list-disc pl-5 text-muted-foreground space-y-2">
                   <li>On‑board data collection (engine performance, auxiliary systems, fuel consumption)</li>
@@ -229,24 +246,22 @@ export default function SustainableTech() {
 
             <div className="mt-12 p-8 bg-neutral-50 border-l-2 border-primary/20 rounded-sm text-center">
               <p className="text-lg font-medium text-[#0B3B5C] mb-2">
-                Ready to reduce your vessel’s environmental footprint? Let’s get started.
+                Ready to reduce your vessel's environmental footprint? Let's get started.
               </p>
-              <HashLink
+              <Link
                 href="/request-consultation"
                 className="inline-block mt-2 bg-[#0B3B5C] text-white px-6 py-3 rounded-sm font-medium hover:bg-[#1A4B7A] transition-colors"
               >
                 Request Technical Assessment
-              </HashLink>
+              </Link>
             </div>
           </div>
 
-          {service && (
-            <RelatedContent
-              serviceSlugs={service.relatedServices}
-              caseStudySlugs={service.relatedCaseStudies}
-              insightSlugs={service.relatedInsights}
-            />
-          )}
+          <RelatedContent
+            serviceSlugs={service.relatedServices || []}
+            caseStudySlugs={service.relatedCaseStudies || []}
+            insightSlugs={service.relatedInsights || []}
+          />
         </main>
         <Footer />
       </div>

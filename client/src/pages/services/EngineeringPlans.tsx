@@ -2,17 +2,37 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Helmet } from "react-helmet-async";
 import { SEO } from "@/components/SEO";
-import { HashLink } from "@/components/HashLink";
 import { services } from "@/data/services";
 import { RelatedContent } from "@/components/RelatedContent";
-import { Link } from "wouter";
+import { Link, Redirect } from "wouter";
 
 export default function EngineeringPlans() {
   const service = services.find(s => s.slug === "engineering-plans");
+  
+  if (!service) return <Redirect to="/404" />;
 
   const serviceSchema = {
     "@context": "https://schema.org",
     "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.adriaticadoo.com/#organization",
+        "name": "Adriatica D.O.O.",
+        "url": "https://www.adriaticadoo.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.adriaticadoo.com/logo.png"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.adriaticadoo.com/#website",
+        "url": "https://www.adriaticadoo.com/",
+        "name": "Adriatica D.O.O.",
+        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
+      },
       {
         "@type": "WebPage",
         "@id": "https://www.adriaticadoo.com/services/engineering-plans/#webpage",
@@ -29,9 +49,10 @@ export default function EngineeringPlans() {
         "@type": "Service",
         "@id": "https://www.adriaticadoo.com/services/engineering-plans/#service",
         "name": "Engineering Plans",
-        "description": "Detailed engineering drawings and plan sets for new constructions, conversions, and refits. All documentation produced in accordance with classification society rules and flag state requirements.",
+        "description": "Production of classification-ready engineering drawings including structural plans per class rules, as-built verification, arrangement layouts (GA, machinery, piping), and SOLAS-compliant fire & safety plans for new builds, conversions, and refits.",
         "url": "https://www.adriaticadoo.com/services/engineering-plans",
         "provider": { "@id": "https://www.adriaticadoo.com/#organization" },
+        "isPartOf": { "@id": "https://www.adriaticadoo.com/services/engineering-plans/#webpage" },
         "areaServed": [
           { "@type": "Place", "name": "Montenegro" },
           { "@type": "Place", "name": "Adriatic Sea" },
@@ -77,15 +98,6 @@ export default function EngineeringPlans() {
             }
           ]
         }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://www.adriaticadoo.com/#website",
-        "url": "https://www.adriaticadoo.com/",
-        "name": "Adriatica D.O.O.",
-        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
-        "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
       }
     ]
   };
@@ -107,14 +119,19 @@ export default function EngineeringPlans() {
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
           <Link href="/services" className="inline-flex items-center text-sm text-primary hover:underline mb-4">
-    ← Back to all services
-  </Link>
+            ← Back to all services
+          </Link>
           <h1 className="font-display text-4xl md:text-5xl font-bold text-[#0B3B5C] mb-6">
             Engineering Plans
           </h1>
 
-          <div className="prose prose-lg max-w-none text-muted-foreground">
-            <p>
+          <div className="max-w-none text-muted-foreground">
+            {/* Pain-Point Girişi */}
+            <p className="text-lg font-medium text-primary italic border-l-4 border-primary pl-6 mb-6">
+              Incomplete or inaccurate engineering drawings are a primary source of construction delays, budget overruns, and class approval bottlenecks. We produce precise, classification-ready drawing sets that eliminate ambiguity and keep your project on schedule.
+            </p>
+
+            <p className="text-lg mb-6">
               You get detailed engineering drawings and plan sets for new constructions, conversions, and refits. All documentation is produced in accordance with classification society rules and flag state requirements – supporting your regulatory approval and operational safety. Our deliverables suit yachts, commercial vessels, and fishing boats.
             </p>
 
@@ -136,7 +153,7 @@ export default function EngineeringPlans() {
             <div className="flex justify-center my-6">
               <img
                 src="/images/services/engineering-plans-schema.svg"
-                alt="Engineering plans hierarchy – structural drawings, as-built sets, arrangement plans, fire and safety plans leading to class approval"
+                alt="Engineering plans development workflow: structural drawings, as-built verification, arrangement layouts, and SOLAS fire & safety plans submitted for classification society approval"
                 className="w-full max-w-2xl h-auto"
                 loading="lazy"
                 width={672}
@@ -150,9 +167,8 @@ export default function EngineeringPlans() {
                 <p className="text-muted-foreground">
                   You receive complete structural drawings covering your vessel's primary and secondary steelwork, including framing, plating, and connections. All drawings are prepared in accordance with the applicable classification society rules (RINA, BV, DNV) and include fabrication details, material specifications, and welding procedures. We also provide 3D models and finite element analysis (FEA) results when required for complex structures.
                 </p>
-                <p className="text-muted-foreground mt-2">
-                  <span className="font-medium">Outcome:</span> Approval‑ready documentation that minimises back‑and‑forth with class and ensures a smooth construction process.
-                </p>
+                <h4 className="font-display text-md font-bold text-[#0B3B5C] mt-4 mb-1">Outcome</h4>
+                <p className="text-muted-foreground">Approval‑ready documentation that minimises back‑and‑forth with class and ensures a smooth construction process.</p>
               </div>
 
               <div className="border-l-2 border-primary/20 pl-6">
@@ -161,8 +177,10 @@ export default function EngineeringPlans() {
                   After construction or major modifications, we update the original drawings to reflect the actual condition of your vessel. This includes verifying measurements on‑site and incorporating any field changes. The final as‑built set is essential for future maintenance, modifications, and compliance documentation.
                 </p>
                 <p className="text-muted-foreground mt-2">
-                  <span className="font-medium">Outcome:</span> A reliable record that supports safe operation, simplifies future engineering work, and meets flag state requirements for vessel documentation.
+                  <span className="font-medium">Process:</span> On‑site physical verification ensures the accuracy of the as‑built documentation.
                 </p>
+                <h4 className="font-display text-md font-bold text-[#0B3B5C] mt-4 mb-1">Outcome</h4>
+                <p className="text-muted-foreground">A reliable record that supports safe operation, simplifies future engineering work, and meets flag state requirements for vessel documentation.</p>
               </div>
 
               <div className="border-l-2 border-primary/20 pl-6">
@@ -170,9 +188,8 @@ export default function EngineeringPlans() {
                 <p className="text-muted-foreground">
                   General arrangement (GA), machinery arrangement, piping isometrics, and accommodation layouts. We ensure that all spaces and systems are clearly documented, with proper labelling of equipment, access points, and emergency exits. Drawings are produced in both 2D and 3D formats as needed.
                 </p>
-                <p className="text-muted-foreground mt-2">
-                  <span className="font-medium">Outcome:</span> Clear, user‑friendly plans that facilitate crew training, maintenance planning, and regulatory surveys.
-                </p>
+                <h4 className="font-display text-md font-bold text-[#0B3B5C] mt-4 mb-1">Outcome</h4>
+                <p className="text-muted-foreground">Clear, user‑friendly plans that facilitate crew training, maintenance planning, and regulatory surveys.</p>
               </div>
 
               <div className="border-l-2 border-primary/20 pl-6">
@@ -180,9 +197,8 @@ export default function EngineeringPlans() {
                 <p className="text-muted-foreground">
                   Fire control plans, emergency escape routes, and safety equipment location drawings, compliant with SOLAS and flag state requirements. These plans are designed to be easily understood by crew and port state control officers. We provide both shipboard copies and the required electronic version for the fire control plan folder.
                 </p>
-                <p className="text-muted-foreground mt-2">
-                  <span className="font-medium">Outcome:</span> PSC‑ready documentation that enhances onboard safety and demonstrates your regulatory compliance.
-                </p>
+                <h4 className="font-display text-md font-bold text-[#0B3B5C] mt-4 mb-1">Outcome</h4>
+                <p className="text-muted-foreground">PSC‑ready documentation that enhances onboard safety and demonstrates your regulatory compliance.</p>
               </div>
             </div>
 
@@ -190,22 +206,20 @@ export default function EngineeringPlans() {
               <p className="text-lg font-medium text-[#0B3B5C] mb-2">
                 Ready to get your engineering plans in place?
               </p>
-              <HashLink
+              <Link
                 href="/request-consultation"
                 className="inline-block mt-2 bg-[#0B3B5C] text-white px-6 py-3 rounded-sm font-medium hover:bg-[#1A4B7A] transition-colors"
               >
                 Request Technical Assessment
-              </HashLink>
+              </Link>
             </div>
           </div>
 
-          {service && (
-            <RelatedContent
-              serviceSlugs={service.relatedServices}
-              caseStudySlugs={service.relatedCaseStudies}
-              insightSlugs={service.relatedInsights}
-            />
-          )}
+          <RelatedContent
+            serviceSlugs={service.relatedServices || []}
+            caseStudySlugs={service.relatedCaseStudies || []}
+            insightSlugs={service.relatedInsights || []}
+          />
         </main>
         <Footer />
       </div>

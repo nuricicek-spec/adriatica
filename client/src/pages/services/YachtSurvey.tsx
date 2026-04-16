@@ -2,17 +2,37 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Helmet } from "react-helmet-async";
 import { SEO } from "@/components/SEO";
-import { HashLink } from "@/components/HashLink";
 import { services } from "@/data/services";
 import { RelatedContent } from "@/components/RelatedContent";
-import { Link } from "wouter";
+import { Link, Redirect } from "wouter";
 
 export default function YachtSurvey() {
   const service = services.find(s => s.slug === "yacht-survey");
+  
+  if (!service) return <Redirect to="/404" />;
 
   const serviceSchema = {
     "@context": "https://schema.org",
     "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.adriaticadoo.com/#organization",
+        "name": "Adriatica D.O.O.",
+        "url": "https://www.adriaticadoo.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.adriaticadoo.com/logo.png"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.adriaticadoo.com/#website",
+        "url": "https://www.adriaticadoo.com/",
+        "name": "Adriatica D.O.O.",
+        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
+      },
       {
         "@type": "WebPage",
         "@id": "https://www.adriaticadoo.com/services/yacht-survey/#webpage",
@@ -29,9 +49,10 @@ export default function YachtSurvey() {
         "@type": "Service",
         "@id": "https://www.adriaticadoo.com/services/yacht-survey/#service",
         "name": "Yacht Survey & Inspection",
-        "description": "Independent technical surveys for yachts: pre-purchase, damage assessment, insurance valuation, charter inspection, and off-hire surveys. IACS‑aligned, class‑recognized reports.",
+        "description": "Independent IACS‑aligned technical surveys for yachts: pre-purchase condition assessment, damage inspection and repair cost estimation, insurance valuation, and charter on‑hire/off‑hire surveys with fast 3‑5 day report turnaround.",
         "url": "https://www.adriaticadoo.com/services/yacht-survey",
         "provider": { "@id": "https://www.adriaticadoo.com/#organization" },
+        "isPartOf": { "@id": "https://www.adriaticadoo.com/services/yacht-survey/#webpage" },
         "areaServed": [
           { "@type": "Place", "name": "Montenegro" },
           { "@type": "Place", "name": "Adriatic Sea" },
@@ -85,15 +106,6 @@ export default function YachtSurvey() {
             }
           ]
         }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://www.adriaticadoo.com/#website",
-        "url": "https://www.adriaticadoo.com/",
-        "name": "Adriatica D.O.O.",
-        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
-        "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
       }
     ]
   };
@@ -115,25 +127,30 @@ export default function YachtSurvey() {
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
           <div className="flex flex-wrap items-center gap-4 mb-4">
-    <Link
-      href="/services"
-      className="inline-flex items-center text-sm text-primary hover:underline"
-    >
-      ← Back to all services
-    </Link>
-    <Link
-      href="/services/project-management"
-      className="inline-flex items-center text-sm text-primary hover:underline"
-    >
-      ← Back to Project Management
-    </Link>
-  </div>
+            <Link
+              href="/services"
+              className="inline-flex items-center text-sm text-primary hover:underline"
+            >
+              ← Back to all services
+            </Link>
+            <Link
+              href="/services/project-management"
+              className="inline-flex items-center text-sm text-primary hover:underline"
+            >
+              ← Back to Project Management
+            </Link>
+          </div>
           <h1 className="font-display text-4xl md:text-5xl font-bold text-[#0B3B5C] mb-6">
             Yacht Survey &amp; Inspection
           </h1>
 
-          <div className="prose prose-lg max-w-none text-muted-foreground">
-            <p>
+          <div className="max-w-none text-muted-foreground">
+            {/* Pain-Point Girişi */}
+            <p className="text-lg font-medium text-primary italic border-l-4 border-primary pl-6 mb-6">
+              A missed structural defect or undocumented pre‑charter damage can cost hundreds of thousands in disputes and unexpected repairs. Our independent, IACS‑aligned surveys provide the technical evidence you need — whether buying, insuring, or operating a yacht.
+            </p>
+
+            <p className="text-lg mb-6">
               You get independent, unbiased technical surveys for yachts of all sizes. Our inspections follow IACS unified requirements and class society rules, providing you with actionable reports for purchase, insurance, charter, or damage assessment.
             </p>
 
@@ -151,32 +168,30 @@ export default function YachtSurvey() {
 
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Why Choose Adriatica for Your Yacht Survey?</h2>
             <ul className="list-disc pl-6 space-y-2">
-              <li>Independent – no conflict of interest with shipyards or brokers.</li>
-              <li>IACS‑aligned methodology – reports accepted by classification societies and insurers.</li>
-              <li>Fast turnaround – typically 3‑5 days from inspection to final report.</li>
-              <li>Regional presence – we survey yachts in Montenegro, Croatia, Italy, and Greece.</li>
+              <li><strong>Independent</strong> – no conflict of interest with shipyards or brokers.</li>
+              <li><strong>IACS‑aligned methodology</strong> – reports accepted by classification societies and insurers.</li>
+              <li><strong>Fast turnaround</strong> – typically 3‑5 days from inspection to final report.</li>
+              <li><strong>Regional presence</strong> – we survey yachts in Montenegro, Croatia, Italy, and Greece.</li>
             </ul>
 
             <div className="mt-12 p-8 bg-neutral-50 border-l-2 border-primary/20 rounded-sm text-center">
               <p className="text-lg font-medium text-[#0B3B5C] mb-2">
                 Need an independent yacht survey?
               </p>
-              <HashLink
+              <Link
                 href="/request-consultation"
                 className="inline-block mt-2 bg-[#0B3B5C] text-white px-6 py-3 rounded-sm font-medium hover:bg-[#1A4B7A] transition-colors"
               >
                 Request a Survey Quote
-              </HashLink>
+              </Link>
             </div>
           </div>
 
-          {service && (
-            <RelatedContent
-              serviceSlugs={service.relatedServices}
-              caseStudySlugs={service.relatedCaseStudies}
-              insightSlugs={service.relatedInsights}
-            />
-          )}
+          <RelatedContent
+            serviceSlugs={service.relatedServices || []}
+            caseStudySlugs={service.relatedCaseStudies || []}
+            insightSlugs={service.relatedInsights || []}
+          />
         </main>
         <Footer />
       </div>
