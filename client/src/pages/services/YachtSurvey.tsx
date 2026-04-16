@@ -145,7 +145,6 @@ export default function YachtSurvey() {
           </h1>
 
           <div className="max-w-none text-muted-foreground">
-            {/* Pain-Point Girişi */}
             <p className="text-lg font-medium text-primary italic border-l-4 border-primary pl-6 mb-6">
               A missed structural defect or undocumented pre‑charter damage can cost hundreds of thousands in disputes and unexpected repairs. Our independent, IACS‑aligned surveys provide the technical evidence you need — whether buying, insuring, or operating a yacht.
             </p>

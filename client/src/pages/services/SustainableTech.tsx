@@ -126,7 +126,6 @@ export default function SustainableTech() {
           </h1>
 
           <div className="max-w-none text-muted-foreground">
-            {/* Pain-Point Girişi */}
             <p className="text-lg font-medium text-primary italic border-l-4 border-primary pl-6 mb-6">
               Environmental regulations are tightening — IMO 2026 biofouling enforcement and CII ratings are already impacting commercial operations. We bridge the gap between regulatory intent and vessel practicality with independent engineering oversight and auditable documentation.
             </p>
@@ -161,7 +160,6 @@ export default function SustainableTech() {
             </div>
 
             <div className="mt-8 space-y-6">
-              {/* Biofouling Management – detailed block */}
               <div className="bg-neutral-50 border-l-2 border-primary/20 p-6 rounded-sm">
                 <div className="flex flex-wrap items-center gap-3 mb-3">
                   <h3 className="font-display text-xl font-bold text-[#0B3B5C]">Biofouling Management Plan (IMO MEPC.378(80))</h3>
@@ -192,7 +190,6 @@ export default function SustainableTech() {
                 </p>
               </div>
 
-              {/* Eco‑friendly Coating Advisory */}
               <div className="bg-neutral-50 border-l-2 border-primary/20 p-6 rounded-sm">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Eco‑friendly Coating Advisory</h3>
                 <p className="text-muted-foreground mb-2">
@@ -209,7 +206,6 @@ export default function SustainableTech() {
                 </p>
               </div>
 
-              {/* Energy Audit & Efficiency Surveys */}
               <div className="bg-neutral-50 border-l-2 border-primary/20 p-6 rounded-sm">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Energy Audit &amp; Efficiency Surveys</h3>
                 <p className="text-muted-foreground mb-2">
@@ -226,7 +222,6 @@ export default function SustainableTech() {
                 </p>
               </div>
 
-              {/* MRV Monitoring Plan (EU MRV Regulation) */}
               <div className="bg-neutral-50 border-l-2 border-primary/20 p-6 rounded-sm">
                 <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">MRV Monitoring Plan (EU MRV Regulation)</h3>
                 <p className="text-muted-foreground mb-2">

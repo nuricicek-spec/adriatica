@@ -126,7 +126,6 @@ export default function EngineeringPlans() {
           </h1>
 
           <div className="max-w-none text-muted-foreground">
-            {/* Pain-Point Girişi */}
             <p className="text-lg font-medium text-primary italic border-l-4 border-primary pl-6 mb-6">
               Incomplete or inaccurate engineering drawings are a primary source of construction delays, budget overruns, and class approval bottlenecks. We produce precise, classification-ready drawing sets that eliminate ambiguity and keep your project on schedule.
             </p>
@@ -139,9 +138,8 @@ export default function EngineeringPlans() {
             <ul className="list-disc pl-6 space-y-2">
               <li>Structural Drawings</li>
               <li>As‑Built Drawing Sets</li>
-              <li>Arrangement Plans</li>
+              <li>Arrangement Plans (GA, machinery, piping)</li>
               <li>Fire &amp; Safety Plans</li>
-              <li>General Arrangement (optional)</li>
             </ul>
 
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Outcome</h2>
@@ -153,7 +151,7 @@ export default function EngineeringPlans() {
             <div className="flex justify-center my-6">
               <img
                 src="/images/services/engineering-plans-schema.svg"
-                alt="Engineering plans development workflow: structural drawings, as-built verification, arrangement layouts, and SOLAS fire & safety plans submitted for classification society approval"
+                alt="Engineering plans development workflow diagram"
                 className="w-full max-w-2xl h-auto"
                 loading="lazy"
                 width={672}

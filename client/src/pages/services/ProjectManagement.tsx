@@ -126,7 +126,6 @@ export default function ProjectManagement() {
           </h1>
 
           <div className="max-w-none text-muted-foreground">
-            {/* Pain-Point Girişi */}
             <p className="text-lg font-medium text-primary italic border-l-4 border-primary pl-6 mb-6">
               Unmanaged yard periods are the single largest source of budget overruns and schedule delays for vessel owners. As your dedicated Owner's Representative, we bridge the gap between shipyard capabilities and owner expectations — ensuring work is done right, on time, and without costly surprises.
             </p>
@@ -141,14 +140,13 @@ export default function ProjectManagement() {
               <li>Dry‑Docking Specification &amp; Management</li>
               <li>On‑site Technical Troubleshooting</li>
               <li>Cost &amp; Schedule Control</li>
-              <li>Yacht Survey &amp; Inspection</li>
             </ul>
 
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">Outcome</h2>
             <p>You receive on‑time, on‑budget project delivery with verified quality and complete as‑built records.</p>
 
             <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mt-8 mb-4">References</h2>
-            <p>Industry best practices, IACS UR Z10</p>
+            <p>PMI standards, BIMCO shipbuilding contracts, classification society rules</p>
 
             <div className="flex justify-center my-6">
               <img
@@ -199,7 +197,7 @@ export default function ProjectManagement() {
               </div>
             </div>
 
-            <div className="mt-12 p-8 bg-neutral-50 border-l-4 border-primary rounded-sm">
+            <div className="mt-12 p-8 bg-neutral-50 border-l-2 border-primary/20 rounded-sm">
               <h3 className="font-display text-2xl font-bold text-[#0B3B5C] mb-3">
                 Yacht Survey &amp; Inspection
               </h3>
