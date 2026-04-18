@@ -49,7 +49,7 @@ export default {
         muted: {
           DEFAULT: "hsl(var(--muted, 210 20% 95%) / <alpha-value>)",
           foreground:
-            "hsl(var(--muted-foreground, 210 10% 35%) / <alpha-value>)", // 🔥 FIX
+            "hsl(var(--muted-foreground, 210 10% 35%) / <alpha-value>)",
         },
 
         accent: {
@@ -66,7 +66,6 @@ export default {
 
         ring: "hsl(var(--ring, 210 70% 30%) / <alpha-value>)",
 
-        // 🔥 EKSTRA: accessibility-safe text
         "text-safe": "hsl(210 10% 30%)",
         "text-soft": "hsl(210 10% 45%)",
 
@@ -79,9 +78,9 @@ export default {
       },
 
       fontFamily: {
-        sans: ["var(--font-sans)"],
-        serif: ["var(--font-serif)"],
-        mono: ["var(--font-mono)"],
+        body: ["var(--font-body)", "sans-serif"],
+        display: ["var(--font-display)", "serif"],
+        mono: ["var(--font-mono)", "monospace"],
       },
 
       keyframes: {
