@@ -69,10 +69,6 @@ export const biofoulingCompliance: Insight = {
     </ol>
   `,
   pdfUrl: '/pdfs/insights/ADRI-TIS-001.pdf',
-  relatedSlugs: ['sustainable-in-water-cleaning-yacht'],
-  relatedServices: ['sustainable-technologies'],
-  relatedCaseStudies: ['biofouling-management-mediterranean', 'managed-in-water-cleaning'],
-
   operationalImplications: {
     heading: 'Operational Implications',
     summary: 'If your vessel is entering Mediterranean waters in 2026, biofouling documentation is no longer optional — it is a PSC readiness requirement. Here is what you should act on now:',

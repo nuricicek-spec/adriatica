@@ -100,10 +100,6 @@ export const sustainableCleaning: Insight = {
     </ol>
   `,
   pdfUrl: '/pdfs/insights/ADRI-TIS-002.pdf',
-  relatedSlugs: ['biofouling-compliance-imo-2026'],
-  relatedServices: ['sustainable-technologies'],
-  relatedCaseStudies: ['managed-in-water-cleaning'],
-
   operationalImplications: {
     heading: 'Operational Implications',
     summary: 'If your vessel is operating in European coastal waters, reactive dry-docking is no longer the only option — or the smart one. Here is how to shift from reactive to proactive:',

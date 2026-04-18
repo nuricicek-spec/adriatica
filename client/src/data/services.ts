@@ -5,9 +5,6 @@ export interface Service {
   deliverables: string[];
   outcome: string;
   references: string;
-  relatedServices?: string[];
-  relatedCaseStudies?: string[];
-  relatedInsights?: string[];
 }
 
 export const services: Service[] = [
@@ -24,9 +21,6 @@ export const services: Service[] = [
     ],
     outcome: "Class‑approved plan sets, reduced approval delays, and a clear basis for construction or modification.",
     references: "Class society rules (RINA, BV, DNV), flag state regulations",
-    relatedServices: ["engineering-documentation", "structural-integrity"],
-    relatedCaseStudies: ["refit-supervision-shipyard"],
-    relatedInsights: ["technical-operations-montenegro"],
   },
   {
     slug: "engineering-documentation",
@@ -40,9 +34,6 @@ export const services: Service[] = [
     ],
     outcome: "Audit‑ready documentation, improved crew familiarity, and smoother port state control inspections.",
     references: "IMO, EU MRV, MARPOL",
-    relatedServices: ["engineering-plans", "structural-integrity"],
-    relatedCaseStudies: ["refit-supervision-shipyard"],
-    relatedInsights: ["technical-operations-montenegro"],
   },
   {
     slug: "structural-integrity",
@@ -56,9 +47,6 @@ export const services: Service[] = [
     ],
     outcome: "Clear repair priorities, extended operational life, and classification society acceptance.",
     references: "IACS UR Z10, classification societies",
-    relatedServices: ["engineering-plans", "engineering-documentation"],
-    relatedCaseStudies: ["refit-supervision-shipyard"],
-    relatedInsights: ["technical-operations-montenegro"],
   },
   {
     slug: "sustainable-technologies",
@@ -72,9 +60,6 @@ export const services: Service[] = [
     ],
     outcome: "IMO‑compliant plans, reduced fuel consumption, and lower environmental risk.",
     references: "IMO, EU MRV, Paris MoU",
-    relatedServices: ["regulatory-compliance"],
-    relatedCaseStudies: ["biofouling-management-mediterranean", "managed-in-water-cleaning"],
-    relatedInsights: ["biofouling-compliance-imo-2026", "sustainable-in-water-cleaning-yacht"],
   },
   {
     slug: "regulatory-compliance",
@@ -89,9 +74,6 @@ export const services: Service[] = [
     ],
     outcome: "PSC‑ready documentation, reduced inspection risk, and full compliance with current regulations.",
     references: "IMO, MARPOL, flag state administrations",
-    relatedServices: ["sustainable-technologies"],
-    relatedCaseStudies: [],
-    relatedInsights: ["biofouling-compliance-imo-2026"],
   },
   {
     slug: "project-management",
@@ -105,9 +87,6 @@ export const services: Service[] = [
     ],
     outcome: "On‑time, on‑budget project delivery with verified quality and complete as‑built records.",
     references: "Industry best practices, IACS UR Z10",
-    relatedServices: ["engineering-plans", "structural-integrity"],
-    relatedCaseStudies: ["refit-supervision-shipyard"],
-    relatedInsights: ["technical-operations-montenegro"],
   },
   {
     slug: "yacht-survey",
@@ -122,8 +101,5 @@ export const services: Service[] = [
     ],
     outcome: "Independent, actionable survey reports that support purchase decisions, insurance claims, and charter compliance.",
     references: "IACS UR Z10, classification societies, Paris MoU guidelines",
-    relatedServices: ["project-management", "structural-integrity", "regulatory-compliance"],
-    relatedCaseStudies: ["refit-supervision-shipyard"],
-    relatedInsights: ["technical-operations-montenegro"],
   },
 ];

@@ -24,25 +24,25 @@ export const technicalOperations: Insight = {
           <tr class="bg-neutral-100">
             <th class="border border-border p-3 text-left font-medium">Milestone</th>
             <th class="border border-border p-3 text-left font-medium">Operational Relevance</th>
-          </tr>
+           </tr>
         </thead>
         <tbody>
-          <tr>
+           <tr>
             <td class="border border-border p-3">UPSUL [1]</td>
             <td class="border border-border p-3">Baseline for national technical and safety compliance.</td>
-          </tr>
-          <tr>
+           </tr>
+           <tr>
             <td class="border border-border p-3">Paris MoU Integration [2]</td>
             <td class="border border-border p-3">Harmonization of local inspections with European Port State Control standards.</td>
-          </tr>
-          <tr>
+           </tr>
+           <tr>
             <td class="border border-border p-3">Adriatic 42 &amp; Navar Exp. [4]</td>
             <td class="border border-border p-3">Emergence of Montenegro as a high-capacity refit and technical hub.</td>
-          </tr>
-          <tr>
+           </tr>
+           <tr>
             <td class="border border-border p-3">Regulatory Convergence [3]</td>
             <td class="border border-border p-3">Transition toward mandatory digital documentation and environmental oversight.</td>
-          </tr>
+           </tr>
         </tbody>
       </table>
     </div>
@@ -90,10 +90,6 @@ export const technicalOperations: Insight = {
     </ol>
   `,
   pdfUrl: '/pdfs/insights/ADRI-TIS-003.pdf',
-  relatedSlugs: [],
-  relatedServices: ['project-management'],
-  relatedCaseStudies: ['refit-supervision-shipyard'],
-
   operationalImplications: {
     heading: 'Operational Implications',
     summary: 'If you are planning a refit or dry-docking in Montenegro, remote engineering management is a significant risk. Here is what direct technical presence changes in practice:',
