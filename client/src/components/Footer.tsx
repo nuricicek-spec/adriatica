@@ -33,7 +33,7 @@ export function Footer() {
                 height="36"
                 className="brightness-0 invert"
               />
-              <span className="font-display font-bold text-[1.5rem] tracking-widest uppercase">
+              <span className="font-body font-bold text-[1.5rem] tracking-widest uppercase">
                 ADRIATICA D.O.O.
               </span>
             </HashLink>

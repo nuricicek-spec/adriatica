@@ -69,7 +69,7 @@ export function Navigation() {
                 height="40"
               />
               {/* x1.1: text-xl (1.25rem) → 1.375rem */}
-              <span className="font-display font-bold text-[1.375rem] tracking-widest text-primary uppercase">
+              <span className="font-body font-bold text-[1.375rem] tracking-widest text-primary uppercase">
                 ADRIATICA D.O.O.
               </span>
             </HashLink>
