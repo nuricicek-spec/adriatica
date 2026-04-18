@@ -17,7 +17,7 @@ export const zeroEmissionZone: Insight = {
            width="800"
            height="600"
            loading="eager">
-           fetchpriority="high"
+           fetchpriority="high">
       <figcaption class="text-sm text-muted-foreground mt-2 text-center">
         Boka Kotorska (Bay of Kotor), a UNESCO World Heritage site, remains vulnerable to maritime emissions.
       </figcaption>
