@@ -1,4 +1,4 @@
-import { defineConfig, type PluginOption } from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 
@@ -6,22 +6,19 @@ import path from 'path';
 let visualizer: any;
 try {
   visualizer = require('rollup-plugin-visualizer').visualizer;
-} catch (_e) {
+} catch {
   // ignore, visualizer not installed
 }
 
 export default defineConfig({
   plugins: [
     react({
-      // React Refresh otomatik olarak development'da aktif
-      // fastRefresh seçeneği artık doğrudan plugin seviyesinde değil, babel ile
       babel: {
         plugins: process.env.NODE_ENV === 'production' 
           ? [['babel-plugin-transform-react-remove-prop-types', { removeImport: true }]]
           : [],
       },
     }),
-    // Bundle analizi için (opsiyonel, sadece ANALYZE=true ile çalışır)
     process.env.ANALYZE === 'true' && visualizer ? visualizer({
       filename: 'dist/bundle-stats.html',
       open: true,

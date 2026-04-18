@@ -1,3 +1,4 @@
+// src/lib/contentIndex.ts
 import { services } from '@/data/services';
 import { caseStudies } from '@/data/caseStudies';
 import { insights } from '@/data/insights';
@@ -22,27 +23,19 @@ function getInsightText(insight: typeof insights[0]): string {
 
 export const allContent: ContentItem[] = [
   ...services.map(service => ({
-    slug: service.slug,
+    ...service,
     type: 'service' as const,
-    title: service.title,
-    description: service.description,
     tags: extractTags(getServiceText(service)),
-    ...service
   })),
   ...caseStudies.map(cs => ({
-    slug: cs.slug,
+    ...cs,
     type: 'case-study' as const,
-    title: cs.title,
     description: cs.challenge.substring(0, 160),
     tags: extractTags(getCaseStudyText(cs)),
-    ...cs
   })),
   ...insights.map(insight => ({
-    slug: insight.slug,
+    ...insight,
     type: 'insight' as const,
-    title: insight.title,
-    description: insight.description,
     tags: extractTags(getInsightText(insight)),
-    ...insight
-  }))
+  })),
 ];

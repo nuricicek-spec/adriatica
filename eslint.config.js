@@ -6,18 +6,37 @@ import typescript from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
 
 export default [
-  js.configs.recommended,
+  // ── 1. Global ignores – build output, public assets, minified files ──────
   {
-    files: ["client/src/**/*.{ts,tsx}"],
+    ignores: [
+      "**/dist/**",
+      "**/build/**",
+      "**/node_modules/**",
+      "**/public/**",
+      "**/*.min.js",
+      "**/*.min.css",
+      "**/pdf.worker.min.js",
+      "**/vendor-*.js",
+    ],
+  },
+
+  // ── 2. Temel JS önerileri ──────────────────────────────────────────────────
+  js.configs.recommended,
+
+  // ── 3. Kaynak dosyalar – sadece src/ altındaki TypeScript/React dosyaları ──
+  {
+    files: ["src/**/*.{ts,tsx}"],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
         ecmaVersion: "latest",
         sourceType: "module",
         ecmaFeatures: { jsx: true },
-        project: "./tsconfig.json",
       },
-      globals: { ...globals.browser },
+      globals: {
+        ...globals.browser,
+        ...globals.es2021,
+      },
     },
     plugins: {
       react,
@@ -29,21 +48,27 @@ export default [
     },
     rules: {
       "react/react-in-jsx-scope": "off",
-      "no-unused-vars": "off",
-      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+      ],
+      "@typescript-eslint/no-explicit-any": "warn",
+      "no-undef": "off", // TypeScript handles this
     },
   },
+
+  // ── 4. Config dosyaları ve Node.js scriptleri (cjs/js/ts) ──────────────────
   {
     files: [
-      "*.config.js",
-      "*.config.ts",
-      "script/**/*.ts",
       "vite.config.ts",
       "tailwind.config.ts",
       "postcss.config.js",
-      "eslint.config.js"
+      "eslint.config.js",
+      "*.cjs",
+      "*.js",
     ],
     languageOptions: {
       parser: tsParser,
@@ -56,15 +81,20 @@ export default [
     plugins: { "@typescript-eslint": typescript },
     rules: {
       "no-unused-vars": "off",
-      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        { argsIgnorePattern: "^_" },
+      ],
     },
   },
+
+  // ── 5. shadcn/ui bileşenleri – otomatik üretilmiş kod, kurallar gevşetildi ──
   {
-    files: ["client/src/components/ui/**/*"],
+    files: ["src/components/ui/**/*"],
     rules: {
       "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": "off",
-      "no-undef": "off", // React import edilmemiş olsa bile hata verme
+      "@typescript-eslint/no-explicit-any": "off",
     },
   },
 ];

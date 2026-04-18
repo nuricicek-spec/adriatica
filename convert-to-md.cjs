@@ -8,10 +8,10 @@ const crypto = require('crypto');
 const CONFIG = {
   inputDirs: ['./client/src/data', './client/src/pages'],
   outputRoot: './knowledge-base',
-  chunkMaxTokens: 800,          // maksimum token sayısı (1 token ≈ 0.75 kelime)
-  chunkOverlap: 100,            // karakter cinsinden overlap
-  minContentLength: 50,         // minimum içerik uzunluğu (altındaki dosyaları atla)
-  skipPatterns: [/index\.tsx?$/, /_app\.tsx?$/, /_document\.tsx?$/], // atlanacak dosyalar
+  chunkMaxTokens: 800,
+  chunkOverlap: 100,
+  minContentLength: 50,
+  skipPatterns: [/index\.tsx?$/, /_app\.tsx?$/, /_document\.tsx?$/],
 };
 
 // ============================================================
@@ -21,13 +21,12 @@ const CONFIG = {
 function slugify(text) {
   return text
     .toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // aksan temizleme
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
 }
 
 function smartTitle(str) {
-  // camelCase / PascalCase / kebab-case / snake_case dönüşümü
   return str
     .replace(/([a-z])([A-Z])/g, '$1 $2')
     .replace(/[-_]/g, ' ')
@@ -57,7 +56,6 @@ function detectType(filePath, content) {
   if (lowerPath.includes('services')) return 'service';
   if (lowerPath.includes('deliverables')) return 'deliverable';
   if (lowerPath.includes('pages')) return 'page';
-  // fallback: içerikten tespit
   if (content.includes('IMO') || content.includes('MARPOL')) return 'insight';
   if (content.includes('case study') || content.includes('project')) return 'case-study';
   return 'unknown';
@@ -73,7 +71,6 @@ function calculateConfidence(mode, priority) {
 function createMetadata({ id, title, type, url, mode, priority, content }) {
   const confidence = calculateConfidence(mode, priority);
   const hash = crypto.createHash('md5').update(content).digest('hex');
-  // basit section tespiti (regulation, performance, design)
   let section = 'general';
   if (/(regulation|compliance|imo|marpol|solas)/i.test(content)) section = 'regulation';
   else if (/(performance|efficiency|fuel|emission)/i.test(content)) section = 'performance';
@@ -124,16 +121,15 @@ function stripHtml(html) {
 }
 
 function removeCodeNoise(content) {
-  // import/export, const/let/var, function tanımlamaları, JSX ifadeleri
   return content
     .replace(/import[\s\S]*?;?\n/g, '')
     .replace(/export[\s\S]*?;?\n/g, '')
     .replace(/\b(const|let|var|function|class|interface|type)\s+[^\n]+/g, '')
-    .replace(/\{[^}]+\}/g, '')               // JSX expressions
+    .replace(/\{[^}]+\}/g, '')
     .replace(/className\s*=\s*["'][^"']*["']/g, '')
     .replace(/on\w+\s*=\s*\{[^}]+\}/g, '')
-    .replace(/\/\/.*$/gm, '')               // tek satır yorum
-    .replace(/\/\*[\s\S]*?\*\//g, '');      // çok satırlı yorum
+    .replace(/\/\/.*$/gm, '')
+    .replace(/\/\*[\s\S]*?\*\//g, '');
 }
 
 function extractTSContent(content) {
@@ -144,12 +140,10 @@ function extractTSContent(content) {
 }
 
 function extractPageText(content) {
-  // sadece <main> içini veya belirli container'ı hedefle
   let mainContent = content;
   const mainMatch = content.match(/<main[\s\S]*?<\/main>/i);
   if (mainMatch) mainContent = mainMatch[0];
   else {
-    // fallback: max-w-7xl veya benzeri container
     const containerMatch = content.match(/<div[^>]*class="[^"]*max-w-7xl[^"]*"[\s\S]*?<\/div>/i);
     if (containerMatch) mainContent = containerMatch[0];
   }
@@ -163,13 +157,11 @@ function extractPageText(content) {
 // ============================================================
 
 function estimateTokens(text) {
-  // daha güvenli tahmin: kelime sayısı * 1.3
   const words = text.split(/\s+/).length;
   return Math.ceil(words * 1.3);
 }
 
 function splitByHeadings(text) {
-  // ## ve ### başlıklarına göre böl
   const sections = text.split(/\n(?=##+ )/);
   const intro = sections[0].trim().startsWith('##') ? '' : sections.shift();
   const chunks = [];
@@ -209,14 +201,12 @@ function processFile(filePath, stats) {
   const raw = fs.readFileSync(filePath, 'utf8');
   const relativePath = filePath.replace(/^.*client\/src\//, '');
   
-  // 1. Atlama kuralları
   if (CONFIG.skipPatterns.some(pattern => pattern.test(filePath))) {
     console.log(`⏭ Skipping (routing): ${relativePath}`);
     stats.skipped++;
     return;
   }
 
-  // 2. İçerik temizleme ve mod belirleme
   let content = '';
   let mode = 'RAW';
   let priority = 'low';
@@ -252,14 +242,12 @@ function processFile(filePath, stats) {
     priority = 'low';
   }
 
-  // 3. İçerik kontrolü
   if (content.length < CONFIG.minContentLength) {
     console.log(`⏭ Skipping (too short): ${relativePath}`);
     stats.skipped++;
     return;
   }
 
-  // 4. Metadata oluştur
   const idBase = generateId(filePath);
   const rawTitle = path.basename(filePath, path.extname(filePath));
   const title = smartTitle(rawTitle);
@@ -267,18 +255,16 @@ function processFile(filePath, stats) {
   const url = generateUrl(filePath);
   const metadata = createMetadata({ id: idBase, title, type, url, mode, priority, content });
 
-  // 5. Hedef klasör (clean / raw)
   const targetSub = (priority === 'high') ? 'clean' : 'raw';
   const outDir = path.join(CONFIG.outputRoot, targetSub, path.dirname(relativePath));
   
-  // 6. Chunking kararı
   const approxTokens = estimateTokens(content);
   if (approxTokens > CONFIG.chunkMaxTokens) {
     console.log(`✂️ Chunking ${relativePath} (${approxTokens} tokens)`);
     let chunks = splitByHeadings(content);
     chunks = applyOverlap(chunks, CONFIG.chunkOverlap);
     
-    chunks.forEach((chunk, idx) => {
+    chunks.forEach((chunk, _idx) => {  // _idx kullanılmıyor -> uyarı yok
       const chunkId = chunks.length === 1 ? idBase : `${idBase}-${chunk.title}`;
       const chunkTitle = chunks.length === 1 ? title : `${title}: ${chunk.title.replace(/-/g, ' ')}`;
       const chunkMeta = { ...metadata, id: chunkId, title: chunkTitle };
@@ -327,7 +313,6 @@ function walkDir(dir, stats) {
 function main() {
   console.log('🚀 Starting hybrid ingestion (production-grade)...\n');
   
-  // Çıktı klasörlerini hazırla
   if (!fs.existsSync(CONFIG.outputRoot)) fs.mkdirSync(CONFIG.outputRoot, { recursive: true });
   ['clean', 'raw'].forEach(sub => {
     const subPath = path.join(CONFIG.outputRoot, sub);
