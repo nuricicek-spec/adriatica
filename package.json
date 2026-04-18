@@ -4,9 +4,10 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "dev": "vite --host",
-    "build": "vite build",
-    "preview": "vite preview"
+  "dev": "vite --host",
+  "build": "vite build",
+  "preview": "vite preview",
+  "build:recommendations": "tsx scripts/build-recommendations.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -82,6 +83,7 @@
     "postcss": "^8.4.47",
     "rollup-plugin-visualizer": "^7.0.1",
     "tailwindcss": "^3.4.17",
+    "tsx": "^4.19.2",
     "typescript": "5.6.3",
     "typescript-eslint": "^8.57.1",
     "vite": "^7.3.0"

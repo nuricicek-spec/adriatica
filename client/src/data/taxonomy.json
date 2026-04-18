@@ -1,0 +1,178 @@
+{
+  "imo": {
+    "weight": 5,
+    "category": "regulation",
+    "synonyms": ["imo", "international maritime organization"]
+  },
+  "mepc": {
+    "weight": 4,
+    "category": "regulation",
+    "parent": "imo",
+    "synonyms": ["mepc", "marine environment protection committee", "mepc.378", "mepc.378(80)"]
+  },
+  "marpol": {
+    "weight": 5,
+    "category": "regulation",
+    "parent": "imo",
+    "synonyms": ["marpol", "annex i", "annex ii", "annex iv", "annex v", "annex vi", "oil pollution", "sewage", "garbage", "air pollution"]
+  },
+  "eu-mrv": {
+    "weight": 4,
+    "category": "regulation",
+    "synonyms": ["eu mrv", "mrv regulation", "monitoring reporting verification", "thetis-mrv"]
+  },
+  "paris-mou": {
+    "weight": 4,
+    "category": "regulation",
+    "synonyms": ["paris mou", "port state control", "psc", "port state inspection"]
+  },
+  "solas": {
+    "weight": 5,
+    "category": "regulation",
+    "parent": "imo",
+    "synonyms": ["solas", "safety of life at sea", "fire control plan", "emergency equipment"]
+  },
+  "ballast-water-management": {
+    "weight": 4,
+    "category": "regulation",
+    "synonyms": ["ballast water", "bwmc", "ballast water management convention", "bwmp", "ballast water treatment system", "bwts"]
+  },
+  "polar-code": {
+    "weight": 4,
+    "category": "regulation",
+    "parent": "imo",
+    "synonyms": ["polar code", "polar water operational manual", "pwom", "polar ship certificate"]
+  },
+  "cii": {
+    "weight": 4,
+    "category": "regulation",
+    "parent": "imo",
+    "synonyms": ["cii", "carbon intensity indicator", "cii rating", "operational carbon intensity"]
+  },
+  "seemp": {
+    "weight": 3,
+    "category": "regulation",
+    "parent": "imo",
+    "synonyms": ["seemp", "ship energy efficiency management plan"]
+  },
+  "class-society": {
+    "weight": 4,
+    "category": "regulation",
+    "synonyms": ["class society", "classification society", "dnv", "lr", "abs", "rina", "bv", "classnk", "kr"]
+  },
+  "flag-state": {
+    "weight": 4,
+    "category": "regulation",
+    "synonyms": ["flag state", "flag administration", "flag registry"]
+  },
+  "green-passport": {
+    "weight": 3,
+    "category": "regulation",
+    "synonyms": ["green passport", "green pass", "ihm", "inventory of hazardous materials"]
+  },
+  "ship-recycling": {
+    "weight": 3,
+    "category": "regulation",
+    "synonyms": ["ship recycling", "hong kong convention", "eu ship recycling regulation"]
+  },
+  "biofouling": {
+    "weight": 5,
+    "category": "technical",
+    "synonyms": ["biofouling", "biofouling management", "biofouling management plan", "bfmp", "biofouling record book", "bfrb", "niche area", "sea chest", "thruster tunnel", "stabilizer pocket", "propeller shaft", "rudder pintle"]
+  },
+  "in-water-cleaning": {
+    "weight": 4,
+    "category": "technical",
+    "synonyms": ["in-water cleaning", "underwater cleaning", "diver cleaning", "rov cleaning", "debris capture", "vacuum assisted cleaning", "non-abrasive cleaning"]
+  },
+  "anti-fouling-coating": {
+    "weight": 3,
+    "category": "technical",
+    "synonyms": ["anti-fouling coating", "afs", "foul release", "silicone coating", "copper-free", "eco-friendly coating", "coating advisory"]
+  },
+  "structural-integrity": {
+    "weight": 5,
+    "category": "technical",
+    "synonyms": ["structural integrity", "hull condition", "fatigue life", "life extension", "structural audit", "thickness measurement", "ultrasonic testing", "corrosion assessment", "wastage plan", "stress concentration", "finite element analysis", "fea"]
+  },
+  "engineering-plans": {
+    "weight": 4,
+    "category": "technical",
+    "synonyms": ["engineering plans", "structural drawings", "as-built drawings", "arrangement plan", "general arrangement", "ga", "machinery arrangement", "piping isometric", "fire plan", "safety plan"]
+  },
+  "pandid": {
+    "weight": 3,
+    "category": "technical",
+    "synonyms": ["p&id", "piping and instrumentation diagram", "system manual", "pneumatic diagram", "hydraulic diagram"]
+  },
+  "electrical-load-analysis": {
+    "weight": 3,
+    "category": "technical",
+    "synonyms": ["electrical load analysis", "eab", "power balance", "generator sizing", "load study", "short circuit analysis", "selective coordination"]
+  },
+  "project-management": {
+    "weight": 4,
+    "category": "technical",
+    "synonyms": ["project management", "owner's representative", "refit supervision", "dry-docking management", "yard supervision", "technical troubleshooting", "cost control", "schedule control", "change order management", "quality control", "qc"]
+  },
+  "energy-audit": {
+    "weight": 3,
+    "category": "technical",
+    "synonyms": ["energy audit", "efficiency survey", "fuel saving", "energy saving measure", "led lighting", "variable frequency drive", "waste heat recovery", "trim optimization"]
+  },
+  "zero-emission-zone": {
+    "weight": 4,
+    "category": "technical",
+    "synonyms": ["zero emission zone", "zez", "green bay", "emission free area", "zero emission fjord", "geirangerfjord", "boka kotorska"]
+  },
+  "pre-purchase-survey": {
+    "weight": 4,
+    "category": "operation",
+    "synonyms": ["pre-purchase survey", "buyer's survey", "condition survey", "second hand yacht survey"]
+  },
+  "damage-survey": {
+    "weight": 4,
+    "category": "operation",
+    "synonyms": ["damage survey", "hull damage", "collision damage", "grounding damage", "fire damage", "machinery damage", "repair cost estimation"]
+  },
+  "refit": {
+    "weight": 4,
+    "category": "operation",
+    "synonyms": ["refit", "refit supervision", "retrofit", "conversion", "modernization", "upgrade"]
+  },
+  "dry-docking": {
+    "weight": 4,
+    "category": "operation",
+    "synonyms": ["dry-docking", "dry dock", "floating dock", "block arrangement", "underwater ship repair", "docking survey"]
+  },
+  "hull-insurance": {
+    "weight": 3,
+    "category": "operation",
+    "synonyms": ["hull insurance", "marine insurance", "p&i", "protection and indemnity", "insurance valuation"]
+  },
+  "adriatic-sea": {
+    "weight": 3,
+    "category": "geography",
+    "synonyms": ["adriatic", "adriatic sea", "croatia", "montenegro", "albania", "slovenia", "tivat", "kotor", "bar", "budva"]
+  },
+  "mediterranean": {
+    "weight": 3,
+    "category": "geography",
+    "synonyms": ["mediterranean", "med", "monaco", "french riviera", "sardinia", "corsica", "sicily", "malta", "greece", "turkey", "spain"]
+  },
+  "superyacht": {
+    "weight": 4,
+    "category": "vessel_type",
+    "synonyms": ["superyacht", "megayacht", "motor yacht", "sailing yacht", "luxury yacht", "explorer yacht", "expedition yacht", "refit yacht", "classic yacht"]
+  },
+  "commercial-vessel": {
+    "weight": 4,
+    "category": "vessel_type",
+    "synonyms": ["commercial vessel", "cargo ship", "bulk carrier", "tanker", "container ship", "roro", "passenger ship", "ferry", "cruise ship"]
+  },
+  "fishing-vessel": {
+    "weight": 3,
+    "category": "vessel_type",
+    "synonyms": ["fishing boat", "fishing vessel", "trawler", "longliner", "purse seiner"]
+  }
+}
