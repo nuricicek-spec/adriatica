@@ -1,94 +1,18 @@
-/* ===== LOCAL FONTS ===== */
-/* Manrope */
+/* ===== LOCAL FONTS (VARIABLE - TEK DOSYADA TÜM KALINLIKLAR) ===== */
 @font-face {
-  font-family: "Manrope";
+  font-family: 'Manrope';
   font-style: normal;
-  font-weight: 200;
+  font-weight: 200 800; /* 200 ile 800 arası tüm ağırlıkları kapsar */
   font-display: swap;
-  src: url("/fonts/manrope-200.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Manrope";
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: url("/fonts/manrope-300.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Manrope";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/manrope-400.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Manrope";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("/fonts/manrope-500.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Manrope";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("/fonts/manrope-600.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Manrope";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/manrope-700.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Manrope";
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url("/fonts/manrope-800.woff2") format("woff2");
+  src: url('/fonts/manrope.woff2') format('woff2');
 }
 
-/* Cinzel */
 @font-face {
-  font-family: "Cinzel";
+  font-family: 'Cinzel';
   font-style: normal;
-  font-weight: 400 900;
+  font-weight: 400 900; /* 400 ile 900 arası tüm ağırlıkları kapsar */
   font-display: swap;
-  src: url("/fonts/cinzel.woff2") format("woff2");
-}
-
-/* Inter */
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/inter-v20-latin-regular.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("/fonts/inter-v20-latin-500.woff2") format("woff2");
-}
-
-/* Plus Jakarta Sans */
-@font-face {
-  font-family: "Plus Jakarta Sans";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/plus-jakarta-sans-v12-latin-regular.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Plus Jakarta Sans";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("/fonts/plus-jakarta-sans-v12-latin-500.woff2") format("woff2");
+  src: url('/fonts/cinzel.woff2') format('woff2');
 }
 
 @tailwind base;
