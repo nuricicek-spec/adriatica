@@ -5,10 +5,25 @@ import { Share2, Download, Star, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { useState, useEffect, useMemo, useCallback } from "react";
-import { RelatedContent } from "@/components/RelatedContent";
+import { useState, useEffect, useMemo, useCallback, lazy, Suspense } from "react";
 import { allContent } from "@/lib/contentIndex";
 import DOMPurify from "dompurify";
+
+// ============================================================
+// Build-time constants (optimization)
+// ============================================================
+const SORTED_INSIGHTS = [...insights].sort((a, b) => {
+  const da = Date.parse(a.date) || 0;
+  const db = Date.parse(b.date) || 0;
+  return db - da;
+});
+
+// Lazy load RelatedContent (below the fold)
+const RelatedContent = lazy(() =>
+  import("@/components/RelatedContent").then((module) => ({
+    default: module.RelatedContent,
+  }))
+);
 
 // ============================================================
 // SSR-safe utilities
@@ -112,16 +127,10 @@ export default function InsightDetail() {
     return isNaN(ts) ? null : new Date(ts);
   }, [insight.date]);
 
+  // Optimized: use pre-sorted insights
   const latestInsights = useMemo(() => {
-    return [...insights]
-      .filter((i) => i.slug !== slug)
-      .sort((a, b) => {
-        const da = Date.parse(a.date) || 0;
-        const db = Date.parse(b.date) || 0;
-        return db - da;
-      })
-      .slice(0, 3);
-  }, [slug, insights]);
+    return SORTED_INSIGHTS.filter((i) => i.slug !== slug).slice(0, 3);
+  }, [slug]);
 
   const canonicalUrl = normalizeUrl(`${BASE_URL}/insights/${insight.slug}`);
 
@@ -182,19 +191,22 @@ export default function InsightDetail() {
     keywords: tagsKeywords,
   };
 
+  const lcpImage = `${BASE_URL}/og-image.png`;
+
   return (
     <>
       <Helmet>
         <title>{insight.title} | Adriatica D.O.O.</title>
         <meta name="description" content={insight.description} />
         <link rel="canonical" href={canonicalUrl} />
+        <link rel="preload" as="image" href={lcpImage} fetchPriority="high" />
         <meta property="og:title" content={insight.title} />
         <meta property="og:description" content={insight.description} />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:type" content="article" />
         <meta property="og:site_name" content="Adriatica D.O.O." />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta property="og:image" content={`${BASE_URL}/og-image.png`} />
+        <meta property="og:image" content={lcpImage} />
         <meta property="article:published_time" content={insight.date} />
         <meta property="article:modified_time" content={insight.date} />
         {tagsKeywords && <meta name="keywords" content={tagsKeywords} />}
@@ -288,7 +300,9 @@ export default function InsightDetail() {
                 </div>
               )}
               {currentItem ? (
-                <RelatedContent currentItem={currentItem} />
+                <Suspense fallback={<div className="h-32 animate-pulse bg-gray-100 rounded mt-12" />}>
+                  <RelatedContent currentItem={currentItem} />
+                </Suspense>
               ) : (
                 <FallbackLatestInsights currentSlug={insight.slug} />
               )}
@@ -354,20 +368,11 @@ export default function InsightDetail() {
   );
 }
 
-// ============================================================
-// Fallback Component
-// ============================================================
+// Fallback component (optimized with pre-sorted insights)
 function FallbackLatestInsights({ currentSlug }: { currentSlug: string }) {
   const fallbackInsights = useMemo(() => {
-    return [...insights]
-      .filter((i) => i.slug !== currentSlug)
-      .sort((a, b) => {
-        const da = Date.parse(a.date) || 0;
-        const db = Date.parse(b.date) || 0;
-        return db - da;
-      })
-      .slice(0, 3);
-  }, [currentSlug, insights]);
+    return SORTED_INSIGHTS.filter((i) => i.slug !== currentSlug).slice(0, 3);
+  }, [currentSlug]);
 
   if (fallbackInsights.length === 0) return null;
 

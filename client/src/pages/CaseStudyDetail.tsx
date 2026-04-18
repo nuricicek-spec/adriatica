@@ -4,19 +4,23 @@ import { Helmet } from "react-helmet-async";
 import { Link } from "wouter";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { RelatedContent } from "@/components/RelatedContent";
 import { allContent } from "@/lib/contentIndex";
-import { useMemo } from "react";
+import { useMemo, lazy, Suspense } from "react";
+
+// Lazy load RelatedContent (below the fold) - named export wrapper
+const RelatedContent = lazy(() =>
+  import("@/components/RelatedContent").then((module) => ({
+    default: module.RelatedContent,
+  }))
+);
 
 // ============================================================
 // SSR-safe utilities
 // ============================================================
 const BASE_URL = import.meta.env.VITE_SITE_URL || "https://adriatica.pages.dev";
 
-// Normalize URL (remove trailing slash)
 const normalizeUrl = (url: string) => url.replace(/\/$/, "");
 
-// Build-time content map for O(1) lookup
 const contentMap = new Map<string, (typeof allContent)[number]>(
   allContent.map((item) => [item.slug, item])
 );
@@ -28,7 +32,6 @@ export default function CaseStudyDetail() {
   const [, params] = useRoute("/case-studies/:slug");
   const slug = params?.slug;
 
-  // Early return if no slug
   if (!slug) {
     return (
       <div className="min-h-screen bg-background">
@@ -67,12 +70,10 @@ export default function CaseStudyDetail() {
     );
   }
 
-  // O(1) lookup for related content
   const currentItem = useMemo(() => {
     return contentMap.get(caseStudy.slug);
   }, [caseStudy.slug]);
 
-  // Fallback if currentItem not found (should not happen)
   if (!currentItem) {
     return (
       <div className="min-h-screen bg-background">
@@ -92,22 +93,19 @@ export default function CaseStudyDetail() {
     );
   }
 
-  // SEO / Schema helpers
   const canonicalUrl = normalizeUrl(`${BASE_URL}/case-studies/${caseStudy.slug}`);
-  
-  // Safe description from challenge field
   const description = caseStudy.challenge?.substring(0, 160) || "";
-  
   const tagsKeywords = currentItem.tags?.map((tag) => tag.name).join(", ") || "";
+  const publishedDate = (caseStudy as any).date;
+  const lcpImage = `${BASE_URL}/og-image.png`;
 
-  // Case Study Schema (Article variant)
   const caseStudySchema = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: caseStudy.title,
     description: description,
-    datePublished: (caseStudy as any).date,      // Optional: add if exists
-    dateModified: (caseStudy as any).date,       // Optional: add if exists
+    datePublished: publishedDate,
+    dateModified: publishedDate,
     author: { "@type": "Organization", name: "Adriatica D.O.O." },
     publisher: {
       "@type": "Organization",
@@ -118,26 +116,22 @@ export default function CaseStudyDetail() {
     keywords: tagsKeywords,
   };
 
-  // Optional date for meta tags
-  const publishedDate = (caseStudy as any).date;
-
   return (
     <>
       <Helmet>
         <title>{caseStudy.title} | Adriatica D.O.O. Case Studies</title>
         <meta name="description" content={description} />
         <link rel="canonical" href={canonicalUrl} />
+        <link rel="preload" as="image" href={lcpImage} fetchPriority="high" />
 
-        {/* Open Graph / Social Media */}
         <meta property="og:title" content={caseStudy.title} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:type" content="article" />
         <meta property="og:site_name" content="Adriatica D.O.O." />
-        <meta property="og:image" content={`${BASE_URL}/og-image.png`} />
+        <meta property="og:image" content={lcpImage} />
         <meta name="twitter:card" content="summary_large_image" />
 
-        {/* Optional published/modified times */}
         {publishedDate && (
           <>
             <meta property="article:published_time" content={publishedDate} />
@@ -145,10 +139,7 @@ export default function CaseStudyDetail() {
           </>
         )}
 
-        {/* Keywords */}
         {tagsKeywords && <meta name="keywords" content={tagsKeywords} />}
-
-        {/* Schema.org */}
         <script type="application/ld+json">{JSON.stringify(caseStudySchema)}</script>
       </Helmet>
 
@@ -188,7 +179,9 @@ export default function CaseStudyDetail() {
                   <p>{caseStudy.result}</p>
                 </div>
               </div>
-              <RelatedContent currentItem={currentItem} />
+              <Suspense fallback={<div className="h-32 animate-pulse bg-gray-100 rounded mt-12" />}>
+                <RelatedContent currentItem={currentItem} />
+              </Suspense>
             </article>
             <aside className="lg:col-span-1" />
           </div>
