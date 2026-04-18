@@ -14,6 +14,9 @@
   --color-sand-100: 40 20% 97%;   /* Off-white/sand for contrast */
   --color-sand-200: 40 15% 94%;
 
+  /* Gold Accent */
+  --gold: 43 66% 52%; /* #D4AF37 */
+
   /* Shadcn/Theme mapping */
   --background: var(--color-sand-100);
   --foreground: var(--color-lapis-900);

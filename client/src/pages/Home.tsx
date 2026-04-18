@@ -31,13 +31,16 @@ export default function Home() {
   const [formStatus, setFormStatus] = useState<
     "idle" | "submitting" | "success" | "error"
   >("idle");
+  const [errorType, setErrorType] = useState<"generic" | "rate-limit" | null>(null);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormStatus("submitting");
+    setErrorType(null);
 
     const form = e.currentTarget;
     const formData = new FormData(form);
+    formData.set("_subject", "New General Inquiry from Homepage");
 
     try {
       const response = await fetch(form.action, {
@@ -51,9 +54,12 @@ export default function Home() {
         form.reset();
       } else {
         setFormStatus("error");
+        if (response.status === 429) setErrorType("rate-limit");
+        else setErrorType("generic");
       }
     } catch {
       setFormStatus("error");
+      setErrorType("generic");
     }
   };
 
@@ -194,7 +200,6 @@ export default function Home() {
               ],
             },
             sameAs: ["https://www.linkedin.com/company/adriatica-d-o-o"],
-            foundingDate: "2025",
             numberOfEmployees: {
               "@type": "QuantitativeValue",
               minValue: 1,
@@ -210,8 +215,8 @@ export default function Home() {
         {/* ── HERO ────────────────────────────────────────────────────────────── */}
         <section className="relative min-h-screen flex overflow-hidden pt-32 pb-16 md:pt-24 md:pb-24">
           <div className="absolute inset-0 z-0">
-            <div className="absolute top-0 right-0 w-2/3 h-full bg-[#1A4B7A]/5 -skew-x-12 transform origin-top" />
-            <div className="absolute bottom-0 left-0 w-1/3 h-2/3 bg-[#0B3B5C]/5 skew-x-12 transform origin-bottom" />
+            <div className="absolute top-0 right-0 w-2/3 h-full bg-[hsl(var(--color-lapis-800))]/5 -skew-x-12 transform origin-top" />
+            <div className="absolute bottom-0 left-0 w-1/3 h-2/3 bg-primary/5 skew-x-12 transform origin-bottom" />
           </div>
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
@@ -225,22 +230,22 @@ export default function Home() {
                 <p className="text-primary font-medium tracking-[0.2em] uppercase mb-4">
                   Est. 2025
                 </p>
-                <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-[#0B3B5C] leading-[1.1] mb-6 uppercase">
+                <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-primary leading-[1.1] mb-6 uppercase">
                   WISDOM IN <br />
-                  <span className="text-[#3A74A0]">ENGINEERING</span>
+                  <span className="text-secondary">ENGINEERING</span>
                 </h1>
 
-                <p className="text-sm uppercase tracking-wide text-muted-foreground mt-2">
+                <p className="text-sm uppercase tracking-wide text-foreground/75 mt-2">
                   For Superyacht Owners & Commercial Fleet Operators in the
                   Adriatic and Mediterranean
                 </p>
 
-                <p className="text-xl md:text-2xl font-bold text-[#0B3B5C] mt-4 mb-4 max-w-2xl">
+                <p className="text-xl md:text-2xl font-bold text-primary mt-4 mb-4 max-w-2xl">
                   Engineering-grade outputs for compliance, documentation, and
                   vessel performance.
                 </p>
 
-                <p className="text-base text-muted-foreground mb-6 max-w-xl">
+                <p className="text-base text-foreground/75 mb-6 max-w-xl">
                   We deliver technical plans, documentation, and assessments —
                   enabling informed decisions, regulatory readiness, and
                   operational clarity.
@@ -252,7 +257,7 @@ export default function Home() {
                       IMO 2026 Priority
                     </span>
                   </div>
-                  <p className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-xl mx-auto lg:mx-0">
+                  <p className="text-base md:text-lg lg:text-xl text-foreground/75 leading-relaxed max-w-xl mx-auto lg:mx-0">
                     <a
                       href="/news"
                       className="hover:underline hover:text-primary transition-colors"
@@ -268,13 +273,13 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                   <Link
                     href="/request-consultation"
-                    className="px-8 py-4 bg-[#D4AF37] text-black font-medium rounded-sm shadow-lg shadow-[#D4AF37]/20 hover:bg-[#C9A961] transition-all duration-300 uppercase tracking-wide text-sm text-center"
+                    className="px-8 py-4 bg-gold text-black font-medium rounded-sm shadow-lg shadow-[#D4AF37]/20 hover:bg-[#C9A961] transition-all duration-300 uppercase tracking-wide text-sm text-center"
                   >
                     Request Technical Assessment
                   </Link>
                   <button
                     onClick={scrollToServices}
-                    className="px-8 py-4 bg-transparent border border-[#0B3B5C] text-[#0B3B5C] font-medium rounded-sm hover:bg-[#0B3B5C]/5 transition-all duration-300 uppercase tracking-wide text-sm"
+                    className="px-8 py-4 bg-transparent border border-primary text-primary font-medium rounded-sm hover:bg-primary/5 transition-all duration-300 uppercase tracking-wide text-sm"
                   >
                     Explore Services
                   </button>
@@ -288,7 +293,7 @@ export default function Home() {
                 className="relative flex justify-center items-center mt-8 lg:mt-0"
               >
                 <div className="relative w-full max-w-[200px] sm:max-w-[280px] lg:max-w-md aspect-square flex items-center justify-center">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-[#0B3B5C]/10 to-transparent rounded-full blur-3xl" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-3xl" />
                   <img
                     src="/logo.svg"
                     alt="Adriatica D.O.O. Symbol"
@@ -315,7 +320,7 @@ export default function Home() {
         </section>
 
         {/* ── TRUST STRIP ─────────────────────────────────────────────────────── */}
-        <section className="py-4 bg-[#0B3B5C] border-y border-white/10">
+        <section className="py-4 bg-primary border-y border-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-2 text-sm text-white/85">
               <span className="flex items-center gap-2">
@@ -353,10 +358,10 @@ export default function Home() {
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-[#0B3B5C] mb-3">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-3">
                 Why Choose Adriatica
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto mb-2">
+              <p className="text-foreground/75 max-w-2xl mx-auto mb-2">
                 Engineering management that delivers compliance, efficiency, and
                 peace of mind.
               </p>
@@ -367,30 +372,30 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center p-6 border-l-2 border-primary/20">
                 <ShieldCheck className="h-12 w-12 text-primary mx-auto mb-4" />
-                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-2">
+                <h3 className="font-display text-xl font-bold text-primary mb-2">
                   Technical Excellence & Compliance
                 </h3>
-                <p className="text-muted-foreground">
+                <p className="text-foreground/75">
                   Your projects are managed in full alignment with IMO, MARPOL,
                   and IACS standards – so you get zero PSC risk.
                 </p>
               </div>
               <div className="text-center p-6 border-l-2 border-primary/20">
                 <Gauge className="h-12 w-12 text-primary mx-auto mb-4" />
-                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-2">
+                <h3 className="font-display text-xl font-bold text-primary mb-2">
                   Operational Efficiency
                 </h3>
-                <p className="text-muted-foreground">
+                <p className="text-foreground/75">
                   Smart planning and digital documentation cut dry‑dock time and
                   improve fuel performance – saving you time and money.
                 </p>
               </div>
               <div className="text-center p-6 border-l-2 border-primary/20">
                 <Handshake className="h-12 w-12 text-primary mx-auto mb-4" />
-                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-2">
+                <h3 className="font-display text-xl font-bold text-primary mb-2">
                   Owner's Trusted Representative
                 </h3>
-                <p className="text-muted-foreground">
+                <p className="text-foreground/75">
                   We act as your technical eyes and ears in shipyards, ensuring
                   quality control and budget adherence – so you can focus on
                   operations.
@@ -404,10 +409,10 @@ export default function Home() {
         <section className="py-20 bg-neutral-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-[#0B3B5C] mb-3">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-3">
                 How We Work
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto mb-2">
+              <p className="text-foreground/75 max-w-2xl mx-auto mb-2">
                 A structured approach to deliver clarity, compliance, and
                 results.
               </p>
@@ -419,40 +424,40 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               <div className="text-center p-6 border-l-2 border-primary/20">
                 <Clipboard className="h-12 w-12 text-primary mx-auto mb-4" />
-                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-2">
+                <h3 className="font-display text-xl font-bold text-primary mb-2">
                   1. Brief & Information
                 </h3>
-                <p className="text-muted-foreground">
+                <p className="text-foreground/75">
                   You share vessel details, operational profile, and specific
                   concerns.
                 </p>
               </div>
               <div className="text-center p-6 border-l-2 border-primary/20">
                 <Search className="h-12 w-12 text-primary mx-auto mb-4" />
-                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-2">
+                <h3 className="font-display text-xl font-bold text-primary mb-2">
                   2. Analysis & Planning
                 </h3>
-                <p className="text-muted-foreground">
+                <p className="text-foreground/75">
                   We perform technical assessment, risk identification, and
                   scope definition.
                 </p>
               </div>
               <div className="text-center p-6 border-l-2 border-primary/20">
                 <Wrench className="h-12 w-12 text-primary mx-auto mb-4" />
-                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-2">
+                <h3 className="font-display text-xl font-bold text-primary mb-2">
                   3. Execution & Supervision
                 </h3>
-                <p className="text-muted-foreground">
+                <p className="text-foreground/75">
                   We handle engineering oversight, contractor coordination, and
                   quality control.
                 </p>
               </div>
               <div className="text-center p-6 border-l-2 border-primary/20">
                 <FileText className="h-12 w-12 text-primary mx-auto mb-4" />
-                <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-2">
+                <h3 className="font-display text-xl font-bold text-primary mb-2">
                   4. Documentation & Handover
                 </h3>
-                <p className="text-muted-foreground">
+                <p className="text-foreground/75">
                   You receive complete records, audit‑ready reports, and
                   as‑built documentation.
                 </p>
@@ -462,7 +467,6 @@ export default function Home() {
         </section>
 
         {/* ── CORE COMPETENCIES ───────────────────────────────────────────────── */}
-
         <section
           id="core-competencies"
           className="py-24 md:py-32 bg-white relative"
@@ -563,9 +567,9 @@ export default function Home() {
         </section>
 
         {/* ── MID-PAGE CTA ────────────────────────────────────────────────────── */}
-        <section className="relative py-20 bg-[#0B3B5C] overflow-hidden">
+        <section className="relative py-20 bg-primary overflow-hidden">
           <div className="absolute inset-0 z-0 pointer-events-none">
-            <div className="absolute top-0 right-0 w-2/3 h-full bg-[#1A4B7A]/20 -skew-x-12 transform origin-top" />
+            <div className="absolute top-0 right-0 w-2/3 h-full bg-[hsl(var(--color-lapis-800))]/20 -skew-x-12 transform origin-top" />
             <div className="absolute inset-0 opacity-10">
               <svg
                 className="h-full w-full"
@@ -589,7 +593,7 @@ export default function Home() {
             </p>
             <Link
               href="/request-consultation"
-              className="inline-block bg-[#D4AF37] text-black font-medium px-8 py-4 rounded-sm text-sm uppercase tracking-wide shadow-lg hover:bg-[#C9A961] transition-all duration-300"
+              className="inline-block bg-gold text-black font-medium px-8 py-4 rounded-sm text-sm uppercase tracking-wide shadow-lg hover:bg-[#C9A961] transition-all duration-300"
             >
               Submit Project Inquiry
             </Link>
@@ -601,10 +605,10 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <h2 className="font-display text-3xl md:text-4xl font-bold text-[#0B3B5C] mb-4">
+                <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-4">
                   Operational Region
                 </h2>
-                <p className="text-lg text-muted-foreground leading-relaxed">
+                <p className="text-lg text-foreground/75 leading-relaxed">
                   You benefit from our engineering management and technical
                   advisory services across a wide range of vessels –
                   superyachts, commercial vessels, and fishing boats – operating
@@ -627,9 +631,9 @@ export default function Home() {
         </section>
 
         {/* ── RECENT INSIGHTS ─────────────────────────────────────────────────── */}
-        <section className="py-24 bg-[#0B3B5C] relative overflow-hidden">
+        <section className="py-24 bg-primary relative overflow-hidden">
           <div className="absolute inset-0 z-0 pointer-events-none">
-            <div className="absolute top-0 left-0 w-1/2 h-full bg-[#1A4B7A]/10 skew-x-12 transform origin-top" />
+            <div className="absolute top-0 left-0 w-1/2 h-full bg-[hsl(var(--color-lapis-800))]/10 skew-x-12 transform origin-top" />
             <div className="absolute inset-0 opacity-5">
               <svg
                 className="h-full w-full"
@@ -677,10 +681,10 @@ export default function Home() {
           className="py-24 bg-neutral-50 border-t border-border/10"
         >
           <div className="max-w-4xl mx-auto px-4 text-center">
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-[#0B3B5C] mb-6">
+            <h2 className="font-display text-4xl md:text-5xl font-bold text-primary mb-6">
               Begin Your Voyage
             </h2>
-            <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto">
+            <p className="text-lg text-foreground/75 mb-10 max-w-2xl mx-auto">
               Share your vessel’s technical challenge. Our principal engineers
               will review and respond within 24 hours. Accepting commissions for
               Q2 2026.
@@ -691,7 +695,7 @@ export default function Home() {
                 <p className="text-green-800 text-lg font-medium mb-2">
                   Thank you!
                 </p>
-                <p className="text-muted-foreground">
+                <p className="text-foreground/75">
                   Your consultation request has been received. We'll be in touch
                   shortly.
                 </p>
@@ -709,14 +713,19 @@ export default function Home() {
                 onSubmit={handleSubmit}
                 className="max-w-md mx-auto space-y-4 text-left"
               >
+                {/* Honeypot */}
+                <div className="hidden" aria-hidden="true">
+                  <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" />
+                </div>
+
                 <div>
-                  <label htmlFor="email" className="sr-only">
+                  <label htmlFor="home-email" className="sr-only">
                     Email address
                   </label>
                   <input
                     type="email"
                     name="email"
-                    id="email"
+                    id="home-email"
                     placeholder="Enter your email address"
                     className="w-full px-6 py-4 bg-white border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
                     required
@@ -726,18 +735,34 @@ export default function Home() {
                 <button
                   type="submit"
                   disabled={formStatus === "submitting"}
-                  className="w-full py-4 bg-[#0B3B5C] text-white font-medium hover:bg-[#1A4B7A] transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-4 bg-primary text-white font-medium hover:bg-[hsl(var(--color-lapis-800))] transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {formStatus === "submitting"
                     ? "Sending..."
                     : "Request Consultation"}
                 </button>
+                
                 {formStatus === "error" && (
-                  <p className="text-red-600 text-sm text-center mt-2">
-                    Something went wrong. Please try again or contact us
-                    directly.
-                  </p>
+                  <div className="text-red-600 text-sm text-center mt-2" role="alert">
+                    {errorType === "rate-limit" ? (
+                      <span>Too many requests. Please wait a moment and try again.</span>
+                    ) : (
+                      <>
+                        Something went wrong. Please try again or contact us directly at{" "}
+                        <a href="mailto:info@adriaticadoo.com" className="underline font-medium">
+                          info@adriaticadoo.com
+                        </a>.
+                      </>
+                    )}
+                  </div>
                 )}
+
+                <p className="text-xs text-center text-muted-foreground pt-2">
+                  By submitting, you agree to our{" "}
+                  <a href="/privacy-policy" className="text-primary hover:underline">
+                    Privacy Policy
+                  </a>.
+                </p>
               </form>
             )}
           </div>
