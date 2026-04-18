@@ -14,6 +14,8 @@ export const zeroEmissionZone: Insight = {
       <img src="/images/insights/boka-kotorska-map.jpg" 
            alt="Map of Boka Kotorska Bay, Montenegro" 
            class="rounded-lg shadow-md w-full"
+           width="800"
+           height="600"
            loading="lazy">
       <figcaption class="text-sm text-muted-foreground mt-2 text-center">
         Boka Kotorska (Bay of Kotor), a UNESCO World Heritage site, remains vulnerable to maritime emissions.
@@ -38,37 +40,37 @@ export const zeroEmissionZone: Insight = {
             <th class="border border-border p-3 text-left font-medium">Restriction Milestones</th>
             <th class="border border-border p-3 text-left font-medium">Primary Rationale &amp; Policy</th>
             <th class="border border-border p-3 text-left font-medium">Legal Basis / Instrument</th>
-           </tr>
+          </tr>
         </thead>
         <tbody>
-           <tr>
+          <tr>
             <td class="border border-border p-3">Boka Kotorska (Montenegro)</td>
             <td class="border border-border p-3">1979 [1]</td>
             <td class="border border-border p-3">Undefined</td>
             <td class="border border-border p-3">No structured motor or emission restrictions currently in place.</td>
             <td class="border border-border p-3">None (No specific instrument)</td>
-           </tr>
-           <tr>
+          </tr>
+          <tr>
             <td class="border border-border p-3">Gulf of Girolata (France)</td>
             <td class="border border-border p-3">1983 [2]</td>
             <td class="border border-border p-3">Late 1990s</td>
             <td class="border border-border p-3">Rigid mooring and motor restrictions to protect marine reserves.</td>
             <td class="border border-border p-3">National Park Regulations</td>
-           </tr>
-           <tr>
+          </tr>
+          <tr>
             <td class="border border-border p-3">Cinque Terre (Italy)</td>
             <td class="border border-border p-3">1997 [3]</td>
             <td class="border border-border p-3">2002</td>
             <td class="border border-border p-3">Marine Protected Area (MPA) designation; strict transit control.</td>
             <td class="border border-border p-3">MPA Decree / Local Ordinance</td>
-           </tr>
-           <tr>
+          </tr>
+          <tr>
             <td class="border border-border p-3">Geirangerfjord (Norway)</td>
             <td class="border border-border p-3">2005 [4]</td>
             <td class="border border-border p-3">2018 / 2026</td>
             <td class="border border-border p-3">Mandatory zero‑emission requirement for tourist vessels, with entry into force in 2026.</td>
             <td class="border border-border p-3">National Zero-Emission Regulation</td>
-           </tr>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -92,6 +94,8 @@ export const zeroEmissionZone: Insight = {
       <img src="/images/insights/roadmap-zero-emission-boka.png" 
            alt="Phased roadmap for a Zero-Emission Zone in Boka Kotorska" 
            class="rounded-lg shadow-md w-full"
+           width="1000"
+           height="400"
            loading="lazy">
       <figcaption class="text-sm text-muted-foreground mt-2 text-center">
         A 3‑phase roadmap to a fully protected Boka Kotorska Bay.
