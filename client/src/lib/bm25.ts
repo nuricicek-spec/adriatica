@@ -8,6 +8,8 @@ export interface BM25Options {
   b?: number;
 }
 
+import { tokenize } from './extractTags';   // ← EKLE
+
 class BM25 {
   private docs: BM25Document[];
   private idf: Map<string, number>;
@@ -23,8 +25,9 @@ class BM25 {
     const N = docs.length;
     const docLengths: number[] = [];
     const termDocFreq = new Map<string, number>();
+
     const tokenizedDocs = docs.map(doc => {
-      const tokens = this.tokenize(doc.text);
+      const tokens = tokenize(doc.text);        // ← extractTags'ten ortak tokenize
       docLengths.push(tokens.length);
       const uniqueTerms = new Set(tokens);
       for (const term of uniqueTerms) {
@@ -51,15 +54,8 @@ class BM25 {
     });
   }
 
-  private tokenize(text: string): string[] {
-    let processed = text.toLowerCase();
-    processed = processed.replace(/([A-Z]{2,})\.?\s*(\d+)/g, '$1$2');
-    processed = processed.replace(/[^a-z0-9.\-()\s]/g, ' ');
-    return processed.split(/\s+/).filter(t => t.length > 1);
-  }
-
   score(query: string): Map<string, number> {
-    const queryTokens = this.tokenize(query);
+    const queryTokens = tokenize(query);        // ← ortak tokenize
     const queryFreq = new Map<string, number>();
     for (const t of queryTokens) {
       queryFreq.set(t, (queryFreq.get(t) || 0) + 1);
