@@ -27,12 +27,14 @@ export default function InsightDetail() {
     return (
       <div className="min-h-screen bg-background">
         <Navigation />
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-12 md:pt-40">
         <div className="max-w-7xl mx-auto px-4 pt-32 pb-12 text-center">
           <h1 className="text-2xl font-bold mb-4">Article not found</h1>
           <Link href="/insights" className="text-primary underline">
             ← All insights
           </Link>
         </div>
+        </main>
         <Footer />
       </div>
     );

@@ -11,7 +11,7 @@ export const zeroEmissionZone: Insight = {
     "Why Boka Kotorska lacks a zero-emission zone despite UNESCO status. Strategic roadmap for 2026-2030, EU-backed Blue Economy, and comparative analysis with Geirangerfjord.",
   contentHtml: `
     <figure class="my-8">
-      <img src="/images/insights/boka-kotorska-map.jpg" 
+      <img src="/images/insights/boka-kotorska-map.webp" 
            alt="Map of Boka Kotorska Bay, Montenegro" 
            class="rounded-lg shadow-md w-full"
            width="800"
@@ -92,7 +92,7 @@ export const zeroEmissionZone: Insight = {
     </ol>
 
     <figure class="my-8">
-      <img src="/images/insights/roadmap-zero-emission-boka.png" 
+      <img src="/images/insights/roadmap-zero-emission-boka.webp" 
            alt="Phased roadmap for a Zero-Emission Zone in Boka Kotorska" 
            class="rounded-lg shadow-md w-full"
            width="1000"
