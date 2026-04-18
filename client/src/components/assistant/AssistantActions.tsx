@@ -5,7 +5,7 @@ import { useAssistant } from "../../hooks/useAssistant";
 
 export function AssistantActions() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const fileInputRef            = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const { attachment, setAttachment, clearAttachment } = useAssistant();
 
   const handleFileSelect = (e: ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +40,7 @@ export function AssistantActions() {
       )}
 
       <button
-        onClick={() => setMenuOpen(p => !p)}
+        onClick={() => setMenuOpen((p) => !p)}
         aria-label="More options"
         className="p-2 rounded-full text-[#0B3B5C]/50 hover:text-[#0B3B5C] hover:bg-neutral-100 transition-colors"
       >
@@ -62,7 +62,9 @@ export function AssistantActions() {
               Attach image or file
             </button>
             <button
-              onClick={() => { window.location.href = "/request-consultation"; }}
+              onClick={() => {
+                window.location.href = "/request-consultation";
+              }}
               className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-neutral-50 text-[#0B3B5C] transition-colors"
             >
               <FileText size={15} className="text-[#3A74A0]" />

@@ -1,18 +1,14 @@
-import {
-  require_react_dom
-} from "./chunk-ASJ5NUHS.js";
-import {
-  require_jsx_runtime
-} from "./chunk-YM5YI6MP.js";
-import {
-  require_react
-} from "./chunk-IL34JRKV.js";
-import {
-  __toESM
-} from "./chunk-4MBMRILA.js";
+import { require_react_dom } from "./chunk-ASJ5NUHS.js";
+import { require_jsx_runtime } from "./chunk-YM5YI6MP.js";
+import { require_react } from "./chunk-IL34JRKV.js";
+import { __toESM } from "./chunk-4MBMRILA.js";
 
 // node_modules/@radix-ui/primitive/dist/index.mjs
-function composeEventHandlers(originalEventHandler, ourEventHandler, { checkForDefaultPrevented = true } = {}) {
+function composeEventHandlers(
+  originalEventHandler,
+  ourEventHandler,
+  { checkForDefaultPrevented = true } = {},
+) {
   return function handleEvent(event) {
     originalEventHandler?.(event);
     if (checkForDefaultPrevented === false || !event.defaultPrevented) {
@@ -79,7 +75,9 @@ function createContextScope(scopeName, createContextScopeDeps = []) {
       const context = React2.useContext(Context);
       if (context) return context;
       if (defaultContext !== void 0) return defaultContext;
-      throw new Error(`\`${consumerName}\` must be used within \`${rootComponentName}\``);
+      throw new Error(
+        `\`${consumerName}\` must be used within \`${rootComponentName}\``,
+      );
     }
     return [Provider, useContext22];
   }
@@ -90,13 +88,18 @@ function createContextScope(scopeName, createContextScopeDeps = []) {
     return function useScope(scope) {
       const contexts = scope?.[scopeName] || scopeContexts;
       return React2.useMemo(
-        () => ({ [`__scope${scopeName}`]: { ...scope, [scopeName]: contexts } }),
-        [scope, contexts]
+        () => ({
+          [`__scope${scopeName}`]: { ...scope, [scopeName]: contexts },
+        }),
+        [scope, contexts],
       );
     };
   };
   createScope.scopeName = scopeName;
-  return [createContext3, composeContextScopes(createScope, ...createContextScopeDeps)];
+  return [
+    createContext3,
+    composeContextScopes(createScope, ...createContextScopeDeps),
+  ];
 }
 function composeContextScopes(...scopes) {
   const baseScope = scopes[0];
@@ -104,15 +107,21 @@ function composeContextScopes(...scopes) {
   const createScope = () => {
     const scopeHooks = scopes.map((createScope2) => ({
       useScope: createScope2(),
-      scopeName: createScope2.scopeName
+      scopeName: createScope2.scopeName,
     }));
     return function useComposedScopes(overrideScopes) {
-      const nextScopes = scopeHooks.reduce((nextScopes2, { useScope, scopeName }) => {
-        const scopeProps = useScope(overrideScopes);
-        const currentScope = scopeProps[`__scope${scopeName}`];
-        return { ...nextScopes2, ...currentScope };
-      }, {});
-      return React2.useMemo(() => ({ [`__scope${baseScope.scopeName}`]: nextScopes }), [nextScopes]);
+      const nextScopes = scopeHooks.reduce(
+        (nextScopes2, { useScope, scopeName }) => {
+          const scopeProps = useScope(overrideScopes);
+          const currentScope = scopeProps[`__scope${scopeName}`];
+          return { ...nextScopes2, ...currentScope };
+        },
+        {},
+      );
+      return React2.useMemo(
+        () => ({ [`__scope${baseScope.scopeName}`]: nextScopes }),
+        [nextScopes],
+      );
     };
   };
   createScope.scopeName = baseScope.scopeName;
@@ -132,15 +141,28 @@ function createSlot(ownerName) {
       const newElement = slottable.props.children;
       const newChildren = childrenArray.map((child) => {
         if (child === slottable) {
-          if (React3.Children.count(newElement) > 1) return React3.Children.only(null);
-          return React3.isValidElement(newElement) ? newElement.props.children : null;
+          if (React3.Children.count(newElement) > 1)
+            return React3.Children.only(null);
+          return React3.isValidElement(newElement)
+            ? newElement.props.children
+            : null;
         } else {
           return child;
         }
       });
-      return (0, import_jsx_runtime2.jsx)(SlotClone, { ...slotProps, ref: forwardedRef, children: React3.isValidElement(newElement) ? React3.cloneElement(newElement, void 0, newChildren) : null });
+      return (0, import_jsx_runtime2.jsx)(SlotClone, {
+        ...slotProps,
+        ref: forwardedRef,
+        children: React3.isValidElement(newElement)
+          ? React3.cloneElement(newElement, void 0, newChildren)
+          : null,
+      });
     }
-    return (0, import_jsx_runtime2.jsx)(SlotClone, { ...slotProps, ref: forwardedRef, children });
+    return (0, import_jsx_runtime2.jsx)(SlotClone, {
+      ...slotProps,
+      ref: forwardedRef,
+      children,
+    });
   });
   Slot2.displayName = `${ownerName}.Slot`;
   return Slot2;
@@ -153,11 +175,15 @@ function createSlotClone(ownerName) {
       const childrenRef = getElementRef(children);
       const props2 = mergeProps(slotProps, children.props);
       if (children.type !== React3.Fragment) {
-        props2.ref = forwardedRef ? composeRefs(forwardedRef, childrenRef) : childrenRef;
+        props2.ref = forwardedRef
+          ? composeRefs(forwardedRef, childrenRef)
+          : childrenRef;
       }
       return React3.cloneElement(children, props2);
     }
-    return React3.Children.count(children) > 1 ? React3.Children.only(null) : null;
+    return React3.Children.count(children) > 1
+      ? React3.Children.only(null)
+      : null;
   });
   SlotClone.displayName = `${ownerName}.SlotClone`;
   return SlotClone;
@@ -165,7 +191,9 @@ function createSlotClone(ownerName) {
 var SLOTTABLE_IDENTIFIER = /* @__PURE__ */ Symbol("radix.slottable");
 function createSlottable(ownerName) {
   const Slottable2 = ({ children }) => {
-    return (0, import_jsx_runtime2.jsx)(import_jsx_runtime2.Fragment, { children });
+    return (0, import_jsx_runtime2.jsx)(import_jsx_runtime2.Fragment, {
+      children,
+    });
   };
   Slottable2.displayName = `${ownerName}.Slottable`;
   Slottable2.__radixId = SLOTTABLE_IDENTIFIER;
@@ -173,7 +201,12 @@ function createSlottable(ownerName) {
 }
 var Slottable = createSlottable("Slottable");
 function isSlottable(child) {
-  return React3.isValidElement(child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER;
+  return (
+    React3.isValidElement(child) &&
+    typeof child.type === "function" &&
+    "__radixId" in child.type &&
+    child.type.__radixId === SLOTTABLE_IDENTIFIER
+  );
 }
 function mergeProps(slotProps, childProps) {
   const overrideProps = { ...childProps };
@@ -193,7 +226,9 @@ function mergeProps(slotProps, childProps) {
     } else if (propName === "style") {
       overrideProps[propName] = { ...slotPropValue, ...childPropValue };
     } else if (propName === "className") {
-      overrideProps[propName] = [slotPropValue, childPropValue].filter(Boolean).join(" ");
+      overrideProps[propName] = [slotPropValue, childPropValue]
+        .filter(Boolean)
+        .join(" ");
     }
   }
   return { ...slotProps, ...overrideProps };
@@ -232,7 +267,7 @@ var NODES = [
   "p",
   "span",
   "svg",
-  "ul"
+  "ul",
 ];
 var Primitive = NODES.reduce((primitive, node) => {
   const Slot2 = createSlot(`Primitive.${node}`);
@@ -242,7 +277,10 @@ var Primitive = NODES.reduce((primitive, node) => {
     if (typeof window !== "undefined") {
       window[/* @__PURE__ */ Symbol.for("radix-ui")] = true;
     }
-    return (0, import_jsx_runtime3.jsx)(Comp, { ...primitiveProps, ref: forwardedRef });
+    return (0, import_jsx_runtime3.jsx)(Comp, {
+      ...primitiveProps,
+      ref: forwardedRef,
+    });
   });
   Node.displayName = `Primitive.${node}`;
   return { ...primitive, [node]: Node };
@@ -258,7 +296,12 @@ function useCallbackRef(callback) {
   React5.useEffect(() => {
     callbackRef.current = callback;
   });
-  return React5.useMemo(() => (...args) => callbackRef.current?.(...args), []);
+  return React5.useMemo(
+    () =>
+      (...args) =>
+        callbackRef.current?.(...args),
+    [],
+  );
 }
 
 // node_modules/@radix-ui/react-dismissable-layer/dist/index.mjs
@@ -266,7 +309,10 @@ var React7 = __toESM(require_react(), 1);
 
 // node_modules/@radix-ui/react-use-escape-keydown/dist/index.mjs
 var React6 = __toESM(require_react(), 1);
-function useEscapeKeydown(onEscapeKeyDownProp, ownerDocument = globalThis?.document) {
+function useEscapeKeydown(
+  onEscapeKeyDownProp,
+  ownerDocument = globalThis?.document,
+) {
   const onEscapeKeyDown = useCallbackRef(onEscapeKeyDownProp);
   React6.useEffect(() => {
     const handleKeyDown = (event) => {
@@ -275,7 +321,10 @@ function useEscapeKeydown(onEscapeKeyDownProp, ownerDocument = globalThis?.docum
       }
     };
     ownerDocument.addEventListener("keydown", handleKeyDown, { capture: true });
-    return () => ownerDocument.removeEventListener("keydown", handleKeyDown, { capture: true });
+    return () =>
+      ownerDocument.removeEventListener("keydown", handleKeyDown, {
+        capture: true,
+      });
   }, [onEscapeKeyDown, ownerDocument]);
 }
 
@@ -289,104 +338,122 @@ var originalBodyPointerEvents;
 var DismissableLayerContext = React7.createContext({
   layers: /* @__PURE__ */ new Set(),
   layersWithOutsidePointerEventsDisabled: /* @__PURE__ */ new Set(),
-  branches: /* @__PURE__ */ new Set()
+  branches: /* @__PURE__ */ new Set(),
 });
-var DismissableLayer = React7.forwardRef(
-  (props, forwardedRef) => {
-    const {
-      disableOutsidePointerEvents = false,
-      onEscapeKeyDown,
-      onPointerDownOutside,
-      onFocusOutside,
-      onInteractOutside,
-      onDismiss,
-      ...layerProps
-    } = props;
-    const context = React7.useContext(DismissableLayerContext);
-    const [node, setNode] = React7.useState(null);
-    const ownerDocument = node?.ownerDocument ?? globalThis?.document;
-    const [, force] = React7.useState({});
-    const composedRefs = useComposedRefs(forwardedRef, (node2) => setNode(node2));
-    const layers = Array.from(context.layers);
-    const [highestLayerWithOutsidePointerEventsDisabled] = [...context.layersWithOutsidePointerEventsDisabled].slice(-1);
-    const highestLayerWithOutsidePointerEventsDisabledIndex = layers.indexOf(highestLayerWithOutsidePointerEventsDisabled);
-    const index = node ? layers.indexOf(node) : -1;
-    const isBodyPointerEventsDisabled = context.layersWithOutsidePointerEventsDisabled.size > 0;
-    const isPointerEventsEnabled = index >= highestLayerWithOutsidePointerEventsDisabledIndex;
-    const pointerDownOutside = usePointerDownOutside((event) => {
-      const target = event.target;
-      const isPointerDownOnBranch = [...context.branches].some((branch) => branch.contains(target));
-      if (!isPointerEventsEnabled || isPointerDownOnBranch) return;
-      onPointerDownOutside?.(event);
-      onInteractOutside?.(event);
-      if (!event.defaultPrevented) onDismiss?.();
-    }, ownerDocument);
-    const focusOutside = useFocusOutside((event) => {
-      const target = event.target;
-      const isFocusInBranch = [...context.branches].some((branch) => branch.contains(target));
-      if (isFocusInBranch) return;
-      onFocusOutside?.(event);
-      onInteractOutside?.(event);
-      if (!event.defaultPrevented) onDismiss?.();
-    }, ownerDocument);
-    useEscapeKeydown((event) => {
-      const isHighestLayer = index === context.layers.size - 1;
-      if (!isHighestLayer) return;
-      onEscapeKeyDown?.(event);
-      if (!event.defaultPrevented && onDismiss) {
-        event.preventDefault();
-        onDismiss();
-      }
-    }, ownerDocument);
-    React7.useEffect(() => {
-      if (!node) return;
-      if (disableOutsidePointerEvents) {
-        if (context.layersWithOutsidePointerEventsDisabled.size === 0) {
-          originalBodyPointerEvents = ownerDocument.body.style.pointerEvents;
-          ownerDocument.body.style.pointerEvents = "none";
-        }
-        context.layersWithOutsidePointerEventsDisabled.add(node);
-      }
-      context.layers.add(node);
-      dispatchUpdate();
-      return () => {
-        if (disableOutsidePointerEvents && context.layersWithOutsidePointerEventsDisabled.size === 1) {
-          ownerDocument.body.style.pointerEvents = originalBodyPointerEvents;
-        }
-      };
-    }, [node, ownerDocument, disableOutsidePointerEvents, context]);
-    React7.useEffect(() => {
-      return () => {
-        if (!node) return;
-        context.layers.delete(node);
-        context.layersWithOutsidePointerEventsDisabled.delete(node);
-        dispatchUpdate();
-      };
-    }, [node, context]);
-    React7.useEffect(() => {
-      const handleUpdate = () => force({});
-      document.addEventListener(CONTEXT_UPDATE, handleUpdate);
-      return () => document.removeEventListener(CONTEXT_UPDATE, handleUpdate);
-    }, []);
-    return (0, import_jsx_runtime4.jsx)(
-      Primitive.div,
-      {
-        ...layerProps,
-        ref: composedRefs,
-        style: {
-          pointerEvents: isBodyPointerEventsDisabled ? isPointerEventsEnabled ? "auto" : "none" : void 0,
-          ...props.style
-        },
-        onFocusCapture: composeEventHandlers(props.onFocusCapture, focusOutside.onFocusCapture),
-        onBlurCapture: composeEventHandlers(props.onBlurCapture, focusOutside.onBlurCapture),
-        onPointerDownCapture: composeEventHandlers(
-          props.onPointerDownCapture,
-          pointerDownOutside.onPointerDownCapture
-        )
-      }
+var DismissableLayer = React7.forwardRef((props, forwardedRef) => {
+  const {
+    disableOutsidePointerEvents = false,
+    onEscapeKeyDown,
+    onPointerDownOutside,
+    onFocusOutside,
+    onInteractOutside,
+    onDismiss,
+    ...layerProps
+  } = props;
+  const context = React7.useContext(DismissableLayerContext);
+  const [node, setNode] = React7.useState(null);
+  const ownerDocument = node?.ownerDocument ?? globalThis?.document;
+  const [, force] = React7.useState({});
+  const composedRefs = useComposedRefs(forwardedRef, (node2) => setNode(node2));
+  const layers = Array.from(context.layers);
+  const [highestLayerWithOutsidePointerEventsDisabled] = [
+    ...context.layersWithOutsidePointerEventsDisabled,
+  ].slice(-1);
+  const highestLayerWithOutsidePointerEventsDisabledIndex = layers.indexOf(
+    highestLayerWithOutsidePointerEventsDisabled,
+  );
+  const index = node ? layers.indexOf(node) : -1;
+  const isBodyPointerEventsDisabled =
+    context.layersWithOutsidePointerEventsDisabled.size > 0;
+  const isPointerEventsEnabled =
+    index >= highestLayerWithOutsidePointerEventsDisabledIndex;
+  const pointerDownOutside = usePointerDownOutside((event) => {
+    const target = event.target;
+    const isPointerDownOnBranch = [...context.branches].some((branch) =>
+      branch.contains(target),
     );
-  }
-);
+    if (!isPointerEventsEnabled || isPointerDownOnBranch) return;
+    onPointerDownOutside?.(event);
+    onInteractOutside?.(event);
+    if (!event.defaultPrevented) onDismiss?.();
+  }, ownerDocument);
+  const focusOutside = useFocusOutside((event) => {
+    const target = event.target;
+    const isFocusInBranch = [...context.branches].some((branch) =>
+      branch.contains(target),
+    );
+    if (isFocusInBranch) return;
+    onFocusOutside?.(event);
+    onInteractOutside?.(event);
+    if (!event.defaultPrevented) onDismiss?.();
+  }, ownerDocument);
+  useEscapeKeydown((event) => {
+    const isHighestLayer = index === context.layers.size - 1;
+    if (!isHighestLayer) return;
+    onEscapeKeyDown?.(event);
+    if (!event.defaultPrevented && onDismiss) {
+      event.preventDefault();
+      onDismiss();
+    }
+  }, ownerDocument);
+  React7.useEffect(() => {
+    if (!node) return;
+    if (disableOutsidePointerEvents) {
+      if (context.layersWithOutsidePointerEventsDisabled.size === 0) {
+        originalBodyPointerEvents = ownerDocument.body.style.pointerEvents;
+        ownerDocument.body.style.pointerEvents = "none";
+      }
+      context.layersWithOutsidePointerEventsDisabled.add(node);
+    }
+    context.layers.add(node);
+    dispatchUpdate();
+    return () => {
+      if (
+        disableOutsidePointerEvents &&
+        context.layersWithOutsidePointerEventsDisabled.size === 1
+      ) {
+        ownerDocument.body.style.pointerEvents = originalBodyPointerEvents;
+      }
+    };
+  }, [node, ownerDocument, disableOutsidePointerEvents, context]);
+  React7.useEffect(() => {
+    return () => {
+      if (!node) return;
+      context.layers.delete(node);
+      context.layersWithOutsidePointerEventsDisabled.delete(node);
+      dispatchUpdate();
+    };
+  }, [node, context]);
+  React7.useEffect(() => {
+    const handleUpdate = () => force({});
+    document.addEventListener(CONTEXT_UPDATE, handleUpdate);
+    return () => document.removeEventListener(CONTEXT_UPDATE, handleUpdate);
+  }, []);
+  return (0, import_jsx_runtime4.jsx)(Primitive.div, {
+    ...layerProps,
+    ref: composedRefs,
+    style: {
+      pointerEvents: isBodyPointerEventsDisabled
+        ? isPointerEventsEnabled
+          ? "auto"
+          : "none"
+        : void 0,
+      ...props.style,
+    },
+    onFocusCapture: composeEventHandlers(
+      props.onFocusCapture,
+      focusOutside.onFocusCapture,
+    ),
+    onBlurCapture: composeEventHandlers(
+      props.onBlurCapture,
+      focusOutside.onBlurCapture,
+    ),
+    onPointerDownCapture: composeEventHandlers(
+      props.onPointerDownCapture,
+      pointerDownOutside.onPointerDownCapture,
+    ),
+  });
+});
 DismissableLayer.displayName = DISMISSABLE_LAYER_NAME;
 var BRANCH_NAME = "DismissableLayerBranch";
 var DismissableLayerBranch = React7.forwardRef((props, forwardedRef) => {
@@ -402,31 +469,39 @@ var DismissableLayerBranch = React7.forwardRef((props, forwardedRef) => {
       };
     }
   }, [context.branches]);
-  return (0, import_jsx_runtime4.jsx)(Primitive.div, { ...props, ref: composedRefs });
+  return (0, import_jsx_runtime4.jsx)(Primitive.div, {
+    ...props,
+    ref: composedRefs,
+  });
 });
 DismissableLayerBranch.displayName = BRANCH_NAME;
-function usePointerDownOutside(onPointerDownOutside, ownerDocument = globalThis?.document) {
+function usePointerDownOutside(
+  onPointerDownOutside,
+  ownerDocument = globalThis?.document,
+) {
   const handlePointerDownOutside = useCallbackRef(onPointerDownOutside);
   const isPointerInsideReactTreeRef = React7.useRef(false);
-  const handleClickRef = React7.useRef(() => {
-  });
+  const handleClickRef = React7.useRef(() => {});
   React7.useEffect(() => {
     const handlePointerDown = (event) => {
       if (event.target && !isPointerInsideReactTreeRef.current) {
-        let handleAndDispatchPointerDownOutsideEvent2 = function() {
+        let handleAndDispatchPointerDownOutsideEvent2 = function () {
           handleAndDispatchCustomEvent(
             POINTER_DOWN_OUTSIDE,
             handlePointerDownOutside,
             eventDetail,
-            { discrete: true }
+            { discrete: true },
           );
         };
-        var handleAndDispatchPointerDownOutsideEvent = handleAndDispatchPointerDownOutsideEvent2;
+        var handleAndDispatchPointerDownOutsideEvent =
+          handleAndDispatchPointerDownOutsideEvent2;
         const eventDetail = { originalEvent: event };
         if (event.pointerType === "touch") {
           ownerDocument.removeEventListener("click", handleClickRef.current);
           handleClickRef.current = handleAndDispatchPointerDownOutsideEvent2;
-          ownerDocument.addEventListener("click", handleClickRef.current, { once: true });
+          ownerDocument.addEventListener("click", handleClickRef.current, {
+            once: true,
+          });
         } else {
           handleAndDispatchPointerDownOutsideEvent2();
         }
@@ -446,7 +521,7 @@ function usePointerDownOutside(onPointerDownOutside, ownerDocument = globalThis?
   }, [ownerDocument, handlePointerDownOutside]);
   return {
     // ensures we check React component tree (not just DOM tree)
-    onPointerDownCapture: () => isPointerInsideReactTreeRef.current = true
+    onPointerDownCapture: () => (isPointerInsideReactTreeRef.current = true),
   };
 }
 function useFocusOutside(onFocusOutside, ownerDocument = globalThis?.document) {
@@ -456,17 +531,22 @@ function useFocusOutside(onFocusOutside, ownerDocument = globalThis?.document) {
     const handleFocus = (event) => {
       if (event.target && !isFocusInsideReactTreeRef.current) {
         const eventDetail = { originalEvent: event };
-        handleAndDispatchCustomEvent(FOCUS_OUTSIDE, handleFocusOutside, eventDetail, {
-          discrete: false
-        });
+        handleAndDispatchCustomEvent(
+          FOCUS_OUTSIDE,
+          handleFocusOutside,
+          eventDetail,
+          {
+            discrete: false,
+          },
+        );
       }
     };
     ownerDocument.addEventListener("focusin", handleFocus);
     return () => ownerDocument.removeEventListener("focusin", handleFocus);
   }, [ownerDocument, handleFocusOutside]);
   return {
-    onFocusCapture: () => isFocusInsideReactTreeRef.current = true,
-    onBlurCapture: () => isFocusInsideReactTreeRef.current = false
+    onFocusCapture: () => (isFocusInsideReactTreeRef.current = true),
+    onBlurCapture: () => (isFocusInsideReactTreeRef.current = false),
   };
 }
 function dispatchUpdate() {
@@ -475,7 +555,11 @@ function dispatchUpdate() {
 }
 function handleAndDispatchCustomEvent(name, handler, detail, { discrete }) {
   const target = detail.originalEvent.target;
-  const event = new CustomEvent(name, { bubbles: false, cancelable: true, detail });
+  const event = new CustomEvent(name, {
+    bubbles: false,
+    cancelable: true,
+    detail,
+  });
   if (handler) target.addEventListener(name, handler, { once: true });
   if (discrete) {
     dispatchDiscreteCustomEvent(target, event);
@@ -488,8 +572,7 @@ var Branch = DismissableLayerBranch;
 
 // node_modules/@radix-ui/react-use-layout-effect/dist/index.mjs
 var React8 = __toESM(require_react(), 1);
-var useLayoutEffect2 = globalThis?.document ? React8.useLayoutEffect : () => {
-};
+var useLayoutEffect2 = globalThis?.document ? React8.useLayoutEffect : () => {};
 
 // node_modules/@radix-ui/react-portal/dist/index.mjs
 var React9 = __toESM(require_react(), 1);
@@ -500,8 +583,16 @@ var Portal = React9.forwardRef((props, forwardedRef) => {
   const { container: containerProp, ...portalProps } = props;
   const [mounted, setMounted] = React9.useState(false);
   useLayoutEffect2(() => setMounted(true), []);
-  const container = containerProp || mounted && globalThis?.document?.body;
-  return container ? import_react_dom.default.createPortal((0, import_jsx_runtime5.jsx)(Primitive.div, { ...portalProps, ref: forwardedRef }), container) : null;
+  const container = containerProp || (mounted && globalThis?.document?.body);
+  return container
+    ? import_react_dom.default.createPortal(
+        (0, import_jsx_runtime5.jsx)(Primitive.div, {
+          ...portalProps,
+          ref: forwardedRef,
+        }),
+        container,
+      )
+    : null;
 });
 Portal.displayName = PORTAL_NAME;
 
@@ -517,10 +608,15 @@ function useStateMachine(initialState, machine) {
 var Presence = (props) => {
   const { present, children } = props;
   const presence = usePresence(present);
-  const child = typeof children === "function" ? children({ present: presence.isPresent }) : React22.Children.only(children);
+  const child =
+    typeof children === "function"
+      ? children({ present: presence.isPresent })
+      : React22.Children.only(children);
   const ref = useComposedRefs(presence.ref, getElementRef2(child));
   const forceMount = typeof children === "function";
-  return forceMount || presence.isPresent ? React22.cloneElement(child, { ref }) : null;
+  return forceMount || presence.isPresent
+    ? React22.cloneElement(child, { ref })
+    : null;
 };
 Presence.displayName = "Presence";
 function usePresence(present) {
@@ -532,19 +628,20 @@ function usePresence(present) {
   const [state, send] = useStateMachine(initialState, {
     mounted: {
       UNMOUNT: "unmounted",
-      ANIMATION_OUT: "unmountSuspended"
+      ANIMATION_OUT: "unmountSuspended",
     },
     unmountSuspended: {
       MOUNT: "mounted",
-      ANIMATION_END: "unmounted"
+      ANIMATION_END: "unmounted",
     },
     unmounted: {
-      MOUNT: "mounted"
-    }
+      MOUNT: "mounted",
+    },
   });
   React22.useEffect(() => {
     const currentAnimationName = getAnimationName(stylesRef.current);
-    prevAnimationNameRef.current = state === "mounted" ? currentAnimationName : "none";
+    prevAnimationNameRef.current =
+      state === "mounted" ? currentAnimationName : "none";
   }, [state]);
   useLayoutEffect2(() => {
     const styles = stylesRef.current;
@@ -555,7 +652,10 @@ function usePresence(present) {
       const currentAnimationName = getAnimationName(styles);
       if (present) {
         send("MOUNT");
-      } else if (currentAnimationName === "none" || styles?.display === "none") {
+      } else if (
+        currentAnimationName === "none" ||
+        styles?.display === "none"
+      ) {
         send("UNMOUNT");
       } else {
         const isAnimating = prevAnimationName !== currentAnimationName;
@@ -574,7 +674,9 @@ function usePresence(present) {
       const ownerWindow = node.ownerDocument.defaultView ?? window;
       const handleAnimationEnd = (event) => {
         const currentAnimationName = getAnimationName(stylesRef.current);
-        const isCurrentAnimation = currentAnimationName.includes(event.animationName);
+        const isCurrentAnimation = currentAnimationName.includes(
+          event.animationName,
+        );
         if (event.target === node && isCurrentAnimation) {
           send("ANIMATION_END");
           if (!prevPresentRef.current) {
@@ -611,7 +713,7 @@ function usePresence(present) {
     ref: React22.useCallback((node2) => {
       if (node2) stylesRef.current = getComputedStyle(node2);
       setNode(node2);
-    }, [])
+    }, []),
   };
 }
 function getAnimationName(styles) {
@@ -633,13 +735,11 @@ function getElementRef2(element) {
 
 // node_modules/@radix-ui/react-use-controllable-state/dist/index.mjs
 var React11 = __toESM(require_react(), 1);
-function useControllableState({
-  prop,
-  defaultProp,
-  onChange = () => {
-  }
-}) {
-  const [uncontrolledProp, setUncontrolledProp] = useUncontrolledState({ defaultProp, onChange });
+function useControllableState({ prop, defaultProp, onChange = () => {} }) {
+  const [uncontrolledProp, setUncontrolledProp] = useUncontrolledState({
+    defaultProp,
+    onChange,
+  });
   const isControlled = prop !== void 0;
   const value = isControlled ? prop : uncontrolledProp;
   const handleChange = useCallbackRef(onChange);
@@ -647,20 +747,18 @@ function useControllableState({
     (nextValue) => {
       if (isControlled) {
         const setter = nextValue;
-        const value2 = typeof nextValue === "function" ? setter(prop) : nextValue;
+        const value2 =
+          typeof nextValue === "function" ? setter(prop) : nextValue;
         if (value2 !== prop) handleChange(value2);
       } else {
         setUncontrolledProp(nextValue);
       }
     },
-    [isControlled, prop, setUncontrolledProp, handleChange]
+    [isControlled, prop, setUncontrolledProp, handleChange],
   );
   return [value, setValue];
 }
-function useUncontrolledState({
-  defaultProp,
-  onChange
-}) {
+function useUncontrolledState({ defaultProp, onChange }) {
   const uncontrolledState = React11.useState(defaultProp);
   const [value] = uncontrolledState;
   const prevValueRef = React11.useRef(value);
@@ -678,31 +776,26 @@ function useUncontrolledState({
 var React12 = __toESM(require_react(), 1);
 var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
 var NAME = "VisuallyHidden";
-var VisuallyHidden = React12.forwardRef(
-  (props, forwardedRef) => {
-    return (0, import_jsx_runtime6.jsx)(
-      Primitive.span,
-      {
-        ...props,
-        ref: forwardedRef,
-        style: {
-          // See: https://github.com/twbs/bootstrap/blob/main/scss/mixins/_visually-hidden.scss
-          position: "absolute",
-          border: 0,
-          width: 1,
-          height: 1,
-          padding: 0,
-          margin: -1,
-          overflow: "hidden",
-          clip: "rect(0, 0, 0, 0)",
-          whiteSpace: "nowrap",
-          wordWrap: "normal",
-          ...props.style
-        }
-      }
-    );
-  }
-);
+var VisuallyHidden = React12.forwardRef((props, forwardedRef) => {
+  return (0, import_jsx_runtime6.jsx)(Primitive.span, {
+    ...props,
+    ref: forwardedRef,
+    style: {
+      // See: https://github.com/twbs/bootstrap/blob/main/scss/mixins/_visually-hidden.scss
+      position: "absolute",
+      border: 0,
+      width: 1,
+      height: 1,
+      padding: 0,
+      margin: -1,
+      overflow: "hidden",
+      clip: "rect(0, 0, 0, 0)",
+      whiteSpace: "nowrap",
+      wordWrap: "normal",
+      ...props.style,
+    },
+  });
+});
 VisuallyHidden.displayName = NAME;
 var Root2 = VisuallyHidden;
 
@@ -723,6 +816,6 @@ export {
   Presence,
   useControllableState,
   VisuallyHidden,
-  Root2
+  Root2,
 };
 //# sourceMappingURL=chunk-ACAKR5Q4.js.map

@@ -1,10 +1,5 @@
-import {
-  require_react
-} from "./chunk-IL34JRKV.js";
-import {
-  __commonJS,
-  __toESM
-} from "./chunk-4MBMRILA.js";
+import { require_react } from "./chunk-IL34JRKV.js";
+import { __commonJS, __toESM } from "./chunk-4MBMRILA.js";
 
 // node_modules/react-fast-compare/index.js
 var require_react_fast_compare = __commonJS({
@@ -12,7 +7,8 @@ var require_react_fast_compare = __commonJS({
     var hasElementType = typeof Element !== "undefined";
     var hasMap = typeof Map === "function";
     var hasSet = typeof Set === "function";
-    var hasArrayBuffer = typeof ArrayBuffer === "function" && !!ArrayBuffer.isView;
+    var hasArrayBuffer =
+      typeof ArrayBuffer === "function" && !!ArrayBuffer.isView;
     function equal(a, b) {
       if (a === b) return true;
       if (a && b && typeof a == "object" && typeof b == "object") {
@@ -21,16 +17,14 @@ var require_react_fast_compare = __commonJS({
         if (Array.isArray(a)) {
           length = a.length;
           if (length != b.length) return false;
-          for (i = length; i-- !== 0; )
-            if (!equal(a[i], b[i])) return false;
+          for (i = length; i-- !== 0; ) if (!equal(a[i], b[i])) return false;
           return true;
         }
         var it;
         if (hasMap && a instanceof Map && b instanceof Map) {
           if (a.size !== b.size) return false;
           it = a.entries();
-          while (!(i = it.next()).done)
-            if (!b.has(i.value[0])) return false;
+          while (!(i = it.next()).done) if (!b.has(i.value[0])) return false;
           it = a.entries();
           while (!(i = it.next()).done)
             if (!equal(i.value[1], b.get(i.value[0]))) return false;
@@ -39,20 +33,29 @@ var require_react_fast_compare = __commonJS({
         if (hasSet && a instanceof Set && b instanceof Set) {
           if (a.size !== b.size) return false;
           it = a.entries();
-          while (!(i = it.next()).done)
-            if (!b.has(i.value[0])) return false;
+          while (!(i = it.next()).done) if (!b.has(i.value[0])) return false;
           return true;
         }
         if (hasArrayBuffer && ArrayBuffer.isView(a) && ArrayBuffer.isView(b)) {
           length = a.length;
           if (length != b.length) return false;
-          for (i = length; i-- !== 0; )
-            if (a[i] !== b[i]) return false;
+          for (i = length; i-- !== 0; ) if (a[i] !== b[i]) return false;
           return true;
         }
-        if (a.constructor === RegExp) return a.source === b.source && a.flags === b.flags;
-        if (a.valueOf !== Object.prototype.valueOf && typeof a.valueOf === "function" && typeof b.valueOf === "function") return a.valueOf() === b.valueOf();
-        if (a.toString !== Object.prototype.toString && typeof a.toString === "function" && typeof b.toString === "function") return a.toString() === b.toString();
+        if (a.constructor === RegExp)
+          return a.source === b.source && a.flags === b.flags;
+        if (
+          a.valueOf !== Object.prototype.valueOf &&
+          typeof a.valueOf === "function" &&
+          typeof b.valueOf === "function"
+        )
+          return a.valueOf() === b.valueOf();
+        if (
+          a.toString !== Object.prototype.toString &&
+          typeof a.toString === "function" &&
+          typeof b.toString === "function"
+        )
+          return a.toString() === b.toString();
         keys = Object.keys(a);
         length = keys.length;
         if (length !== Object.keys(b).length) return false;
@@ -60,7 +63,10 @@ var require_react_fast_compare = __commonJS({
           if (!Object.prototype.hasOwnProperty.call(b, keys[i])) return false;
         if (hasElementType && a instanceof Element) return false;
         for (i = length; i-- !== 0; ) {
-          if ((keys[i] === "_owner" || keys[i] === "__v" || keys[i] === "__o") && a.$$typeof) {
+          if (
+            (keys[i] === "_owner" || keys[i] === "__v" || keys[i] === "__o") &&
+            a.$$typeof
+          ) {
             continue;
           }
           if (!equal(a[keys[i]], b[keys[i]])) return false;
@@ -80,14 +86,14 @@ var require_react_fast_compare = __commonJS({
         throw error;
       }
     };
-  }
+  },
 });
 
 // node_modules/invariant/browser.js
 var require_browser = __commonJS({
   "node_modules/invariant/browser.js"(exports, module) {
     "use strict";
-    var invariant2 = function(condition, format, a, b, c, d, e, f) {
+    var invariant2 = function (condition, format, a, b, c, d, e, f) {
       if (true) {
         if (format === void 0) {
           throw new Error("invariant requires an error message argument");
@@ -97,15 +103,15 @@ var require_browser = __commonJS({
         var error;
         if (format === void 0) {
           error = new Error(
-            "Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings."
+            "Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.",
           );
         } else {
           var args = [a, b, c, d, e, f];
           var argIndex = 0;
           error = new Error(
-            format.replace(/%s/g, function() {
+            format.replace(/%s/g, function () {
               return args[argIndex++];
-            })
+            }),
           );
           error.name = "Invariant Violation";
         }
@@ -114,13 +120,18 @@ var require_browser = __commonJS({
       }
     };
     module.exports = invariant2;
-  }
+  },
 });
 
 // node_modules/shallowequal/index.js
 var require_shallowequal = __commonJS({
   "node_modules/shallowequal/index.js"(exports, module) {
-    module.exports = function shallowEqual2(objA, objB, compare, compareContext) {
+    module.exports = function shallowEqual2(
+      objA,
+      objB,
+      compare,
+      compareContext,
+    ) {
       var ret = compare ? compare.call(compareContext, objA, objB) : void 0;
       if (ret !== void 0) {
         return !!ret;
@@ -128,7 +139,12 @@ var require_shallowequal = __commonJS({
       if (objA === objB) {
         return true;
       }
-      if (typeof objA !== "object" || !objA || typeof objB !== "object" || !objB) {
+      if (
+        typeof objA !== "object" ||
+        !objA ||
+        typeof objB !== "object" ||
+        !objB
+      ) {
         return false;
       }
       var keysA = Object.keys(objA);
@@ -144,14 +160,16 @@ var require_shallowequal = __commonJS({
         }
         var valueA = objA[key];
         var valueB = objB[key];
-        ret = compare ? compare.call(compareContext, valueA, valueB, key) : void 0;
-        if (ret === false || ret === void 0 && valueA !== valueB) {
+        ret = compare
+          ? compare.call(compareContext, valueA, valueB, key)
+          : void 0;
+        if (ret === false || (ret === void 0 && valueA !== valueB)) {
           return false;
         }
       }
       return true;
     };
-  }
+  },
 });
 
 // node_modules/react-helmet-async/lib/index.esm.js
@@ -197,9 +215,9 @@ var SEO_PRIORITY_TAGS = {
       "twitter:image",
       "twitter:image:alt",
       "twitter:card",
-      "twitter:site"
-    ]
-  }
+      "twitter:site",
+    ],
+  },
 };
 var VALID_TAG_NAMES = Object.values(TAG_NAMES);
 var REACT_TAG_MAP = {
@@ -210,14 +228,14 @@ var REACT_TAG_MAP = {
   contextmenu: "contextMenu",
   "http-equiv": "httpEquiv",
   itemprop: "itemProp",
-  tabindex: "tabIndex"
+  tabindex: "tabIndex",
 };
 var HTML_TAG_MAP = Object.entries(REACT_TAG_MAP).reduce(
   (carry, [key, value]) => {
     carry[value] = key;
     return carry;
   },
-  {}
+  {},
 );
 var HELMET_ATTRIBUTE = "data-rh";
 var HELMET_PROPS = {
@@ -226,7 +244,7 @@ var HELMET_PROPS = {
   ENCODE_SPECIAL_CHARACTERS: "encodeSpecialCharacters",
   ON_CHANGE_CLIENT_STATE: "onChangeClientState",
   TITLE_TEMPLATE: "titleTemplate",
-  PRIORITIZE_SEO_TAGS: "prioritizeSeoTags"
+  PRIORITIZE_SEO_TAGS: "prioritizeSeoTags",
 };
 var getInnermostProperty = (propsList, property) => {
   for (let i = propsList.length - 1; i >= 0; i -= 1) {
@@ -240,96 +258,145 @@ var getInnermostProperty = (propsList, property) => {
 var getTitleFromPropsList = (propsList) => {
   let innermostTitle = getInnermostProperty(
     propsList,
-    "title"
+    "title",
     /* TITLE */
   );
-  const innermostTemplate = getInnermostProperty(propsList, HELMET_PROPS.TITLE_TEMPLATE);
+  const innermostTemplate = getInnermostProperty(
+    propsList,
+    HELMET_PROPS.TITLE_TEMPLATE,
+  );
   if (Array.isArray(innermostTitle)) {
     innermostTitle = innermostTitle.join("");
   }
   if (innermostTemplate && innermostTitle) {
     return innermostTemplate.replace(/%s/g, () => innermostTitle);
   }
-  const innermostDefaultTitle = getInnermostProperty(propsList, HELMET_PROPS.DEFAULT_TITLE);
+  const innermostDefaultTitle = getInnermostProperty(
+    propsList,
+    HELMET_PROPS.DEFAULT_TITLE,
+  );
   return innermostTitle || innermostDefaultTitle || void 0;
 };
-var getOnChangeClientState = (propsList) => getInnermostProperty(propsList, HELMET_PROPS.ON_CHANGE_CLIENT_STATE) || (() => {
-});
-var getAttributesFromPropsList = (tagType, propsList) => propsList.filter((props) => typeof props[tagType] !== "undefined").map((props) => props[tagType]).reduce((tagAttrs, current) => ({ ...tagAttrs, ...current }), {});
-var getBaseTagFromPropsList = (primaryAttributes, propsList) => propsList.filter((props) => typeof props[
-  "base"
-  /* BASE */
-] !== "undefined").map((props) => props[
-  "base"
-  /* BASE */
-]).reverse().reduce((innermostBaseTag, tag) => {
-  if (!innermostBaseTag.length) {
-    const keys = Object.keys(tag);
-    for (let i = 0; i < keys.length; i += 1) {
-      const attributeKey = keys[i];
-      const lowerCaseAttributeKey = attributeKey.toLowerCase();
-      if (primaryAttributes.indexOf(lowerCaseAttributeKey) !== -1 && tag[lowerCaseAttributeKey]) {
-        return innermostBaseTag.concat(tag);
+var getOnChangeClientState = (propsList) =>
+  getInnermostProperty(propsList, HELMET_PROPS.ON_CHANGE_CLIENT_STATE) ||
+  (() => {});
+var getAttributesFromPropsList = (tagType, propsList) =>
+  propsList
+    .filter((props) => typeof props[tagType] !== "undefined")
+    .map((props) => props[tagType])
+    .reduce((tagAttrs, current) => ({ ...tagAttrs, ...current }), {});
+var getBaseTagFromPropsList = (primaryAttributes, propsList) =>
+  propsList
+    .filter(
+      (props) =>
+        typeof props[
+          "base"
+          /* BASE */
+        ] !== "undefined",
+    )
+    .map(
+      (props) =>
+        props[
+          "base"
+          /* BASE */
+        ],
+    )
+    .reverse()
+    .reduce((innermostBaseTag, tag) => {
+      if (!innermostBaseTag.length) {
+        const keys = Object.keys(tag);
+        for (let i = 0; i < keys.length; i += 1) {
+          const attributeKey = keys[i];
+          const lowerCaseAttributeKey = attributeKey.toLowerCase();
+          if (
+            primaryAttributes.indexOf(lowerCaseAttributeKey) !== -1 &&
+            tag[lowerCaseAttributeKey]
+          ) {
+            return innermostBaseTag.concat(tag);
+          }
+        }
       }
-    }
-  }
-  return innermostBaseTag;
-}, []);
-var warn = (msg) => console && typeof console.warn === "function" && console.warn(msg);
+      return innermostBaseTag;
+    }, []);
+var warn = (msg) =>
+  console && typeof console.warn === "function" && console.warn(msg);
 var getTagsFromPropsList = (tagName, primaryAttributes, propsList) => {
   const approvedSeenTags = {};
-  return propsList.filter((props) => {
-    if (Array.isArray(props[tagName])) {
-      return true;
-    }
-    if (typeof props[tagName] !== "undefined") {
-      warn(
-        `Helmet: ${tagName} should be of type "Array". Instead found type "${typeof props[tagName]}"`
-      );
-    }
-    return false;
-  }).map((props) => props[tagName]).reverse().reduce((approvedTags, instanceTags) => {
-    const instanceSeenTags = {};
-    instanceTags.filter((tag) => {
-      let primaryAttributeKey;
-      const keys2 = Object.keys(tag);
-      for (let i = 0; i < keys2.length; i += 1) {
-        const attributeKey = keys2[i];
-        const lowerCaseAttributeKey = attributeKey.toLowerCase();
-        if (primaryAttributes.indexOf(lowerCaseAttributeKey) !== -1 && !(primaryAttributeKey === "rel" && tag[primaryAttributeKey].toLowerCase() === "canonical") && !(lowerCaseAttributeKey === "rel" && tag[lowerCaseAttributeKey].toLowerCase() === "stylesheet")) {
-          primaryAttributeKey = lowerCaseAttributeKey;
-        }
-        if (primaryAttributes.indexOf(attributeKey) !== -1 && (attributeKey === "innerHTML" || attributeKey === "cssText" || attributeKey === "itemprop")) {
-          primaryAttributeKey = attributeKey;
-        }
-      }
-      if (!primaryAttributeKey || !tag[primaryAttributeKey]) {
-        return false;
-      }
-      const value = tag[primaryAttributeKey].toLowerCase();
-      if (!approvedSeenTags[primaryAttributeKey]) {
-        approvedSeenTags[primaryAttributeKey] = {};
-      }
-      if (!instanceSeenTags[primaryAttributeKey]) {
-        instanceSeenTags[primaryAttributeKey] = {};
-      }
-      if (!approvedSeenTags[primaryAttributeKey][value]) {
-        instanceSeenTags[primaryAttributeKey][value] = true;
+  return propsList
+    .filter((props) => {
+      if (Array.isArray(props[tagName])) {
         return true;
       }
+      if (typeof props[tagName] !== "undefined") {
+        warn(
+          `Helmet: ${tagName} should be of type "Array". Instead found type "${typeof props[tagName]}"`,
+        );
+      }
       return false;
-    }).reverse().forEach((tag) => approvedTags.push(tag));
-    const keys = Object.keys(instanceSeenTags);
-    for (let i = 0; i < keys.length; i += 1) {
-      const attributeKey = keys[i];
-      const tagUnion = {
-        ...approvedSeenTags[attributeKey],
-        ...instanceSeenTags[attributeKey]
-      };
-      approvedSeenTags[attributeKey] = tagUnion;
-    }
-    return approvedTags;
-  }, []).reverse();
+    })
+    .map((props) => props[tagName])
+    .reverse()
+    .reduce((approvedTags, instanceTags) => {
+      const instanceSeenTags = {};
+      instanceTags
+        .filter((tag) => {
+          let primaryAttributeKey;
+          const keys2 = Object.keys(tag);
+          for (let i = 0; i < keys2.length; i += 1) {
+            const attributeKey = keys2[i];
+            const lowerCaseAttributeKey = attributeKey.toLowerCase();
+            if (
+              primaryAttributes.indexOf(lowerCaseAttributeKey) !== -1 &&
+              !(
+                primaryAttributeKey === "rel" &&
+                tag[primaryAttributeKey].toLowerCase() === "canonical"
+              ) &&
+              !(
+                lowerCaseAttributeKey === "rel" &&
+                tag[lowerCaseAttributeKey].toLowerCase() === "stylesheet"
+              )
+            ) {
+              primaryAttributeKey = lowerCaseAttributeKey;
+            }
+            if (
+              primaryAttributes.indexOf(attributeKey) !== -1 &&
+              (attributeKey === "innerHTML" ||
+                attributeKey === "cssText" ||
+                attributeKey === "itemprop")
+            ) {
+              primaryAttributeKey = attributeKey;
+            }
+          }
+          if (!primaryAttributeKey || !tag[primaryAttributeKey]) {
+            return false;
+          }
+          const value = tag[primaryAttributeKey].toLowerCase();
+          if (!approvedSeenTags[primaryAttributeKey]) {
+            approvedSeenTags[primaryAttributeKey] = {};
+          }
+          if (!instanceSeenTags[primaryAttributeKey]) {
+            instanceSeenTags[primaryAttributeKey] = {};
+          }
+          if (!approvedSeenTags[primaryAttributeKey][value]) {
+            instanceSeenTags[primaryAttributeKey][value] = true;
+            return true;
+          }
+          return false;
+        })
+        .reverse()
+        .forEach((tag) => approvedTags.push(tag));
+      const keys = Object.keys(instanceSeenTags);
+      for (let i = 0; i < keys.length; i += 1) {
+        const attributeKey = keys[i];
+        const tagUnion = {
+          ...approvedSeenTags[attributeKey],
+          ...instanceSeenTags[attributeKey],
+        };
+        approvedSeenTags[attributeKey] = tagUnion;
+      }
+      return approvedTags;
+    }, [])
+    .reverse();
 };
 var getAnyTrueFromPropsList = (propsList, checkedTag) => {
   if (Array.isArray(propsList) && propsList.length) {
@@ -343,22 +410,28 @@ var getAnyTrueFromPropsList = (propsList, checkedTag) => {
   return false;
 };
 var reducePropsToState = (propsList) => ({
-  baseTag: getBaseTagFromPropsList([
-    "href"
-    /* HREF */
-  ], propsList),
+  baseTag: getBaseTagFromPropsList(
+    [
+      "href",
+      /* HREF */
+    ],
+    propsList,
+  ),
   bodyAttributes: getAttributesFromPropsList("bodyAttributes", propsList),
   defer: getInnermostProperty(propsList, HELMET_PROPS.DEFER),
-  encode: getInnermostProperty(propsList, HELMET_PROPS.ENCODE_SPECIAL_CHARACTERS),
+  encode: getInnermostProperty(
+    propsList,
+    HELMET_PROPS.ENCODE_SPECIAL_CHARACTERS,
+  ),
   htmlAttributes: getAttributesFromPropsList("htmlAttributes", propsList),
   linkTags: getTagsFromPropsList(
     "link",
     [
       "rel",
-      "href"
+      "href",
       /* HREF */
     ],
-    propsList
+    propsList,
   ),
   metaTags: getTagsFromPropsList(
     "meta",
@@ -367,34 +440,46 @@ var reducePropsToState = (propsList) => ({
       "charset",
       "http-equiv",
       "property",
-      "itemprop"
+      "itemprop",
       /* ITEM_PROP */
     ],
-    propsList
+    propsList,
   ),
-  noscriptTags: getTagsFromPropsList("noscript", [
-    "innerHTML"
-    /* INNER_HTML */
-  ], propsList),
+  noscriptTags: getTagsFromPropsList(
+    "noscript",
+    [
+      "innerHTML",
+      /* INNER_HTML */
+    ],
+    propsList,
+  ),
   onChangeClientState: getOnChangeClientState(propsList),
   scriptTags: getTagsFromPropsList(
     "script",
     [
       "src",
-      "innerHTML"
+      "innerHTML",
       /* INNER_HTML */
     ],
-    propsList
+    propsList,
   ),
-  styleTags: getTagsFromPropsList("style", [
-    "cssText"
-    /* CSS_TEXT */
-  ], propsList),
+  styleTags: getTagsFromPropsList(
+    "style",
+    [
+      "cssText",
+      /* CSS_TEXT */
+    ],
+    propsList,
+  ),
   title: getTitleFromPropsList(propsList),
   titleAttributes: getAttributesFromPropsList("titleAttributes", propsList),
-  prioritizeSeoTags: getAnyTrueFromPropsList(propsList, HELMET_PROPS.PRIORITIZE_SEO_TAGS)
+  prioritizeSeoTags: getAnyTrueFromPropsList(
+    propsList,
+    HELMET_PROPS.PRIORITIZE_SEO_TAGS,
+  ),
 });
-var flattenArray = (possibleArray) => Array.isArray(possibleArray) ? possibleArray.join("") : possibleArray;
+var flattenArray = (possibleArray) =>
+  Array.isArray(possibleArray) ? possibleArray.join("") : possibleArray;
 var checkIfPropsMatch = (props, toMatch) => {
   const keys = Object.keys(props);
   for (let i = 0; i < keys.length; i += 1) {
@@ -415,7 +500,7 @@ var prioritizer = (elementsList, propsToMatch) => {
         }
         return acc;
       },
-      { priority: [], default: [] }
+      { priority: [], default: [] },
     );
   }
   return { default: elementsList, priority: [] };
@@ -423,95 +508,116 @@ var prioritizer = (elementsList, propsToMatch) => {
 var without = (obj, key) => {
   return {
     ...obj,
-    [key]: void 0
+    [key]: void 0,
   };
 };
 var SELF_CLOSING_TAGS = [
   "noscript",
   "script",
-  "style"
+  "style",
   /* STYLE */
 ];
 var encodeSpecialCharacters = (str, encode = true) => {
   if (encode === false) {
     return String(str);
   }
-  return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;");
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#x27;");
 };
-var generateElementAttributesAsString = (attributes) => Object.keys(attributes).reduce((str, key) => {
-  const attr = typeof attributes[key] !== "undefined" ? `${key}="${attributes[key]}"` : `${key}`;
-  return str ? `${str} ${attr}` : attr;
-}, "");
+var generateElementAttributesAsString = (attributes) =>
+  Object.keys(attributes).reduce((str, key) => {
+    const attr =
+      typeof attributes[key] !== "undefined"
+        ? `${key}="${attributes[key]}"`
+        : `${key}`;
+    return str ? `${str} ${attr}` : attr;
+  }, "");
 var generateTitleAsString = (type, title, attributes, encode) => {
   const attributeString = generateElementAttributesAsString(attributes);
   const flattenedTitle = flattenArray(title);
-  return attributeString ? `<${type} ${HELMET_ATTRIBUTE}="true" ${attributeString}>${encodeSpecialCharacters(
-    flattenedTitle,
-    encode
-  )}</${type}>` : `<${type} ${HELMET_ATTRIBUTE}="true">${encodeSpecialCharacters(
-    flattenedTitle,
-    encode
-  )}</${type}>`;
+  return attributeString
+    ? `<${type} ${HELMET_ATTRIBUTE}="true" ${attributeString}>${encodeSpecialCharacters(
+        flattenedTitle,
+        encode,
+      )}</${type}>`
+    : `<${type} ${HELMET_ATTRIBUTE}="true">${encodeSpecialCharacters(
+        flattenedTitle,
+        encode,
+      )}</${type}>`;
 };
-var generateTagsAsString = (type, tags, encode = true) => tags.reduce((str, t) => {
-  const tag = t;
-  const attributeHtml = Object.keys(tag).filter(
-    (attribute) => !(attribute === "innerHTML" || attribute === "cssText")
-  ).reduce((string, attribute) => {
-    const attr = typeof tag[attribute] === "undefined" ? attribute : `${attribute}="${encodeSpecialCharacters(tag[attribute], encode)}"`;
-    return string ? `${string} ${attr}` : attr;
+var generateTagsAsString = (type, tags, encode = true) =>
+  tags.reduce((str, t) => {
+    const tag = t;
+    const attributeHtml = Object.keys(tag)
+      .filter(
+        (attribute) => !(attribute === "innerHTML" || attribute === "cssText"),
+      )
+      .reduce((string, attribute) => {
+        const attr =
+          typeof tag[attribute] === "undefined"
+            ? attribute
+            : `${attribute}="${encodeSpecialCharacters(tag[attribute], encode)}"`;
+        return string ? `${string} ${attr}` : attr;
+      }, "");
+    const tagContent = tag.innerHTML || tag.cssText || "";
+    const isSelfClosing = SELF_CLOSING_TAGS.indexOf(type) === -1;
+    return `${str}<${type} ${HELMET_ATTRIBUTE}="true" ${attributeHtml}${isSelfClosing ? `/>` : `>${tagContent}</${type}>`}`;
   }, "");
-  const tagContent = tag.innerHTML || tag.cssText || "";
-  const isSelfClosing = SELF_CLOSING_TAGS.indexOf(type) === -1;
-  return `${str}<${type} ${HELMET_ATTRIBUTE}="true" ${attributeHtml}${isSelfClosing ? `/>` : `>${tagContent}</${type}>`}`;
-}, "");
-var convertElementAttributesToReactProps = (attributes, initProps = {}) => Object.keys(attributes).reduce((obj, key) => {
-  const mapped = REACT_TAG_MAP[key];
-  obj[mapped || key] = attributes[key];
-  return obj;
-}, initProps);
+var convertElementAttributesToReactProps = (attributes, initProps = {}) =>
+  Object.keys(attributes).reduce((obj, key) => {
+    const mapped = REACT_TAG_MAP[key];
+    obj[mapped || key] = attributes[key];
+    return obj;
+  }, initProps);
 var generateTitleAsReactComponent = (_type, title, attributes) => {
   const initProps = {
     key: title,
-    [HELMET_ATTRIBUTE]: true
+    [HELMET_ATTRIBUTE]: true,
   };
   const props = convertElementAttributesToReactProps(attributes, initProps);
   return [import_react3.default.createElement("title", props, title)];
 };
-var generateTagsAsReactComponent = (type, tags) => tags.map((tag, i) => {
-  const mappedTag = {
-    key: i,
-    [HELMET_ATTRIBUTE]: true
-  };
-  Object.keys(tag).forEach((attribute) => {
-    const mapped = REACT_TAG_MAP[attribute];
-    const mappedAttribute = mapped || attribute;
-    if (mappedAttribute === "innerHTML" || mappedAttribute === "cssText") {
-      const content = tag.innerHTML || tag.cssText;
-      mappedTag.dangerouslySetInnerHTML = { __html: content };
-    } else {
-      mappedTag[mappedAttribute] = tag[attribute];
-    }
+var generateTagsAsReactComponent = (type, tags) =>
+  tags.map((tag, i) => {
+    const mappedTag = {
+      key: i,
+      [HELMET_ATTRIBUTE]: true,
+    };
+    Object.keys(tag).forEach((attribute) => {
+      const mapped = REACT_TAG_MAP[attribute];
+      const mappedAttribute = mapped || attribute;
+      if (mappedAttribute === "innerHTML" || mappedAttribute === "cssText") {
+        const content = tag.innerHTML || tag.cssText;
+        mappedTag.dangerouslySetInnerHTML = { __html: content };
+      } else {
+        mappedTag[mappedAttribute] = tag[attribute];
+      }
+    });
+    return import_react3.default.createElement(type, mappedTag);
   });
-  return import_react3.default.createElement(type, mappedTag);
-});
 var getMethodsForTag = (type, tags, encode = true) => {
   switch (type) {
     case "title":
       return {
-        toComponent: () => generateTitleAsReactComponent(type, tags.title, tags.titleAttributes),
-        toString: () => generateTitleAsString(type, tags.title, tags.titleAttributes, encode)
+        toComponent: () =>
+          generateTitleAsReactComponent(type, tags.title, tags.titleAttributes),
+        toString: () =>
+          generateTitleAsString(type, tags.title, tags.titleAttributes, encode),
       };
     case "bodyAttributes":
     case "htmlAttributes":
       return {
         toComponent: () => convertElementAttributesToReactProps(tags),
-        toString: () => generateElementAttributesAsString(tags)
+        toString: () => generateElementAttributesAsString(tags),
       };
     default:
       return {
         toComponent: () => generateTagsAsReactComponent(type, tags),
-        toString: () => generateTagsAsString(type, tags, encode)
+        toString: () => generateTagsAsString(type, tags, encode),
       };
   }
 };
@@ -523,22 +629,21 @@ var getPriorityMethods = ({ metaTags, linkTags, scriptTags, encode }) => {
     toComponent: () => [
       ...generateTagsAsReactComponent("meta", meta.priority),
       ...generateTagsAsReactComponent("link", link.priority),
-      ...generateTagsAsReactComponent("script", script.priority)
+      ...generateTagsAsReactComponent("script", script.priority),
     ],
-    toString: () => (
+    toString: () =>
       // generate all the tags as strings and concatenate them
       `${getMethodsForTag("meta", meta.priority, encode)} ${getMethodsForTag(
         "link",
         link.priority,
-        encode
-      )} ${getMethodsForTag("script", script.priority, encode)}`
-    )
+        encode,
+      )} ${getMethodsForTag("script", script.priority, encode)}`,
   };
   return {
     priorityMethods,
     metaTags: meta.default,
     linkTags: link.default,
-    scriptTags: script.default
+    scriptTags: script.default,
   };
 };
 var mapStateOnServer = (props) => {
@@ -551,15 +656,16 @@ var mapStateOnServer = (props) => {
     styleTags,
     title = "",
     titleAttributes,
-    prioritizeSeoTags
+    prioritizeSeoTags,
   } = props;
   let { linkTags, metaTags, scriptTags } = props;
   let priorityMethods = {
     toComponent: () => [],
-    toString: () => ""
+    toString: () => "",
   };
   if (prioritizeSeoTags) {
-    ({ priorityMethods, linkTags, metaTags, scriptTags } = getPriorityMethods(props));
+    ({ priorityMethods, linkTags, metaTags, scriptTags } =
+      getPriorityMethods(props));
   }
   return {
     priority: priorityMethods,
@@ -571,12 +677,16 @@ var mapStateOnServer = (props) => {
     noscript: getMethodsForTag("noscript", noscriptTags, encode),
     script: getMethodsForTag("script", scriptTags, encode),
     style: getMethodsForTag("style", styleTags, encode),
-    title: getMethodsForTag("title", { title, titleAttributes }, encode)
+    title: getMethodsForTag("title", { title, titleAttributes }, encode),
   };
 };
 var server_default = mapStateOnServer;
 var instances = [];
-var isDocument = !!(typeof window !== "undefined" && window.document && window.document.createElement);
+var isDocument = !!(
+  typeof window !== "undefined" &&
+  window.document &&
+  window.document.createElement
+);
 var HelmetData = class {
   instances = [];
   canUseDOM = isDocument;
@@ -586,15 +696,17 @@ var HelmetData = class {
       this.context.helmet = serverState;
     },
     helmetInstances: {
-      get: () => this.canUseDOM ? instances : this.instances,
+      get: () => (this.canUseDOM ? instances : this.instances),
       add: (instance) => {
         (this.canUseDOM ? instances : this.instances).push(instance);
       },
       remove: (instance) => {
-        const index = (this.canUseDOM ? instances : this.instances).indexOf(instance);
+        const index = (this.canUseDOM ? instances : this.instances).indexOf(
+          instance,
+        );
         (this.canUseDOM ? instances : this.instances).splice(index, 1);
-      }
-    }
+      },
+    },
   };
   constructor(context, canUseDOM) {
     this.context = context;
@@ -611,7 +723,7 @@ var HelmetData = class {
         scriptTags: [],
         styleTags: [],
         title: "",
-        titleAttributes: {}
+        titleAttributes: {},
       });
     }
   }
@@ -628,21 +740,34 @@ var HelmetProvider = class _HelmetProvider extends import_react2.Component {
     if (isReact19) {
       this.helmetData = null;
     } else {
-      this.helmetData = new HelmetData(this.props.context || {}, _HelmetProvider.canUseDOM);
+      this.helmetData = new HelmetData(
+        this.props.context || {},
+        _HelmetProvider.canUseDOM,
+      );
     }
   }
   render() {
     if (isReact19) {
-      return import_react2.default.createElement(import_react2.default.Fragment, null, this.props.children);
+      return import_react2.default.createElement(
+        import_react2.default.Fragment,
+        null,
+        this.props.children,
+      );
     }
-    return import_react2.default.createElement(Context.Provider, { value: this.helmetData.value }, this.props.children);
+    return import_react2.default.createElement(
+      Context.Provider,
+      { value: this.helmetData.value },
+      this.props.children,
+    );
   }
 };
 var updateTags = (type, tags) => {
-  const headElement = document.head || document.querySelector(
-    "head"
-    /* HEAD */
-  );
+  const headElement =
+    document.head ||
+    document.querySelector(
+      "head",
+      /* HEAD */
+    );
   const tagNodes = headElement.querySelectorAll(`${type}[${HELMET_ATTRIBUTE}]`);
   const oldTags = [].slice.call(tagNodes);
   const newTags = [];
@@ -665,10 +790,12 @@ var updateTags = (type, tags) => {
         }
       }
       newElement.setAttribute(HELMET_ATTRIBUTE, "true");
-      if (oldTags.some((existingTag, index) => {
-        indexToDelete = index;
-        return newElement.isEqualNode(existingTag);
-      })) {
+      if (
+        oldTags.some((existingTag, index) => {
+          indexToDelete = index;
+          return newElement.isEqualNode(existingTag);
+        })
+      ) {
         oldTags.splice(indexToDelete, 1);
       } else {
         newTags.push(newElement);
@@ -679,7 +806,7 @@ var updateTags = (type, tags) => {
   newTags.forEach((tag) => headElement.appendChild(tag));
   return {
     oldTags,
-    newTags
+    newTags,
   };
 };
 var updateAttributes = (tagName, attributes) => {
@@ -688,7 +815,9 @@ var updateAttributes = (tagName, attributes) => {
     return;
   }
   const helmetAttributeString = elementTag.getAttribute(HELMET_ATTRIBUTE);
-  const helmetAttributes = helmetAttributeString ? helmetAttributeString.split(",") : [];
+  const helmetAttributes = helmetAttributeString
+    ? helmetAttributeString.split(",")
+    : [];
   const attributesToRemove = [...helmetAttributes];
   const attributeKeys = Object.keys(attributes);
   for (const attribute of attributeKeys) {
@@ -709,7 +838,9 @@ var updateAttributes = (tagName, attributes) => {
   }
   if (helmetAttributes.length === attributesToRemove.length) {
     elementTag.removeAttribute(HELMET_ATTRIBUTE);
-  } else if (elementTag.getAttribute(HELMET_ATTRIBUTE) !== attributeKeys.join(",")) {
+  } else if (
+    elementTag.getAttribute(HELMET_ATTRIBUTE) !== attributeKeys.join(",")
+  ) {
     elementTag.setAttribute(HELMET_ATTRIBUTE, attributeKeys.join(","));
   }
 };
@@ -731,7 +862,7 @@ var commitTagChanges = (newState, cb) => {
     scriptTags,
     styleTags,
     title,
-    titleAttributes
+    titleAttributes,
   } = newState;
   updateAttributes("body", bodyAttributes);
   updateAttributes("html", htmlAttributes);
@@ -742,7 +873,7 @@ var commitTagChanges = (newState, cb) => {
     metaTags: updateTags("meta", metaTags),
     noscriptTags: updateTags("noscript", noscriptTags),
     scriptTags: updateTags("script", scriptTags),
-    styleTags: updateTags("style", styleTags)
+    styleTags: updateTags("style", styleTags),
   };
   const addedTags = {};
   const removedTags = {};
@@ -797,7 +928,7 @@ var HelmetDispatcher = class extends import_react5.Component {
       helmetInstances.get().map((instance) => {
         const { context: _context, ...props } = instance.props;
         return props;
-      })
+      }),
     );
     if (HelmetProvider.canUseDOM) {
       client_default(state);
@@ -840,11 +971,9 @@ var toReactProps = (attrs) => {
   return result;
 };
 var applyAttributes = (tagName, attributes) => {
-  if (!isDocument)
-    return;
+  if (!isDocument) return;
   const el = document.getElementsByTagName(tagName)[0];
-  if (!el)
-    return;
+  if (!el) return;
   const managedAttr = "data-rh-managed";
   const prev = el.getAttribute(managedAttr);
   const prevKeys = prev ? prev.split(",") : [];
@@ -903,62 +1032,65 @@ var React19Dispatcher = class extends import_react6.Component {
   resolveTitle() {
     const { title, titleTemplate, defaultTitle } = this.props;
     if (title && titleTemplate) {
-      return titleTemplate.replace(/%s/g, () => Array.isArray(title) ? title.join("") : title);
+      return titleTemplate.replace(/%s/g, () =>
+        Array.isArray(title) ? title.join("") : title,
+      );
     }
     return title || defaultTitle || void 0;
   }
   renderTitle() {
     const title = this.resolveTitle();
-    if (title === void 0)
-      return null;
+    if (title === void 0) return null;
     const titleAttributes = this.props.titleAttributes || {};
-    return import_react6.default.createElement("title", toReactProps(titleAttributes), title);
+    return import_react6.default.createElement(
+      "title",
+      toReactProps(titleAttributes),
+      title,
+    );
   }
   renderBase() {
     const { base } = this.props;
-    if (!base)
-      return null;
+    if (!base) return null;
     return import_react6.default.createElement("base", toReactProps(base));
   }
   renderMeta() {
     const { meta } = this.props;
-    if (!meta || !Array.isArray(meta))
-      return null;
-    return meta.map(
-      (attrs, i) => import_react6.default.createElement("meta", {
+    if (!meta || !Array.isArray(meta)) return null;
+    return meta.map((attrs, i) =>
+      import_react6.default.createElement("meta", {
         key: i,
-        ...toReactProps(attrs)
-      })
+        ...toReactProps(attrs),
+      }),
     );
   }
   renderLink() {
     const { link } = this.props;
-    if (!link || !Array.isArray(link))
-      return null;
-    return link.map(
-      (attrs, i) => import_react6.default.createElement("link", {
+    if (!link || !Array.isArray(link)) return null;
+    return link.map((attrs, i) =>
+      import_react6.default.createElement("link", {
         key: i,
-        ...toReactProps(attrs)
-      })
+        ...toReactProps(attrs),
+      }),
     );
   }
   renderScript() {
     const { script } = this.props;
-    if (!script || !Array.isArray(script))
-      return null;
+    if (!script || !Array.isArray(script)) return null;
     return script.map((attrs, i) => {
       const { innerHTML, ...rest } = attrs;
       const props = toReactProps(rest);
       if (innerHTML) {
         props.dangerouslySetInnerHTML = { __html: innerHTML };
       }
-      return import_react6.default.createElement("script", { key: i, ...props });
+      return import_react6.default.createElement("script", {
+        key: i,
+        ...props,
+      });
     });
   }
   renderStyle() {
     const { style } = this.props;
-    if (!style || !Array.isArray(style))
-      return null;
+    if (!style || !Array.isArray(style)) return null;
     return style.map((attrs, i) => {
       const { cssText, ...rest } = attrs;
       const props = toReactProps(rest);
@@ -970,15 +1102,17 @@ var React19Dispatcher = class extends import_react6.Component {
   }
   renderNoscript() {
     const { noscript } = this.props;
-    if (!noscript || !Array.isArray(noscript))
-      return null;
+    if (!noscript || !Array.isArray(noscript)) return null;
     return noscript.map((attrs, i) => {
       const { innerHTML, ...rest } = attrs;
       const props = toReactProps(rest);
       if (innerHTML) {
         props.dangerouslySetInnerHTML = { __html: innerHTML };
       }
-      return import_react6.default.createElement("noscript", { key: i, ...props });
+      return import_react6.default.createElement("noscript", {
+        key: i,
+        ...props,
+      });
     });
   }
   render() {
@@ -991,7 +1125,7 @@ var React19Dispatcher = class extends import_react6.Component {
       this.renderLink(),
       this.renderScript(),
       this.renderStyle(),
-      this.renderNoscript()
+      this.renderNoscript(),
     );
   }
 };
@@ -999,10 +1133,13 @@ var Helmet = class extends import_react.Component {
   static defaultProps = {
     defer: true,
     encodeSpecialCharacters: true,
-    prioritizeSeoTags: false
+    prioritizeSeoTags: false,
   };
   shouldComponentUpdate(nextProps) {
-    return !(0, import_react_fast_compare.default)(without(this.props, "helmetData"), without(nextProps, "helmetData"));
+    return !(0, import_react_fast_compare.default)(
+      without(this.props, "helmetData"),
+      without(nextProps, "helmetData"),
+    );
   }
   mapNestedChildrenToProps(child, nestedChildren) {
     if (!nestedChildren) {
@@ -1012,28 +1149,33 @@ var Helmet = class extends import_react.Component {
       case "script":
       case "noscript":
         return {
-          innerHTML: nestedChildren
+          innerHTML: nestedChildren,
         };
       case "style":
         return {
-          cssText: nestedChildren
+          cssText: nestedChildren,
         };
       default:
         throw new Error(
-          `<${child.type} /> elements are self-closing and can not contain children. Refer to our API for more information.`
+          `<${child.type} /> elements are self-closing and can not contain children. Refer to our API for more information.`,
         );
     }
   }
-  flattenArrayTypeChildren(child, arrayTypeChildren, newChildProps, nestedChildren) {
+  flattenArrayTypeChildren(
+    child,
+    arrayTypeChildren,
+    newChildProps,
+    nestedChildren,
+  ) {
     return {
       ...arrayTypeChildren,
       [child.type]: [
-        ...arrayTypeChildren[child.type] || [],
+        ...(arrayTypeChildren[child.type] || []),
         {
           ...newChildProps,
-          ...this.mapNestedChildrenToProps(child, nestedChildren)
-        }
-      ]
+          ...this.mapNestedChildrenToProps(child, nestedChildren),
+        },
+      ],
     };
   }
   mapObjectTypeChildren(child, newProps, newChildProps, nestedChildren) {
@@ -1042,22 +1184,22 @@ var Helmet = class extends import_react.Component {
         return {
           ...newProps,
           [child.type]: nestedChildren,
-          titleAttributes: { ...newChildProps }
+          titleAttributes: { ...newChildProps },
         };
       case "body":
         return {
           ...newProps,
-          bodyAttributes: { ...newChildProps }
+          bodyAttributes: { ...newChildProps },
         };
       case "html":
         return {
           ...newProps,
-          htmlAttributes: { ...newChildProps }
+          htmlAttributes: { ...newChildProps },
         };
       default:
         return {
           ...newProps,
-          [child.type]: { ...newChildProps }
+          [child.type]: { ...newChildProps },
         };
     }
   }
@@ -1066,7 +1208,7 @@ var Helmet = class extends import_react.Component {
     Object.keys(arrayTypeChildren).forEach((arrayChildName) => {
       newFlattenedProps = {
         ...newFlattenedProps,
-        [arrayChildName]: arrayTypeChildren[arrayChildName]
+        [arrayChildName]: arrayTypeChildren[arrayChildName],
       };
     });
     return newFlattenedProps;
@@ -1074,13 +1216,20 @@ var Helmet = class extends import_react.Component {
   warnOnInvalidChildren(child, nestedChildren) {
     (0, import_invariant.default)(
       VALID_TAG_NAMES.some((name) => child.type === name),
-      typeof child.type === "function" ? `You may be attempting to nest <Helmet> components within each other, which is not allowed. Refer to our API for more information.` : `Only elements types ${VALID_TAG_NAMES.join(
-        ", "
-      )} are allowed. Helmet does not support rendering <${child.type}> elements. Refer to our API for more information.`
+      typeof child.type === "function"
+        ? `You may be attempting to nest <Helmet> components within each other, which is not allowed. Refer to our API for more information.`
+        : `Only elements types ${VALID_TAG_NAMES.join(
+            ", ",
+          )} are allowed. Helmet does not support rendering <${child.type}> elements. Refer to our API for more information.`,
     );
     (0, import_invariant.default)(
-      !nestedChildren || typeof nestedChildren === "string" || Array.isArray(nestedChildren) && !nestedChildren.some((nestedChild) => typeof nestedChild !== "string"),
-      `Helmet expects a string as a child of <${child.type}>. Did you forget to wrap your children in braces? ( <${child.type}>{\`\`}</${child.type}> ) Refer to our API for more information.`
+      !nestedChildren ||
+        typeof nestedChildren === "string" ||
+        (Array.isArray(nestedChildren) &&
+          !nestedChildren.some(
+            (nestedChild) => typeof nestedChild !== "string",
+          )),
+      `Helmet expects a string as a child of <${child.type}>. Did you forget to wrap your children in braces? ( <${child.type}>{\`\`}</${child.type}> ) Refer to our API for more information.`,
     );
     return true;
   }
@@ -1114,11 +1263,16 @@ var Helmet = class extends import_react.Component {
             child,
             arrayTypeChildren,
             newChildProps,
-            nestedChildren
+            nestedChildren,
           );
           break;
         default:
-          newProps = this.mapObjectTypeChildren(child, newProps, newChildProps, nestedChildren);
+          newProps = this.mapObjectTypeChildren(
+            child,
+            newProps,
+            newChildProps,
+            nestedChildren,
+          );
           break;
       }
     });
@@ -1137,14 +1291,22 @@ var Helmet = class extends import_react.Component {
       delete newProps.helmetData;
     }
     if (isReact19) {
-      return import_react.default.createElement(React19Dispatcher, { ...newProps });
+      return import_react.default.createElement(React19Dispatcher, {
+        ...newProps,
+      });
     }
-    return helmetData ? import_react.default.createElement(HelmetDispatcher, { ...newProps, context: helmetData.value }) : import_react.default.createElement(Context.Consumer, null, (context) => import_react.default.createElement(HelmetDispatcher, { ...newProps, context }));
+    return helmetData
+      ? import_react.default.createElement(HelmetDispatcher, {
+          ...newProps,
+          context: helmetData.value,
+        })
+      : import_react.default.createElement(Context.Consumer, null, (context) =>
+          import_react.default.createElement(HelmetDispatcher, {
+            ...newProps,
+            context,
+          }),
+        );
   }
 };
-export {
-  Helmet,
-  HelmetData,
-  HelmetProvider
-};
+export { Helmet, HelmetData, HelmetProvider };
 //# sourceMappingURL=react-helmet-async.js.map

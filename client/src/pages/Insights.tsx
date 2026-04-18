@@ -16,12 +16,12 @@ export default function InsightsPage() {
 
   // "i" → "insight" olarak yeniden adlandırıldı (belirsiz parametre adı)
   const categories = useMemo(() => {
-    const cats = new Set(insights.map(insight => insight.category));
+    const cats = new Set(insights.map((insight) => insight.category));
     return ["All", ...Array.from(cats).sort()];
   }, []);
 
   const filteredAndSorted = useMemo(() => {
-    const filtered = insights.filter(insight => {
+    const filtered = insights.filter((insight) => {
       if (category !== "All" && insight.category !== category) return false;
       if (searchTerm.trim() !== "") {
         const term = searchTerm.toLowerCase();
@@ -34,9 +34,13 @@ export default function InsightsPage() {
     });
 
     if (sortBy === "newest") {
-      filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      filtered.sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+      );
     } else if (sortBy === "oldest") {
-      filtered.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+      filtered.sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+      );
     } else if (sortBy === "alphabetical") {
       filtered.sort((a, b) => a.title.localeCompare(b.title));
     }
@@ -96,8 +100,10 @@ export default function InsightsPage() {
                 onChange={(e) => setCategory(e.target.value)}
                 className="px-3 py-2 border border-border/40 rounded-sm bg-white focus:outline-none focus:border-primary"
               >
-                {categories.map(cat => (
-                  <option key={cat} value={cat}>{cat}</option>
+                {categories.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
                 ))}
               </select>
 
@@ -118,24 +124,31 @@ export default function InsightsPage() {
 
           {/* Sonuç sayısı */}
           <p className="text-sm text-muted-foreground mt-4" aria-live="polite">
-            {filteredAndSorted.length} article{filteredAndSorted.length !== 1 ? "s" : ""} found
+            {filteredAndSorted.length} article
+            {filteredAndSorted.length !== 1 ? "s" : ""} found
           </p>
 
           {/* Grid — Wouter'da <Link> zaten <a> render eder, iç <a> kaldırıldı */}
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-            {filteredAndSorted.map(insight => (
+            {filteredAndSorted.map((insight) => (
               <Link
                 key={insight.slug}
                 href={`/insights/${insight.slug}`}
                 className="block group p-6 bg-white border border-border/40 rounded-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
               >
-                <div className="text-sm text-primary font-medium mb-2">{insight.category}</div>
+                <div className="text-sm text-primary font-medium mb-2">
+                  {insight.category}
+                </div>
                 <h2 className="text-xl font-display font-bold mb-2 group-hover:text-primary transition-colors">
                   {insight.title}
                 </h2>
-                <p className="text-muted-foreground text-sm mb-3">{insight.description}</p>
+                <p className="text-muted-foreground text-sm mb-3">
+                  {insight.description}
+                </p>
                 <div className="flex items-center text-xs text-muted-foreground">
-                  <span>{new Date(insight.date).toLocaleDateString("en-GB")}</span>
+                  <span>
+                    {new Date(insight.date).toLocaleDateString("en-GB")}
+                  </span>
                   <span className="mx-2">•</span>
                   <span>{insight.readTime} min read</span>
                 </div>
@@ -146,7 +159,9 @@ export default function InsightsPage() {
           {/* Sonuç yok */}
           {filteredAndSorted.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-muted-foreground">No articles match your criteria.</p>
+              <p className="text-muted-foreground">
+                No articles match your criteria.
+              </p>
               <button
                 onClick={clearFilters}
                 className="mt-2 text-primary hover:underline"

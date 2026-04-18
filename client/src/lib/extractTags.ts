@@ -1,9 +1,9 @@
-import { MARITIME_TAXONOMY } from './taxonomy';
+import { MARITIME_TAXONOMY } from "./taxonomy";
 
 export function extractTags(text: string): string[] {
   const lowerText = text.toLowerCase();
   const matchedTags = new Set<string>();
-  
+
   for (const [tag, patterns] of Object.entries(MARITIME_TAXONOMY)) {
     for (const pattern of patterns) {
       if (lowerText.includes(pattern)) {
@@ -12,6 +12,6 @@ export function extractTags(text: string): string[] {
       }
     }
   }
-  
+
   return Array.from(matchedTags);
 }

@@ -17,6 +17,10 @@ export default [
       "**/*.min.css",
       "**/pdf.worker.min.js",
       "**/vendor-*.js",
+      "**/.vite-cache/**",      // <-- YENİ
+      "**/client/.vite-cache/**", // <-- YENİ
+      "**/deps/**",             // <-- YENİ
+      "**/chunk-*.js"           // <-- YENİ
     ],
   },
 

@@ -1,12 +1,14 @@
-import type { Insight } from '.';
+import type { Insight } from ".";
 
 export const zeroEmissionZone: Insight = {
-  slug: 'zero-emission-zone-boka-kotorska',
-  title: 'Boka Kotorska Zero-Emission Zone | UNESCO Protection Roadmap | Adriatica',
-  category: 'Strategic Outlook',
-  date: '2026-03-25',
+  slug: "zero-emission-zone-boka-kotorska",
+  title:
+    "Boka Kotorska Zero-Emission Zone | UNESCO Protection Roadmap | Adriatica",
+  category: "Strategic Outlook",
+  date: "2026-03-25",
   readTime: 8,
-  description: 'Why Boka Kotorska lacks a zero-emission zone despite UNESCO status. Strategic roadmap for 2026-2030, EU-backed Blue Economy, and comparative analysis with Geirangerfjord.',
+  description:
+    "Why Boka Kotorska lacks a zero-emission zone despite UNESCO status. Strategic roadmap for 2026-2030, EU-backed Blue Economy, and comparative analysis with Geirangerfjord.",
   contentHtml: `
     <figure class="my-8">
       <img src="/images/insights/boka-kotorska-map.jpg" 
@@ -118,33 +120,39 @@ export const zeroEmissionZone: Insight = {
       <li>Adriatica D.O.O. Engineering Archives: Comparative analysis on anthropogenic impact and ZEZ feasibility (2025).</li>
     </ol>
   `,
-  pdfUrl: '/pdfs/insights/ADRI-TIS-004.pdf',
+  pdfUrl: "/pdfs/insights/ADRI-TIS-004.pdf",
   operationalImplications: {
-    heading: 'Operational Implications',
-    summary: 'If you operate a vessel in or around Boka Kotorska, the regulatory landscape is shifting. Here is what the 2026–2030 roadmap means for your operations today:',
+    heading: "Operational Implications",
+    summary:
+      "If you operate a vessel in or around Boka Kotorska, the regulatory landscape is shifting. Here is what the 2026–2030 roadmap means for your operations today:",
     points: [
       {
-        point: 'Vessels operating in Boka Kotorska should begin assessing emission profiles now. When a ZEZ framework is introduced, vessels without baseline documentation will face the steepest compliance burden.',
-        href: '/services/sustainable-technologies',
+        point:
+          "Vessels operating in Boka Kotorska should begin assessing emission profiles now. When a ZEZ framework is introduced, vessels without baseline documentation will face the steepest compliance burden.",
+        href: "/services/sustainable-technologies",
       },
       {
-        point: 'Charter operators positioning in Montenegro should monitor regulatory signals closely. The Geirangerfjord precedent shows that tourist vessel restrictions arrive first — often with 12–18 months notice.',
+        point:
+          "Charter operators positioning in Montenegro should monitor regulatory signals closely. The Geirangerfjord precedent shows that tourist vessel restrictions arrive first — often with 12–18 months notice.",
       },
       {
-        point: 'Hybrid propulsion retrofits and shore power compatibility assessments are long-lead items. If ZEZ enforcement arrives by 2028, engineering evaluations need to begin no later than 2026.',
-        href: '/services/structural-integrity',
+        point:
+          "Hybrid propulsion retrofits and shore power compatibility assessments are long-lead items. If ZEZ enforcement arrives by 2028, engineering evaluations need to begin no later than 2026.",
+        href: "/services/structural-integrity",
       },
       {
-        point: 'EU IPA III and Horizon Europe funding is available for green maritime feasibility studies in candidate countries. Montenegro-based operators and marina investors should explore eligibility now.',
+        point:
+          "EU IPA III and Horizon Europe funding is available for green maritime feasibility studies in candidate countries. Montenegro-based operators and marina investors should explore eligibility now.",
       },
       {
-        point: 'Building an energy efficiency profile for your vessel today — SEEMP, energy audits, CII tracking — positions you ahead of both ZEZ requirements and charter market expectations.',
-        href: '/deliverables',
+        point:
+          "Building an energy efficiency profile for your vessel today — SEEMP, energy audits, CII tracking — positions you ahead of both ZEZ requirements and charter market expectations.",
+        href: "/deliverables",
       },
     ],
     cta: {
-      label: 'Discuss Your Vessel\'s Emission Readiness',
-      href: '/request-consultation',
+      label: "Discuss Your Vessel's Emission Readiness",
+      href: "/request-consultation",
     },
   },
 };

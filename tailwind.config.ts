@@ -4,10 +4,7 @@ import typography from "@tailwindcss/typography";
 
 export default {
   darkMode: ["class"],
-  content: [
-    "./client/index.html",
-    "./client/src/**/*.{js,jsx,ts,tsx}",
-  ],
+  content: ["./client/index.html", "./client/src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       borderRadius: {
@@ -25,24 +22,28 @@ export default {
 
         card: {
           DEFAULT: "hsl(var(--card, 0 0% 100%) / <alpha-value>)",
-          foreground: "hsl(var(--card-foreground, 210 15% 15%) / <alpha-value>)",
+          foreground:
+            "hsl(var(--card-foreground, 210 15% 15%) / <alpha-value>)",
           border: "hsl(var(--card-border, 210 15% 85%) / <alpha-value>)",
         },
 
         popover: {
           DEFAULT: "hsl(var(--popover, 0 0% 100%) / <alpha-value>)",
-          foreground: "hsl(var(--popover-foreground, 210 15% 15%) / <alpha-value>)",
+          foreground:
+            "hsl(var(--popover-foreground, 210 15% 15%) / <alpha-value>)",
           border: "hsl(var(--popover-border, 210 15% 85%) / <alpha-value>)",
         },
 
         primary: {
           DEFAULT: "hsl(var(--primary, 210 70% 30%) / <alpha-value>)",
-          foreground: "hsl(var(--primary-foreground, 0 0% 100%) / <alpha-value>)",
+          foreground:
+            "hsl(var(--primary-foreground, 0 0% 100%) / <alpha-value>)",
         },
 
         secondary: {
           DEFAULT: "hsl(var(--secondary, 210 20% 90%) / <alpha-value>)",
-          foreground: "hsl(var(--secondary-foreground, 210 15% 20%) / <alpha-value>)",
+          foreground:
+            "hsl(var(--secondary-foreground, 210 15% 20%) / <alpha-value>)",
         },
 
         muted: {
@@ -53,12 +54,14 @@ export default {
 
         accent: {
           DEFAULT: "hsl(var(--accent, 210 40% 92%) / <alpha-value>)",
-          foreground: "hsl(var(--accent-foreground, 210 20% 20%) / <alpha-value>)",
+          foreground:
+            "hsl(var(--accent-foreground, 210 20% 20%) / <alpha-value>)",
         },
 
         destructive: {
           DEFAULT: "hsl(var(--destructive, 0 75% 50%) / <alpha-value>)",
-          foreground: "hsl(var(--destructive-foreground, 0 0% 100%) / <alpha-value>)",
+          foreground:
+            "hsl(var(--destructive-foreground, 0 0% 100%) / <alpha-value>)",
         },
 
         ring: "hsl(var(--ring, 210 70% 30%) / <alpha-value>)",

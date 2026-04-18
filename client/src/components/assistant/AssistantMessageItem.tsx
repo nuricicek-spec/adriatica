@@ -24,7 +24,10 @@ const REDIRECT_DELAY_MS = 300;
  * Strips the [ROUTE:...] token from content and returns both the
  * cleaned text and the extracted route (or null if none found).
  */
-function extractRoute(content: string): { clean: string; route: string | null } {
+function extractRoute(content: string): {
+  clean: string;
+  route: string | null;
+} {
   const match = content.match(ROUTE_TOKEN_RE);
   if (!match) return { clean: content, route: null };
   return {
@@ -62,7 +65,7 @@ function renderWithLinks(content: string): (string | JSX.Element)[] {
         className="text-primary underline font-medium hover:text-primary/80 transition-colors"
       >
         {fullMatch}
-      </Link>
+      </Link>,
     );
 
     lastIndex = start + fullMatch.length;
@@ -103,9 +106,10 @@ export function AssistantMessageItem({ message }: Props) {
       <div
         className={`
           max-w-[82%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed
-          ${isUser
-            ? "bg-[#0B3B5C] text-white rounded-br-sm"
-            : "bg-neutral-100 text-[#0B3B5C] rounded-bl-sm"
+          ${
+            isUser
+              ? "bg-[#0B3B5C] text-white rounded-br-sm"
+              : "bg-neutral-100 text-[#0B3B5C] rounded-bl-sm"
           }
         `}
       >
@@ -120,15 +124,22 @@ export function AssistantMessageItem({ message }: Props) {
         {message.attachment && !message.attachment.preview && (
           <div className="flex items-center gap-2 mb-2 text-xs opacity-70">
             <span>📎</span>
-            <span className="truncate max-w-[160px]">{message.attachment.name}</span>
+            <span className="truncate max-w-[160px]">
+              {message.attachment.name}
+            </span>
           </div>
         )}
 
         {/* Message content — plain string for user, parsed JSX for assistant */}
         <span>{renderedContent}</span>
 
-        <p className={`text-[10px] mt-1 opacity-40 ${isUser ? "text-right" : "text-left"}`}>
-          {message.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+        <p
+          className={`text-[10px] mt-1 opacity-40 ${isUser ? "text-right" : "text-left"}`}
+        >
+          {message.timestamp.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
         </p>
       </div>
     </div>

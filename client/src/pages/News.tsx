@@ -10,14 +10,16 @@ const newsItems = [
     date: "25 March 2026",
     dateIso: "2026-03-25",
     title: "Adriatica Launches IMO‑Aligned Biofouling Management Plans",
-    excerpt: "With Port State Control regimes intensifying scrutiny on biofouling documentation, Adriatica D.O.O. now provides vessel‑specific Biofouling Management Plans (BFMP) fully aligned with IMO MEPC.378(80) guidelines. You get quantified risk assessments, niche‑area identification, and a structured Biofouling Record Book (BFRB) – PSC‑ready documentation and a clear path to compliance. As the 2026 enforcement deadline approaches, we're here to help vessel operators in the Adriatic and Mediterranean stay ahead of regulatory requirements.",
+    excerpt:
+      "With Port State Control regimes intensifying scrutiny on biofouling documentation, Adriatica D.O.O. now provides vessel‑specific Biofouling Management Plans (BFMP) fully aligned with IMO MEPC.378(80) guidelines. You get quantified risk assessments, niche‑area identification, and a structured Biofouling Record Book (BFRB) – PSC‑ready documentation and a clear path to compliance. As the 2026 enforcement deadline approaches, we're here to help vessel operators in the Adriatic and Mediterranean stay ahead of regulatory requirements.",
     showCta: true,
   },
   {
     date: "30 June 2025",
     dateIso: "2025-06-30",
     title: "Adriatica Joins the Montenegrin Marine Industry Association",
-    excerpt: "We're proud to become a member of the local marine industry network, strengthening our commitment to the Adriatic maritime community.",
+    excerpt:
+      "We're proud to become a member of the local marine industry network, strengthening our commitment to the Adriatic maritime community.",
     showCta: true,
   },
 ];
@@ -29,43 +31,45 @@ export default function News() {
       {
         "@type": "CollectionPage",
         "@id": "https://www.adriaticadoo.com/news/#webpage",
-        "url": "https://www.adriaticadoo.com/news",
-        "name": "News | Adriatica D.O.O.",
-        "description": "Latest news and updates from Adriatica D.O.O. – marine engineering insights, industry developments, and company announcements.",
-        "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
-        "about": { "@id": "https://www.adriaticadoo.com/#organization" },
-        "inLanguage": "en",
-        "datePublished": "2025-01-01",
-        "dateModified": newsItems[0].dateIso
+        url: "https://www.adriaticadoo.com/news",
+        name: "News | Adriatica D.O.O.",
+        description:
+          "Latest news and updates from Adriatica D.O.O. – marine engineering insights, industry developments, and company announcements.",
+        isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
+        about: { "@id": "https://www.adriaticadoo.com/#organization" },
+        inLanguage: "en",
+        datePublished: "2025-01-01",
+        dateModified: newsItems[0].dateIso,
       },
       {
         "@type": "ItemList",
         "@id": "https://www.adriaticadoo.com/news/#itemlist",
-        "name": "Adriatica D.O.O. News",
-        "numberOfItems": newsItems.length,
-        "itemListElement": newsItems.map((item, index) => ({
+        name: "Adriatica D.O.O. News",
+        numberOfItems: newsItems.length,
+        itemListElement: newsItems.map((item, index) => ({
           "@type": "ListItem",
-          "position": index + 1,
-          "item": {
+          position: index + 1,
+          item: {
             "@type": "NewsArticle",
-            "headline": item.title,
-            "description": item.excerpt,
-            "datePublished": item.dateIso,
-            "author": { "@id": "https://www.adriaticadoo.com/#organization" },
-            "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
-          }
-        }))
+            headline: item.title,
+            description: item.excerpt,
+            datePublished: item.dateIso,
+            author: { "@id": "https://www.adriaticadoo.com/#organization" },
+            publisher: { "@id": "https://www.adriaticadoo.com/#organization" },
+          },
+        })),
       },
       {
         "@type": "WebSite",
         "@id": "https://www.adriaticadoo.com/#website",
-        "url": "https://www.adriaticadoo.com/",
-        "name": "Adriatica D.O.O.",
-        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
-        "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
-      }
-    ]
+        url: "https://www.adriaticadoo.com/",
+        name: "Adriatica D.O.O.",
+        description:
+          "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        inLanguage: "en",
+        publisher: { "@id": "https://www.adriaticadoo.com/#organization" },
+      },
+    ],
   };
 
   return (
@@ -77,7 +81,7 @@ export default function News() {
       />
       <Helmet>
         <script type="application/ld+json">
-          {JSON.stringify(newsSchema).replace(/</g, '\\u003c')}
+          {JSON.stringify(newsSchema).replace(/</g, "\\u003c")}
         </script>
       </Helmet>
 
@@ -93,12 +97,16 @@ export default function News() {
               Latest News
             </h1>
             <p className="text-xl text-muted-foreground mb-12">
-              Updates from Adriatica D.O.O. – stay tuned for our latest projects and announcements.
+              Updates from Adriatica D.O.O. – stay tuned for our latest projects
+              and announcements.
             </p>
 
             <div className="space-y-12">
               {newsItems.map((item) => (
-                <article key={item.dateIso} className="border-l-2 border-primary/20 pl-6">
+                <article
+                  key={item.dateIso}
+                  className="border-l-2 border-primary/20 pl-6"
+                >
                   <time
                     dateTime={item.dateIso}
                     className="text-sm text-primary uppercase tracking-widest font-medium"

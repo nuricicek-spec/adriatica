@@ -11,23 +11,25 @@ export default function NotFound() {
       {
         "@type": "WebPage",
         "@id": "https://www.adriaticadoo.com/404/#webpage",
-        "url": "https://www.adriaticadoo.com/404",
-        "name": "Page Not Found | Adriatica D.O.O.",
-        "description": "The page you are looking for does not exist. Return to Adriatica D.O.O. homepage.",
-        "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
-        "about": { "@id": "https://www.adriaticadoo.com/#organization" },
-        "inLanguage": "en"
+        url: "https://www.adriaticadoo.com/404",
+        name: "Page Not Found | Adriatica D.O.O.",
+        description:
+          "The page you are looking for does not exist. Return to Adriatica D.O.O. homepage.",
+        isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
+        about: { "@id": "https://www.adriaticadoo.com/#organization" },
+        inLanguage: "en",
       },
       {
         "@type": "WebSite",
         "@id": "https://www.adriaticadoo.com/#website",
-        "url": "https://www.adriaticadoo.com/",
-        "name": "Adriatica D.O.O.",
-        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
-        "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
-      }
-    ]
+        url: "https://www.adriaticadoo.com/",
+        name: "Adriatica D.O.O.",
+        description:
+          "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        inLanguage: "en",
+        publisher: { "@id": "https://www.adriaticadoo.com/#organization" },
+      },
+    ],
   };
 
   return (
@@ -40,7 +42,7 @@ export default function NotFound() {
       />
       <Helmet>
         <script type="application/ld+json">
-          {JSON.stringify(notFoundSchema).replace(/</g, '\\u003c')}
+          {JSON.stringify(notFoundSchema).replace(/</g, "\\u003c")}
         </script>
       </Helmet>
 
@@ -49,15 +51,21 @@ export default function NotFound() {
           <CardContent className="pt-6">
             <div className="flex mb-4 gap-2">
               <AlertCircle className="h-8 w-8 text-destructive" />
-              <h1 className="text-2xl font-display font-bold text-foreground">404 Page Not Found</h1>
+              <h1 className="text-2xl font-display font-bold text-foreground">
+                404 Page Not Found
+              </h1>
             </div>
 
             <p className="mt-4 text-sm text-muted-foreground">
-              The coordinates you entered do not match any known location on our chart.
+              The coordinates you entered do not match any known location on our
+              chart.
             </p>
-            
+
             <div className="mt-8">
-              <Link href="/" className="inline-flex items-center justify-center px-6 py-3 bg-[#0B3B5C] text-white font-medium hover:bg-[#1A4B7A] transition-colors rounded-sm w-full">
+              <Link
+                href="/"
+                className="inline-flex items-center justify-center px-6 py-3 bg-[#0B3B5C] text-white font-medium hover:bg-[#1A4B7A] transition-colors rounded-sm w-full"
+              >
                 Return to Home
               </Link>
             </div>

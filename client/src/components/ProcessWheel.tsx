@@ -2,7 +2,7 @@
 // Interactive 4-step Engineering Management Process Wheel
 // SVG geometry built in React JSX – no external libraries required.
 
-import React from 'react'; // Eklendi
+import React from "react"; // Eklendi
 import { useState, useEffect, useCallback, useRef } from "react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -76,16 +76,18 @@ const SEG_LABELS = [
 
 // ─── SVG geometry helpers ─────────────────────────────────────────────────────
 
-const CX    = 200;  // viewBox centre x
-const CY    = 200;  // viewBox centre y
-const R_OUT = 178;  // outer radius
-const R_IN  = 72;   // inner radius (hole)
-const GAP   = 1.4;  // degrees of gap between segments
+const CX = 200; // viewBox centre x
+const CY = 200; // viewBox centre y
+const R_OUT = 178; // outer radius
+const R_IN = 72; // inner radius (hole)
+const GAP = 1.4; // degrees of gap between segments
 
 /** Convert polar coords to Cartesian */
 function polar(
-  cx: number, cy: number,
-  r: number, angleDeg: number
+  cx: number,
+  cy: number,
+  r: number,
+  angleDeg: number,
 ): [number, number] {
   const rad = (angleDeg * Math.PI) / 180;
   return [cx + r * Math.cos(rad), cy + r * Math.sin(rad)];
@@ -96,12 +98,15 @@ function polar(
  * startDeg / endDeg are in standard SVG degrees (0 = right, clockwise).
  */
 function arcPath(
-  cx: number, cy: number,
-  rOuter: number, rInner: number,
-  startDeg: number, endDeg: number
+  cx: number,
+  cy: number,
+  rOuter: number,
+  rInner: number,
+  startDeg: number,
+  endDeg: number,
 ): string {
   const s = startDeg + GAP;
-  const e = endDeg   - GAP;
+  const e = endDeg - GAP;
   const [x1, y1] = polar(cx, cy, rOuter, s);
   const [x2, y2] = polar(cx, cy, rOuter, e);
   const [x3, y3] = polar(cx, cy, rInner, e);
@@ -119,18 +124,18 @@ function arcPath(
 
 // 4 equal segments of 90°, starting from top (−90°)
 const SEGMENTS = [
-  { start: -90, end:   0 }, // top-right
-  { start:   0, end:  90 }, // bottom-right
-  { start:  90, end: 180 }, // bottom-left
+  { start: -90, end: 0 }, // top-right
+  { start: 0, end: 90 }, // bottom-right
+  { start: 90, end: 180 }, // bottom-left
   { start: 180, end: 270 }, // top-left
 ];
 
 /** Small clockwise-arrow triangle drawn at each 90° boundary */
 function ArrowMarker({ angleDeg }: { angleDeg: number }) {
-  const r    = 190;
+  const r = 190;
   const span = 13;
-  const [tx, ty]   = polar(CX, CY, r, angleDeg + span);
-  const sz         = 5;
+  const [tx, ty] = polar(CX, CY, r, angleDeg + span);
+  const sz = 5;
   const [bx1, by1] = polar(tx, ty, sz, angleDeg + span + 90 - 155);
   const [bx2, by2] = polar(tx, ty, sz, angleDeg + span + 90 + 155);
   return (
@@ -144,7 +149,7 @@ function ArrowMarker({ angleDeg }: { angleDeg: number }) {
 // ─── Main component ───────────────────────────────────────────────────────────
 
 export default function ProcessWheel() {
-  const [active,  setActive]  = useState(0);
+  const [active, setActive] = useState(0);
   const [visible, setVisible] = useState(true); // drives panel fade
   const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -163,7 +168,7 @@ export default function ProcessWheel() {
   const startAuto = useCallback(() => {
     if (autoRef.current) clearInterval(autoRef.current);
     autoRef.current = setInterval(() => {
-      setActive(prev => (prev + 1) % 4);
+      setActive((prev) => (prev + 1) % 4);
       triggerFade();
     }, 3800);
   }, [triggerFade]);
@@ -173,11 +178,14 @@ export default function ProcessWheel() {
     return () => stopAuto();
   }, [startAuto, stopAuto]);
 
-  const select = useCallback((idx: number) => {
-    stopAuto();
-    triggerFade();
-    setActive(idx);
-  }, [stopAuto, triggerFade]);
+  const select = useCallback(
+    (idx: number) => {
+      stopAuto();
+      triggerFade();
+      setActive(idx);
+    },
+    [stopAuto, triggerFade],
+  );
 
   const handleKey = (e: React.KeyboardEvent, idx: number) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -190,7 +198,6 @@ export default function ProcessWheel() {
   return (
     <section className="w-full py-16 px-6">
       <div className="flex flex-col md:flex-row items-center gap-16 max-w-5xl mx-auto">
-
         {/* ── Wheel ──────────────────────────────────────────────────────── */}
         <div className="flex-shrink-0 w-[336px] md:w-[432px]">
           <svg
@@ -201,10 +208,10 @@ export default function ProcessWheel() {
           >
             {/* Segments */}
             {SEGMENTS.map((seg, i) => {
-              const isActive  = i === active;
-              const midAngle  = (seg.start + seg.end) / 2;
+              const isActive = i === active;
+              const midAngle = (seg.start + seg.end) / 2;
               const midRadius = (R_OUT + R_IN) / 2;
-              const [lx, ly]  = polar(CX, CY, midRadius, midAngle);
+              const [lx, ly] = polar(CX, CY, midRadius, midAngle);
               const [line1, line2] = SEG_LABELS[i];
 
               return (
@@ -216,7 +223,7 @@ export default function ProcessWheel() {
                   aria-pressed={isActive}
                   className="cursor-pointer outline-none"
                   onClick={() => select(i)}
-                  onKeyDown={e => handleKey(e, i)}
+                  onKeyDown={(e) => handleKey(e, i)}
                 >
                   <path
                     d={arcPath(CX, CY, R_OUT, R_IN, seg.start, seg.end)}
@@ -239,36 +246,67 @@ export default function ProcessWheel() {
                     fontSize="11"
                     fontWeight="600"
                     letterSpacing="1.8"
-                    style={{ pointerEvents: "none", textTransform: "uppercase" }}
+                    style={{
+                      pointerEvents: "none",
+                      textTransform: "uppercase",
+                    }}
                   >
-                    <tspan x={lx} dy="-7">{line1}</tspan>
-                    <tspan x={lx} dy="13">{line2}</tspan>
+                    <tspan x={lx} dy="-7">
+                      {line1}
+                    </tspan>
+                    <tspan x={lx} dy="13">
+                      {line2}
+                    </tspan>
                   </text>
                 </g>
               );
             })}
 
             {/* Clockwise arrow markers at segment boundaries */}
-            {[0, 90, 180, 270].map(a => (
+            {[0, 90, 180, 270].map((a) => (
               <ArrowMarker key={a} angleDeg={a} />
             ))}
 
             {/* Separation rings */}
-            <circle cx={CX} cy={CY} r={R_OUT} fill="none" stroke="white"
-              strokeWidth="2.5" opacity="0.35" />
-            <circle cx={CX} cy={CY} r={R_IN}  fill="none" stroke="white"
-              strokeWidth="2"   opacity="0.35" />
+            <circle
+              cx={CX}
+              cy={CY}
+              r={R_OUT}
+              fill="none"
+              stroke="white"
+              strokeWidth="2.5"
+              opacity="0.35"
+            />
+            <circle
+              cx={CX}
+              cy={CY}
+              r={R_IN}
+              fill="none"
+              stroke="white"
+              strokeWidth="2"
+              opacity="0.35"
+            />
 
             {/* Centre disc */}
-            <circle cx={CX} cy={CY} r={R_IN} fill="white"
-              style={{ filter: "drop-shadow(0 2px 5px rgba(11,59,92,0.18))" }} />
+            <circle
+              cx={CX}
+              cy={CY}
+              r={R_IN}
+              fill="white"
+              style={{ filter: "drop-shadow(0 2px 5px rgba(11,59,92,0.18))" }}
+            />
             <circle cx={CX} cy={CY} r={R_IN - 4} fill="#F8FAFB" />
 
             {/* Centre text */}
-            <text x={CX} y={CY + 6} textAnchor="middle"
+            <text
+              x={CX}
+              y={CY + 6}
+              textAnchor="middle"
               fill="#0B3B5C"
               fontFamily="var(--font-display, 'Playfair Display', serif)"
-              fontSize="17" fontWeight="600">
+              fontSize="17"
+              fontWeight="600"
+            >
               MANAGEMENT
             </text>
           </svg>
@@ -278,15 +316,18 @@ export default function ProcessWheel() {
         <div className="flex-1 min-w-0">
           <div
             style={{
-              opacity:    visible ? 1 : 0,
-              transform:  visible ? "translateY(0)" : "translateY(6px)",
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateY(0)" : "translateY(6px)",
               transition: "opacity 0.26s ease, transform 0.26s ease",
             }}
           >
             <div className="flex items-center gap-3 mb-5">
               <div
                 className="w-3 h-px flex-shrink-0"
-                style={{ background: SEG_COLORS[active], transition: "background 0.3s" }}
+                style={{
+                  background: SEG_COLORS[active],
+                  transition: "background 0.3s",
+                }}
               />
               <span className="text-sm font-light tracking-wide uppercase text-muted-foreground">
                 {STEPS[active].phase}
@@ -316,7 +357,7 @@ export default function ProcessWheel() {
                   onClick={() => select(i)}
                   className="h-[3px] rounded-sm transition-all duration-300 cursor-pointer"
                   style={{
-                    width:      i === active ? "40px" : "28px",
+                    width: i === active ? "40px" : "28px",
                     background: i === active ? "#0B3B5C" : "hsl(var(--border))",
                   }}
                 />

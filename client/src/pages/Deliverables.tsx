@@ -1,23 +1,23 @@
-import { useState, useCallback } from 'react';
-import type { KeyboardEvent } from 'react';
+import { useState, useCallback } from "react";
+import type { KeyboardEvent } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { SectionHeading } from "@/components/SectionHeading";
 import { HashLink } from "@/components/HashLink";
 import { SEO } from "@/components/SEO";
 import { Helmet } from "react-helmet-async";
-import { deliverables } from '@/data/deliverables';
-import { PDFViewer } from '@/components/PDFViewer';
+import { deliverables } from "@/data/deliverables";
+import { PDFViewer } from "@/components/PDFViewer";
 
 // Deliverable tipi — typeof yerine açık tip
-type Deliverable = typeof deliverables[number];
+type Deliverable = (typeof deliverables)[number];
 
 // Sabit — render döngüsü dışında
-const CATEGORIES = ['All', 'Engineering', 'Compliance', 'Operations'] as const;
-type Category = typeof CATEGORIES[number];
+const CATEGORIES = ["All", "Engineering", "Compliance", "Operations"] as const;
+type Category = (typeof CATEGORIES)[number];
 
 export default function Deliverables() {
-  const [category, setCategory] = useState<Category>('All');
+  const [category, setCategory] = useState<Category>("All");
   const [previewItem, setPreviewItem] = useState<Deliverable | null>(null);
 
   const closeModal = useCallback(() => setPreviewItem(null), []);
@@ -25,15 +25,15 @@ export default function Deliverables() {
   // Klavye ile modal kapatma (Escape)
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === 'Escape') closeModal();
+      if (e.key === "Escape") closeModal();
     },
-    [closeModal]
+    [closeModal],
   );
 
   const filtered = (
-    category === 'All'
+    category === "All"
       ? deliverables
-      : deliverables.filter(d => d.category === category)
+      : deliverables.filter((d) => d.category === category)
   ).sort((a, b) => a.title.localeCompare(b.title));
 
   return (
@@ -49,21 +49,22 @@ export default function Deliverables() {
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "ItemList",
-            "name": "Adriatica D.O.O. Deliverables",
-            "description": "Engineering and compliance deliverables for marine projects.",
-            "numberOfItems": deliverables.length,
-            "itemListElement": deliverables.map((item, idx) => ({
+            name: "Adriatica D.O.O. Deliverables",
+            description:
+              "Engineering and compliance deliverables for marine projects.",
+            numberOfItems: deliverables.length,
+            itemListElement: deliverables.map((item, idx) => ({
               "@type": "ListItem",
-              "position": idx + 1,
-              "item": {
+              position: idx + 1,
+              item: {
                 "@type": "Service",
-                "name": item.title,
-                "description": item.description,
-                "serviceType": item.category,
-                "provider": {
+                name: item.title,
+                description: item.description,
+                serviceType: item.category,
+                provider: {
                   "@type": "Organization",
-                  "name": "Adriatica D.O.O.",
-                  "url": "https://www.adriaticadoo.com"
+                  name: "Adriatica D.O.O.",
+                  url: "https://www.adriaticadoo.com",
                 },
               },
             })),
@@ -81,16 +82,20 @@ export default function Deliverables() {
           />
 
           {/* Filtre butonları */}
-          <div className="flex flex-wrap justify-center gap-4 my-8" role="group" aria-label="Filter by category">
-            {CATEGORIES.map(cat => (
+          <div
+            className="flex flex-wrap justify-center gap-4 my-8"
+            role="group"
+            aria-label="Filter by category"
+          >
+            {CATEGORIES.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setCategory(cat)}
                 aria-pressed={category === cat}
                 className={`px-5 py-2 rounded-sm font-medium transition-all duration-200 ${
                   category === cat
-                    ? 'bg-primary text-white shadow-md'
-                    : 'bg-neutral-100 text-muted-foreground hover:bg-neutral-200'
+                    ? "bg-primary text-white shadow-md"
+                    : "bg-neutral-100 text-muted-foreground hover:bg-neutral-200"
                 }`}
               >
                 {cat}
@@ -100,7 +105,7 @@ export default function Deliverables() {
 
           {/* Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filtered.map(item => (
+            {filtered.map((item) => (
               <div
                 key={item.id}
                 className="border border-border/40 rounded-sm p-5 bg-white hover:shadow-md transition-shadow"
@@ -145,7 +150,9 @@ export default function Deliverables() {
 
           {/* Alt CTA */}
           <div className="mt-16 text-center p-6 bg-neutral-50 border border-border/10 rounded-sm">
-            <p className="text-muted-foreground mb-3">Don't see what you need?</p>
+            <p className="text-muted-foreground mb-3">
+              Don't see what you need?
+            </p>
             <HashLink
               href="/request-consultation"
               className="inline-block bg-primary text-white px-6 py-3 rounded-sm font-medium hover:bg-primary/90 transition"
@@ -169,7 +176,7 @@ export default function Deliverables() {
           >
             <div
               className="bg-white rounded-sm max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col relative"
-              onClick={e => e.stopPropagation()}
+              onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
               <div className="p-4 border-b flex items-start justify-between sticky top-0 bg-white z-10">
@@ -204,14 +211,21 @@ export default function Deliverables() {
               <div className="flex-1 overflow-auto p-4">
                 <div className="bg-neutral-50 p-4 rounded-sm">
                   <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 mb-4 text-sm text-yellow-800">
-                    <p className="font-semibold">📄 Sample from a real project (redacted).</p>
-                    <p>Your version will be custom‑prepared for your vessel after service agreement.</p>
+                    <p className="font-semibold">
+                      📄 Sample from a real project (redacted).
+                    </p>
+                    <p>
+                      Your version will be custom‑prepared for your vessel after
+                      service agreement.
+                    </p>
                   </div>
 
                   {previewItem.previewPdf ? (
                     <PDFViewer url={previewItem.previewPdf} />
                   ) : (
-                    <p className="text-center text-muted-foreground">Preview not available yet.</p>
+                    <p className="text-center text-muted-foreground">
+                      Preview not available yet.
+                    </p>
                   )}
                 </div>
               </div>

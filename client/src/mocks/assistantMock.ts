@@ -29,13 +29,19 @@ export function getMockResponse(userMessage: string): Promise<string> {
 
   for (const [keyword, response] of Object.entries(KEYWORD_RESPONSES)) {
     if (lower.includes(keyword)) {
-      return new Promise(resolve =>
-        setTimeout(() => resolve(response), ASSISTANT_CONFIG.MOCK_RESPONSE_DELAY)
+      return new Promise((resolve) =>
+        setTimeout(
+          () => resolve(response),
+          ASSISTANT_CONFIG.MOCK_RESPONSE_DELAY,
+        ),
       );
     }
   }
 
-  return new Promise(resolve =>
-    setTimeout(() => resolve(OFFLINE_RESPONSE), ASSISTANT_CONFIG.MOCK_RESPONSE_DELAY)
+  return new Promise((resolve) =>
+    setTimeout(
+      () => resolve(OFFLINE_RESPONSE),
+      ASSISTANT_CONFIG.MOCK_RESPONSE_DELAY,
+    ),
   );
 }

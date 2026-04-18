@@ -11,25 +11,27 @@ export default function CookiePolicy() {
       {
         "@type": "WebPage",
         "@id": "https://www.adriaticadoo.com/cookie-policy/#webpage",
-        "url": "https://www.adriaticadoo.com/cookie-policy",
-        "name": "Cookie Policy | Adriatica D.O.O.",
-        "description": "Cookie policy of Adriatica D.O.O. – how we use cookies and similar technologies on our website.",
-        "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
-        "about": { "@id": "https://www.adriaticadoo.com/#organization" },
-        "inLanguage": "en",
-        "datePublished": "2025-01-01",
-        "dateModified": "2025-03-15"
+        url: "https://www.adriaticadoo.com/cookie-policy",
+        name: "Cookie Policy | Adriatica D.O.O.",
+        description:
+          "Cookie policy of Adriatica D.O.O. – how we use cookies and similar technologies on our website.",
+        isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
+        about: { "@id": "https://www.adriaticadoo.com/#organization" },
+        inLanguage: "en",
+        datePublished: "2025-01-01",
+        dateModified: "2025-03-15",
       },
       {
         "@type": "WebSite",
         "@id": "https://www.adriaticadoo.com/#website",
-        "url": "https://www.adriaticadoo.com/",
-        "name": "Adriatica D.O.O.",
-        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
-        "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
-      }
-    ]
+        url: "https://www.adriaticadoo.com/",
+        name: "Adriatica D.O.O.",
+        description:
+          "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        inLanguage: "en",
+        publisher: { "@id": "https://www.adriaticadoo.com/#organization" },
+      },
+    ],
   };
 
   return (
@@ -42,7 +44,7 @@ export default function CookiePolicy() {
       />
       <Helmet>
         <script type="application/ld+json">
-          {JSON.stringify(cookiePolicySchema).replace(/</g, '\\u003c')}
+          {JSON.stringify(cookiePolicySchema).replace(/</g, "\\u003c")}
         </script>
       </Helmet>
 
@@ -60,14 +62,21 @@ export default function CookiePolicy() {
 
             {/* Company Information */}
             <div className="bg-neutral-50 border-l-4 border-primary p-6 mb-8 rounded-sm">
-              <h2 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Company Information</h2>
+              <h2 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">
+                Company Information
+              </h2>
               <div className="space-y-1 text-muted-foreground">
-                <p><strong>Adriatica D.O.O.</strong></p>
+                <p>
+                  <strong>Adriatica D.O.O.</strong>
+                </p>
                 <p>Tax Office: Podgorica, Montenegro</p>
                 <p>Tax ID (PIB): 03612807</p>
                 <p>
                   Email:{" "}
-                  <a href="mailto:info@adriaticadoo.com" className="text-primary hover:underline transition-colors">
+                  <a
+                    href="mailto:info@adriaticadoo.com"
+                    className="text-primary hover:underline transition-colors"
+                  >
                     info@adriaticadoo.com
                   </a>
                 </p>
@@ -76,19 +85,34 @@ export default function CookiePolicy() {
 
             <div className="space-y-6 text-muted-foreground leading-relaxed">
               <p>
-                We use cookies and similar technologies to recognise you when you visit our website. This Cookie Policy explains what cookies are, how we use them, and how you can control them.
+                We use cookies and similar technologies to recognise you when
+                you visit our website. This Cookie Policy explains what cookies
+                are, how we use them, and how you can control them.
               </p>
-              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">What are cookies?</h2>
+              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">
+                What are cookies?
+              </h2>
               <p>
-                Cookies are small data files placed on your computer or mobile device when you visit a website. Website owners use them to make their sites work more efficiently and to provide reporting information.
+                Cookies are small data files placed on your computer or mobile
+                device when you visit a website. Website owners use them to make
+                their sites work more efficiently and to provide reporting
+                information.
               </p>
-              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">How we use cookies</h2>
+              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">
+                How we use cookies
+              </h2>
               <p>
-                We use cookies to understand how our website is used, remember your preferences, and improve your overall experience.
+                We use cookies to understand how our website is used, remember
+                your preferences, and improve your overall experience.
               </p>
-              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">Managing cookies</h2>
+              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">
+                Managing cookies
+              </h2>
               <p>
-                You can control cookies through your browser settings. Most browsers allow you to refuse or accept cookies. If you choose to reject cookies, you may still use our website, though some functionality may be limited.
+                You can control cookies through your browser settings. Most
+                browsers allow you to refuse or accept cookies. If you choose to
+                reject cookies, you may still use our website, though some
+                functionality may be limited.
               </p>
             </div>
           </motion.div>

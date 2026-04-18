@@ -5,7 +5,8 @@ import { useAssistant } from "../../hooks/useAssistant";
 import { AssistantActions } from "./AssistantActions";
 
 export function AssistantInput() {
-  const { input, setInput, sendMessage, isLoading, attachment } = useAssistant();
+  const { input, setInput, sendMessage, isLoading, attachment } =
+    useAssistant();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSend = async () => {
@@ -58,9 +59,10 @@ export function AssistantInput() {
           className={`
             w-8 h-8 rounded-full flex items-center justify-center shrink-0 mb-0.5
             transition-all duration-200
-            ${canSend
-              ? "bg-[#0B3B5C] text-white hover:bg-[#1A4B7A] hover:scale-105"
-              : "bg-neutral-200 text-neutral-400 cursor-not-allowed"
+            ${
+              canSend
+                ? "bg-[#0B3B5C] text-white hover:bg-[#1A4B7A] hover:scale-105"
+                : "bg-neutral-200 text-neutral-400 cursor-not-allowed"
             }
           `}
         >

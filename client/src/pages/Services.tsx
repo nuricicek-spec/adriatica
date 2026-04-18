@@ -13,50 +13,57 @@ const pageSchema = {
     {
       "@type": "Organization",
       "@id": "https://www.adriaticadoo.com/#organization",
-      "name": "Adriatica D.O.O.",
-      "url": "https://www.adriaticadoo.com",
-      "logo": {
+      name: "Adriatica D.O.O.",
+      url: "https://www.adriaticadoo.com",
+      logo: {
         "@type": "ImageObject",
-        "url": "https://www.adriaticadoo.com/logo.png",
+        url: "https://www.adriaticadoo.com/logo.png",
       },
-      "taxID": "03612807",
-      "address": {
+      taxID: "03612807",
+      address: {
         "@type": "PostalAddress",
-        "addressLocality": "Budva",
-        "addressCountry": "ME",
+        addressLocality: "Budva",
+        addressCountry: "ME",
       },
-      "description": "Marine engineering consultancy specializing in EU MRV, IMO DCS, and Biofouling compliance.",
-      "areaServed": [
-        "Bar", "Budva", "Kotor", "Tivat",
-        "Montenegro", "Adriatic Coast", "Europe",
+      description:
+        "Marine engineering consultancy specializing in EU MRV, IMO DCS, and Biofouling compliance.",
+      areaServed: [
+        "Bar",
+        "Budva",
+        "Kotor",
+        "Tivat",
+        "Montenegro",
+        "Adriatic Coast",
+        "Europe",
       ],
     },
     {
       "@type": "WebSite",
       "@id": "https://www.adriaticadoo.com/#website",
-      "url": "https://www.adriaticadoo.com/",
-      "name": "Adriatica D.O.O.",
-      "inLanguage": "en",
-      "publisher": { "@id": "https://www.adriaticadoo.com/#organization" },
+      url: "https://www.adriaticadoo.com/",
+      name: "Adriatica D.O.O.",
+      inLanguage: "en",
+      publisher: { "@id": "https://www.adriaticadoo.com/#organization" },
     },
     {
       "@type": "WebPage",
       "@id": "https://www.adriaticadoo.com/services/#webpage",
-      "url": "https://www.adriaticadoo.com/services",
-      "name": "Services | Adriatica D.O.O.",
-      "description": "Marine engineering services: engineering plans, documentation, structural integrity, sustainable technologies, regulatory compliance, and project management.",
-      "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
-      "about": { "@id": "https://www.adriaticadoo.com/#organization" },
-      "inLanguage": "en",
+      url: "https://www.adriaticadoo.com/services",
+      name: "Services | Adriatica D.O.O.",
+      description:
+        "Marine engineering services: engineering plans, documentation, structural integrity, sustainable technologies, regulatory compliance, and project management.",
+      isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
+      about: { "@id": "https://www.adriaticadoo.com/#organization" },
+      inLanguage: "en",
     },
     {
       "@type": "ProfessionalService",
       "@id": "https://www.adriaticadoo.com/#professionalservice",
-      "name": "Adriatica D.O.O.",
-      "image": "https://www.adriaticadoo.com/og-image-default.png",
-      "url": "https://www.adriaticadoo.com",
-      "provider": { "@id": "https://www.adriaticadoo.com/#organization" },
-      "serviceType": [
+      name: "Adriatica D.O.O.",
+      image: "https://www.adriaticadoo.com/og-image-default.png",
+      url: "https://www.adriaticadoo.com",
+      provider: { "@id": "https://www.adriaticadoo.com/#organization" },
+      serviceType: [
         "Marine Engineering",
         "Regulatory Compliance",
         "MRV Reporting",
@@ -81,7 +88,8 @@ const services = [
       "Fire & Safety Plans",
       "General Arrangement (optional)",
     ],
-    outcome: "Class‑approved plan sets, reduced approval delays, and a clear basis for construction or modification.",
+    outcome:
+      "Class‑approved plan sets, reduced approval delays, and a clear basis for construction or modification.",
     references: "Class society rules (RINA, BV, DNV), flag state regulations",
   },
   {
@@ -95,7 +103,8 @@ const services = [
       "Fuel Management & Quality Booklet",
       "Inventory of Hazardous Materials (IHM)",
     ],
-    outcome: "Audit‑ready documentation, improved crew familiarity, and smoother port state control inspections.",
+    outcome:
+      "Audit‑ready documentation, improved crew familiarity, and smoother port state control inspections.",
     references: "IMO, EU MRV, MARPOL",
   },
   {
@@ -109,7 +118,8 @@ const services = [
       "Modification Consultancy",
       "Vibration & Noise Diagnostic",
     ],
-    outcome: "Clear repair priorities, extended operational life, and classification society acceptance.",
+    outcome:
+      "Clear repair priorities, extended operational life, and classification society acceptance.",
     references: "IACS UR Z10, classification societies",
   },
   {
@@ -123,7 +133,8 @@ const services = [
       "Energy Audit & Efficiency Surveys",
       "MRV Monitoring Plan (EU MRV Regulation)",
     ],
-    outcome: "IMO‑compliant plans, reduced fuel consumption, and lower environmental risk.",
+    outcome:
+      "IMO‑compliant plans, reduced fuel consumption, and lower environmental risk.",
     references: "IMO, EU MRV, Paris MoU",
   },
   {
@@ -139,7 +150,8 @@ const services = [
       "Emergency Response Manuals",
       "Polar Water Operational Manual (PWOM)",
     ],
-    outcome: "PSC‑ready documentation, reduced inspection risk, and full compliance with current regulations.",
+    outcome:
+      "PSC‑ready documentation, reduced inspection risk, and full compliance with current regulations.",
     references: "IMO, MARPOL, flag state administrations",
   },
   {
@@ -154,12 +166,13 @@ const services = [
       "Cost & Schedule Control",
       "Yacht Survey & Inspection",
     ],
-    outcome: "On‑time, on‑budget project delivery with verified quality and complete as‑built records.",
+    outcome:
+      "On‑time, on‑budget project delivery with verified quality and complete as‑built records.",
     references: "Industry best practices, IACS UR Z10",
   },
 ];
 
-type Service = typeof services[number];
+type Service = (typeof services)[number];
 
 // ─── Service Card ─────────────────────────────────────────────────────────────
 function ServiceCard({ service }: { service: Service }) {
@@ -172,7 +185,7 @@ function ServiceCard({ service }: { service: Service }) {
         {service.description}
       </p>
       <ul className="list-disc pl-5 mb-2 text-muted-foreground space-y-1 text-sm">
-        {service.deliverables.map(item => (
+        {service.deliverables.map((item) => (
           <li key={item}>{item}</li>
         ))}
       </ul>
@@ -197,23 +210,43 @@ function ServiceCard({ service }: { service: Service }) {
 // ─── Diagram A: Structural Life‑Cycle Timeline ───────────────────────────────
 function StructuralTimelineDiagram() {
   const milestones = [
-    { year: "Yr 0",   label: "Newbuild /\nBaseline Survey",  sub: "Initial condition\nestablished" },
-    { year: "Yr 2.5", label: "Intermediate\nSurvey",         sub: "Hull & coating\ncondition check" },
-    { year: "Yr 5",   label: "Special Survey\n(1st)",        sub: "Class renewal,\nfull inspection" },
-    { year: "Yr 10",  label: "Special Survey\n(2nd)",        sub: "Structural assessment\n& repair scope" },
-    { year: "Yr 15+", label: "Life Extension\nStudy",        sub: "Integrity analysis,\nclass acceptance" },
+    {
+      year: "Yr 0",
+      label: "Newbuild /\nBaseline Survey",
+      sub: "Initial condition\nestablished",
+    },
+    {
+      year: "Yr 2.5",
+      label: "Intermediate\nSurvey",
+      sub: "Hull & coating\ncondition check",
+    },
+    {
+      year: "Yr 5",
+      label: "Special Survey\n(1st)",
+      sub: "Class renewal,\nfull inspection",
+    },
+    {
+      year: "Yr 10",
+      label: "Special Survey\n(2nd)",
+      sub: "Structural assessment\n& repair scope",
+    },
+    {
+      year: "Yr 15+",
+      label: "Life Extension\nStudy",
+      sub: "Integrity analysis,\nclass acceptance",
+    },
   ];
 
-  const W         = 500;
-  const H         = 230;
-  const lineY     = 130;
-  const startX    = 52;
-  const endX      = W - 52;
-  const step      = (endX - startX) / (milestones.length - 1);
-  const nodeR     = 10;
+  const W = 500;
+  const H = 230;
+  const lineY = 130;
+  const startX = 52;
+  const endX = W - 52;
+  const step = (endX - startX) / (milestones.length - 1);
+  const nodeR = 10;
   const accentCol = "#3A74A0";
-  const navyCol   = "#0B3B5C";
-  const muteCol   = "#8FA8BC";
+  const navyCol = "#0B3B5C";
+  const muteCol = "#8FA8BC";
 
   return (
     <div className="border-l-2 border-primary/20 pl-6 py-2 flex flex-col justify-between h-full">
@@ -222,9 +255,10 @@ function StructuralTimelineDiagram() {
           Structural Life‑Cycle Milestones
         </h3>
         <p className="text-muted-foreground leading-relaxed mb-4 text-sm">
-          Structural integrity management is a continuous process. Key intervention
-          points align with class survey schedules — allowing targeted assessment,
-          repair, and life extension decisions at each milestone.
+          Structural integrity management is a continuous process. Key
+          intervention points align with class survey schedules — allowing
+          targeted assessment, repair, and life extension decisions at each
+          milestone.
         </p>
       </div>
 
@@ -234,48 +268,65 @@ function StructuralTimelineDiagram() {
         aria-label="Structural Life-Cycle Inspection Timeline"
       >
         <line
-          x1={startX} y1={lineY} x2={endX} y2={lineY}
-          stroke={accentCol} strokeWidth="2" strokeLinecap="round"
+          x1={startX}
+          y1={lineY}
+          x2={endX}
+          y2={lineY}
+          stroke={accentCol}
+          strokeWidth="2"
+          strokeLinecap="round"
         />
 
         {milestones.map((m, i) => {
-          const x          = startX + i * step;
-          const isLast     = i === milestones.length - 1;
-          const above      = i % 2 === 0;
-          const labelY     = above ? lineY - 34 : lineY + 28;
-          const subY       = above ? lineY - 68 : lineY + 56;
+          const x = startX + i * step;
+          const isLast = i === milestones.length - 1;
+          const above = i % 2 === 0;
+          const labelY = above ? lineY - 34 : lineY + 28;
+          const subY = above ? lineY - 68 : lineY + 56;
           const labelLines = m.label.split("\n");
-          const subLines   = m.sub.split("\n");
+          const subLines = m.sub.split("\n");
 
           return (
             <g key={m.year}>
               <line
-                x1={x} y1={above ? lineY - nodeR : lineY + nodeR}
-                x2={x} y2={above ? labelY + 14 : lineY + nodeR + 8}
-                stroke={accentCol} strokeWidth="1.5" strokeDasharray="3 2"
+                x1={x}
+                y1={above ? lineY - nodeR : lineY + nodeR}
+                x2={x}
+                y2={above ? labelY + 14 : lineY + nodeR + 8}
+                stroke={accentCol}
+                strokeWidth="1.5"
+                strokeDasharray="3 2"
               />
               <circle
-                cx={x} cy={lineY} r={nodeR}
+                cx={x}
+                cy={lineY}
+                r={nodeR}
                 fill={isLast ? navyCol : accentCol}
-                stroke="white" strokeWidth="2"
+                stroke="white"
+                strokeWidth="2"
               />
               <text
-                x={x} y={lineY + 1}
-                textAnchor="middle" dominantBaseline="middle"
+                x={x}
+                y={lineY + 1}
+                textAnchor="middle"
+                dominantBaseline="middle"
                 fill="white"
                 fontFamily="var(--font-body, 'Inter', sans-serif)"
-                fontSize="6" fontWeight="700"
+                fontSize="6"
+                fontWeight="700"
               >
                 {m.year}
               </text>
               {labelLines.map((line, li) => (
                 <text
                   key={`${m.year}-label-${li}`}
-                  x={x} y={labelY + li * 13}
+                  x={x}
+                  y={labelY + li * 13}
                   textAnchor="middle"
                   fill={navyCol}
                   fontFamily="var(--font-display, 'Playfair Display', serif)"
-                  fontSize="9.5" fontWeight="600"
+                  fontSize="9.5"
+                  fontWeight="600"
                 >
                   {line}
                 </text>
@@ -283,11 +334,13 @@ function StructuralTimelineDiagram() {
               {subLines.map((line, li) => (
                 <text
                   key={`${m.year}-sub-${li}`}
-                  x={x} y={subY + li * 11}
+                  x={x}
+                  y={subY + li * 11}
                   textAnchor="middle"
                   fill={muteCol}
                   fontFamily="var(--font-body, 'Inter', sans-serif)"
-                  fontSize="7.5" fontWeight="400"
+                  fontSize="7.5"
+                  fontWeight="400"
                 >
                   {line}
                 </text>
@@ -301,11 +354,13 @@ function StructuralTimelineDiagram() {
           fill={accentCol}
         />
         <text
-          x={W / 2} y={H - 6}
+          x={W / 2}
+          y={H - 6}
           textAnchor="middle"
           fill={muteCol}
           fontFamily="var(--font-body, 'Inter', sans-serif)"
-          fontSize="7" fontStyle="italic"
+          fontSize="7"
+          fontStyle="italic"
         >
           Intervention points aligned with IACS UR Z10 & class survey schedules
         </text>
@@ -316,27 +371,32 @@ function StructuralTimelineDiagram() {
 
 // ─── Diagram B: Operating Model Venn ─────────────────────────────────────────
 function OperatingModelDiagram() {
-  const CX    = 200;
-  const CY    = 190;
-  const R     = 90;
-  const OFF   = 48;
+  const CX = 200;
+  const CY = 190;
+  const R = 90;
+  const OFF = 48;
   const SQRT3 = Math.sqrt(3);
 
   const circles = [
-    { cx: CX,                    cy: CY - OFF          },
-    { cx: CX - OFF * SQRT3 / 2,  cy: CY + OFF / 2      },
-    { cx: CX + OFF * SQRT3 / 2,  cy: CY + OFF / 2      },
+    { cx: CX, cy: CY - OFF },
+    { cx: CX - (OFF * SQRT3) / 2, cy: CY + OFF / 2 },
+    { cx: CX + (OFF * SQRT3) / 2, cy: CY + OFF / 2 },
   ];
 
-  const navyCol   = "#0B3B5C";
-  const muteCol   = "#6B8FA8";
-  const fillCol   = "rgba(58,116,160,0.10)";
+  const navyCol = "#0B3B5C";
+  const muteCol = "#6B8FA8";
+  const fillCol = "rgba(58,116,160,0.10)";
   const strokeCol = "#3A74A0";
 
   const intersections = [
-    { id: "technical",  x: CX - 34,  y: CY - 28,           text: "Technical\nCompliance" },
-    { id: "regulatory", x: CX + 34,  y: CY - 28,           text: "Regulatory\nOversight"  },
-    { id: "execution",  x: CX,       y: CY + OFF / 2 + 14, text: "Execution\nControl"     },
+    { id: "technical", x: CX - 34, y: CY - 28, text: "Technical\nCompliance" },
+    { id: "regulatory", x: CX + 34, y: CY - 28, text: "Regulatory\nOversight" },
+    {
+      id: "execution",
+      x: CX,
+      y: CY + OFF / 2 + 14,
+      text: "Execution\nControl",
+    },
   ];
 
   return (
@@ -346,9 +406,9 @@ function OperatingModelDiagram() {
           Our Operating Model
         </h3>
         <p className="text-muted-foreground leading-relaxed mb-4 text-sm">
-          Engineering, compliance, and operations work as one integrated system —
-          delivering engineering‑led solutions from concept to completion, with no
-          gaps between disciplines.
+          Engineering, compliance, and operations work as one integrated system
+          — delivering engineering‑led solutions from concept to completion,
+          with no gaps between disciplines.
         </p>
       </div>
 
@@ -360,51 +420,66 @@ function OperatingModelDiagram() {
         {circles.map((c, i) => (
           <circle
             key={i}
-            cx={c.cx} cy={c.cy} r={R}
+            cx={c.cx}
+            cy={c.cy}
+            r={R}
             fill={fillCol}
-            stroke={strokeCol} strokeWidth="1.5"
+            stroke={strokeCol}
+            strokeWidth="1.5"
           />
         ))}
 
         {/* Engineering — top */}
         <text
-          x={CX} y={CY - OFF - R + 18}
-          textAnchor="middle" fill={navyCol}
+          x={CX}
+          y={CY - OFF - R + 18}
+          textAnchor="middle"
+          fill={navyCol}
           fontFamily="var(--font-display, 'Playfair Display', serif)"
-          fontSize="13" fontWeight="600"
+          fontSize="13"
+          fontWeight="600"
         >
           Engineering
         </text>
 
         {/* Compliance — bottom left */}
         <text
-          x={CX - OFF * SQRT3 / 2 - R + 18} y={CY + OFF / 2 + R - 12}
-          textAnchor="middle" fill={navyCol}
+          x={CX - (OFF * SQRT3) / 2 - R + 18}
+          y={CY + OFF / 2 + R - 12}
+          textAnchor="middle"
+          fill={navyCol}
           fontFamily="var(--font-display, 'Playfair Display', serif)"
-          fontSize="13" fontWeight="600"
+          fontSize="13"
+          fontWeight="600"
         >
           Compliance
         </text>
 
         {/* Operations — bottom right */}
         <text
-          x={CX + OFF * SQRT3 / 2 + R - 18} y={CY + OFF / 2 + R - 12}
-          textAnchor="middle" fill={navyCol}
+          x={CX + (OFF * SQRT3) / 2 + R - 18}
+          y={CY + OFF / 2 + R - 12}
+          textAnchor="middle"
+          fill={navyCol}
           fontFamily="var(--font-display, 'Playfair Display', serif)"
-          fontSize="13" fontWeight="600"
+          fontSize="13"
+          fontWeight="600"
         >
           Operations
         </text>
 
-        {intersections.map(n => {
+        {intersections.map((n) => {
           const lines = n.text.split("\n");
           return (
             <text
               key={n.id}
-              x={n.x} y={n.y}
-              textAnchor="middle" fill={muteCol}
+              x={n.x}
+              y={n.y}
+              textAnchor="middle"
+              fill={muteCol}
               fontFamily="var(--font-body, 'Inter', sans-serif)"
-              fontSize="8" fontWeight="500"
+              fontSize="8"
+              fontWeight="500"
             >
               {lines.map((line, li) => (
                 <tspan key={`${n.id}-${li}`} x={n.x} dy={li === 0 ? 0 : 11}>
@@ -417,20 +492,30 @@ function OperatingModelDiagram() {
 
         {/* Centre label */}
         <text
-          x={CX} y={CY + 4}
-          textAnchor="middle" fill={navyCol}
+          x={CX}
+          y={CY + 4}
+          textAnchor="middle"
+          fill={navyCol}
           fontFamily="var(--font-display, 'Playfair Display', serif)"
-          fontSize="12" fontWeight="700"
+          fontSize="12"
+          fontWeight="700"
         >
-          <tspan x={CX} dy="-8">Integrated</tspan>
-          <tspan x={CX} dy="18">Management</tspan>
+          <tspan x={CX} dy="-8">
+            Integrated
+          </tspan>
+          <tspan x={CX} dy="18">
+            Management
+          </tspan>
         </text>
 
         <text
-          x={CX} y={330}
-          textAnchor="middle" fill={muteCol}
+          x={CX}
+          y={330}
+          textAnchor="middle"
+          fill={muteCol}
           fontFamily="var(--font-body, 'Inter', sans-serif)"
-          fontSize="8" fontStyle="italic"
+          fontSize="8"
+          fontStyle="italic"
         >
           One point of contact across all three disciplines
         </text>
@@ -450,7 +535,7 @@ export default function Services() {
       />
       <Helmet>
         <script type="application/ld+json">
-          {JSON.stringify(pageSchema).replace(/</g, '\\u003c')}
+          {JSON.stringify(pageSchema).replace(/</g, "\\u003c")}
         </script>
       </Helmet>
 
@@ -458,7 +543,6 @@ export default function Services() {
         <Navigation />
 
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-
           <SectionHeading
             title="Engineering Services"
             subtitle="Marine Engineering & Consultancy"
@@ -476,7 +560,9 @@ export default function Services() {
                 <li>Technical Report – findings, analysis, recommendations</li>
                 <li>Engineering Documentation – plans, drawings, manuals</li>
                 <li>Action Plan – clear next steps and timelines</li>
-                <li>Ongoing Support – follow‑up and implementation assistance</li>
+                <li>
+                  Ongoing Support – follow‑up and implementation assistance
+                </li>
               </ul>
             </div>
             <div className="border-l-2 border-primary/20 pl-6">
@@ -485,9 +571,18 @@ export default function Services() {
               </h3>
               <ol className="list-decimal pl-5 text-muted-foreground space-y-2">
                 <li>You share vessel details and concerns – we listen.</li>
-                <li>We analyse and plan – technical assessment, risk identification, scope definition.</li>
-                <li>We execute and coordinate – engineering supervision, contractor management, quality control.</li>
-                <li>You receive documentation – complete records ready for audits or class submission.</li>
+                <li>
+                  We analyse and plan – technical assessment, risk
+                  identification, scope definition.
+                </li>
+                <li>
+                  We execute and coordinate – engineering supervision,
+                  contractor management, quality control.
+                </li>
+                <li>
+                  You receive documentation – complete records ready for audits
+                  or class submission.
+                </li>
               </ol>
             </div>
           </div>
@@ -495,7 +590,10 @@ export default function Services() {
           {/* Positioning statement */}
           <div className="mt-10 p-6 bg-neutral-50 border border-border/50 rounded-sm text-center">
             <p className="text-lg text-[#0B3B5C] font-medium">
-              You get independent engineering management, technical oversight, and compliance assurance – from initial assessment to final documentation. We don't just advise; we deliver actionable, auditable results.
+              You get independent engineering management, technical oversight,
+              and compliance assurance – from initial assessment to final
+              documentation. We don't just advise; we deliver actionable,
+              auditable results.
             </p>
           </div>
 
@@ -533,7 +631,6 @@ export default function Services() {
               <OperatingModelDiagram />
             </div>
           </div>
-
         </main>
 
         <Footer />

@@ -13,7 +13,7 @@ export function AssistantMessages() {
 
   return (
     <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 overscroll-contain">
-      {messages.map(msg => (
+      {messages.map((msg) => (
         <AssistantMessageItem key={msg.id} message={msg} />
       ))}
 

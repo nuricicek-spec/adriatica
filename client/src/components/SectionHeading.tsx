@@ -8,7 +8,12 @@ interface SectionHeadingProps {
   light?: boolean;
 }
 
-export function SectionHeading({ title, subtitle, className, light = false }: SectionHeadingProps) {
+export function SectionHeading({
+  title,
+  subtitle,
+  className,
+  light = false,
+}: SectionHeadingProps) {
   return (
     <div className={cn("mb-12 md:mb-20", className)}>
       <motion.div
@@ -17,19 +22,28 @@ export function SectionHeading({ title, subtitle, className, light = false }: Se
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <h2 className={cn(
-          "font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4",
-          light ? "text-white" : "text-primary"
-        )}>
+        <h2
+          className={cn(
+            "font-display text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4",
+            light ? "text-white" : "text-primary",
+          )}
+        >
           {title}
         </h2>
         {subtitle && (
           <div className="flex items-center gap-4">
-            <div className={cn("h-px w-12", light ? "bg-white/30" : "bg-primary/30")}></div>
-            <p className={cn(
-              "text-lg font-light tracking-wide uppercase",
-              light ? "text-white/80" : "text-muted-foreground"
-            )}>
+            <div
+              className={cn(
+                "h-px w-12",
+                light ? "bg-white/30" : "bg-primary/30",
+              )}
+            ></div>
+            <p
+              className={cn(
+                "text-lg font-light tracking-wide uppercase",
+                light ? "text-white/80" : "text-muted-foreground",
+              )}
+            >
               {subtitle}
             </p>
           </div>

@@ -147,11 +147,16 @@ function PineconeVisual() {
       <style>{PINECONE_STYLES}</style>
       <div className="pc-wrap h-full">
         <div className="pc-svg">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 160" width="100%" height="100%">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 100 160"
+            width="100%"
+            height="100%"
+          >
             <defs>
               <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%"   stopColor="#D4AF37" stopOpacity="1" />
-                <stop offset="50%"  stopColor="#C9A961" stopOpacity="1" />
+                <stop offset="0%" stopColor="#D4AF37" stopOpacity="1" />
+                <stop offset="50%" stopColor="#C9A961" stopOpacity="1" />
                 <stop offset="100%" stopColor="#B8964F" stopOpacity="1" />
               </linearGradient>
             </defs>
@@ -191,16 +196,24 @@ function PineconeVisual() {
         <div className="pc-label bl">Renewal</div>
         <div className="pc-label br">Seed of Life</div>
         <div className="pc-diamond d1">
-          <svg viewBox="0 0 18 26"><polygon points="9,0 18,13 9,26 0,13" fill="#0B3B5C" /></svg>
+          <svg viewBox="0 0 18 26">
+            <polygon points="9,0 18,13 9,26 0,13" fill="#0B3B5C" />
+          </svg>
         </div>
         <div className="pc-diamond d2">
-          <svg viewBox="0 0 18 26"><polygon points="9,0 18,13 9,26 0,13" fill="url(#goldGrad)" /></svg>
+          <svg viewBox="0 0 18 26">
+            <polygon points="9,0 18,13 9,26 0,13" fill="url(#goldGrad)" />
+          </svg>
         </div>
         <div className="pc-diamond d3">
-          <svg viewBox="0 0 18 26"><polygon points="9,0 18,13 9,26 0,13" fill="url(#goldGrad)" /></svg>
+          <svg viewBox="0 0 18 26">
+            <polygon points="9,0 18,13 9,26 0,13" fill="url(#goldGrad)" />
+          </svg>
         </div>
         <div className="pc-diamond d4">
-          <svg viewBox="0 0 18 26"><polygon points="9,0 18,13 9,26 0,13" fill="#1A4B7A" /></svg>
+          <svg viewBox="0 0 18 26">
+            <polygon points="9,0 18,13 9,26 0,13" fill="#1A4B7A" />
+          </svg>
         </div>
         <div className="pc-bottom">SUMERIAN PINECONE</div>
         <div className="pc-border" />
@@ -213,8 +226,12 @@ function PineconeVisual() {
 function Stat({ value, label }: { value: string; label: string }) {
   return (
     <div className="border-l-2 border-[#3A74A0]/40 pl-5">
-      <div className="font-display text-4xl font-bold text-[#3A74A0] mb-1">{value}</div>
-      <div className="text-xs uppercase tracking-widest text-white/50">{label}</div>
+      <div className="font-display text-4xl font-bold text-[#3A74A0] mb-1">
+        {value}
+      </div>
+      <div className="text-xs uppercase tracking-widest text-white/50">
+        {label}
+      </div>
     </div>
   );
 }
@@ -243,7 +260,9 @@ function Principle({
       <p className="text-xs uppercase tracking-[0.2em] text-primary/60 mb-1 font-medium">
         {number}
       </p>
-      <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-2">{title}</h3>
+      <h3 className="font-display text-xl font-bold text-[#0B3B5C] mb-2">
+        {title}
+      </h3>
       <p className="text-muted-foreground leading-relaxed text-sm">{body}</p>
     </motion.div>
   );
@@ -257,31 +276,31 @@ export default function Philosophy() {
       {
         "@type": "Organization",
         "@id": "https://www.adriaticadoo.com/#organization",
-        "name": "Adriatica D.O.O.",
-        "url": "https://www.adriaticadoo.com",
-        "logo": {
+        name: "Adriatica D.O.O.",
+        url: "https://www.adriaticadoo.com",
+        logo: {
           "@type": "ImageObject",
-          "url": "https://www.adriaticadoo.com/logo.png",
+          url: "https://www.adriaticadoo.com/logo.png",
         },
       },
       {
         "@type": "WebSite",
         "@id": "https://www.adriaticadoo.com/#website",
-        "url": "https://www.adriaticadoo.com/",
-        "name": "Adriatica D.O.O.",
-        "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" },
+        url: "https://www.adriaticadoo.com/",
+        name: "Adriatica D.O.O.",
+        inLanguage: "en",
+        publisher: { "@id": "https://www.adriaticadoo.com/#organization" },
       },
       {
         "@type": "AboutPage",
         "@id": "https://www.adriaticadoo.com/philosophy/#webpage",
-        "url": "https://www.adriaticadoo.com/philosophy",
-        "name": "Our Philosophy | Adriatica D.O.O.",
-        "description":
+        url: "https://www.adriaticadoo.com/philosophy",
+        name: "Our Philosophy | Adriatica D.O.O.",
+        description:
           "The Adriatica D.O.O. standard: Wisdom, resilience, and precision in marine engineering. Discover the Sumerian pinecone symbolism and our reductive approach to structural integrity.",
-        "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
-        "about": { "@id": "https://www.adriaticadoo.com/#organization" },
-        "inLanguage": "en",
+        isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
+        about: { "@id": "https://www.adriaticadoo.com/#organization" },
+        inLanguage: "en",
       },
     ],
   };
@@ -295,13 +314,19 @@ export default function Philosophy() {
       />
       <Helmet>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-<link
-  rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap"
-  media="print"
-  onLoad={(e) => { (e.currentTarget as HTMLLinkElement).media = 'all'; }}
-/>
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap"
+          media="print"
+          onLoad={(e) => {
+            (e.currentTarget as HTMLLinkElement).media = "all";
+          }}
+        />
         <script type="application/ld+json">
           {JSON.stringify(schema).replace(/</g, "\\u003c")}
         </script>
@@ -311,7 +336,6 @@ export default function Philosophy() {
         <Navigation />
 
         <main>
-
           {/* ── HERO ────────────────────────────────────────────────────────── */}
           <section className="relative pt-40 pb-24 overflow-hidden bg-background">
             {/* Arka plan kırılma efekti — Home'daki hero ile aynı dil */}
@@ -331,12 +355,16 @@ export default function Philosophy() {
                   Adriatica D.O.O. Standard
                 </p>
                 <h1 className="font-display text-5xl md:text-7xl font-bold text-[#0B3B5C] leading-[1.05] mb-6 uppercase">
-                    THE ESSENTIAL<br />
+                  THE ESSENTIAL
+                  <br />
                   <span className="text-[#3A74A0]">STRUCTURE</span>
                 </h1>
                 <div className="w-16 h-0.5 bg-primary/30 mb-6" />
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl">
-                  Our philosophy is not a statement — it is a method. Every project is shaped by the same principles that have governed enduring structures for millennia: remove the unnecessary, strengthen the essential, and build for what outlasts you.
+                  Our philosophy is not a statement — it is a method. Every
+                  project is shaped by the same principles that have governed
+                  enduring structures for millennia: remove the unnecessary,
+                  strengthen the essential, and build for what outlasts you.
                 </p>
               </motion.div>
             </div>
@@ -346,7 +374,6 @@ export default function Philosophy() {
           <section className="py-24 bg-neutral-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-
                 {/* Sol: Pinecone */}
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
@@ -372,7 +399,11 @@ export default function Philosophy() {
                       The Symbol
                     </p>
                     <p className="text-muted-foreground leading-relaxed">
-                      The Sumerian pinecone is one of the oldest symbols of human civilisation — representing wisdom accumulated over generations, the resilience of natural structures, and the seed of future growth. We chose it deliberately: engineering, at its best, carries the same qualities.
+                      The Sumerian pinecone is one of the oldest symbols of
+                      human civilisation — representing wisdom accumulated over
+                      generations, the resilience of natural structures, and the
+                      seed of future growth. We chose it deliberately:
+                      engineering, at its best, carries the same qualities.
                     </p>
                   </motion.div>
 
@@ -403,7 +434,6 @@ export default function Philosophy() {
                     />
                   </div>
                 </div>
-
               </div>
             </div>
           </section>
@@ -414,7 +444,11 @@ export default function Philosophy() {
             <div className="absolute inset-0 z-0 pointer-events-none">
               <div className="absolute top-0 right-0 w-2/3 h-full bg-[#1A4B7A]/10 -skew-x-12 transform origin-top" />
               <div className="absolute inset-0 opacity-10">
-                <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <svg
+                  className="h-full w-full"
+                  viewBox="0 0 100 100"
+                  preserveAspectRatio="none"
+                >
                   <path d="M0 100 L100 0 L100 100 Z" fill="white" />
                 </svg>
               </div>
@@ -422,7 +456,6 @@ export default function Philosophy() {
 
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-
                 {/* Sol: Metin */}
                 <motion.div
                   initial={{ opacity: 0, x: -24 }}
@@ -434,32 +467,50 @@ export default function Philosophy() {
                     The Adriatica Standard
                   </p>
                   <h2 className="font-display text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                    Align.<br />
-                    Execute.<br />
+                    Align.
+                    <br />
+                    Execute.
+                    <br />
                     Verify.
                   </h2>
                   <p className="text-white/75 leading-relaxed mb-4 text-lg">
-                    Our Integrity Cycle is not a marketing phrase. It is the operational sequence we follow on every engagement — from the first technical brief to the final handover document.
+                    Our Integrity Cycle is not a marketing phrase. It is the
+                    operational sequence we follow on every engagement — from
+                    the first technical brief to the final handover document.
                   </p>
                   <p className="text-white/75 leading-relaxed">
-                    Precision is not just a method — it is our philosophy. Every project is executed with uncompromising attention to detail, ensuring safety and compliance beyond what standards require.
+                    Precision is not just a method — it is our philosophy. Every
+                    project is executed with uncompromising attention to detail,
+                    ensuring safety and compliance beyond what standards
+                    require.
                   </p>
                 </motion.div>
 
                 {/* Sağ: İstatistikler */}
-<motion.div
-  initial={{ opacity: 0, x: 24 }}
-  whileInView={{ opacity: 1, x: 0 }}
-  viewport={{ once: true }}
-  transition={{ duration: 0.7, delay: 0.15 }}
-  className="grid grid-cols-2 gap-10"
->
-  <Stat value={`${TRUST_METRICS.yearsExperience}+`} label={`Years ${TRUST_METRICS.field}`} />
-  <Stat value={`${TRUST_METRICS.vesselsSupported}+`} label="Vessels Supported" />
-  <Stat value={`${TRUST_METRICS.countries}+`} label="Countries" />
-  <Stat value={`${TRUST_METRICS.pscDetentions}`} label="PSC Detentions" />
-</motion.div>
-
+                <motion.div
+                  initial={{ opacity: 0, x: 24 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: 0.15 }}
+                  className="grid grid-cols-2 gap-10"
+                >
+                  <Stat
+                    value={`${TRUST_METRICS.yearsExperience}+`}
+                    label={`Years ${TRUST_METRICS.field}`}
+                  />
+                  <Stat
+                    value={`${TRUST_METRICS.vesselsSupported}+`}
+                    label="Vessels Supported"
+                  />
+                  <Stat
+                    value={`${TRUST_METRICS.countries}+`}
+                    label="Countries"
+                  />
+                  <Stat
+                    value={`${TRUST_METRICS.pscDetentions}`}
+                    label="PSC Detentions"
+                  />
+                </motion.div>
               </div>
             </div>
           </section>
@@ -480,7 +531,9 @@ export default function Philosophy() {
                   Engineering clarity for the Adriatic.
                 </h2>
                 <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-                  If our standard matches what you expect from a technical partner, we would be glad to hear about your vessel and your challenge.
+                  If our standard matches what you expect from a technical
+                  partner, we would be glad to hear about your vessel and your
+                  challenge.
                 </p>
                 <a
                   href="/request-consultation"
@@ -491,7 +544,6 @@ export default function Philosophy() {
               </motion.div>
             </div>
           </section>
-
         </main>
 
         <Footer />

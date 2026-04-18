@@ -23,7 +23,6 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Üst Bölüm: 3 Sütun */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 border-b border-white/10 pb-16">
-
           {/* Sol Sütun: Logo + Slogan + Adres + İletişim + Sosyal */}
           <div className="md:col-span-5">
             <HashLink href="/" className="flex items-center space-x-3 mb-4">
@@ -38,20 +37,24 @@ export function Footer() {
                 ADRIATICA D.O.O.
               </span>
             </HashLink>
-<p className="text-[#C8D6E5] text-xs uppercase tracking-wider mb-4">
-  Engineering clarity for the Adriatic.
-</p>
+            <p className="text-[#C8D6E5] text-xs uppercase tracking-wider mb-4">
+              Engineering clarity for the Adriatic.
+            </p>
             <div className="text-[#C8D6E5] text-sm space-y-3 mb-5">
               <p className="flex items-start gap-2">
                 <span className="shrink-0">📍</span>
                 <span>Adriatic Coast & Montenegro</span>
               </p>
               <div>
-                <p className="text-xs uppercase tracking-wider text-white/85 mb-0.5">Address</p>
+                <p className="text-xs uppercase tracking-wider text-white/85 mb-0.5">
+                  Address
+                </p>
                 <p>Budva, Montenegro</p>
               </div>
               <div>
-                <p className="text-xs uppercase tracking-wider text-white/85 mb-0.5">Contact</p>
+                <p className="text-xs uppercase tracking-wider text-white/85 mb-0.5">
+                  Contact
+                </p>
                 <p>
                   <a
                     href="mailto:info@adriaticadoo.com"
@@ -98,12 +101,12 @@ export function Footer() {
             <h3 className="font-display font-bold text-lg mb-5">Explore</h3>
             <ul className="space-y-3">
               {[
-                { name: "Home",         href: "/"             },
-                { name: "Services",     href: "/services"     },
+                { name: "Home", href: "/" },
+                { name: "Services", href: "/services" },
                 { name: "Deliverables", href: "/deliverables" },
-                { name: "Insights",     href: "/insights"     },
+                { name: "Insights", href: "/insights" },
                 { name: "Case Studies", href: "/case-studies" },
-              ].map(item => (
+              ].map((item) => (
                 <li key={item.name}>
                   <HashLink
                     href={item.href}
@@ -123,11 +126,11 @@ export function Footer() {
                 <h3 className="font-display font-bold text-lg mb-5">Company</h3>
                 <ul className="space-y-3">
                   {[
-                    { name: "About",       href: "/about"       },
-                    { name: "Careers",     href: "/careers"     },
-                    { name: "News",        href: "/news"        },
-                    { name: "Philosophy",  href: "/philosophy"  },
-                  ].map(item => (
+                    { name: "About", href: "/about" },
+                    { name: "Careers", href: "/careers" },
+                    { name: "News", href: "/news" },
+                    { name: "Philosophy", href: "/philosophy" },
+                  ].map((item) => (
                     <li key={item.name}>
                       <HashLink
                         href={item.href}
@@ -165,43 +168,102 @@ export function Footer() {
           </div>
 
           <div className="order-1 lg:order-2 flex flex-wrap justify-center items-center gap-5">
-            <a href="https://www.imo.org" target="_blank" rel="noopener noreferrer" aria-label="IMO"
-              className="hover:opacity-80 hover:scale-105 transition-transform duration-200">
-              <img src="/logos/imo_logo.png" alt="IMO" width="93" height="40"
-                className="h-10 w-auto bg-white/10 rounded-sm p-0.5" />
+            <a
+              href="https://www.imo.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="IMO"
+              className="hover:opacity-80 hover:scale-105 transition-transform duration-200"
+            >
+              <img
+                src="/logos/imo_logo.png"
+                alt="IMO"
+                width="93"
+                height="40"
+                className="h-10 w-auto bg-white/10 rounded-sm p-0.5"
+              />
             </a>
-            <a href="https://www.parismou.org" target="_blank" rel="noopener noreferrer" aria-label="Paris MoU"
-              className="hover:opacity-80 hover:scale-105 transition-transform duration-200">
-              <img src="/logos/parismou-logo.png" alt="Paris MoU" width="182" height="40"
-                className="h-10 w-auto" />
+            <a
+              href="https://www.parismou.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Paris MoU"
+              className="hover:opacity-80 hover:scale-105 transition-transform duration-200"
+            >
+              <img
+                src="/logos/parismou-logo.png"
+                alt="Paris MoU"
+                width="182"
+                height="40"
+                className="h-10 w-auto"
+              />
             </a>
-            <a href="https://helcom.fi" target="_blank" rel="noopener noreferrer" aria-label="HELCOM"
-              className="hover:opacity-80 hover:scale-105 transition-transform duration-200">
-              <img src="/logos/helcom_logo.png" alt="HELCOM" width="41" height="40"
-                className="h-10 w-auto" />
+            <a
+              href="https://helcom.fi"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="HELCOM"
+              className="hover:opacity-80 hover:scale-105 transition-transform duration-200"
+            >
+              <img
+                src="/logos/helcom_logo.png"
+                alt="HELCOM"
+                width="41"
+                height="40"
+                className="h-10 w-auto"
+              />
             </a>
-            <a href="https://www.gov.me/uprava-pomorske-sigurnosti" target="_blank" rel="noopener noreferrer" aria-label="Montenegro MSA"
-              className="hover:opacity-80 hover:scale-105 transition-transform duration-200">
-              <img src="/logos/me-flag-round-circle-icon.svg" alt="Montenegro MSA" width="40" height="40"
-                className="h-10 w-10" />
+            <a
+              href="https://www.gov.me/uprava-pomorske-sigurnosti"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Montenegro MSA"
+              className="hover:opacity-80 hover:scale-105 transition-transform duration-200"
+            >
+              <img
+                src="/logos/me-flag-round-circle-icon.svg"
+                alt="Montenegro MSA"
+                width="40"
+                height="40"
+                className="h-10 w-10"
+              />
             </a>
-            <a href="https://www.emsa.europa.eu" target="_blank" rel="noopener noreferrer" aria-label="EMSA"
-              className="hover:opacity-80 hover:scale-105 transition-transform duration-200">
-              <img src="/logos/eu-union-flag-round-circle-icon.svg" alt="EMSA" width="40" height="40"
-                className="h-10 w-10" />
+            <a
+              href="https://www.emsa.europa.eu"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="EMSA"
+              className="hover:opacity-80 hover:scale-105 transition-transform duration-200"
+            >
+              <img
+                src="/logos/eu-union-flag-round-circle-icon.svg"
+                alt="EMSA"
+                width="40"
+                height="40"
+                className="h-10 w-10"
+              />
             </a>
           </div>
 
           <div className="order-3 flex flex-wrap justify-center gap-x-5 gap-y-1">
-            <HashLink href="/privacy-policy" className="hover:text-white transition-colors text-sm">
+            <HashLink
+              href="/privacy-policy"
+              className="hover:text-white transition-colors text-sm"
+            >
               Privacy Policy
             </HashLink>
             <span className="text-white/80">·</span>
-            <HashLink href="/terms-of-service" className="hover:text-white transition-colors text-sm">
+            <HashLink
+              href="/terms-of-service"
+              className="hover:text-white transition-colors text-sm"
+            >
               Terms of Service
             </HashLink>
             <span className="text-white/80">·</span>
-            <HashLink href="/cookie-policy" className="hover:text-white transition-colors text-sm">
+            <HashLink
+              href="/cookie-policy"
+              className="hover:text-white transition-colors text-sm"
+            >
               Cookie Policy
             </HashLink>
           </div>

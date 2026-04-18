@@ -1,12 +1,14 @@
-import type { Insight } from '.';
+import type { Insight } from ".";
 
 export const sustainableCleaning: Insight = {
-  slug: 'sustainable-in-water-cleaning-yacht',
-  title: 'In-Water Cleaning Management for Yachts | Sustainable Compliance | Adriatica',
-  category: 'Technical Guidance',
-  date: '2026-02-20',
+  slug: "sustainable-in-water-cleaning-yacht",
+  title:
+    "In-Water Cleaning Management for Yachts | Sustainable Compliance | Adriatica",
+  category: "Technical Guidance",
+  date: "2026-02-20",
   readTime: 7,
-  description: 'Professional in-water cleaning management for 25m+ yachts. Cost savings up to 80%, regulatory alignment with Paris MoU, and full BFRB documentation.',
+  description:
+    "Professional in-water cleaning management for 25m+ yachts. Cost savings up to 80%, regulatory alignment with Paris MoU, and full BFRB documentation.",
   contentHtml: `
     <p class="lead text-lg font-medium mb-6">As IMO MEPC.378(80) Guidelines transition toward structured enforcement convergence across Port State Control (PSC) regimes, biofouling management is shifting from voluntary guidance toward structured operational oversight. While in‑water cleaning offers a cost‑effective alternative to dry‑docking, it requires stringent adherence to environmental standards and technical documentation across different European regions. Adriatica D.O.O. provides engineering management services to plan, coordinate, and certify in‑water cleaning operations. Although Adriatica D.O.O. operates primarily in the Adriatic and Mediterranean regions, our compliance framework is aligned with Port State Control inspection expectations under the Paris MoU framework [5,9], ensuring continued compliance for 25m+ and 50m+ vessels without disruption to operational scheduling.</p>
 
@@ -99,31 +101,37 @@ export const sustainableCleaning: Insight = {
       <li>Helsinki Commission (HELCOM): Environmental guidelines for the Baltic Sea area regarding biofouling and debris containment.</li>
     </ol>
   `,
-  pdfUrl: '/pdfs/insights/ADRI-TIS-002.pdf',
+  pdfUrl: "/pdfs/insights/ADRI-TIS-002.pdf",
   operationalImplications: {
-    heading: 'Operational Implications',
-    summary: 'If your vessel is operating in European coastal waters, reactive dry-docking is no longer the only option — or the smart one. Here is how to shift from reactive to proactive:',
+    heading: "Operational Implications",
+    summary:
+      "If your vessel is operating in European coastal waters, reactive dry-docking is no longer the only option — or the smart one. Here is how to shift from reactive to proactive:",
     points: [
       {
-        point: 'Schedule in-water cleaning during guest turnaround or seasonal downtime. A managed operation takes one day versus 4–7 days for unscheduled dry-docking.',
+        point:
+          "Schedule in-water cleaning during guest turnaround or seasonal downtime. A managed operation takes one day versus 4–7 days for unscheduled dry-docking.",
       },
       {
-        point: 'For 25m+ vessels operating in Mediterranean and Baltic waters, ensure your diving contractor uses vacuum-assisted debris capture — not all cleaning methods meet local environmental standards.',
+        point:
+          "For 25m+ vessels operating in Mediterranean and Baltic waters, ensure your diving contractor uses vacuum-assisted debris capture — not all cleaning methods meet local environmental standards.",
       },
       {
-        point: 'Every cleaning event must be logged in your Biofouling Record Book (BFRB) with photographic evidence. Without this, the cleaning has no regulatory value for PSC inspections.',
-        href: '/deliverables',
+        point:
+          "Every cleaning event must be logged in your Biofouling Record Book (BFRB) with photographic evidence. Without this, the cleaning has no regulatory value for PSC inspections.",
+        href: "/deliverables",
       },
       {
-        point: 'If you are in Monaco, Dubrovnik, or Baltic ports, verify debris containment requirements before scheduling any in-water work — enforcement varies by jurisdiction.',
+        point:
+          "If you are in Monaco, Dubrovnik, or Baltic ports, verify debris containment requirements before scheduling any in-water work — enforcement varies by jurisdiction.",
       },
       {
-        point: 'The cost difference is significant: managed in-water cleaning averages €6,000 versus €30,000 for unscheduled dry-docking. Budget accordingly at the start of each season.',
+        point:
+          "The cost difference is significant: managed in-water cleaning averages €6,000 versus €30,000 for unscheduled dry-docking. Budget accordingly at the start of each season.",
       },
     ],
     cta: {
-      label: 'Plan Your In-Water Cleaning Programme',
-      href: '/request-consultation',
+      label: "Plan Your In-Water Cleaning Programme",
+      href: "/request-consultation",
     },
   },
 };

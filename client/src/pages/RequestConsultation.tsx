@@ -223,7 +223,8 @@ export default function RequestConsultation() {
                             htmlFor="email"
                             className="block text-sm font-medium text-[#0B3B5C] mb-1"
                           >
-                            Email Address <span className="text-red-500">*</span>
+                            Email Address{" "}
+                            <span className="text-red-500">*</span>
                           </label>
                           <input
                             type="email"
@@ -335,7 +336,7 @@ export default function RequestConsultation() {
                             <option value="Project Management">
                               Project Management
                             </option>
-                             <option value="Project Management">
+                            <option value="Project Management">
                               Yacht Survey & Inspection
                             </option>
                             <option value="Other / Not Sure">
@@ -377,8 +378,8 @@ export default function RequestConsultation() {
                             htmlFor="gdprConsent"
                             className="text-sm text-muted-foreground leading-relaxed"
                           >
-                            I agree that Adriatica D.O.O. may process my personal
-                            data in accordance with the{" "}
+                            I agree that Adriatica D.O.O. may process my
+                            personal data in accordance with the{" "}
                             <a
                               href="/privacy-policy"
                               className="text-primary hover:underline"
@@ -442,8 +443,8 @@ export default function RequestConsultation() {
                     </p>
                     <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
                       Whether you're a superyacht captain, a commercial fleet
-                      technical manager, or an owner preparing for a survey —
-                      if you value operational clarity and technical precision,
+                      technical manager, or an owner preparing for a survey — if
+                      you value operational clarity and technical precision,
                       you're in the right place.
                     </p>
 
@@ -453,7 +454,9 @@ export default function RequestConsultation() {
                     <ol className="space-y-3 text-sm text-muted-foreground list-decimal list-inside mb-6">
                       <li>We review your request within 24 hours.</li>
                       <li>Brief discussion to clarify your requirements.</li>
-                      <li>You receive initial technical feedback and options.</li>
+                      <li>
+                        You receive initial technical feedback and options.
+                      </li>
                     </ol>
 
                     <div className="mt-6 pt-6 border-t border-border/30">

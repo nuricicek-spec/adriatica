@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -10,8 +10,8 @@
   --color-lapis-800: 209 65% 29%; /* #1A4B7A */
   --color-lapis-700: 207 53% 35%; /* #2A5F8A */
   --color-lapis-600: 206 47% 43%; /* #3A74A0 - Lightest of the darks */
-  
-  --color-sand-100: 40 20% 97%;   /* Off-white/sand for contrast */
+
+  --color-sand-100: 40 20% 97%; /* Off-white/sand for contrast */
   --color-sand-200: 40 15% 94%;
 
   /* Shadcn/Theme mapping */
@@ -46,8 +46,8 @@
   --radius: 0.25rem; /* Sharp, architectural corners */
 
   /* Fonts */
-  --font-display: 'Cinzel', serif; /* Architectural, classic */
-  --font-body: 'Manrope', sans-serif; /* Modern, clean, technical */
+  --font-display: "Cinzel", serif; /* Architectural, classic */
+  --font-body: "Manrope", sans-serif; /* Modern, clean, technical */
 }
 
 .dark {
@@ -88,7 +88,12 @@
     @apply bg-background text-foreground;
     font-family: var(--font-body);
   }
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-display);
     @apply tracking-tight;
   }

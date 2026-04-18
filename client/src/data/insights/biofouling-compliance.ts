@@ -1,12 +1,13 @@
-import type { Insight } from '.';
+import type { Insight } from ".";
 
 export const biofoulingCompliance: Insight = {
-  slug: 'biofouling-compliance-imo-2026',
-  title: 'IMO 2026 Biofouling Compliance: Superyacht Case Study | Adriatica',
-  category: 'Regulation',
-  date: '2026-01-20',
+  slug: "biofouling-compliance-imo-2026",
+  title: "IMO 2026 Biofouling Compliance: Superyacht Case Study | Adriatica",
+  category: "Regulation",
+  date: "2026-01-20",
   readTime: 6,
-  description: 'Learn IMO 2026 biofouling compliance through a real-world superyacht case study. Proactive documentation, niche-area risk assessment, and seamless Mediterranean entry.',
+  description:
+    "Learn IMO 2026 biofouling compliance through a real-world superyacht case study. Proactive documentation, niche-area risk assessment, and seamless Mediterranean entry.",
   contentHtml: `
     <p class="lead text-lg font-medium mb-6">Adriatica D.O.O. presents a real-world superyacht case study on biofouling management, showcasing how proactive documentation and niche area risk assessment support compliance readiness for the anticipated IMO 2026 transition. Learn how our framework delivers seamless Mediterranean entry, operational efficiency, and measurable sustainability gains.</p>
 
@@ -68,32 +69,38 @@ export const biofoulingCompliance: Insight = {
       <li>Adriatica D.O.O. Engineering Archives: Internal case studies on superyacht operational efficiency in the Adriatic &amp; Mediterranean regions.</li>
     </ol>
   `,
-  pdfUrl: '/pdfs/insights/ADRI-TIS-001.pdf',
+  pdfUrl: "/pdfs/insights/ADRI-TIS-001.pdf",
   operationalImplications: {
-    heading: 'Operational Implications',
-    summary: 'If your vessel is entering Mediterranean waters in 2026, biofouling documentation is no longer optional — it is a PSC readiness requirement. Here is what you should act on now:',
+    heading: "Operational Implications",
+    summary:
+      "If your vessel is entering Mediterranean waters in 2026, biofouling documentation is no longer optional — it is a PSC readiness requirement. Here is what you should act on now:",
     points: [
       {
-        point: 'Assess your vessel\'s biofouling exposure index — idle duration in tropical waters, coating age, and niche-area configuration are the three key risk drivers.',
+        point:
+          "Assess your vessel's biofouling exposure index — idle duration in tropical waters, coating age, and niche-area configuration are the three key risk drivers.",
       },
       {
-        point: 'Commission a vessel-specific Biofouling Management Plan (BFMP) before your next Mediterranean transit. Generic plans are increasingly inadequate for PSC inspections.',
-        href: '/services/sustainable-technologies',
+        point:
+          "Commission a vessel-specific Biofouling Management Plan (BFMP) before your next Mediterranean transit. Generic plans are increasingly inadequate for PSC inspections.",
+        href: "/services/sustainable-technologies",
       },
       {
-        point: 'Start maintaining a Biofouling Record Book (BFRB) with photographic evidence for every inspection and cleaning event — this is your auditable trail.',
+        point:
+          "Start maintaining a Biofouling Record Book (BFRB) with photographic evidence for every inspection and cleaning event — this is your auditable trail.",
       },
       {
-        point: 'If your coating is older than 36 months or your vessel has been idle in high-fouling zones, schedule a niche-area inspection before entry.',
-        href: '/deliverables',
+        point:
+          "If your coating is older than 36 months or your vessel has been idle in high-fouling zones, schedule a niche-area inspection before entry.",
+        href: "/deliverables",
       },
       {
-        point: 'Charter operators should note: PSC delays cost more than proactive compliance. Regulatory readiness is now a charter market differentiator.',
+        point:
+          "Charter operators should note: PSC delays cost more than proactive compliance. Regulatory readiness is now a charter market differentiator.",
       },
     ],
     cta: {
-      label: 'Request a Biofouling Compliance Assessment',
-      href: '/request-consultation',
+      label: "Request a Biofouling Compliance Assessment",
+      href: "/request-consultation",
     },
   },
 };

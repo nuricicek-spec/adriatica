@@ -12,8 +12,7 @@ export const ASSISTANT_CONFIG = {
   METHOD: "POST" as const,
 
   /** Panel opening greeting */
-  GREETING:
-    "Hi! Need help with your vessel? Let's assess it together.",
+  GREETING: "Hi! Need help with your vessel? Let's assess it together.",
 
   /** Brand name shown in panel header */
   ASSISTANT_NAME: "Adriatica Technical Assistant",

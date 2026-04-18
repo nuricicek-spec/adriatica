@@ -6,7 +6,7 @@ import { AssistantInput } from "./AssistantInput";
 
 export function AssistantPanel() {
   const { isOpen, close } = useAssistant();
-  const panelRef          = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   // Escape ile kapat
   useEffect(() => {
@@ -23,16 +23,16 @@ export function AssistantPanel() {
       document.body.style.overflow = "hidden";
       // iOS safari için position fixed trick
       document.body.style.position = "fixed";
-      document.body.style.width    = "100%";
+      document.body.style.width = "100%";
     } else {
       document.body.style.overflow = "";
       document.body.style.position = "";
-      document.body.style.width    = "";
+      document.body.style.width = "";
     }
     return () => {
       document.body.style.overflow = "";
       document.body.style.position = "";
-      document.body.style.width    = "";
+      document.body.style.width = "";
     };
   }, [isOpen]);
 
@@ -68,9 +68,10 @@ export function AssistantPanel() {
           shadow-2xl
           flex flex-col overflow-hidden
           transition-all duration-300 ease-out
-          ${isOpen
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-8 pointer-events-none"
+          ${
+            isOpen
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-8 pointer-events-none"
           }
         `}
       >

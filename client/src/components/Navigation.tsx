@@ -5,7 +5,7 @@ import { HashLink } from "@/components/HashLink";
 import { cn } from "@/lib/utils";
 
 export function Navigation() {
-  const [isScrolled, setIsScrolled]             = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [, setLocation] = useLocation();
 
@@ -18,16 +18,18 @@ export function Navigation() {
   // Mobil menü açıkken body scroll'u engelle
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [isMobileMenuOpen]);
 
   const navLinks = [
-    { name: "Services",     href: "/services"      },
-    { name: "Deliverables", href: "/deliverables"   },
-    { name: "Insights",     href: "/insights"       },
-    { name: "Case Studies", href: "/case-studies"   },
-    { name: "About",        href: "/about"          },
-    { name: "Contact",      href: "/#begin-voyage"  },
+    { name: "Services", href: "/services" },
+    { name: "Deliverables", href: "/deliverables" },
+    { name: "Insights", href: "/insights" },
+    { name: "Case Studies", href: "/case-studies" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/#begin-voyage" },
   ];
 
   const closeMenu = () => setIsMobileMenuOpen(false);
@@ -52,12 +54,11 @@ export function Navigation() {
           "fixed w-full z-50 transition-all duration-300 border-b border-transparent",
           isScrolled
             ? "bg-background/90 backdrop-blur-md py-4 shadow-sm border-border/10"
-            : "bg-transparent py-6"
+            : "bg-transparent py-6",
         )}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
-
             {/* Logo */}
             <HashLink href="/" className="flex items-center space-x-3 group">
               <img
@@ -75,7 +76,7 @@ export function Navigation() {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
-              {navLinks.map(link => (
+              {navLinks.map((link) => (
                 <HashLink
                   key={link.name}
                   href={link.href}
@@ -95,7 +96,7 @@ export function Navigation() {
             {/* Mobile Menu Button */}
             <div className="md:hidden">
               <button
-                onClick={() => setIsMobileMenuOpen(prev => !prev)}
+                onClick={() => setIsMobileMenuOpen((prev) => !prev)}
                 className="text-primary p-2"
                 aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isMobileMenuOpen}
@@ -112,10 +113,10 @@ export function Navigation() {
             "md:hidden absolute top-full left-0 w-full z-50 bg-background border-b border-border/10 shadow-xl py-4 px-4 flex flex-col space-y-4 transition-all duration-200",
             isMobileMenuOpen
               ? "opacity-100 translate-y-0"
-              : "opacity-0 -translate-y-4 pointer-events-none"
+              : "opacity-0 -translate-y-4 pointer-events-none",
           )}
         >
-          {navLinks.map(link => (
+          {navLinks.map((link) => (
             <HashLink
               key={link.name}
               href={link.href}

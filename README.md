@@ -1,4 +1,3 @@
-
 # ⚓ Adriatica D.O.O. - Marine Engineering & Consultancy
 
 This repository contains the web application and technical documentation framework for Adriatica D.O.O., focusing on maritime compliance and engineering solutions in the Adriatic and EU regions.
@@ -144,6 +143,7 @@ client/
 └── (diğer kök dosyalar: package.json, vite.config.ts, tailwind.config.ts, README.md)
 
 ```
+
 ## 🚀 Quick Start
 
 1. Clone the repository:
@@ -179,6 +179,7 @@ Your site will be live in seconds.
 Free to use and modify for personal or commercial projects. No warranty provided.
 
 ## 🛠️ Technical Focus
+
 - Marine Engineering
 - Marine Consultancy
 - IMO Regulatory Compliance

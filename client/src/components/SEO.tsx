@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from "react-helmet-async";
 
 interface SEOProps {
   title?: string;
@@ -6,7 +6,7 @@ interface SEOProps {
   canonical: string;
   ogImage?: string;
   ogImageAlt?: string;
-  ogType?: 'website' | 'article';
+  ogType?: "website" | "article";
   publishedTime?: string;
   modifiedTime?: string;
   noindex?: boolean;
@@ -21,15 +21,15 @@ const siteUrl = "https://www.adriaticadoo.com";
 
 function normalizeUrl(url: string): string {
   // Ana domain'i koru, diğerlerinden trailing slash'ı temizle
-  const stripped = url.replace(/\/$/, '');
-  return stripped === '' ? siteUrl : stripped;
+  const stripped = url.replace(/\/$/, "");
+  return stripped === "" ? siteUrl : stripped;
 }
 
 function resolveImageUrl(image: string): string {
   // Absolute URL (http/https veya protocol-relative) ise dokunma
   if (/^(https?:)?\/\//.test(image)) return image;
   // Relative path ise site URL ile birleştir
-  return `${siteUrl}${image.startsWith('/') ? '' : '/'}${image}`;
+  return `${siteUrl}${image.startsWith("/") ? "" : "/"}${image}`;
 }
 
 export function SEO({
@@ -38,7 +38,7 @@ export function SEO({
   canonical,
   ogImage,
   ogImageAlt,
-  ogType = 'website',
+  ogType = "website",
   publishedTime,
   modifiedTime,
   noindex = false,
@@ -49,14 +49,17 @@ export function SEO({
   const metaOgImageAlt = ogImageAlt || defaultOgImageAlt;
   const canonicalUrl = normalizeUrl(canonical);
 
-  const isArticle = ogType === 'article';
+  const isArticle = ogType === "article";
 
   return (
     <Helmet>
       <title>{pageTitle}</title>
       <meta name="description" content={metaDescription} />
       <link rel="canonical" href={canonicalUrl} />
-      <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+      <meta
+        name="robots"
+        content={noindex ? "noindex, nofollow" : "index, follow"}
+      />
       <meta name="author" content="Adriatica D.O.O." />
       <meta name="theme-color" content="#0B3B5C" />
       <meta name="format-detection" content="telephone=no" />

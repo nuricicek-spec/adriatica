@@ -1,12 +1,13 @@
-import type { Insight } from '.';
+import type { Insight } from ".";
 
 export const technicalOperations: Insight = {
-  slug: 'technical-operations-montenegro',
-  title: 'Montenegro Shipyard Supervision & UPSUL Compliance | Adriatica',
-  category: 'Case Insight',
-  date: '2026-03-20',
+  slug: "technical-operations-montenegro",
+  title: "Montenegro Shipyard Supervision & UPSUL Compliance | Adriatica",
+  category: "Case Insight",
+  date: "2026-03-20",
   readTime: 5,
-  description: 'Direct technical presence in Montenegro: refit supervision, UPSUL regulatory compliance, and shipyard coordination. Reduce dry-docking time by up to 15%.',
+  description:
+    "Direct technical presence in Montenegro: refit supervision, UPSUL regulatory compliance, and shipyard coordination. Reduce dry-docking time by up to 15%.",
   contentHtml: `
     <p class="lead text-lg font-medium mb-6">Adriatica D.O.O. examines the critical importance of direct technical presence in the Adriatic region, focusing on the synergy between Montenegrin maritime regulations (UPSUL) and shipyard supervision. This insight provides a strategic roadmap for navigating complex refit cycles and ensuring compliance within Montenegro's evolving maritime infrastructure.</p>
 
@@ -89,32 +90,38 @@ export const technicalOperations: Insight = {
       <li>Adriatica D.O.O. Engineering Archives. (2026). Internal Case Studies on Shipyard Supervision and Technical Management in Montenegro. Podgorica: Adriatica D.O.O.</li>
     </ol>
   `,
-  pdfUrl: '/pdfs/insights/ADRI-TIS-003.pdf',
+  pdfUrl: "/pdfs/insights/ADRI-TIS-003.pdf",
   operationalImplications: {
-    heading: 'Operational Implications',
-    summary: 'If you are planning a refit or dry-docking in Montenegro, remote engineering management is a significant risk. Here is what direct technical presence changes in practice:',
+    heading: "Operational Implications",
+    summary:
+      "If you are planning a refit or dry-docking in Montenegro, remote engineering management is a significant risk. Here is what direct technical presence changes in practice:",
     points: [
       {
-        point: 'Appoint an on-site Owner\'s Technical Representative before your vessel enters any Montenegrin shipyard. Specification drift without physical oversight is the primary cause of timeline overruns.',
-        href: '/services/project-management',
+        point:
+          "Appoint an on-site Owner's Technical Representative before your vessel enters any Montenegrin shipyard. Specification drift without physical oversight is the primary cause of timeline overruns.",
+        href: "/services/project-management",
       },
       {
-        point: 'Verify that your technical documentation meets UPSUL requirements before arrival — not after. Local Port Authority coordination takes time and affects your yard slot.',
+        point:
+          "Verify that your technical documentation meets UPSUL requirements before arrival — not after. Local Port Authority coordination takes time and affects your yard slot.",
       },
       {
-        point: 'For refits at Adriatic 42 (Bijela) or Navar (Tivat), ensure coating specifications, shaft alignment, and biofouling records are prepared in advance. Last-minute documentation requests delay class acceptance.',
-        href: '/services/engineering-documentation',
+        point:
+          "For refits at Adriatic 42 (Bijela) or Navar (Tivat), ensure coating specifications, shaft alignment, and biofouling records are prepared in advance. Last-minute documentation requests delay class acceptance.",
+        href: "/services/engineering-documentation",
       },
       {
-        point: 'Build a 2-day buffer into your refit timeline for PSC or classification society responses. On-site representation reduces this buffer significantly.',
+        point:
+          "Build a 2-day buffer into your refit timeline for PSC or classification society responses. On-site representation reduces this buffer significantly.",
       },
       {
-        point: 'Vessels planning Mediterranean re-entry after Montenegro refit should align their technical records with Paris MoU inspection criteria — not just UPSUL compliance.',
+        point:
+          "Vessels planning Mediterranean re-entry after Montenegro refit should align their technical records with Paris MoU inspection criteria — not just UPSUL compliance.",
       },
     ],
     cta: {
-      label: 'Request On-Site Engineering Representation',
-      href: '/request-consultation',
+      label: "Request On-Site Engineering Representation",
+      href: "/request-consultation",
     },
   },
 };

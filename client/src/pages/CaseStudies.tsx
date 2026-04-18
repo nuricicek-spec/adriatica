@@ -13,38 +13,41 @@ export default function CaseStudies() {
       {
         "@type": "CollectionPage",
         "@id": "https://www.adriaticadoo.com/case-studies/#webpage",
-        "url": "https://www.adriaticadoo.com/case-studies",
-        "name": "Case Studies | Adriatica D.O.O.",
-        "description": "Real-world marine engineering results: biofouling compliance, cost savings with in-water cleaning, and on-time refit supervision.",
-        "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
-        "about": { "@id": "https://www.adriaticadoo.com/#organization" },
-        "inLanguage": "en",
-        "datePublished": "2025-01-01",
-        "dateModified": "2025-03-15"
+        url: "https://www.adriaticadoo.com/case-studies",
+        name: "Case Studies | Adriatica D.O.O.",
+        description:
+          "Real-world marine engineering results: biofouling compliance, cost savings with in-water cleaning, and on-time refit supervision.",
+        isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
+        about: { "@id": "https://www.adriaticadoo.com/#organization" },
+        inLanguage: "en",
+        datePublished: "2025-01-01",
+        dateModified: "2025-03-15",
       },
       {
         "@type": "ItemList",
         "@id": "https://www.adriaticadoo.com/case-studies/#itemlist",
-        "name": "Marine Engineering Case Studies",
-        "description": "Operational case studies demonstrating Adriatica D.O.O. engineering outcomes.",
-        "numberOfItems": caseStudies.length,
-        "itemListElement": caseStudies.map((study, index) => ({
+        name: "Marine Engineering Case Studies",
+        description:
+          "Operational case studies demonstrating Adriatica D.O.O. engineering outcomes.",
+        numberOfItems: caseStudies.length,
+        itemListElement: caseStudies.map((study, index) => ({
           "@type": "ListItem",
-          "position": index + 1,
-          "url": `https://www.adriaticadoo.com/case-studies/${study.slug}`,
-          "name": study.title
-        }))
+          position: index + 1,
+          url: `https://www.adriaticadoo.com/case-studies/${study.slug}`,
+          name: study.title,
+        })),
       },
       {
         "@type": "WebSite",
         "@id": "https://www.adriaticadoo.com/#website",
-        "url": "https://www.adriaticadoo.com/",
-        "name": "Adriatica D.O.O.",
-        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
-        "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
-      }
-    ]
+        url: "https://www.adriaticadoo.com/",
+        name: "Adriatica D.O.O.",
+        description:
+          "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        inLanguage: "en",
+        publisher: { "@id": "https://www.adriaticadoo.com/#organization" },
+      },
+    ],
   };
 
   return (
@@ -56,7 +59,7 @@ export default function CaseStudies() {
       />
       <Helmet>
         <script type="application/ld+json">
-          {JSON.stringify(caseStudiesSchema).replace(/</g, '\\u003c')}
+          {JSON.stringify(caseStudiesSchema).replace(/</g, "\\u003c")}
         </script>
       </Helmet>
 
@@ -79,15 +82,21 @@ export default function CaseStudies() {
                   </h2>
                   <div className="space-y-3 text-muted-foreground">
                     <p>
-                      <span className="font-semibold text-[#0B3B5C]">Challenge:</span>{" "}
+                      <span className="font-semibold text-[#0B3B5C]">
+                        Challenge:
+                      </span>{" "}
                       {study.challenge}
                     </p>
                     <p>
-                      <span className="font-semibold text-[#0B3B5C]">Solution:</span>{" "}
+                      <span className="font-semibold text-[#0B3B5C]">
+                        Solution:
+                      </span>{" "}
                       {study.solution}
                     </p>
                     <p>
-                      <span className="font-semibold text-[#0B3B5C]">Result:</span>{" "}
+                      <span className="font-semibold text-[#0B3B5C]">
+                        Result:
+                      </span>{" "}
                       {study.result}
                     </p>
                   </div>

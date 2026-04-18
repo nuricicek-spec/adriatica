@@ -11,25 +11,27 @@ export default function PrivacyPolicy() {
       {
         "@type": "WebPage",
         "@id": "https://www.adriaticadoo.com/privacy-policy/#webpage",
-        "url": "https://www.adriaticadoo.com/privacy-policy",
-        "name": "Privacy Policy | Adriatica D.O.O.",
-        "description": "Privacy policy of Adriatica D.O.O. – how we collect, use, and protect your personal information.",
-        "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
-        "about": { "@id": "https://www.adriaticadoo.com/#organization" },
-        "inLanguage": "en",
-        "datePublished": "2025-01-01",
-        "dateModified": "2025-03-15"
+        url: "https://www.adriaticadoo.com/privacy-policy",
+        name: "Privacy Policy | Adriatica D.O.O.",
+        description:
+          "Privacy policy of Adriatica D.O.O. – how we collect, use, and protect your personal information.",
+        isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
+        about: { "@id": "https://www.adriaticadoo.com/#organization" },
+        inLanguage: "en",
+        datePublished: "2025-01-01",
+        dateModified: "2025-03-15",
       },
       {
         "@type": "WebSite",
         "@id": "https://www.adriaticadoo.com/#website",
-        "url": "https://www.adriaticadoo.com/",
-        "name": "Adriatica D.O.O.",
-        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
-        "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
-      }
-    ]
+        url: "https://www.adriaticadoo.com/",
+        name: "Adriatica D.O.O.",
+        description:
+          "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        inLanguage: "en",
+        publisher: { "@id": "https://www.adriaticadoo.com/#organization" },
+      },
+    ],
   };
 
   return (
@@ -42,7 +44,7 @@ export default function PrivacyPolicy() {
       />
       <Helmet>
         <script type="application/ld+json">
-          {JSON.stringify(privacyPolicySchema).replace(/</g, '\\u003c')}
+          {JSON.stringify(privacyPolicySchema).replace(/</g, "\\u003c")}
         </script>
       </Helmet>
 
@@ -60,14 +62,21 @@ export default function PrivacyPolicy() {
 
             {/* Company Information */}
             <div className="bg-neutral-50 border-l-4 border-primary p-6 mb-8 rounded-sm">
-              <h2 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Company Information</h2>
+              <h2 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">
+                Company Information
+              </h2>
               <div className="space-y-1 text-muted-foreground">
-                <p><strong>Adriatica D.O.O.</strong></p>
+                <p>
+                  <strong>Adriatica D.O.O.</strong>
+                </p>
                 <p>Tax Office: Podgorica, Montenegro</p>
                 <p>Tax ID (PIB): 03612807</p>
                 <p>
                   Email:{" "}
-                  <a href="mailto:info@adriaticadoo.com" className="text-primary hover:underline transition-colors">
+                  <a
+                    href="mailto:info@adriaticadoo.com"
+                    className="text-primary hover:underline transition-colors"
+                  >
                     info@adriaticadoo.com
                   </a>
                 </p>
@@ -76,19 +85,34 @@ export default function PrivacyPolicy() {
 
             <div className="space-y-6 text-muted-foreground leading-relaxed">
               <p>
-                At Adriatica D.O.O., we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your personal information when you visit our website.
+                At Adriatica D.O.O., we take your privacy seriously. This
+                Privacy Policy explains how we collect, use, and protect your
+                personal information when you visit our website.
               </p>
-              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">What information we collect</h2>
+              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">
+                What information we collect
+              </h2>
               <p>
-                We collect information you provide directly to us – for example, when you request a consultation or sign up for our newsletter. This may include your name, email address, and any other details you choose to share.
+                We collect information you provide directly to us – for example,
+                when you request a consultation or sign up for our newsletter.
+                This may include your name, email address, and any other details
+                you choose to share.
               </p>
-              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">How we use your information</h2>
+              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">
+                How we use your information
+              </h2>
               <p>
-                We use your information to provide and improve our services, communicate with you, and comply with legal obligations. We never sell your personal information to third parties.
+                We use your information to provide and improve our services,
+                communicate with you, and comply with legal obligations. We
+                never sell your personal information to third parties.
               </p>
-              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">Data security</h2>
+              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">
+                Data security
+              </h2>
               <p>
-                We implement reasonable security measures to protect your information from unauthorised access, disclosure, or alteration. However, no internet transmission is 100% secure.
+                We implement reasonable security measures to protect your
+                information from unauthorised access, disclosure, or alteration.
+                However, no internet transmission is 100% secure.
               </p>
             </div>
           </motion.div>

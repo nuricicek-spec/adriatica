@@ -11,25 +11,27 @@ export default function TermsOfService() {
       {
         "@type": "WebPage",
         "@id": "https://www.adriaticadoo.com/terms-of-service/#webpage",
-        "url": "https://www.adriaticadoo.com/terms-of-service",
-        "name": "Terms of Service | Adriatica D.O.O.",
-        "description": "Terms of service for Adriatica D.O.O. – by accessing our website, you agree to these terms.",
-        "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
-        "about": { "@id": "https://www.adriaticadoo.com/#organization" },
-        "inLanguage": "en",
-        "datePublished": "2025-01-01",
-        "dateModified": "2025-03-15"
+        url: "https://www.adriaticadoo.com/terms-of-service",
+        name: "Terms of Service | Adriatica D.O.O.",
+        description:
+          "Terms of service for Adriatica D.O.O. – by accessing our website, you agree to these terms.",
+        isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
+        about: { "@id": "https://www.adriaticadoo.com/#organization" },
+        inLanguage: "en",
+        datePublished: "2025-01-01",
+        dateModified: "2025-03-15",
       },
       {
         "@type": "WebSite",
         "@id": "https://www.adriaticadoo.com/#website",
-        "url": "https://www.adriaticadoo.com/",
-        "name": "Adriatica D.O.O.",
-        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
-        "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
-      }
-    ]
+        url: "https://www.adriaticadoo.com/",
+        name: "Adriatica D.O.O.",
+        description:
+          "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        inLanguage: "en",
+        publisher: { "@id": "https://www.adriaticadoo.com/#organization" },
+      },
+    ],
   };
 
   return (
@@ -42,7 +44,7 @@ export default function TermsOfService() {
       />
       <Helmet>
         <script type="application/ld+json">
-          {JSON.stringify(termsOfServiceSchema).replace(/</g, '\\u003c')}
+          {JSON.stringify(termsOfServiceSchema).replace(/</g, "\\u003c")}
         </script>
       </Helmet>
 
@@ -60,14 +62,21 @@ export default function TermsOfService() {
 
             {/* Company Information */}
             <div className="bg-neutral-50 border-l-4 border-primary p-6 mb-8 rounded-sm">
-              <h2 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">Company Information</h2>
+              <h2 className="font-display text-xl font-bold text-[#0B3B5C] mb-3">
+                Company Information
+              </h2>
               <div className="space-y-1 text-muted-foreground">
-                <p><strong>Adriatica D.O.O.</strong></p>
+                <p>
+                  <strong>Adriatica D.O.O.</strong>
+                </p>
                 <p>Tax Office: Podgorica, Montenegro</p>
                 <p>Tax ID (PIB): 03612807</p>
                 <p>
                   Email:{" "}
-                  <a href="mailto:info@adriaticadoo.com" className="text-primary hover:underline transition-colors">
+                  <a
+                    href="mailto:info@adriaticadoo.com"
+                    className="text-primary hover:underline transition-colors"
+                  >
                     info@adriaticadoo.com
                   </a>
                 </p>
@@ -76,19 +85,32 @@ export default function TermsOfService() {
 
             <div className="space-y-6 text-muted-foreground leading-relaxed">
               <p>
-                By accessing or using the Adriatica D.O.O. website, you agree to follow these Terms of Service. If not, please do not use our website.
+                By accessing or using the Adriatica D.O.O. website, you agree to
+                follow these Terms of Service. If not, please do not use our
+                website.
               </p>
-              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">Intellectual Property</h2>
+              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">
+                Intellectual Property
+              </h2>
               <p>
-                All content on this website – including text, graphics, logos, and images – is owned by Adriatica D.O.O. or its content suppliers and is protected by international copyright laws.
+                All content on this website – including text, graphics, logos,
+                and images – is owned by Adriatica D.O.O. or its content
+                suppliers and is protected by international copyright laws.
               </p>
-              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">Disclaimer of Warranties</h2>
+              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">
+                Disclaimer of Warranties
+              </h2>
               <p>
-                The information on this website is for general informational purposes only. We provide no guarantees, express or implied, about its completeness, accuracy, or reliability.
+                The information on this website is for general informational
+                purposes only. We provide no guarantees, express or implied,
+                about its completeness, accuracy, or reliability.
               </p>
-              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">Limitation of Liability</h2>
+              <h2 className="text-xl font-bold text-[#0B3B5C] mt-8 mb-4">
+                Limitation of Liability
+              </h2>
               <p>
-                We will not be liable for any direct, indirect, incidental, or consequential damages arising from your use of this website.
+                We will not be liable for any direct, indirect, incidental, or
+                consequential damages arising from your use of this website.
               </p>
             </div>
           </motion.div>

@@ -1,7 +1,7 @@
-import { zeroEmissionZone } from './zero-emission-zone';
-import { technicalOperations } from './technical-operations';
-import { sustainableCleaning } from './sustainable-cleaning';
-import { biofoulingCompliance } from './biofouling-compliance';
+import { zeroEmissionZone } from "./zero-emission-zone";
+import { technicalOperations } from "./technical-operations";
+import { sustainableCleaning } from "./sustainable-cleaning";
+import { biofoulingCompliance } from "./biofouling-compliance";
 
 export interface OperationalImplication {
   point: string;

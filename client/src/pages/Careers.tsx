@@ -11,25 +11,27 @@ export default function Careers() {
       {
         "@type": "WebPage",
         "@id": "https://www.adriaticadoo.com/careers/#webpage",
-        "url": "https://www.adriaticadoo.com/careers",
-        "name": "Careers | Adriatica D.O.O.",
-        "description": "Join Adriatica D.O.O. – marine engineering careers in Montenegro. We're looking for naval architects, marine engineers, and technical specialists.",
-        "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
-        "about": { "@id": "https://www.adriaticadoo.com/#organization" },
-        "inLanguage": "en",
-        "datePublished": "2025-01-01",
-        "dateModified": "2025-03-15"
+        url: "https://www.adriaticadoo.com/careers",
+        name: "Careers | Adriatica D.O.O.",
+        description:
+          "Join Adriatica D.O.O. – marine engineering careers in Montenegro. We're looking for naval architects, marine engineers, and technical specialists.",
+        isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
+        about: { "@id": "https://www.adriaticadoo.com/#organization" },
+        inLanguage: "en",
+        datePublished: "2025-01-01",
+        dateModified: "2025-03-15",
       },
       {
         "@type": "WebSite",
         "@id": "https://www.adriaticadoo.com/#website",
-        "url": "https://www.adriaticadoo.com/",
-        "name": "Adriatica D.O.O.",
-        "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
-        "inLanguage": "en",
-        "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
-      }
-    ]
+        url: "https://www.adriaticadoo.com/",
+        name: "Adriatica D.O.O.",
+        description:
+          "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        inLanguage: "en",
+        publisher: { "@id": "https://www.adriaticadoo.com/#organization" },
+      },
+    ],
   };
 
   return (
@@ -41,7 +43,7 @@ export default function Careers() {
       />
       <Helmet>
         <script type="application/ld+json">
-          {JSON.stringify(careersSchema).replace(/</g, '\\u003c')}
+          {JSON.stringify(careersSchema).replace(/</g, "\\u003c")}
         </script>
       </Helmet>
 
@@ -58,10 +60,13 @@ export default function Careers() {
             </h1>
             <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
               <p>
-                We're always looking for passionate marine engineers, naval architects, and technical consultants to join our growing team in Montenegro.
+                We're always looking for passionate marine engineers, naval
+                architects, and technical consultants to join our growing team
+                in Montenegro.
               </p>
               <p>
-                If you share our values of independence, practicality, and technical excellence, send your CV and cover letter to:
+                If you share our values of independence, practicality, and
+                technical excellence, send your CV and cover letter to:
               </p>
               <p className="font-bold text-[#0B3B5C]">
                 <a

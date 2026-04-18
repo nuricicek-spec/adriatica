@@ -60,8 +60,11 @@ export function FeatureCard({
 
         {items && items.length > 0 && (
           <ul className="space-y-2 mb-4">
-            {items.map(item => (
-              <li key={item} className="flex items-start text-sm text-muted-foreground/80">
+            {items.map((item) => (
+              <li
+                key={item}
+                className="flex items-start text-sm text-muted-foreground/80"
+              >
                 <span className="mr-2 text-primary/40 mt-1.5">•</span>
                 <span>{item}</span>
               </li>
