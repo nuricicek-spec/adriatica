@@ -1,9 +1,6 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import type { FormEvent } from "react";
-import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
-import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import {
   CheckCircle2,
@@ -15,26 +12,85 @@ import {
   Clock,
 } from "lucide-react";
 
+// ✅ Lazy load – named export'ları default'a sarmala (Navigation ve Footer named export)
+const Navigation = lazy(() =>
+  import("@/components/Navigation").then((m) => ({ default: m.Navigation }))
+);
+const Footer = lazy(() =>
+  import("@/components/Footer").then((m) => ({ default: m.Footer }))
+);
+
 const PAGE_TITLE =
   "Request Technical Consultation | Compliance & Engineering Management";
 const PAGE_DESCRIPTION =
   "Request a technical consultation to address your vessel's specific compliance, structural, or documentation challenges. PSC readiness, dry-dock planning, and technical audits.";
 
+// Schema – Organization tanımı eklendi, referans tamamlandı
+const consultationSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.adriaticadoo.com/#organization",
+      name: "Adriatica D.O.O.",
+      url: "https://www.adriaticadoo.com/",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://www.adriaticadoo.com/logo.png",
+      },
+      description:
+        "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+      contactPoint: {
+        "@type": "ContactPoint",
+        email: "info@adriaticadoo.com",
+        contactType: "customer service",
+      },
+    },
+    {
+      "@type": "ContactPage",
+      "@id": "https://www.adriaticadoo.com/request-consultation/#webpage",
+      url: "https://www.adriaticadoo.com/request-consultation",
+      name: PAGE_TITLE,
+      description: PAGE_DESCRIPTION,
+      isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
+      about: { "@id": "https://www.adriaticadoo.com/#organization" },
+      inLanguage: "en",
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.adriaticadoo.com/#website",
+      url: "https://www.adriaticadoo.com/",
+      name: "Adriatica D.O.O.",
+      description:
+        "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+      inLanguage: "en",
+      publisher: { "@id": "https://www.adriaticadoo.com/#organization" },
+    },
+  ],
+};
+
 export default function RequestConsultation() {
   const [formStatus, setFormStatus] = useState<
     "idle" | "submitting" | "success" | "error"
   >("idle");
+  const [errorType, setErrorType] = useState<"generic" | "rate-limit" | null>(
+    null
+  );
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormStatus("submitting");
+    setErrorType(null);
 
     const form = e.currentTarget;
     const formData = new FormData(form);
 
-    const fullName = formData.get("fullName") as string;
+    // Güvenli tip kontrolü + trim()
+    const fullNameValue = formData.get("fullName");
+    const fullName =
+      typeof fullNameValue === "string" ? fullNameValue.trim() : "";
     if (fullName) {
-      formData.append("_subject", `New Technical Consultation: ${fullName}`);
+      formData.set("_subject", `New Technical Consultation: ${fullName}`);
     }
 
     try {
@@ -49,36 +105,16 @@ export default function RequestConsultation() {
         form.reset();
       } else {
         setFormStatus("error");
+        if (response.status === 429) {
+          setErrorType("rate-limit");
+        } else {
+          setErrorType("generic");
+        }
       }
     } catch {
       setFormStatus("error");
+      setErrorType("generic");
     }
-  };
-
-  const consultationSchema = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "ContactPage",
-        "@id": "https://www.adriaticadoo.com/request-consultation/#webpage",
-        url: "https://www.adriaticadoo.com/request-consultation",
-        name: PAGE_TITLE,
-        description: PAGE_DESCRIPTION,
-        isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
-        about: { "@id": "https://www.adriaticadoo.com/#organization" },
-        inLanguage: "en",
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://www.adriaticadoo.com/#website",
-        url: "https://www.adriaticadoo.com/",
-        name: "Adriatica D.O.O.",
-        description:
-          "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
-        inLanguage: "en",
-        publisher: { "@id": "https://www.adriaticadoo.com/#organization" },
-      },
-    ],
   };
 
   return (
@@ -89,22 +125,51 @@ export default function RequestConsultation() {
         canonical="https://www.adriaticadoo.com/request-consultation"
       />
       <Helmet>
+        {/* Google Analytics – idle callback + onerror */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                var ric = window.requestIdleCallback || function(cb) {
+                  var start = Date.now();
+                  return setTimeout(function() {
+                    cb({ didTimeout: false, timeRemaining: function() { return Math.max(0, 50 - (Date.now() - start)); } });
+                  }, 1);
+                };
+                ric(function() {
+                  var script = document.createElement('script');
+                  script.src = 'https://www.googletagmanager.com/gtag/js?id=G-WPWD3K7JHR';
+                  script.async = true;
+                  script.onload = function() {
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){ window.dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag('config', 'G-WPWD3K7JHR', { send_page_view: true });
+                  };
+                  script.onerror = function() {
+                    console.warn('Google Analytics script failed to load');
+                  };
+                  document.head.appendChild(script);
+                });
+              })();
+            `,
+          }}
+        />
+
+        {/* Schema.org yapılandırılmış veri */}
         <script type="application/ld+json">
           {JSON.stringify(consultationSchema).replace(/</g, "\\u003c")}
         </script>
       </Helmet>
 
       <div className="min-h-screen bg-background font-body selection:bg-primary/20">
-        <Navigation />
+        <Suspense fallback={<div className="h-16 bg-background border-b" />}>
+          <Navigation />
+        </Suspense>
 
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              {/* Sayfa Başlığı - GÜÇLENDİRİLMİŞ */}
+            <div className="fade-in">
               <div className="text-center mb-8">
                 <h1 className="font-display text-4xl md:text-5xl font-bold text-[#0B3B5C] mb-4">
                   Stay Compliant. Reduce Downtime. Operate with Confidence.
@@ -115,7 +180,6 @@ export default function RequestConsultation() {
                 </p>
               </div>
 
-              {/* 3 Maddelik Değer Önerisi - KISALTILMIŞ */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-5xl mx-auto">
                 <div className="bg-neutral-50 border-l-2 border-primary p-5 rounded-sm">
                   <div className="flex items-center gap-3 mb-2">
@@ -152,7 +216,6 @@ export default function RequestConsultation() {
                 </div>
               </div>
 
-              {/* Mobil Güven Çizgisi */}
               <div className="lg:hidden mb-4 flex items-center justify-center gap-4 text-xs text-muted-foreground bg-neutral-50/80 py-3 px-4 rounded-sm border border-border/20">
                 <span className="flex items-center gap-1">
                   <Clock className="h-3.5 w-3.5" /> Response within 24h
@@ -165,18 +228,19 @@ export default function RequestConsultation() {
                 </span>
               </div>
 
-              {/* Friction Breaker - HEMEN FORM ÖNCESİ */}
               <p className="text-sm text-center text-muted-foreground mb-6 lg:hidden">
                 This is a focused technical consultation — not a generic contact
                 request.
               </p>
 
-              {/* İki Sütun: Form + Bilgi Paneli — 7/5 Oranında */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
-                {/* SOL: Form - 7 sütun */}
                 <div className="lg:col-span-7">
                   {formStatus === "success" ? (
-                    <div className="bg-green-50 border border-green-200 rounded-sm p-8 text-center">
+                    <div
+                      role="status"
+                      aria-live="polite"
+                      className="bg-green-50 border border-green-200 rounded-sm p-8 text-center"
+                    >
                       <CheckCircle2 className="h-12 w-12 text-green-600 mx-auto mb-4" />
                       <h2 className="text-2xl font-display font-bold text-[#0B3B5C] mb-2">
                         Request Received
@@ -189,7 +253,7 @@ export default function RequestConsultation() {
                         onClick={() => setFormStatus("idle")}
                         className="text-primary hover:underline text-sm font-medium"
                       >
-                        Submit another request →
+                        Submit another request <span aria-hidden="true">→</span>
                       </button>
                     </div>
                   ) : (
@@ -197,8 +261,17 @@ export default function RequestConsultation() {
                       onSubmit={handleSubmit}
                       className="bg-white border border-border/20 rounded-sm p-6 md:p-8 shadow-sm"
                     >
+                      {/* Honeypot – bot koruması */}
+                      <div className="hidden" aria-hidden="true">
+                        <input
+                          type="text"
+                          name="_gotcha"
+                          tabIndex={-1}
+                          autoComplete="off"
+                        />
+                      </div>
+
                       <div className="space-y-5">
-                        {/* Full Name */}
                         <div>
                           <label
                             htmlFor="fullName"
@@ -212,12 +285,11 @@ export default function RequestConsultation() {
                             id="fullName"
                             required
                             disabled={formStatus === "submitting"}
-                            className="w-full px-4 py-3 bg-neutral-50 border border-border rounded-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all disabled:opacity-50"
+                            className="w-full px-4 py-3 bg-neutral-50 border border-border rounded-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                             placeholder="Captain / Owner / Technical Manager"
                           />
                         </div>
 
-                        {/* Email */}
                         <div>
                           <label
                             htmlFor="email"
@@ -232,12 +304,11 @@ export default function RequestConsultation() {
                             id="email"
                             required
                             disabled={formStatus === "submitting"}
-                            className="w-full px-4 py-3 bg-neutral-50 border border-border rounded-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all disabled:opacity-50"
+                            className="w-full px-4 py-3 bg-neutral-50 border border-border rounded-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                             placeholder="you@example.com"
                           />
                         </div>
 
-                        {/* Phone */}
                         <div>
                           <label
                             htmlFor="phone"
@@ -253,12 +324,11 @@ export default function RequestConsultation() {
                             name="phone"
                             id="phone"
                             disabled={formStatus === "submitting"}
-                            className="w-full px-4 py-3 bg-neutral-50 border border-border rounded-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all disabled:opacity-50"
+                            className="w-full px-4 py-3 bg-neutral-50 border border-border rounded-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                             placeholder="+382 68 591 757"
                           />
                         </div>
 
-                        {/* Company / Vessel */}
                         <div>
                           <label
                             htmlFor="company"
@@ -274,12 +344,11 @@ export default function RequestConsultation() {
                             name="company"
                             id="company"
                             disabled={formStatus === "submitting"}
-                            className="w-full px-4 py-3 bg-neutral-50 border border-border rounded-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all disabled:opacity-50"
+                            className="w-full px-4 py-3 bg-neutral-50 border border-border rounded-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                             placeholder="e.g., M/Y Serenity"
                           />
                         </div>
 
-                        {/* Country */}
                         <div>
                           <label
                             htmlFor="country"
@@ -295,12 +364,11 @@ export default function RequestConsultation() {
                             name="country"
                             id="country"
                             disabled={formStatus === "submitting"}
-                            className="w-full px-4 py-3 bg-neutral-50 border border-border rounded-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all disabled:opacity-50"
+                            className="w-full px-4 py-3 bg-neutral-50 border border-border rounded-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                             placeholder="Montenegro"
                           />
                         </div>
 
-                        {/* Area of Interest */}
                         <div>
                           <label
                             htmlFor="serviceInterest"
@@ -315,7 +383,7 @@ export default function RequestConsultation() {
                             name="serviceInterest"
                             id="serviceInterest"
                             disabled={formStatus === "submitting"}
-                            className="w-full px-4 py-3 bg-neutral-50 border border-border rounded-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all disabled:opacity-50"
+                            className="w-full px-4 py-3 bg-neutral-50 border border-border rounded-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                           >
                             <option value="">-- Please select --</option>
                             <option value="Engineering Plans">
@@ -336,7 +404,7 @@ export default function RequestConsultation() {
                             <option value="Project Management">
                               Project Management
                             </option>
-                            <option value="Project Management">
+                            <option value="Yacht Survey & Inspection">
                               Yacht Survey & Inspection
                             </option>
                             <option value="Other / Not Sure">
@@ -345,7 +413,6 @@ export default function RequestConsultation() {
                           </select>
                         </div>
 
-                        {/* Message */}
                         <div>
                           <label
                             htmlFor="message"
@@ -359,12 +426,11 @@ export default function RequestConsultation() {
                             rows={5}
                             required
                             disabled={formStatus === "submitting"}
-                            className="w-full px-4 py-3 bg-neutral-50 border border-border rounded-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-y disabled:opacity-50"
+                            className="w-full px-4 py-3 bg-neutral-50 border border-border rounded-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-y disabled:opacity-50 disabled:cursor-not-allowed"
                             placeholder="Please describe your technical requirements, vessel type, timeline, or any specific challenge."
                           />
                         </div>
 
-                        {/* GDPR */}
                         <div className="flex items-start gap-3 pt-2">
                           <input
                             type="checkbox"
@@ -372,7 +438,7 @@ export default function RequestConsultation() {
                             id="gdprConsent"
                             required
                             disabled={formStatus === "submitting"}
-                            className="mt-1 h-4 w-4 rounded border-border text-primary focus:ring-primary"
+                            className="mt-1 h-4 w-4 rounded border-border text-primary focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"
                           />
                           <label
                             htmlFor="gdprConsent"
@@ -382,7 +448,7 @@ export default function RequestConsultation() {
                             personal data in accordance with the{" "}
                             <a
                               href="/privacy-policy"
-                              className="text-primary hover:underline"
+                              className="text-primary font-medium hover:underline"
                             >
                               Privacy Policy
                             </a>
@@ -390,22 +456,33 @@ export default function RequestConsultation() {
                           </label>
                         </div>
 
-                        {/* Error Message */}
                         {formStatus === "error" && (
-                          <div className="bg-red-50 border border-red-200 rounded-sm p-4 text-red-700 text-sm">
-                            Something went wrong. Please try again or contact us
-                            directly at{" "}
-                            <a
-                              href="mailto:info@adriaticadoo.com"
-                              className="underline font-medium"
-                            >
-                              info@adriaticadoo.com
-                            </a>
-                            .
+                          <div
+                            role="alert"
+                            aria-live="assertive"
+                            className="bg-red-50 border border-red-200 rounded-sm p-4 text-red-700 text-sm"
+                          >
+                            {errorType === "rate-limit" ? (
+                              <span>
+                                Too many requests. Please wait a moment and try
+                                again.
+                              </span>
+                            ) : (
+                              <>
+                                Something went wrong. Please try again or
+                                contact us directly at{" "}
+                                <a
+                                  href="mailto:info@adriaticadoo.com"
+                                  className="underline font-medium"
+                                >
+                                  info@adriaticadoo.com
+                                </a>
+                                .
+                              </>
+                            )}
                           </div>
                         )}
 
-                        {/* Submit Button */}
                         <button
                           type="submit"
                           disabled={formStatus === "submitting"}
@@ -416,7 +493,6 @@ export default function RequestConsultation() {
                             : "Submit Consultation Request"}
                         </button>
 
-                        {/* Urgency Notu */}
                         <p className="text-xs text-center text-muted-foreground mt-3">
                           We recommend addressing compliance gaps at least 4–6
                           weeks before your next survey.
@@ -426,10 +502,8 @@ export default function RequestConsultation() {
                   )}
                 </div>
 
-                {/* SAĞ: Bilgi Paneli - 5 sütun */}
                 <div className="lg:col-span-5">
                   <div className="bg-neutral-50 border border-border/20 rounded-sm p-6 md:p-8 shadow-sm sticky top-24">
-                    {/* Friction breaker masaüstü için */}
                     <p className="text-sm text-muted-foreground mb-4 pb-2 border-b border-border/20">
                       This is a focused technical consultation — not a generic
                       contact request.
@@ -473,7 +547,7 @@ export default function RequestConsultation() {
                             confidentiality according to our{" "}
                             <a
                               href="/privacy-policy"
-                              className="text-primary hover:underline"
+                              className="text-primary font-medium hover:underline"
                             >
                               Privacy Policy
                             </a>
@@ -486,11 +560,13 @@ export default function RequestConsultation() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </main>
 
-        <Footer />
+        <Suspense fallback={<div className="h-16 bg-background border-t" />}>
+          <Footer />
+        </Suspense>
       </div>
     </>
   );

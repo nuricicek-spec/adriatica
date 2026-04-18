@@ -1,4 +1,19 @@
-@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
+/* ===== LOCAL FONTS (Manrope & Cinzel) ===== */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('/fonts/manrope-400.woff2') format('woff2-variations');
+}
+
+@font-face {
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('/fonts/cinzel.woff2') format('woff2-variations');
+}
 
 @tailwind base;
 @tailwind components;
@@ -102,7 +117,6 @@
 /* Custom Utilities for Premium Feel */
 .glass-panel {
   @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-xl;
-  /* Dark mode handling handled by colors usually, or specific overrides */
 }
 
 .text-gradient {
@@ -116,7 +130,7 @@ ol.list-decimal {
   padding-left: 1.5rem;
 }
 
-/* Mobil menü animasyonları (tailwindcss-animate eklentisi varsa zaten çalışır, yoksa aşağıdaki tanımlar) */
+/* Mobil menü animasyonları */
 @keyframes slide-in-from-top {
   from {
     transform: translateY(-100%);
@@ -144,7 +158,8 @@ ol.list-decimal {
 .slide-in-from-top {
   animation: slide-in-from-top 0.2s ease-out forwards;
 }
-/* Toast/notification kütüphanelerinin boş listelerini gizle (erişilebilirlik) */
+
+/* Toast/notification kütüphanelerinin boş listelerini gizle */
 ol:empty,
 ul:empty,
 [role="list"]:empty {

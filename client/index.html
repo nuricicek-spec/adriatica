@@ -33,32 +33,7 @@
       gtag("config", "G-WPWD3K7JHR", { send_page_view: false });
     </script>
 
-    <!-- ========== LCP: preload logo ========== -->
-
-    <!-- ========== Font preconnect ========== -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <!--
-      Cinzel buradan KALDIRILDI.
-      Sadece Philosophy ve Home sayfasında kullanılıyor.
-      İlgili sayfalarda <Helmet> içinde yükleniyor — böylece
-      diğer sayfalarda render-blocking yaratmıyor.
-    -->
-
-    <!-- Manrope + Montserrat — site genelinde kullanılan fontlar -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Montserrat:wght@300;400&display=swap"
-      media="print"
-      onload="this.media = 'all'"
-    />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Montserrat:wght@300;400&display=swap"
-      />
-    </noscript>
+    <!-- Fontlar LOCAL olarak yüklenecek, hiçbir Google Fonts linki YOK -->
 
     <!-- Minimal critical CSS — prevents FOUC before Tailwind loads -->
     <style>
