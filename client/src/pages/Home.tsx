@@ -299,6 +299,7 @@ export default function Home() {
                     alt="Adriatica D.O.O. Symbol"
                     width={400}
                     height={400}
+                    fetchPriority="high"
                     className="w-full h-auto drop-shadow-2xl"
                   />
                 </div>
@@ -759,7 +760,7 @@ export default function Home() {
 
                 <p className="text-xs text-center text-muted-foreground pt-2">
                   By submitting, you agree to our{" "}
-                  <a href="/privacy-policy" className="text-primary hover:underline">
+                  <a href="/privacy-policy" className="text-primary underline decoration-primary/50 hover:decoration-primary transition-colors">
                     Privacy Policy
                   </a>.
                 </p>
