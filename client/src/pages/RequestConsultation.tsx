@@ -12,7 +12,7 @@ import {
   Clock,
 } from "lucide-react";
 
-// ✅ Lazy load – named export'ları default'a sarmala (Navigation ve Footer named export)
+// ✅ Lazy load – named export'ları default'a sarmala
 const Navigation = lazy(() =>
   import("@/components/Navigation").then((m) => ({ default: m.Navigation }))
 );
@@ -125,38 +125,7 @@ export default function RequestConsultation() {
         canonical="https://www.adriaticadoo.com/request-consultation"
       />
       <Helmet>
-        {/* Google Analytics – idle callback + onerror */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                var ric = window.requestIdleCallback || function(cb) {
-                  var start = Date.now();
-                  return setTimeout(function() {
-                    cb({ didTimeout: false, timeRemaining: function() { return Math.max(0, 50 - (Date.now() - start)); } });
-                  }, 1);
-                };
-                ric(function() {
-                  var script = document.createElement('script');
-                  script.src = 'https://www.googletagmanager.com/gtag/js?id=G-WPWD3K7JHR';
-                  script.async = true;
-                  script.onload = function() {
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){ window.dataLayer.push(arguments); }
-                    gtag('js', new Date());
-                    gtag('config', 'G-WPWD3K7JHR', { send_page_view: true });
-                  };
-                  script.onerror = function() {
-                    console.warn('Google Analytics script failed to load');
-                  };
-                  document.head.appendChild(script);
-                });
-              })();
-            `,
-          }}
-        />
-
-        {/* Schema.org yapılandırılmış veri */}
+        {/* Schema.org yapılandırılmış veri (GA4 script'i kaldırıldı, çift yükleme hatasını önlemek için) */}
         <script type="application/ld+json">
           {JSON.stringify(consultationSchema).replace(/</g, "\\u003c")}
         </script>
@@ -174,7 +143,7 @@ export default function RequestConsultation() {
                 <h1 className="font-display text-4xl md:text-5xl font-bold text-[#0B3B5C] mb-4">
                   Stay Compliant. Reduce Downtime. Operate with Confidence.
                 </h1>
-                <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+                <p className="text-lg text-foreground/75 max-w-3xl mx-auto">
                   Request a technical consultation to address your vessel's
                   specific compliance, structural, or documentation challenges.
                 </p>
@@ -184,9 +153,9 @@ export default function RequestConsultation() {
                 <div className="bg-neutral-50 border-l-2 border-primary p-5 rounded-sm">
                   <div className="flex items-center gap-3 mb-2">
                     <FileCheck className="h-6 w-6 text-primary shrink-0" />
-                    <h3 className="font-display font-bold text-[#0B3B5C] text-base">
+                    <h2 className="font-display font-bold text-[#0B3B5C] text-base">
                       Stay PSC‑Ready
-                    </h3>
+                    </h2>
                   </div>
                   <p className="text-sm text-muted-foreground">
                     Identify compliance gaps before inspections.
@@ -195,9 +164,9 @@ export default function RequestConsultation() {
                 <div className="bg-neutral-50 border-l-2 border-primary p-5 rounded-sm">
                   <div className="flex items-center gap-3 mb-2">
                     <Anchor className="h-6 w-6 text-primary shrink-0" />
-                    <h3 className="font-display font-bold text-[#0B3B5C] text-base">
+                    <h2 className="font-display font-bold text-[#0B3B5C] text-base">
                       Reduce Yard Time
-                    </h3>
+                    </h2>
                   </div>
                   <p className="text-sm text-muted-foreground">
                     Optimize dry‑dock with clear technical specs.
@@ -206,9 +175,9 @@ export default function RequestConsultation() {
                 <div className="bg-neutral-50 border-l-2 border-primary p-5 rounded-sm">
                   <div className="flex items-center gap-3 mb-2">
                     <ClipboardCheck className="h-6 w-6 text-primary shrink-0" />
-                    <h3 className="font-display font-bold text-[#0B3B5C] text-base">
+                    <h2 className="font-display font-bold text-[#0B3B5C] text-base">
                       Survey‑Ready Docs
-                    </h3>
+                    </h2>
                   </div>
                   <p className="text-sm text-muted-foreground">
                     Ensure drawings and plans meet all requirements.
@@ -228,7 +197,7 @@ export default function RequestConsultation() {
                 </span>
               </div>
 
-              <p className="text-sm text-center text-muted-foreground mb-6 lg:hidden">
+              <p className="text-sm text-center text-foreground/75 mb-6 lg:hidden">
                 This is a focused technical consultation — not a generic contact
                 request.
               </p>
