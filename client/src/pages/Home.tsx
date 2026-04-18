@@ -273,7 +273,7 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                   <Link
                     href="/request-consultation"
-                    className="px-8 py-4 bg-gold text-black font-medium rounded-sm shadow-lg shadow-[#D4AF37]/20 hover:bg-[#C9A961] transition-all duration-300 uppercase tracking-wide text-sm text-center"
+                    className="px-8 py-4 bg-[#D4AF37] text-black font-medium rounded-sm shadow-lg shadow-gold/20 hover:bg-[#C9A961] transition-all duration-300 uppercase tracking-wide text-sm text-center"
                   >
                     Request Technical Assessment
                   </Link>
@@ -593,7 +593,7 @@ export default function Home() {
             </p>
             <Link
               href="/request-consultation"
-              className="inline-block bg-gold text-black font-medium px-8 py-4 rounded-sm text-sm uppercase tracking-wide shadow-lg hover:bg-[#C9A961] transition-all duration-300"
+              className="inline-block bg-[#D4AF37] text-black font-medium px-8 py-4 rounded-sm text-sm uppercase tracking-wide shadow-lg hover:bg-[#C9A961] transition-all duration-300"
             >
               Submit Project Inquiry
             </Link>
