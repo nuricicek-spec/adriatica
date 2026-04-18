@@ -273,7 +273,7 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                   <Link
                     href="/request-consultation"
-                    className="px-8 py-4 bg-gold text-black font-medium rounded-sm shadow-lg shadow-gold/20 hover:bg-gold/90 transition-all duration-300 uppercase tracking-wide text-sm text-center"
+                    className="px-8 py-4 bg-[#D4AF37] text-black font-medium rounded-sm shadow-lg shadow-gold/20 hover:bg-[#C9A961] transition-all duration-300 uppercase tracking-wide text-sm text-center"
                   >
                     Request Technical Assessment
                   </Link>
@@ -324,21 +324,21 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-2 text-sm text-white/85">
               <span className="flex items-center gap-2">
-                <span className="text-gold font-bold">
+                <span className="text-[#D4AF37] font-bold">
                   {TRUST_METRICS.yearsExperience}+
                 </span>
                 Years {TRUST_METRICS.field}
               </span>
               <span className="text-white/20 hidden sm:inline">·</span>
               <span className="flex items-center gap-2">
-                <span className="text-gold font-bold">
+                <span className="text-[#D4AF37] font-bold">
                   {TRUST_METRICS.vesselsSupported}+
                 </span>
                 Vessels Supported
               </span>
               <span className="text-white/20 hidden sm:inline">·</span>
               <span className="flex items-center gap-2">
-                <span className="text-gold font-bold">
+                <span className="text-[#D4AF37] font-bold">
                   {TRUST_METRICS.pscDetentions}
                 </span>
                 PSC Detentions
@@ -346,7 +346,7 @@ export default function Home() {
               <span className="text-white/20 hidden sm:inline">·</span>
               <Link
                 href="/philosophy"
-                className="text-white/85 hover:text-gold transition-colors uppercase tracking-wider text-xs font-medium"
+                className="text-white/85 hover:text-[#D4AF37] transition-colors uppercase tracking-wider text-xs font-medium"
               >
                 Our Philosophy →
               </Link>
@@ -593,7 +593,7 @@ export default function Home() {
             </p>
             <Link
               href="/request-consultation"
-              className="inline-block bg-gold text-black font-medium px-8 py-4 rounded-sm text-sm uppercase tracking-wide shadow-lg hover:bg-gold/90 transition-all duration-300"
+              className="inline-block bg-[#D4AF37] text-black font-medium px-8 py-4 rounded-sm text-sm uppercase tracking-wide shadow-lg hover:bg-[#C9A961] transition-all duration-300"
             >
               Submit Project Inquiry
             </Link>
@@ -657,7 +657,7 @@ export default function Home() {
               </div>
               <Link
                 href="/insights"
-                className="text-sm text-gold hover:text-white transition-colors uppercase tracking-wider font-medium shrink-0"
+                className="text-sm text-[#D4AF37] hover:text-white transition-colors uppercase tracking-wider font-medium shrink-0"
               >
                 All Insights →
               </Link>
