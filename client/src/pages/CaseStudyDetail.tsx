@@ -16,6 +16,7 @@ export default function CaseStudyDetail() {
     return (
       <div className="min-h-screen bg-background">
         <Navigation />
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-12 md:pt-40">
         <div className="max-w-4xl mx-auto px-4 pt-32 pb-12 text-center">
           <h1 className="text-2xl font-bold">
             Sorry, this case study could not be found.
@@ -24,6 +25,7 @@ export default function CaseStudyDetail() {
             ← All case studies
           </Link>
         </div>
+        </main>
         <Footer />
       </div>
     );
