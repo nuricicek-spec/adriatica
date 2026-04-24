@@ -70,13 +70,13 @@ export async function generateReportPdf(
   const element = pdfRef.current.cloneNode(true) as HTMLElement;
   element.classList.add("pdf-mode");
   
-  // Görünür layout'ta tut ama kullanıcıya gösterme (off-screen yerine fixed + opacity)
+  // ⚡ GEÇİCİ GÖRÜNÜR MOD: html2canvas için kısa süreliğine opacity:1 yapıyoruz
   element.style.position = "fixed";
   element.style.top = "0";
   element.style.left = "0";
   element.style.width = "800px";
-  element.style.zIndex = "-1";
-  element.style.opacity = "0";
+  element.style.opacity = "1";        // ÖNCE GÖRÜNÜR YAP
+  element.style.zIndex = "99999";     // EN ÜSTE ÇIKAR
   element.style.pointerEvents = "none";
 
   // 2. ADVANCED FORM STATE FIX (Select, Checkbox, Textarea, React Edge-case)
@@ -91,17 +91,16 @@ export async function generateReportPdf(
       if (el.checked) {
         el.setAttribute('checked', 'checked');
       } else {
-        el.removeAttribute('checked'); // Explicit unchecked state
+        el.removeAttribute('checked');
       }
     } else if (el.tagName === 'TEXTAREA') {
-      el.textContent = el.value; // innerHTML yerine textContent (encoding fix)
+      el.textContent = el.value;
     } else {
       el.setAttribute('value', String(el.value));
-      el.value = el.value; // Force sync for React controlled components
+      el.value = el.value;
     }
   });
 
-  // 3. MEMORY LEAK / FAIL SAFE STATE
   let appended = false;
 
   try {
@@ -141,35 +140,35 @@ export async function generateReportPdf(
     summaryDiv.innerHTML = summaryHtml;
     element.prepend(summaryDiv);
 
-    // 5. RENDER DELAY (Safari Safe)
+    // 5. RENDER DELAY
     if (document.fonts && document.fonts.ready) {
-      try { await document.fonts.ready; } catch (e) { /* Safari fallback */ }
+      try { await document.fonts.ready; } catch (e) {}
     }
     await new Promise(r => requestAnimationFrame(() => r(null)));
 
-    // 6. IMAGE RENDERING RACE CONDITION FIX
+    // 6. IMAGE READY
     const images = element.querySelectorAll('img');
     await Promise.all(
       Array.from(images).map(img => {
         if (img.complete) return Promise.resolve();
         return new Promise<void>(res => {
           img.onload = () => res();
-          img.onerror = () => res(); // Hata olsa bile PDF'i durdurma
+          img.onerror = () => res();
         });
       })
     );
 
-    // 7. LOGO FETCH (Cached)
+    // 7. LOGO
     const logoBase64 = await getLogoBase64();
 
-    // 8. LARGE DOM DEGRADE STRATEGY (getBoundingClientRect ile güvenli ölçüm)
+    // 8. LARGE DOM CHECK
     const rect = element.getBoundingClientRect();
     const isLarge = rect.height > 8000;
     if (isLarge) {
       console.warn("Large PDF content detected – reduced quality mode enabled.");
     }
 
-    // 9. OPTIMIZE EDİLMİŞ AYARLAR (Layout Drift Riski Azaltılmış onclone)
+    // 9. OPTIONS
     const opt = {
       margin: [40, 20, 45, 20] as [number, number, number, number],
       image: { type: 'jpeg' as const, quality: 0.92 },
@@ -193,11 +192,11 @@ export async function generateReportPdf(
       jsPDF: { unit: 'mm' as const, format: 'a4' as const, orientation: 'portrait' as const }
     };
 
-    // 10. ASYNC PDF FLOW
+    // 10. PDF FLOW
     const worker = html2pdf().set(opt).from(element);
     const pdf: any = await worker.toPdf().get('pdf');
 
-    // 11. HEADER / FOOTER LOOP
+    // 11. HEADER / FOOTER
     const totalPages = pdf.getNumberOfPages();
     const pageHeight = pdf.internal.pageSize.height;
     const pageWidth = pdf.internal.pageSize.width;
@@ -223,14 +222,14 @@ export async function generateReportPdf(
       pdf.text('Podgorica, Montenegro | info@adriaticadoo.com | www.adriaticadoo.com', pageWidth / 2, pageHeight - 8, { align: 'center' });
     }
 
-    // 12. FILENAME SANITIZE
+    // 12. FILENAME
     const sanitized = filename.replace(/[^a-z0-9_\-\.]/gi, '_').replace(/\.{2,}/g, '.');
     const safeFilename = sanitized.toLowerCase().endsWith('.pdf') ? sanitized : `${sanitized}.pdf`;
 
     // 13. SAVE
     pdf.save(safeFilename);
 
-    // 14. WORKER LIFECYCLE CLEANUP (Micro-delay ile)
+    // 14. WORKER CLEANUP
     await new Promise(r => setTimeout(r, 100));
     (worker as any).destroy?.();
 
@@ -243,7 +242,9 @@ export async function generateReportPdf(
       throw new PdfError('An unknown error occurred during PDF generation.', 'RENDER_UNKNOWN');
     }
   } finally {
+    // Önce opacity sıfırla (eğer hâlâ görünürse kapanır), sonra DOM'dan kaldır
     if (appended && document.body.contains(element)) {
+      element.style.opacity = "0";   // Hemen gizle
       document.body.removeChild(element);
     }
   }
