@@ -105,3 +105,69 @@
 .text-gradient {
   @apply bg-clip-text text-transparent bg-gradient-to-r from-[hsl(var(--color-lapis-900))] to-[hsl(var(--color-lapis-600))];
 }
+
+/* PDF Render Pipeline - Print Mode */
+.pdf-mode {
+  width: 800px !important;
+  padding: 30px !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.pdf-mode h1, .pdf-mode h2, .pdf-mode h3, .pdf-mode h4,
+.pdf-mode p, .pdf-mode span, .pdf-mode div, .pdf-mode td, .pdf-mode th, .pdf-mode li, .pdf-mode label {
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  box-shadow: none !important;
+}
+
+.pdf-mode img {
+  max-width: 100% !important;
+}
+
+.pdf-mode .text-3xl,
+.pdf-mode .text-4xl {
+  font-size: 24px !important;
+}
+
+.pdf-mode .text-xl {
+  font-size: 18px !important;
+}
+
+.pdf-mode .text-base {
+  font-size: 14px !important;
+}
+
+.pdf-mode .text-sm {
+  font-size: 12px !important;
+}
+
+.pdf-mode .text-xs,
+.pdf-mode .text-\[10px\] {
+  font-size: 10px !important;
+}
+
+.pdf-mode p,
+.pdf-mode span,
+.pdf-mode div {
+  color: #000000 !important;
+}
+
+/* Renkli statü kutuları için istisnalar */
+.pdf-mode .border-green-500 { border-color: #22c55e !important; }
+.pdf-mode .bg-green-50 { background-color: #f0fdf4 !important; }
+.pdf-mode .border-red-500 { border-color: #ef4444 !important; }
+.pdf-mode .bg-red-50 { background-color: #fef2f2 !important; }
+.pdf-mode .text-green-800 { color: #166534 !important; }
+.pdf-mode .text-red-800 { color: #991b1b !important; }
+.pdf-mode .text-primary, 
+.pdf-mode .text-\[\#0B3B5C\] { color: #0B3B5C !important; }
+.pdf-mode .bg-primary\/5 { background-color: rgba(11, 59, 92, 0.05) !important; }
+
+/* Sayfa kesintisi kontrolü */
+.pdf-mode .no-break {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
