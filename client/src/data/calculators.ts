@@ -1,79 +1,87 @@
 // C:\Adriatica\client\src\data\calculators.ts
 
-// --- EEXI VE CII İÇİN ORTAK VERİLER ---
-
+// --- GEMİ TİPLERİ VE KATSAYILARI ---
 export const VESSEL_TYPES = [
   { value: "bulkCarrier", label: "Bulk Carrier", fi: 1.0, fc: 1.0 },
   { value: "tanker", label: "Oil/Gas Tanker", fi: 1.0, fc: 1.0 },
   { value: "containerShip", label: "Container Ship", fi: 1.0, fc: 1.0 },
-  { value: "roRo", label: "Ro-Ro Ship (Vehicle)", fi: 1.2, fc: 1.0 },
-  { value: "roRoCargo", label: "Ro-Ro Cargo", fi: 1.2, fc: 1.0 },
+  { value: "roRoCargo", label: "Ro-Ro Cargo/Vehicle", fi: 1.2, fc: 1.0 },
+  { value: "roRoPax", label: "Ro-Ro Passenger", fi: 1.2, fc: 1.0 },
   { value: "generalCargo", label: "General Cargo Ship", fi: 1.0, fc: 1.0 },
-  { value: "yacht", label: "Yacht (>400 GT)", fi: 1.2, fc: 0.7 }, // Yatlar için özel katsayılar
+  { value: "yacht", label: "Yacht (>400 GT)", fi: 1.2, fc: 0.7 },
   { value: "fishing", label: "Fishing Vessel", fi: 1.0, fc: 0.7 },
 ] as const;
 
+// --- YAKIT TÜRLERİ VE KARBON EMİSYON FAKTÖRLERİ (MEPC.344(78)) ---
 export const FUEL_TYPES = [
-  { value: "HFO", label: "Heavy Fuel Oil (HFO)", cf: 3.206 },
-  { value: "LFO", label: "Light Fuel Oil (LFO/MDO)", cf: 3.151 },
+  { value: "HFO", label: "Heavy Fuel Oil (HFO/LFO)", cf: 3.206 },
   { value: "LNG", label: "Liquefied Natural Gas (LNG)", cf: 2.750 },
   { value: "Methanol", label: "Methanol", cf: 1.375 },
+  { value: "Ethanol", label: "Ethanol", cf: 1.521 },
 ] as const;
 
-export const DEFAULT_SFC = 190; // g/kWh (IMO Varsayılan)
-export const FW_FACTOR = 1; // Deniz durumu katsayısı (standart hesaplamada 1 alınır)
+// --- EEXI IÇİN GEREKLİ VERİLER ---
+export const DEFAULT_SFC_ME = 190; // g/kWh (Ana Makine için varsayılan)
+export const DEFAULT_SFC_AUX = 215; // g/kWh (Yardımcı makine için varsayılan - değişken yük nedeniyle daha yüksektir)
+export const FW_FACTOR = 1.0; // Deniz durumu katsayısı
 
-// --- EEXI İÇİN GEREKLİ VERİLER ---
+// EEDI Baseline Formülü için 'a' ve 'c' katsayıları (MEPC.308(73) Tablo 2)
+// EEXI Required limiti, geminin EEDI'sine göre hesaplanır. Web aracında EEDI yoksa 
+// bu baseline formülünden DWT'ye göre backward hesaplama yapıyoruz.
+const EEDI_BASELINE = [
+  { type: "bulkCarrier", a: 961.79, c: 0.477 },
+  { type: "tanker", a: 1124.29, c: 0.488 },
+  { type: "containerShip", a: 1746.94, c: 0.466 },
+  { type: "roRoCargo", a: 1371.87, c: 0.493 },
+  { type: "roRoPax", a: 5520.34, c: 0.437 },
+  { type: "generalCargo", a: 1071.18, c: 0.484 },
+  { type: "yacht", a: 1071.18, c: 0.484 }, // Genel kargo formülü baz alınır
+  { type: "fishing", a: 891.34, c: 0.491 },
+] as const;
 
-// EEXI Required Limitleri (DWT aralıklarına göre sadeleştirilmiş tablo - Phase 3)
-// Not: Gerçek projede gemi tipine göre değişir, burada genel bir hesaplama için sadeleştirilmiştir.
-export const EEXI_LIMITS_BULK_TANKER = [
-  { minDwt: 0, maxDwt: 20000, limit: 4.50 },
-  { minDwt: 20001, maxDwt: 40000, limit: 3.50 },
-  { minDwt: 40001, maxDwt: 80000, limit: 2.70 },
-  { minDwt: 80001, maxDwt: 120000, limit: 2.30 },
-  { minDwt: 120001, maxDwt: 200000, limit: 2.00 },
-  { minDwt: 200001, maxDwt: Infinity, limit: 1.80 },
-];
+// EEXI Azaltma Faktörleri (Yıllara Göre)
+export const EEXI_REDUCTION_FACTORS: Record<number, number> = {
+  2023: 0.02,
+  2024: 0.04,
+  2025: 0.06,
+  2026: 0.08,
+  2027: 0.10,
+  2028: 0.12,
+  2029: 0.14,
+  2030: 0.16,
+};
 
-export const EEXI_LIMITS_CONTAINER = [
-  { minDwt: 0, maxDwt: 40000, limit: 6.50 },
-  { minDwt: 40001, maxDwt: 80000, limit: 4.50 },
-  { minDwt: 80001, maxDwt: 120000, limit: 3.50 },
-  { minDwt: 120001, maxDwt: 200000, limit: 2.80 },
-  { minDwt: 200001, maxDwt: Infinity, limit: 2.30 },
-];
+// --- CII IÇİN GEREKLİ VERİLER (MEPC.364(79) Tablo 1) ---
+// CII Reference Formülü: CII_ref = a * DWT^(-c)
+export const CII_COEFFICIENTS = [
+  { type: "bulkCarrier", a: 1079.2, c: 0.616 },
+  { type: "tanker", a: 1579.9, c: 0.619 },
+  { type: "containerShip", a: 2362.6, c: 0.599 },
+  { type: "roRoCargo", a: 3513.6, c: 0.559 },
+  { type: "roRoPax", a: 4897.4, c: 0.516 },
+  { type: "generalCargo", a: 1965.1, c: 0.617 },
+  { type: "yacht", a: 1965.1, c: 0.617 },
+  { type: "fishing", a: 1220.5, c: 0.614 },
+] as const;
 
-export const EEXI_LIMITS_GENERAL = [
-  { minDwt: 0, maxDwt: 20000, limit: 5.50 },
-  { minDwt: 20001, maxDwt: 40000, limit: 4.50 },
-  { minDwt: 40001, maxDwt: 80000, limit: 3.50 },
-  { minDwt: 80001, maxDwt: 120000, limit: 3.00 },
-  { minDwt: 120001, maxDwt: Infinity, limit: 2.50 },
-];
-
-// --- CII İÇİN GEREKLİ VERİLER ---
-
-// CII Azaltma Faktörleri (Yıllara göre)
+// CII Azaltma Faktörleri (Z)
 export const CII_REDUCTION_FACTORS: Record<number, number> = {
   2023: 0.05,
   2024: 0.07,
   2025: 0.09,
-  2026: 0.11, // 2026 sınırı
+  2026: 0.11, // C ve altı sınırı
   2027: 0.13,
 };
 
-// CII Base Değerleri (DWT'ye göre - DWT/speed fonksiyonunun sadeleştirilmiş hali)
-export const CII_BASE_VALUES = [
-  { minDwt: 0, maxDwt: 5000, base: 110 },
-  { minDwt: 5001, maxDwt: 20000, base: 75 },
-  { minDwt: 20001, maxDwt: 50000, base: 50 },
-  { minDwt: 50001, maxDwt: 100000, base: 35 },
-  { minDwt: 100001, maxDwt: Infinity, base: 25 },
-];
+// Yardımcı Fonksiyonlar
+export function getEediBaseline(dwt: number, vesselType: string): number {
+  const data = EEDI_BASELINE.find(b => b.type === vesselType);
+  if (!data) return 0;
+  return data.a * Math.pow(dwt, -data.c);
+}
 
-// Yardımcı Fonksiyon: DWT'ye göre tablodan doğru limiti bulur
-export function getLimitFromTable(dwt: number, table: { minDwt: number; maxDwt: number; limit: number }[]): number {
-  const row = table.find(r => dwt >= r.minDwt && dwt <= r.maxDwt);
-  return row ? row.limit : 0;
+export function getCiiReference(dwt: number, vesselType: string): number {
+  const data = CII_COEFFICIENTS.find(b => b.type === vesselType);
+  if (!data) return 0;
+  return data.a * Math.pow(dwt, -data.c);
 }

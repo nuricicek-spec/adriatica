@@ -1,20 +1,14 @@
 import { useState } from "react";
-import { VESSEL_TYPES, FUEL_TYPES, CII_REDUCTION_FACTORS, CII_BASE_VALUES, getLimitFromTable } from "@/data/calculators";
-
-interface CiiResult {
-  attained: number;
-  required: number;
-  rating: string;
-}
+import { VESSEL_TYPES, FUEL_TYPES, CII_REDUCTION_FACTORS, getCiiReference } from "@/data/calculators";
 
 export function CiiCalculator() {
   const [vesselType, setVesselType] = useState("bulkCarrier");
-  const [dwt, setDwt] = useState<string>("");
-  const [totalFuel, setTotalFuel] = useState<string>("");
-  const [totalDistance, setTotalDistance] = useState<string>("");
+  const [dwt, setDwt] = useState("");
   const [fuelType, setFuelType] = useState("HFO");
-  const [targetYear, setTargetYear] = useState<string>("2026");
-  const [result, setResult] = useState<CiiResult | null>(null);
+  const [totalFuel, setTotalFuel] = useState("");
+  const [totalDistance, setTotalDistance] = useState("");
+  const [targetYear, setTargetYear] = useState("2026");
+  const [result, setResult] = useState<any>(null);
 
   const handleCalculate = () => {
     const dwtNum = parseFloat(dwt);
@@ -27,116 +21,132 @@ export function CiiCalculator() {
     const fuelData = FUEL_TYPES.find(f => f.value === fuelType);
     if (!fuelData) return;
 
-    // CII Formülü: (Toplam Yakıt * CF) / (DWT * Mesafe)
-    // Sonuç gCO2 / (DWT * nm) cinsinden çıkar.
-    const attained = (fuelNum * fuelData.cf * 1e6) / (dwtNum * distNum);
+    // 1. Attained CII (Gerçek Operasyonel Değer)
+    // Formül: (Toplam Yakıt * CF) / (DWT * Mesafe)
+    const attainedCii = (fuelNum * fuelData.cf * 1e6) / (dwtNum * distNum);
 
-    // Required CII Hesapla
-    const baseCiiRow = CII_BASE_VALUES.find(r => dwtNum >= r.minDwt && dwtNum <= r.maxDwt);
-    const baseCii = baseCiiRow ? baseCiiRow.base : 0;
+    // 2. Required CII (MEPC.364(79) Gerçek Formül)
+    // CII_ref = a * DWT^(-c)
+    const ciiReference = getCiiReference(dwtNum, vesselType);
     const reductionFactor = CII_REDUCTION_FACTORS[yearNum] || 0.11;
-    const required = baseCii * (1 - reductionFactor);
+    const requiredCii = ciiReference * (1 - reductionFactor);
 
-    // Rating Belirle (A, B, C, D, E)
+    // 3. Rating Belirleme (A, B, C, D, E Sınırları)
     let rating = "E";
-    const upperA = required * 0.85;
-    const upperB = required * 0.95;
-    const upperC = required * 1.05;
-    const upperD = required * 1.15;
+    const upperA = requiredCii * (1 - 0.20); // A sınıfı (En iyi %20)
+    const upperB = requiredCii * (1 - 0.10); // B sınıfı
+    const upperC = requiredCii;                // C sınıfı (Sınır)
+    const upperD = requiredCii * 1.10;        // D sınıfı
 
-    if (attained <= upperA) rating = "A";
-    else if (attained <= upperB) rating = "B";
-    else if (attained <= upperC) rating = "C";
-    else if (attained <= upperD) rating = "D";
+    if (attainedCii <= upperA) rating = "A";
+    else if (attainedCii <= upperB) rating = "B";
+    else if (attainedCii <= upperC) rating = "C";
+    else if (attainedCii <= upperD) rating = "D";
     else rating = "E";
 
     setResult({
-      attained: parseFloat(attained.toFixed(2)),
-      required: parseFloat(required.toFixed(2)),
+      attained: attainedCii.toFixed(2),
+      required: requiredCii.toFixed(2),
+      reference: ciiReference.toFixed(2),
       rating,
+      factor: reductionFactor
     });
   };
 
   const getRatingColor = (rating: string) => {
     switch(rating) {
-      case "A": return "text-green-700 bg-green-100";
-      case "B": return "text-blue-700 bg-blue-100";
-      case "C": return "text-yellow-700 bg-yellow-100";
-      case "D": return "text-orange-700 bg-orange-100";
-      case "E": return "text-red-700 bg-red-100";
-      default: return "text-gray-700 bg-gray-100";
+      case "A": return "text-green-800 bg-green-100 border-green-400";
+      case "B": return "text-blue-800 bg-blue-100 border-blue-400";
+      case "C": return "text-yellow-800 bg-yellow-100 border-yellow-400";
+      case "D": return "text-orange-800 bg-orange-100 border-orange-400";
+      case "E": return "text-red-800 bg-red-100 border-red-400";
+      default: return "";
     }
   };
 
   return (
-    <div className="bg-white border border-border/40 rounded-sm p-6 md:p-8">
-      <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mb-2">
-        CII Operational Predictor
-      </h2>
-      <p className="text-sm text-muted-foreground mb-6">
-        Predict your operational CII rating based on last year's consumption.
-      </p>
+    <div className="bg-white border border-border/40 rounded-sm p-6 md:p-8 shadow-sm">
+      <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mb-1">CII Operational Predictor</h2>
+      <p className="text-xs text-muted-foreground mb-6">Using MEPC.364(79) exact formula: CII_ref = a × DWT^(-c)</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-        <div>
-          <label className="block text-sm font-medium text-[#0B3B5C] mb-1">Vessel Type</label>
-          <select value={vesselType} onChange={e => setVesselType(e.target.value)} className="w-full p-2 border rounded-sm bg-white focus:border-primary outline-none">
-            {VESSEL_TYPES.map(v => <option key={v.value} value={v.value}>{v.label}</option>)}
-          </select>
+      <div className="space-y-6">
+        <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
+          <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">Vessel & Target Year</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Vessel Type</label>
+              <select value={vesselType} onChange={e => setVesselType(e.target.value)} className="w-full p-2 border rounded-sm bg-white text-sm focus:border-primary outline-none">
+                {VESSEL_TYPES.map(v => <option key={v.value} value={v.value}>{v.label}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Deadweight (DWT)</label>
+              <input type="number" value={dwt} onChange={e => setDwt(e.target.value)} placeholder="50000" className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none" />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Target Year</label>
+              <select value={targetYear} onChange={e => setTargetYear(e.target.value)} className="w-full p-2 border rounded-sm bg-white text-sm focus:border-primary outline-none">
+                {Object.keys(CII_REDUCTION_FACTORS).map(y => <option key={y} value={y}>{y}</option>)}
+              </select>
+            </div>
+          </div>
         </div>
-        <div>
-          <label className="block text-sm font-medium text-[#0B3B5C] mb-1">Target Year</label>
-          <select value={targetYear} onChange={e => setTargetYear(e.target.value)} className="w-full p-2 border rounded-sm bg-white focus:border-primary outline-none">
-            <option value="2025">2025</option>
-            <option value="2026">2026</option>
-            <option value="2027">2027</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-[#0B3B5C] mb-1">Deadweight (DWT) - Tons</label>
-          <input type="number" value={dwt} onChange={e => setDwt(e.target.value)} placeholder="e.g., 50000" className="w-full p-2 border rounded-sm focus:border-primary outline-none" />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-[#0B3B5C] mb-1">Main Fuel Type</label>
-          <select value={fuelType} onChange={e => setFuelType(e.target.value)} className="w-full p-2 border rounded-sm bg-white focus:border-primary outline-none">
-            {FUEL_TYPES.map(f => <option key={f.value} value={f.value}>{f.label}</option>)}
-          </select>
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-[#0B3B5C] mb-1">Total Fuel Consumed (Tons/Year)</label>
-          <input type="number" value={totalFuel} onChange={e => setTotalFuel(e.target.value)} placeholder="e.g., 3500" className="w-full p-2 border rounded-sm focus:border-primary outline-none" />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-[#0B3B5C] mb-1">Total Distance (NM/Year)</label>
-          <input type="number" value={totalDistance} onChange={e => setTotalDistance(e.target.value)} placeholder="e.g., 50000" className="w-full p-2 border rounded-sm focus:border-primary outline-none" />
+
+        <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
+          <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">Operational Data (Last 12 Months)</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Fuel Type Consumed</label>
+              <select value={fuelType} onChange={e => setFuelType(e.target.value)} className="w-full p-2 border rounded-sm bg-white text-sm focus:border-primary outline-none">
+                {FUEL_TYPES.map(f => <option key={f.value} value={f.value}>{f.label}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Total Fuel Consumed (Metric Tons)</label>
+              <input type="number" step="0.1" value={totalFuel} onChange={e => setTotalFuel(e.target.value)} placeholder="3500.5" className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none" />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Total Distance (NM)</label>
+              <input type="number" value={totalDistance} onChange={e => setTotalDistance(e.target.value)} placeholder="50000" className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none" />
+            </div>
+          </div>
         </div>
       </div>
 
-      <button onClick={handleCalculate} className="w-full py-3 bg-primary text-white font-medium rounded-sm hover:bg-primary/90 transition mb-6">
+      <button onClick={handleCalculate} className="w-full py-3 bg-primary text-white font-medium rounded-sm hover:bg-primary/90 transition mt-6">
         Predict CII Rating
       </button>
 
       {result && (
-        <div className={`p-4 border rounded-sm ${getRatingColor(result.rating)}`}>
-          <h3 className="text-lg font-bold mb-2 flex items-center justify-between">
-            <span>Predicted CII Rating:</span>
-            <span className="text-2xl">{result.rating}</span>
-          </h3>
-          <div className="grid grid-cols-2 gap-4 text-sm mt-4">
+        <div className={`mt-6 p-5 border-2 rounded-sm ${getRatingColor(result.rating)}`}>
+          <div className="flex justify-between items-start">
+            <h3 className="text-lg font-bold">Predicted CII Rating:</h3>
+            <span className="text-3xl font-display font-bold">{result.rating}</span>
+          </div>
+          
+          <div className="grid grid-cols-3 gap-4 text-xs mt-4 bg-white/50 p-3 rounded-sm">
             <div>
-              <span className="text-muted-foreground">Attained CII:</span>
-              <p className="font-bold text-lg">{result.attained} gCO2/DWT·nm</p>
+              <span className="text-muted-foreground block">Attained CII</span>
+              <p className="font-bold text-base">{result.attained}</p>
             </div>
             <div>
-              <span className="text-muted-foreground">Required CII ({targetYear}):</span>
-              <p className="font-bold text-lg">{result.required} gCO2/DWT·nm</p>
+              <span className="text-muted-foreground block">Required CII ({targetYear})</span>
+              <p className="font-bold text-base">{result.required}</p>
+            </div>
+            <div>
+              <span className="text-muted-foreground block">Baseline CII_ref</span>
+              <p className="font-bold text-base">{result.reference}</p>
             </div>
           </div>
+
           {(result.rating === "D" || result.rating === "E") && (
-            <p className="text-xs mt-3 font-medium italic">
-              * Vessel is predicted to fall below acceptable rating thresholds. SEEMP optimization is required.
-            </p>
+            <div className="mt-4 pt-3 border-t border-black/10">
+              <p className="text-xs font-bold">
+                * Vessel is predicted to fall below acceptable thresholds. A robust SEEMP (Ship Energy Efficiency Management Plan) with documented optimization measures is strictly required to avoid being flagged.
+              </p>
+            </div>
           )}
+          <p className="text-[10px] text-black/50 mt-3 italic">Reference: MEPC.364(79) Table 1 coefficients used.</p>
         </div>
       )}
     </div>

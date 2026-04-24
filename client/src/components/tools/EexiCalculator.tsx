@@ -1,118 +1,197 @@
 import { useState } from "react";
-import { VESSEL_TYPES, FUEL_TYPES, DEFAULT_SFC, FW_FACTOR, getLimitFromTable, EEXI_LIMITS_BULK_TANKER, EEXI_LIMITS_CONTAINER, EEXI_LIMITS_GENERAL } from "@/data/calculators";
-
-interface EexiResult {
-  attained: number;
-  required: number;
-  isCompliant: boolean;
-}
+import { VESSEL_TYPES, FUEL_TYPES, DEFAULT_SFC_ME, DEFAULT_SFC_AUX, FW_FACTOR, EEXI_REDUCTION_FACTORS, getEediBaseline } from "@/data/calculators";
 
 export function EexiCalculator() {
   const [vesselType, setVesselType] = useState("bulkCarrier");
-  const [dwt, setDwt] = useState<string>("");
-  const [mcr, setMcr] = useState<string>("");
-  const [fuelType, setFuelType] = useState("HFO");
-  const [vref, setVref] = useState<string>("");
-  const [sfc, setSfc] = useState<string>(DEFAULT_SFC.toString());
-  const [result, setResult] = useState<EexiResult | null>(null);
+  const [dwt, setDwt] = useState("");
+  const [targetYear, setTargetYear] = useState("2026");
+  
+  // Ana Makine
+  const [meMcr, setMeMcr] = useState("");
+  const [meFuel, setMeFuel] = useState("HFO");
+  const [meSfc, setMeSfc] = useState(DEFAULT_SFC_ME.toString());
+  const [vref, setVref] = useState("");
+
+  // Yardımcı Makine & PTO
+  const [hasPto, setHasPto] = useState(false);
+  const [ptoPower, setPtoPower] = useState(""); // PTO kapasitesi (kW)
+  const [ptoEff, setPtoEff] = useState("1.0"); // f_eff (genelde 1.0)
+  const [auxPower, setAuxPower] = useState(""); // PAE toplamı (kW)
+  const [auxSfc, setAuxSfc] = useState(DEFAULT_SFC_AUX.toString());
+  
+  const [result, setResult] = useState<any>(null);
 
   const handleCalculate = () => {
     const dwtNum = parseFloat(dwt);
-    const mcrNum = parseFloat(mcr);
+    const mcrNum = parseFloat(meMcr);
     const vrefNum = parseFloat(vref);
-    const sfcNum = parseFloat(sfc) || DEFAULT_SFC;
+    const sfcMe = parseFloat(meSfc) || DEFAULT_SFC_ME;
+    const sfcAux = parseFloat(auxSfc) || DEFAULT_SFC_AUX;
+    const auxNum = parseFloat(auxPower) || 0;
+    const ptoNum = parseFloat(ptoPower) || 0;
+    const ptoEffNum = parseFloat(ptoEff) || 1.0;
+    const yearNum = parseInt(targetYear);
 
     if (!dwtNum || !mcrNum || !vrefNum) return;
 
     const typeData = VESSEL_TYPES.find(v => v.value === vesselType);
-    const fuelData = FUEL_TYPES.find(f => f.value === fuelType);
+    const fuelData = FUEL_TYPES.find(f => f.value === meFuel);
     if (!typeData || !fuelData) return;
 
-    // IMO EEXI Formülü: (SFC * CF * MCR * fw) / (fi * fc * DWT * Vref)
-    // SFC g/kWh cinsinden ton/kWh'a çevrilir (/ 10^6). Sonuç gCO2/(DWT*nm) cinsinden çıkar.
-    const attained = ((sfcNum / 1e6) * fuelData.cf * mcrNum * FW_FACTOR) / (typeData.fi * typeData.fc * dwtNum * vrefNum) * 1e9;
+    // 1. Attained EEXI Hesaplama (MEPC.338(76) Ek 2)
+    // EEXI = ( (SFC_ME * CF_ME * MCR) - (f_eff * P_PTI * CF_ME) + (SFC_AUX * CF_AUX * PAE) ) / (fi * fc * DWT * Vref)
+    // Not: Birim analizi yapıldığında direkt gCO2/(DWT*nm) cinsinden çıkar.
+    
+    const meEmissions = (sfcMe * fuelData.cf * mcrNum) / 1e6; // Ton CO2/saat
+    const ptoReduction = hasPto ? ((ptoEffNum * ptoNum) * fuelData.cf) / 1e6 : 0; // Ton CO2/saat düşüş
+    const auxEmissions = (sfcAux * fuelData.cf * auxNum) / 1e6; // Ton CO2/saat
 
-    // Required EEXI Limitini Bul (Gemi tipine göre doğru tabloyu seç)
-    let requiredLimit = 0;
-    if (vesselType === "containerShip") {
-      requiredLimit = getLimitFromTable(dwtNum, EEXI_LIMITS_CONTAINER);
-    } else if (vesselType === "tanker" || vesselType === "bulkCarrier") {
-      requiredLimit = getLimitFromTable(dwtNum, EEXI_LIMITS_BULK_TANKER);
-    } else {
-      requiredLimit = getLimitFromTable(dwtNum, EEXI_LIMITS_GENERAL);
+    const totalEmissions = Math.max(0, meEmissions - ptoReduction + auxEmissions);
+    
+    const attainedEexi = (totalEmissions * 1e6) / (typeData.fi * typeData.fc * dwtNum * vrefNum);
+
+    // 2. Required EEXI Hesaplama
+    // Gemide EEDI sertifikası yoksa, DWT'ye göre backward hesaplama yapıyoruz (Baseline * (1 - Reduction))
+    const baselineEedi = getEediBaseline(dwtNum, vesselType);
+    const reductionFactor = EEXI_REDUCTION_FACTORS[yearNum] || 0.08;
+    const requiredEexi = baselineEedi * (1 - reductionFactor);
+
+    // EPL (Engine Power Limitation) tahmini (Sadece NON-COMPLIANT ise)
+    let eplLimit = null;
+    if (attainedEexi > requiredEexi) {
+      // EPL Formülü (MEPC.364(79)): P_limit = MCR * (Req / Att)^(1/3.5)
+      eplLimit = mcrNum * Math.pow((requiredEexi / attainedEexi), (1 / 3.5));
     }
 
     setResult({
-      attained: parseFloat(attained.toFixed(2)),
-      required: requiredLimit,
-      isCompliant: attained <= requiredLimit,
+      attained: attainedEexi.toFixed(2),
+      required: requiredEexi.toFixed(2),
+      isCompliant: attainedEexi <= requiredEexi,
+      eplLimit: eplLimit ? eplLimit.toFixed(0) : null,
+      baselineEedi: baselineEedi.toFixed(2)
     });
   };
 
   return (
-    <div className="bg-white border border-border/40 rounded-sm p-6 md:p-8">
-      <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mb-2">
-        EEXI Calculation
-      </h2>
-      <p className="text-sm text-muted-foreground mb-6">
-        Based on IMO MEPC.338(76) - Phase 3 requirements.
-      </p>
+    <div className="bg-white border border-border/40 rounded-sm p-6 md:p-8 shadow-sm">
+      <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mb-1">EEXI Calculation</h2>
+      <p className="text-xs text-muted-foreground mb-6">Based on MEPC.338(76) - Including PTO/PTI and Auxiliary Engine parameters.</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-        <div>
-          <label className="block text-sm font-medium text-[#0B3B5C] mb-1">Vessel Type</label>
-          <select value={vesselType} onChange={e => { setVesselType(e.target.value); setResult(null); }} className="w-full p-2 border rounded-sm bg-white focus:border-primary outline-none">
-            {VESSEL_TYPES.map(v => <option key={v.value} value={v.value}>{v.label}</option>)}
-          </select>
+      <div className="space-y-6">
+        {/* Gemi Genel Parametreleri */}
+        <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
+          <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">Vessel Parameters</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Vessel Type</label>
+              <select value={vesselType} onChange={e => setVesselType(e.target.value)} className="w-full p-2 border rounded-sm bg-white text-sm focus:border-primary outline-none">
+                {VESSEL_TYPES.map(v => <option key={v.value} value={v.value}>{v.label}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Deadweight at Design Draft (DWT)</label>
+              <input type="number" value={dwt} onChange={e => setDwt(e.target.value)} placeholder="50000" className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none" />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Target Compliance Year</label>
+              <select value={targetYear} onChange={e => setTargetYear(e.target.value)} className="w-full p-2 border rounded-sm bg-white text-sm focus:border-primary outline-none">
+                {Object.keys(EEXI_REDUCTION_FACTORS).map(y => <option key={y} value={y}>{y}</option>)}
+              </select>
+            </div>
+          </div>
         </div>
-        <div>
-          <label className="block text-sm font-medium text-[#0B3B5C] mb-1">Fuel Type</label>
-          <select value={fuelType} onChange={e => { setFuelType(e.target.value); setResult(null); }} className="w-full p-2 border rounded-sm bg-white focus:border-primary outline-none">
-            {FUEL_TYPES.map(f => <option key={f.value} value={f.value}>{f.label}</option>)}
-          </select>
+
+        {/* Ana Makine Parametreleri */}
+        <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
+          <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">Main Engine (ME)</h3>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">MCR (kW)</label>
+              <input type="number" value={meMcr} onChange={e => setMeMcr(e.target.value)} placeholder="8000" className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none" />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Fuel Type</label>
+              <select value={meFuel} onChange={e => setMeFuel(e.target.value)} className="w-full p-2 border rounded-sm bg-white text-sm focus:border-primary outline-none">
+                {FUEL_TYPES.map(f => <option key={f.value} value={f.value}>{f.label}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">SFC (g/kWh)</label>
+              <input type="number" value={meSfc} onChange={e => setMeSfc(e.target.value)} placeholder={DEFAULT_SFC_ME.toString()} className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none" />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">Vref (Knots)</label>
+              <input type="number" step="0.1" value={vref} onChange={e => setVref(e.target.value)} placeholder="14.5" className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none" />
+            </div>
+          </div>
         </div>
-        <div>
-          <label className="block text-sm font-medium text-[#0B3B5C] mb-1">Deadweight (DWT) - Tons</label>
-          <input type="number" value={dwt} onChange={e => setDwt(e.target.value)} placeholder="e.g., 50000" className="w-full p-2 border rounded-sm focus:border-primary outline-none" />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-[#0B3B5C] mb-1">Main Engine MCR - kW</label>
-          <input type="number" value={mcr} onChange={e => setMcr(e.target.value)} placeholder="e.g., 8000" className="w-full p-2 border rounded-sm focus:border-primary outline-none" />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-[#0B3B5C] mb-1">Reference Speed (Vref) - Knots</label>
-          <input type="number" value={vref} onChange={e => setVref(e.target.value)} placeholder="e.g., 14.5" className="w-full p-2 border rounded-sm focus:border-primary outline-none" />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-[#0B3B5C] mb-1">SFC (g/kWh) - Optional</label>
-          <input type="number" value={sfc} onChange={e => setSfc(e.target.value)} placeholder={`Default: ${DEFAULT_SFC}`} className="w-full p-2 border rounded-sm focus:border-primary outline-none" />
+
+        {/* Yardımcı Makine ve PTO (Advanced) */}
+        <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
+          <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">Auxiliary & Power Take-In (PTI)</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">Total Auxiliary Power - PAE (kW)</label>
+                <input type="number" value={auxPower} onChange={e => setAuxPower(e.target.value)} placeholder="500" className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none" />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">Aux SFC (g/kWh)</label>
+                <input type="number" value={auxSfc} onChange={e => setAuxSfc(e.target.value)} placeholder={DEFAULT_SFC_AUX.toString()} className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none" />
+              </div>
+            </div>
+            <div className="space-y-3 border-l-2 border-primary/20 pl-4">
+              <div className="flex items-center gap-2">
+                <input type="checkbox" id="ptoCheck" checked={hasPto} onChange={e => setHasPto(e.target.checked)} className="rounded border-border text-primary" />
+                <label htmlFor="ptoCheck" className="text-sm font-medium text-[#0B3B5C]">Shaft Generator / PTO Installed?</label>
+              </div>
+              {hasPto && (
+                <>
+                  <div>
+                    <label className="block text-xs font-medium text-muted-foreground mb-1">PTO Power Capacity (kW)</label>
+                    <input type="number" value={ptoPower} onChange={e => setPtoPower(e.target.value)} placeholder="1000" className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-muted-foreground mb-1">PTO Efficiency Factor (f_eff)</label>
+                    <input type="number" step="0.1" value={ptoEff} onChange={e => setPtoEff(e.target.value)} placeholder="1.0" className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none" />
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
-      <button onClick={handleCalculate} className="w-full py-3 bg-primary text-white font-medium rounded-sm hover:bg-primary/90 transition mb-6">
-        Calculate EEXI
+      <button onClick={handleCalculate} className="w-full py-3 bg-primary text-white font-medium rounded-sm hover:bg-primary/90 transition mt-6">
+        Calculate Attained EEXI
       </button>
 
       {result && (
-        <div className={`p-4 border-2 rounded-sm ${result.isCompliant ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'}`}>
-          <h3 className={`text-lg font-bold mb-2 ${result.isCompliant ? 'text-green-800' : 'text-red-800'}`}>
+        <div className={`mt-6 p-5 border-2 rounded-sm ${result.isCompliant ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'}`}>
+          <h3 className={`text-lg font-bold mb-3 ${result.isCompliant ? 'text-green-800' : 'text-red-800'}`}>
             Status: {result.isCompliant ? "COMPLIANT" : "NON-COMPLIANT"}
           </h3>
-          <div className="grid grid-cols-2 gap-4 text-sm">
+          <div className="grid grid-cols-2 gap-4 text-sm mb-3">
             <div>
-              <span className="text-muted-foreground">Attained EEXI:</span>
-              <p className="font-bold text-lg text-[#0B3B5C]">{result.attained} gCO2/DWT·nm</p>
+              <span className="text-xs text-muted-foreground">Attained EEXI:</span>
+              <p className="font-bold text-xl text-[#0B3B5C]">{result.attained}</p>
             </div>
             <div>
-              <span className="text-muted-foreground">Required Limit:</span>
-              <p className="font-bold text-lg text-[#0B3B5C]">{result.required} gCO2/DWT·nm</p>
+              <span className="text-xs text-muted-foreground">Required EEXI ({targetYear}):</span>
+              <p className="font-bold text-xl text-[#0B3B5C]">{result.required}</p>
             </div>
           </div>
-          {!result.isCompliant && (
-            <p className="text-xs text-red-700 mt-3 italic">
-              * Vessel exceeds limits. EPL (Engine Power Limitation) may be required to achieve compliance.
-            </p>
+          
+          {!result.isCompliant && result.eplLimit && (
+            <div className="mt-4 pt-3 border-t border-red-300 bg-white/50 p-3 rounded-sm">
+              <h4 className="font-bold text-sm text-red-800 mb-1">EPL (Engine Power Limitation) Estimate Required</h4>
+              <p className="text-xs text-muted-foreground mb-2">To achieve compliance, Main Engine MCR must be limited to:</p>
+              <p className="font-mono font-bold text-lg text-[#0B3B5C]">{result.eplLimit} kW <span className="text-xs font-normal text-muted-foreground">(from original {meMcr} kW)</span></p>
+            </div>
           )}
+          <p className="text-[10px] text-muted-foreground mt-3 italic">
+            * Required EEXI backward-calculated using Attained EEDI baseline formula for {VESSEL_TYPES.find(v=>v.value===vesselType)?.label}. Reference MEPC.308(73).
+          </p>
         </div>
       )}
     </div>
