@@ -1,3 +1,4 @@
+// EexiCalculator.tsx
 import { useState, useRef } from "react";
 import html2pdf from "html2pdf.js";
 import { VESSEL_TYPES, FUEL_TYPES, DEFAULT_SFC_ME, DEFAULT_SFC_AUX, FW_FACTOR, EEXI_REDUCTION_FACTORS, getEediBaseline } from "@/data/calculators";
@@ -19,10 +20,9 @@ export function EexiCalculator() {
   const [auxSfc, setAuxSfc] = useState(DEFAULT_SFC_AUX.toString());
   
   const [result, setResult] = useState<any>(null);
-  const pdfRef = useRef<HTMLDivElement>(null); // PDF REF
+  const pdfRef = useRef<HTMLDivElement>(null);
 
   const handleCalculate = () => {
-    // ... (eski hesaplama kodları aynen kalıyor) ...
     const dwtNum = parseFloat(dwt);
     const mcrNum = parseFloat(meMcr);
     const vrefNum = parseFloat(vref);
@@ -64,25 +64,62 @@ export function EexiCalculator() {
     };
 
     setResult(finalResult);
-
-    // BURASI YENİ: TOOLS.TSX'E SİNYAL GÖNDERİYOR
     window.dispatchEvent(new CustomEvent("tool_compliance_update", {
       detail: { status: finalResult.isCompliant ? "compliant" : "non-compliant" }
     }));
   };
 
-  // BURASI YENİ: PDF İNDİRME FONKSİYONU
-  const handleDownloadPdf = () => {
+  const handleDownloadPdf = async () => {
     if (!pdfRef.current) return;
+
+    let logoBase64 = '';
+    try {
+      const response = await fetch('/logo.svg');
+      const blob = await response.blob();
+      logoBase64 = await new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.readAsDataURL(blob);
+      });
+    } catch (e) { console.error("Logo fetch failed", e); }
+
     const opt = {
-      margin: 0.5,
-      filename: 'Adriatica_EEXI_Preliminary_Report.pdf', // Cii ve BWTS için kendi isimlerini yaz
-      image: { type: 'jpeg', quality: 0.98 },
+      margin: [40, 20, 45, 20] as [number, number, number, number],
+      filename: 'Adriatica_EEXI_Preliminary_Report.pdf',
+      image: { type: 'jpeg' as const, quality: 0.98 },
       html2canvas: { scale: 2, useCORS: true },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-    } as const; // 🌟 SADECE BURAYA 'as const' EKLEDİK
-    
-    html2pdf().set(opt).from(pdfRef.current).save();
+      jsPDF: { unit: 'mm' as const, format: 'a4' as const, orientation: 'portrait' as const }
+    };
+
+    html2pdf().set(opt).from(pdfRef.current).toPdf().get('pdf').then((pdf: any) => {
+      const totalPages = pdf.internal.getNumberOfPages();
+      const pageHeight = pdf.internal.pageSize.height;
+      const pageWidth = pdf.internal.pageSize.width;
+
+      for (let i = 1; i <= totalPages; i++) {
+        pdf.setPage(i);
+        if (logoBase64) pdf.addImage(logoBase64, 'SVG', 20, 12, 15, 15);
+        
+        pdf.setFontSize(10);
+        pdf.setTextColor(11, 59, 92);
+        pdf.text('PRELIMINARY ASSESSMENT - ADRIATICA D.O.O.', pageWidth - 20, 22, { align: 'right' });
+        pdf.setDrawColor(200, 200, 200);
+        pdf.setLineWidth(0.5);
+        pdf.line(20, 30, pageWidth - 20, 30);
+
+        pdf.setDrawColor(200, 200, 200);
+        pdf.line(20, pageHeight - 25, pageWidth - 20, pageHeight - 25);
+        pdf.setFontSize(9);
+        pdf.setTextColor(11, 59, 92);
+        pdf.text('ADRIATICA D.O.O.', pageWidth / 2, pageHeight - 18, { align: 'center' });
+        pdf.setFontSize(7);
+        pdf.setTextColor(100, 100, 100);
+        pdf.text('Marine Engineering & Technical Consultancy', pageWidth / 2, pageHeight - 13, { align: 'center' });
+        pdf.text('Podgorica, Montenegro | info@adriaticadoo.com | www.adriaticadoo.com', pageWidth / 2, pageHeight - 8, { align: 'center' });
+      }
+      
+      pdf.save(opt.filename);
+    });
   };
 
   return (
@@ -91,7 +128,6 @@ export function EexiCalculator() {
       <p className="text-xs text-muted-foreground mb-6">Based on MEPC.338(76) - Including PTO/PTI and Auxiliary Engine parameters.</p>
 
       <div className="space-y-6">
-        {/* Üst Bölüm */}
         <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
           <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">Vessel Parameters</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -114,7 +150,6 @@ export function EexiCalculator() {
           </div>
         </div>
 
-        {/* Ana Makine */}
         <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
           <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">Main Engine (ME)</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -139,7 +174,6 @@ export function EexiCalculator() {
           </div>
         </div>
 
-        {/* PTO ve Yardımcı */}
         <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
           <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">Auxiliary & Power Take-In (PTI)</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -179,20 +213,18 @@ export function EexiCalculator() {
         Calculate Attained EEXI
       </button>
 
-      {/* PDF REF'İN BAŞLANGICI (İÇİNE PDF'TE ÇIKMASINI İSTEDİĞİN HER ŞEYİ KOYUYORUZ) */}
       {result && (
-        <div ref={pdfRef} className="mt-6 p-6 bg-white border-2 rounded-sm print:border-black" style={{color: '#000'}}>
-          <div className="flex justify-between items-center border-b-2 border-[#0B3B5C] pb-4 mb-4">
+        <div ref={pdfRef} className="mt-6 p-6 bg-white border-2 rounded-sm" style={{color: '#000'}}>
+          <div className="flex justify-between items-center mb-6">
             <div>
-              <h3 className="text-lg font-bold text-[#0B3B5C]">Preliminary EEXI Assessment</h3>
+              <h3 className="text-lg font-bold text-[#0B3B5C]">PRELIMINARY EEXI ASSESSMENT</h3>
               <p className="text-xs text-gray-500">Generated by Adriatica D.O.O. Engineering Tools</p>
             </div>
-            <img src="/logo.svg" alt="Logo" className="h-10 w-auto opacity-70" />
           </div>
           
           <div className={`p-4 border-2 rounded-sm mb-4 ${result.isCompliant ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'}`}>
             <h4 className={`text-base font-bold mb-2 ${result.isCompliant ? 'text-green-800' : 'text-red-800'}`}>
-              Status: {result.isCompliant ? "COMPLIANT" : "NON-COMPLIANT"}
+              STATUS: {result.isCompliant ? "COMPLIANT" : "NON-COMPLIANT"}
             </h4>
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
@@ -204,30 +236,23 @@ export function EexiCalculator() {
                 <p className="font-bold text-xl text-[#0B3B5C]">{result.required}</p>
               </div>
             </div>
-            
             {!result.isCompliant && result.eplLimit && (
               <div className="mt-4 pt-3 border-t border-red-300 bg-white/50 p-3 rounded-sm">
-                <h5 className="font-bold text-sm text-red-800 mb-1">EPL Limitation Estimate</h5>
+                <h5 className="font-bold text-sm text-red-800 mb-1">EPL LIMITATION ESTIMATE</h5>
                 <p className="font-mono font-bold text-lg text-[#0B3B5C]">{result.eplLimit} kW <span className="text-xs font-normal text-gray-600">(from {meMcr} kW)</span></p>
               </div>
             )}
           </div>
 
-          {/* MÜHENDİS EGOSU METODOLOJİ NOTU */}
           <div className="bg-gray-50 p-3 rounded-sm border text-[10px] text-gray-600 leading-relaxed">
-            <p className="font-bold text-[#0B3B5C] mb-1">Calculation Methodology & Assumptions:</p>
+            <p className="font-bold text-[#0B3B5C] mb-1">CALCULATION METHODOLOGY & ASSUMPTIONS:</p>
             <p>This estimation uses a simplified baseline formula derived from MEPC.338(76) guidelines, mapping vessel parameters to Attained EEDI baselines. Weather corrections (fw) assume standard sea trials. It excludes specific hull line optimization factors (C_FV). This document is NOT an IEE Certificate or Class-approved EEXI technical file.</p>
           </div>
         </div>
       )}
-      {/* PDF REF'İN BİTİŞİ */}
 
-      {/* PDF BUTONU (REF DIŞINDA KALDIĞI İÇİN PDF'TE ÇIKMAZ) */}
       {result && (
-        <button 
-          onClick={handleDownloadPdf}
-          className="w-full mt-4 py-2.5 border border-primary text-primary font-medium rounded-sm hover:bg-primary/5 transition flex items-center justify-center gap-2 text-sm"
-        >
+        <button onClick={handleDownloadPdf} className="w-full mt-4 py-2.5 border border-primary text-primary font-medium rounded-sm hover:bg-primary/5 transition flex items-center justify-center gap-2 text-sm">
           Download Preliminary Report (PDF)
         </button>
       )}
