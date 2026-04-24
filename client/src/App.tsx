@@ -24,6 +24,7 @@ const About = lazy(() => import("@/pages/About"));
 const Deliverables = lazy(() => import("@/pages/Deliverables"));
 const RequestConsultation = lazy(() => import("@/pages/RequestConsultation"));
 const Philosophy = lazy(() => import("@/pages/Philosophy"));
+const Tools = lazy(() => import("@/pages/Tools"));
 
 // Service detail pages
 const EngineeringPlans = lazy(
@@ -123,6 +124,7 @@ function Router() {
         <Route path="/deliverables" component={Deliverables} />
         <Route path="/request-consultation" component={RequestConsultation} />
         <Route path="/philosophy" component={Philosophy} />
+        <Route path="/tools" component={Tools} />
         <Route path="/privacy-policy" component={PrivacyPolicy} />
         <Route path="/terms-of-service" component={TermsOfService} />
         <Route path="/cookie-policy" component={CookiePolicy} />
