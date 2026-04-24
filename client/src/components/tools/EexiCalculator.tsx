@@ -1,6 +1,5 @@
-// EexiCalculator.tsx
 import { useState, useRef } from "react";
-import html2pdf from "html2pdf.js";
+import { generateReportPdf, PdfError } from "@/lib/generateReportPdf";
 import { VESSEL_TYPES, FUEL_TYPES, DEFAULT_SFC_ME, DEFAULT_SFC_AUX, FW_FACTOR, EEXI_REDUCTION_FACTORS, getEediBaseline } from "@/data/calculators";
 
 export function EexiCalculator() {
@@ -20,6 +19,7 @@ export function EexiCalculator() {
   const [auxSfc, setAuxSfc] = useState(DEFAULT_SFC_AUX.toString());
   
   const [result, setResult] = useState<any>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
   const pdfRef = useRef<HTMLDivElement>(null);
 
   const handleCalculate = () => {
@@ -33,7 +33,8 @@ export function EexiCalculator() {
     const ptoEffNum = parseFloat(ptoEff) || 1.0;
     const yearNum = parseInt(targetYear);
 
-    if (!dwtNum || !mcrNum || !vrefNum) return;
+    // NaN Fix (0 geçersiz kabul edildi)
+    if (isNaN(dwtNum) || isNaN(mcrNum) || isNaN(vrefNum) || dwtNum <= 0 || mcrNum <= 0 || vrefNum <= 0) return;
 
     const typeData = VESSEL_TYPES.find(v => v.value === vesselType);
     const fuelData = FUEL_TYPES.find(f => f.value === meFuel);
@@ -70,56 +71,33 @@ export function EexiCalculator() {
   };
 
   const handleDownloadPdf = async () => {
-    if (!pdfRef.current) return;
-
-    let logoBase64 = '';
+    if (!result) return;
+    setIsGenerating(true);
+    
     try {
-      const response = await fetch('/logo.svg');
-      const blob = await response.blob();
-      logoBase64 = await new Promise<string>((resolve) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result as string);
-        reader.readAsDataURL(blob);
+      const typeData = VESSEL_TYPES.find(v => v.value === vesselType);
+      await generateReportPdf(pdfRef, 'Adriatica_EEXI_Preliminary_Report.pdf', [
+        { label: "Vessel Type", value: typeData?.label || vesselType },
+        { label: "Deadweight (DWT)", value: dwt },
+        { label: "Target Year", value: targetYear },
+        { label: "Main Engine MCR (kW)", value: meMcr },
+        { label: "Fuel Type", value: meFuel },
+        { label: "SFC (g/kWh)", value: meSfc },
+        { label: "Vref (Knots)", value: vref },
+        { label: "PTO Installed", value: hasPto ? "Yes" : "No" },
+        { label: "Auxiliary Power PAE (kW)", value: auxPower }
+      ], {
+        toolName: 'EEXI Preliminary Calculator'
       });
-    } catch (e) { console.error("Logo fetch failed", e); }
-
-    const opt = {
-      margin: [40, 20, 45, 20] as [number, number, number, number],
-      filename: 'Adriatica_EEXI_Preliminary_Report.pdf',
-      image: { type: 'jpeg' as const, quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true },
-      jsPDF: { unit: 'mm' as const, format: 'a4' as const, orientation: 'portrait' as const }
-    };
-
-    html2pdf().set(opt).from(pdfRef.current).toPdf().get('pdf').then((pdf: any) => {
-      const totalPages = pdf.internal.getNumberOfPages();
-      const pageHeight = pdf.internal.pageSize.height;
-      const pageWidth = pdf.internal.pageSize.width;
-
-      for (let i = 1; i <= totalPages; i++) {
-        pdf.setPage(i);
-        if (logoBase64) pdf.addImage(logoBase64, 'SVG', 20, 12, 15, 15);
-        
-        pdf.setFontSize(10);
-        pdf.setTextColor(11, 59, 92);
-        pdf.text('PRELIMINARY ASSESSMENT - ADRIATICA D.O.O.', pageWidth - 20, 22, { align: 'right' });
-        pdf.setDrawColor(200, 200, 200);
-        pdf.setLineWidth(0.5);
-        pdf.line(20, 30, pageWidth - 20, 30);
-
-        pdf.setDrawColor(200, 200, 200);
-        pdf.line(20, pageHeight - 25, pageWidth - 20, pageHeight - 25);
-        pdf.setFontSize(9);
-        pdf.setTextColor(11, 59, 92);
-        pdf.text('ADRIATICA D.O.O.', pageWidth / 2, pageHeight - 18, { align: 'center' });
-        pdf.setFontSize(7);
-        pdf.setTextColor(100, 100, 100);
-        pdf.text('Marine Engineering & Technical Consultancy', pageWidth / 2, pageHeight - 13, { align: 'center' });
-        pdf.text('Podgorica, Montenegro | info@adriaticadoo.com | www.adriaticadoo.com', pageWidth / 2, pageHeight - 8, { align: 'center' });
+    } catch (err) {
+      if (err instanceof PdfError && err.code === 'RENDER_MEMORY') {
+        alert("PDF content is too large to process safely. Please try again or contact support.");
+      } else {
+        alert("An error occurred while generating the PDF. Please try again.");
       }
-      
-      pdf.save(opt.filename);
-    });
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   return (
@@ -214,13 +192,9 @@ export function EexiCalculator() {
       </button>
 
       {result && (
-        <div ref={pdfRef} className="mt-6 p-6 bg-white border-2 rounded-sm" style={{color: '#000'}}>
-          <div className="flex justify-between items-center mb-6">
-            <div>
-              <h3 className="text-lg font-bold text-[#0B3B5C]">PRELIMINARY EEXI ASSESSMENT</h3>
-              <p className="text-xs text-gray-500">Generated by Adriatica D.O.O. Engineering Tools</p>
-            </div>
-          </div>
+        <div ref={pdfRef} className="mt-6 p-6 bg-white border-2 rounded-sm no-break">
+          <h3 className="text-lg font-bold text-[#0B3B5C]">PRELIMINARY EEXI ASSESSMENT</h3>
+          <p className="text-xs text-gray-500 mb-6">Generated by Adriatica D.O.O. Engineering Tools</p>
           
           <div className={`p-4 border-2 rounded-sm mb-4 ${result.isCompliant ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'}`}>
             <h4 className={`text-base font-bold mb-2 ${result.isCompliant ? 'text-green-800' : 'text-red-800'}`}>
@@ -237,7 +211,7 @@ export function EexiCalculator() {
               </div>
             </div>
             {!result.isCompliant && result.eplLimit && (
-              <div className="mt-4 pt-3 border-t border-red-300 bg-white/50 p-3 rounded-sm">
+              <div className="mt-4 pt-3 border-t border-red-300 bg-white/50 p-3 rounded-sm no-break">
                 <h5 className="font-bold text-sm text-red-800 mb-1">EPL LIMITATION ESTIMATE</h5>
                 <p className="font-mono font-bold text-lg text-[#0B3B5C]">{result.eplLimit} kW <span className="text-xs font-normal text-gray-600">(from {meMcr} kW)</span></p>
               </div>
@@ -252,8 +226,12 @@ export function EexiCalculator() {
       )}
 
       {result && (
-        <button onClick={handleDownloadPdf} className="w-full mt-4 py-2.5 border border-primary text-primary font-medium rounded-sm hover:bg-primary/5 transition flex items-center justify-center gap-2 text-sm">
-          Download Preliminary Report (PDF)
+        <button 
+          onClick={handleDownloadPdf} 
+          disabled={isGenerating}
+          className="w-full mt-4 py-2.5 border border-primary text-primary font-medium rounded-sm hover:bg-primary/5 transition flex items-center justify-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isGenerating ? "Generating PDF..." : "Download Preliminary Report (PDF)"}
         </button>
       )}
     </div>

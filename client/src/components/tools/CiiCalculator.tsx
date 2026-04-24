@@ -1,6 +1,5 @@
-// CiiCalculator.tsx
 import { useState, useRef } from "react";
-import html2pdf from "html2pdf.js";
+import { generateReportPdf, PdfError } from "@/lib/generateReportPdf";
 import { VESSEL_TYPES, FUEL_TYPES, CII_REDUCTION_FACTORS, getCiiReference } from "@/data/calculators";
 
 export function CiiCalculator() {
@@ -11,6 +10,7 @@ export function CiiCalculator() {
   const [totalDistance, setTotalDistance] = useState("");
   const [targetYear, setTargetYear] = useState("2026");
   const [result, setResult] = useState<any>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
   const pdfRef = useRef<HTMLDivElement>(null);
 
   const handleCalculate = () => {
@@ -18,7 +18,9 @@ export function CiiCalculator() {
     const fuelNum = parseFloat(totalFuel);
     const distNum = parseFloat(totalDistance);
     const yearNum = parseInt(targetYear);
-    if (!dwtNum || !fuelNum || !distNum) return;
+
+    // NaN Fix
+    if (isNaN(dwtNum) || isNaN(fuelNum) || isNaN(distNum) || dwtNum <= 0 || fuelNum <= 0 || distNum <= 0) return;
 
     const fuelData = FUEL_TYPES.find(f => f.value === fuelType);
     if (!fuelData) return;
@@ -56,56 +58,32 @@ export function CiiCalculator() {
   };
 
   const handleDownloadPdf = async () => {
-    if (!pdfRef.current) return;
-
-    let logoBase64 = '';
+    if (!result) return;
+    setIsGenerating(true);
+    
     try {
-      const response = await fetch('/logo.svg');
-      const blob = await response.blob();
-      logoBase64 = await new Promise<string>((resolve) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result as string);
-        reader.readAsDataURL(blob);
-      });
-    } catch (e) { console.error("Logo fetch failed", e); }
-
-    const opt = {
-      margin: [40, 20, 45, 20] as [number, number, number, number],
-      filename: 'Adriatica_CII_Preliminary_Report.pdf',
-      image: { type: 'jpeg' as const, quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true },
-      jsPDF: { unit: 'mm' as const, format: 'a4' as const, orientation: 'portrait' as const }
-    };
-
-    html2pdf().set(opt).from(pdfRef.current).toPdf().get('pdf').then((pdf: any) => {
-      const totalPages = pdf.internal.getNumberOfPages();
-      const pageHeight = pdf.internal.pageSize.height;
-      const pageWidth = pdf.internal.pageSize.width;
-
-      for (let i = 1; i <= totalPages; i++) {
-        pdf.setPage(i);
-        if (logoBase64) pdf.addImage(logoBase64, 'SVG', 20, 12, 15, 15);
-        
-        pdf.setFontSize(10);
-        pdf.setTextColor(11, 59, 92);
-        pdf.text('PRELIMINARY ASSESSMENT - ADRIATICA D.O.O.', pageWidth - 20, 22, { align: 'right' });
-        pdf.setDrawColor(200, 200, 200);
-        pdf.setLineWidth(0.5);
-        pdf.line(20, 30, pageWidth - 20, 30);
-
-        pdf.setDrawColor(200, 200, 200);
-        pdf.line(20, pageHeight - 25, pageWidth - 20, pageHeight - 25);
-        pdf.setFontSize(9);
-        pdf.setTextColor(11, 59, 92);
-        pdf.text('ADRIATICA D.O.O.', pageWidth / 2, pageHeight - 18, { align: 'center' });
-        pdf.setFontSize(7);
-        pdf.setTextColor(100, 100, 100);
-        pdf.text('Marine Engineering & Technical Consultancy', pageWidth / 2, pageHeight - 13, { align: 'center' });
-        pdf.text('Podgorica, Montenegro | info@adriaticadoo.com | www.adriaticadoo.com', pageWidth / 2, pageHeight - 8, { align: 'center' });
-      }
+      const typeData = VESSEL_TYPES.find(v => v.value === vesselType);
+      const fuelData = FUEL_TYPES.find(f => f.value === fuelType);
       
-      pdf.save(opt.filename);
-    });
+      await generateReportPdf(pdfRef, 'Adriatica_CII_Preliminary_Report.pdf', [
+        { label: "Vessel Type", value: typeData?.label || vesselType },
+        { label: "Deadweight (DWT)", value: dwt },
+        { label: "Target Year", value: targetYear },
+        { label: "Fuel Type", value: fuelData?.label || fuelType },
+        { label: "Total Fuel Consumed (MT)", value: totalFuel },
+        { label: "Total Distance (NM)", value: totalDistance }
+      ], {
+        toolName: 'CII Operational Predictor'
+      });
+    } catch (err) {
+      if (err instanceof PdfError && err.code === 'RENDER_MEMORY') {
+        alert("PDF content is too large to process safely. Please try again or contact support.");
+      } else {
+        alert("An error occurred while generating the PDF. Please try again.");
+      }
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   const getRatingColor = (rating: string) => {
@@ -173,13 +151,9 @@ export function CiiCalculator() {
       </button>
 
       {result && (
-        <div ref={pdfRef} className="mt-6 p-6 bg-white border-2 rounded-sm" style={{color: '#000'}}>
-          <div className="flex justify-between items-center mb-6">
-            <div>
-              <h3 className="text-lg font-bold text-[#0B3B5C]">PRELIMINARY CII ASSESSMENT</h3>
-              <p className="text-xs text-gray-500">Generated by Adriatica D.O.O. Engineering Tools</p>
-            </div>
-          </div>
+        <div ref={pdfRef} className="mt-6 p-6 bg-white border-2 rounded-sm no-break">
+          <h3 className="text-lg font-bold text-[#0B3B5C]">PRELIMINARY CII ASSESSMENT</h3>
+          <p className="text-xs text-gray-500 mb-6">Generated by Adriatica D.O.O. Engineering Tools</p>
 
           <div className={`p-4 border-2 rounded-sm mb-4 ${getRatingColor(result.rating)}`}>
             <div className="flex justify-between items-start">
@@ -187,7 +161,7 @@ export function CiiCalculator() {
               <span className="text-4xl font-display font-bold">{result.rating}</span>
             </div>
             
-            <div className="grid grid-cols-3 gap-4 text-xs mt-4 bg-white/50 p-3 rounded-sm">
+            <div className="grid grid-cols-3 gap-4 text-xs mt-4 bg-white/50 p-3 rounded-sm no-break">
               <div>
                 <span className="text-gray-600 block">Attained CII</span>
                 <p className="font-bold text-base text-[#0B3B5C]">{result.attained}</p>
@@ -217,8 +191,12 @@ export function CiiCalculator() {
       )}
 
       {result && (
-        <button onClick={handleDownloadPdf} className="w-full mt-4 py-2.5 border border-primary text-primary font-medium rounded-sm hover:bg-primary/5 transition flex items-center justify-center gap-2 text-sm">
-          Download Preliminary Report (PDF)
+        <button 
+          onClick={handleDownloadPdf} 
+          disabled={isGenerating}
+          className="w-full mt-4 py-2.5 border border-primary text-primary font-medium rounded-sm hover:bg-primary/5 transition flex items-center justify-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isGenerating ? "Generating PDF..." : "Download Preliminary Report (PDF)"}
         </button>
       )}
     </div>
