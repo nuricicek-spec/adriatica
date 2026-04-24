@@ -106,6 +106,7 @@ export function Footer() {
                 { name: "Deliverables", href: "/deliverables" },
                 { name: "Insights", href: "/insights" },
                 { name: "Case Studies", href: "/case-studies" },
+                { name: "Calculators", href: "/tools" },
               ].map((item) => (
                 <li key={item.name}>
                   <HashLink
