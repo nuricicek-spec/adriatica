@@ -6,17 +6,15 @@ export function EexiCalculator() {
   const [dwt, setDwt] = useState("");
   const [targetYear, setTargetYear] = useState("2026");
   
-  // Ana Makine
   const [meMcr, setMeMcr] = useState("");
   const [meFuel, setMeFuel] = useState("HFO");
   const [meSfc, setMeSfc] = useState(DEFAULT_SFC_ME.toString());
   const [vref, setVref] = useState("");
 
-  // Yardımcı Makine & PTO
   const [hasPto, setHasPto] = useState(false);
-  const [ptoPower, setPtoPower] = useState(""); // PTO kapasitesi (kW)
-  const [ptoEff, setPtoEff] = useState("1.0"); // f_eff (genelde 1.0)
-  const [auxPower, setAuxPower] = useState(""); // PAE toplamı (kW)
+  const [ptoPower, setPtoPower] = useState("");
+  const [ptoEff, setPtoEff] = useState("1.0");
+  const [auxPower, setAuxPower] = useState("");
   const [auxSfc, setAuxSfc] = useState(DEFAULT_SFC_AUX.toString());
   
   const [result, setResult] = useState<any>(null);
@@ -38,28 +36,19 @@ export function EexiCalculator() {
     const fuelData = FUEL_TYPES.find(f => f.value === meFuel);
     if (!typeData || !fuelData) return;
 
-    // 1. Attained EEXI Hesaplama (MEPC.338(76) Ek 2)
-    // EEXI = ( (SFC_ME * CF_ME * MCR) - (f_eff * P_PTI * CF_ME) + (SFC_AUX * CF_AUX * PAE) ) / (fi * fc * DWT * Vref)
-    // Not: Birim analizi yapıldığında direkt gCO2/(DWT*nm) cinsinden çıkar.
-    
-    const meEmissions = (sfcMe * fuelData.cf * mcrNum) / 1e6; // Ton CO2/saat
-    const ptoReduction = hasPto ? ((ptoEffNum * ptoNum) * fuelData.cf) / 1e6 : 0; // Ton CO2/saat düşüş
-    const auxEmissions = (sfcAux * fuelData.cf * auxNum) / 1e6; // Ton CO2/saat
+    const meEmissions = (sfcMe * fuelData.cf * mcrNum) / 1e6;
+    const ptoReduction = hasPto ? ((ptoEffNum * ptoNum) * fuelData.cf) / 1e6 : 0;
+    const auxEmissions = (sfcAux * fuelData.cf * auxNum) / 1e6;
 
     const totalEmissions = Math.max(0, meEmissions - ptoReduction + auxEmissions);
-    
     const attainedEexi = (totalEmissions * 1e6) / (typeData.fi * typeData.fc * dwtNum * vrefNum);
 
-    // 2. Required EEXI Hesaplama
-    // Gemide EEDI sertifikası yoksa, DWT'ye göre backward hesaplama yapıyoruz (Baseline * (1 - Reduction))
     const baselineEedi = getEediBaseline(dwtNum, vesselType);
     const reductionFactor = EEXI_REDUCTION_FACTORS[yearNum] || 0.08;
     const requiredEexi = baselineEedi * (1 - reductionFactor);
 
-    // EPL (Engine Power Limitation) tahmini (Sadece NON-COMPLIANT ise)
     let eplLimit = null;
     if (attainedEexi > requiredEexi) {
-      // EPL Formülü (MEPC.364(79)): P_limit = MCR * (Req / Att)^(1/3.5)
       eplLimit = mcrNum * Math.pow((requiredEexi / attainedEexi), (1 / 3.5));
     }
 
@@ -78,10 +67,10 @@ export function EexiCalculator() {
       <p className="text-xs text-muted-foreground mb-6">Based on MEPC.338(76) - Including PTO/PTI and Auxiliary Engine parameters.</p>
 
       <div className="space-y-6">
-        {/* Gemi Genel Parametreleri */}
+        {/* Gemi Genel Parametreleri - 2 SATIR YAPISI */}
         <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
           <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">Vessel Parameters</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-muted-foreground mb-1">Vessel Type</label>
               <select value={vesselType} onChange={e => setVesselType(e.target.value)} className="w-full p-2 border rounded-sm bg-white text-sm focus:border-primary outline-none">
@@ -92,7 +81,7 @@ export function EexiCalculator() {
               <label className="block text-xs font-medium text-muted-foreground mb-1">Deadweight at Design Draft (DWT)</label>
               <input type="number" value={dwt} onChange={e => setDwt(e.target.value)} placeholder="50000" className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none" />
             </div>
-            <div>
+            <div className="md:col-span-2">
               <label className="block text-xs font-medium text-muted-foreground mb-1">Target Compliance Year</label>
               <select value={targetYear} onChange={e => setTargetYear(e.target.value)} className="w-full p-2 border rounded-sm bg-white text-sm focus:border-primary outline-none">
                 {Object.keys(EEXI_REDUCTION_FACTORS).map(y => <option key={y} value={y}>{y}</option>)}
@@ -101,10 +90,10 @@ export function EexiCalculator() {
           </div>
         </div>
 
-        {/* Ana Makine Parametreleri */}
+        {/* Ana Makine Parametreleri - 2x2 MATRİS YAPISI */}
         <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
           <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">Main Engine (ME)</h3>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-muted-foreground mb-1">MCR (kW)</label>
               <input type="number" value={meMcr} onChange={e => setMeMcr(e.target.value)} placeholder="8000" className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none" />
@@ -126,7 +115,7 @@ export function EexiCalculator() {
           </div>
         </div>
 
-        {/* Yardımcı Makine ve PTO (Advanced) */}
+        {/* Yardımcı Makine ve PTO */}
         <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
           <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">Auxiliary & Power Take-In (PTI)</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

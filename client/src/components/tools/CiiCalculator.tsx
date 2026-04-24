@@ -21,22 +21,17 @@ export function CiiCalculator() {
     const fuelData = FUEL_TYPES.find(f => f.value === fuelType);
     if (!fuelData) return;
 
-    // 1. Attained CII (Gerçek Operasyonel Değer)
-    // Formül: (Toplam Yakıt * CF) / (DWT * Mesafe)
     const attainedCii = (fuelNum * fuelData.cf * 1e6) / (dwtNum * distNum);
 
-    // 2. Required CII (MEPC.364(79) Gerçek Formül)
-    // CII_ref = a * DWT^(-c)
     const ciiReference = getCiiReference(dwtNum, vesselType);
     const reductionFactor = CII_REDUCTION_FACTORS[yearNum] || 0.11;
     const requiredCii = ciiReference * (1 - reductionFactor);
 
-    // 3. Rating Belirleme (A, B, C, D, E Sınırları)
     let rating = "E";
-    const upperA = requiredCii * (1 - 0.20); // A sınıfı (En iyi %20)
-    const upperB = requiredCii * (1 - 0.10); // B sınıfı
-    const upperC = requiredCii;                // C sınıfı (Sınır)
-    const upperD = requiredCii * 1.10;        // D sınıfı
+    const upperA = requiredCii * (1 - 0.20);
+    const upperB = requiredCii * (1 - 0.10);
+    const upperC = requiredCii;
+    const upperD = requiredCii * 1.10;
 
     if (attainedCii <= upperA) rating = "A";
     else if (attainedCii <= upperB) rating = "B";
@@ -70,9 +65,10 @@ export function CiiCalculator() {
       <p className="text-xs text-muted-foreground mb-6">Using MEPC.364(79) exact formula: CII_ref = a × DWT^(-c)</p>
 
       <div className="space-y-6">
+        {/* Üst Bölüm - 2 Satır */}
         <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
           <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">Vessel & Target Year</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-muted-foreground mb-1">Vessel Type</label>
               <select value={vesselType} onChange={e => setVesselType(e.target.value)} className="w-full p-2 border rounded-sm bg-white text-sm focus:border-primary outline-none">
@@ -83,7 +79,7 @@ export function CiiCalculator() {
               <label className="block text-xs font-medium text-muted-foreground mb-1">Deadweight (DWT)</label>
               <input type="number" value={dwt} onChange={e => setDwt(e.target.value)} placeholder="50000" className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none" />
             </div>
-            <div>
+            <div className="md:col-span-2">
               <label className="block text-xs font-medium text-muted-foreground mb-1">Target Year</label>
               <select value={targetYear} onChange={e => setTargetYear(e.target.value)} className="w-full p-2 border rounded-sm bg-white text-sm focus:border-primary outline-none">
                 {Object.keys(CII_REDUCTION_FACTORS).map(y => <option key={y} value={y}>{y}</option>)}
@@ -92,9 +88,10 @@ export function CiiCalculator() {
           </div>
         </div>
 
+        {/* Alt Bölüm - 2 Satır (Son Kutu Tam Genişlikte) */}
         <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
           <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">Operational Data (Last 12 Months)</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-muted-foreground mb-1">Fuel Type Consumed</label>
               <select value={fuelType} onChange={e => setFuelType(e.target.value)} className="w-full p-2 border rounded-sm bg-white text-sm focus:border-primary outline-none">
@@ -105,7 +102,7 @@ export function CiiCalculator() {
               <label className="block text-xs font-medium text-muted-foreground mb-1">Total Fuel Consumed (Metric Tons)</label>
               <input type="number" step="0.1" value={totalFuel} onChange={e => setTotalFuel(e.target.value)} placeholder="3500.5" className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none" />
             </div>
-            <div>
+            <div className="md:col-span-2">
               <label className="block text-xs font-medium text-muted-foreground mb-1">Total Distance (NM)</label>
               <input type="number" value={totalDistance} onChange={e => setTotalDistance(e.target.value)} placeholder="50000" className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none" />
             </div>
@@ -142,7 +139,7 @@ export function CiiCalculator() {
           {(result.rating === "D" || result.rating === "E") && (
             <div className="mt-4 pt-3 border-t border-black/10">
               <p className="text-xs font-bold">
-                * Vessel is predicted to fall below acceptable thresholds. A robust SEEMP (Ship Energy Efficiency Management Plan) with documented optimization measures is strictly required to avoid being flagged.
+                * Vessel is predicted to fall below acceptable thresholds. A robust SEEMP with documented optimization measures is strictly required.
               </p>
             </div>
           )}

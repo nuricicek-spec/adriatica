@@ -3,7 +3,7 @@ import { useState } from "react";
 export function BwtsCalculator() {
   const [pumpDesignCap, setPumpDesignCap] = useState("");
   const [pumpCount, setPumpCount] = useState("1");
-  const [safetyMargin, setSafetyMargin] = useState("1.10"); // %10, %15 veya %20
+  const [safetyMargin, setSafetyMargin] = useState("1.10");
   const [result, setResult] = useState<number | null>(null);
 
   const handleCalculate = () => {
@@ -13,9 +13,6 @@ export function BwtsCalculator() {
 
     if (!capNum || !countNum) return;
 
-    // BWTS Kapasite hesabı: En büyük pompaların toplam debisi * Tasarım marjı
-    // İstasyon tasarımında filtre tıkanıklığı, deniz suyu yoğunluğu değişimleri vs. için 
-    // standart olarak %10 - %20 arası bir safety factor (marj) eklenir.
     const requiredCapacity = capNum * countNum * marginNum;
     setResult(parseFloat(requiredCapacity.toFixed(1)));
   };
@@ -28,7 +25,7 @@ export function BwtsCalculator() {
       <div className="space-y-6">
         <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
           <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">Ballast System Parameters</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="md:col-span-2">
               <label className="block text-xs font-medium text-muted-foreground mb-1">Largest Ballast Pump Design Capacity (m³/h)</label>
               <input type="number" value={pumpDesignCap} onChange={e => setPumpDesignCap(e.target.value)} placeholder="e.g., 250" className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none" />
