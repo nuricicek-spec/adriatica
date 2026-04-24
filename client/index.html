@@ -15,9 +15,14 @@
     <meta name="robots" content="index, follow" />
     <meta name="geo.region" content="ME" />
     <meta name="geo.placename" content="Montenegro" />
+    <meta name="theme-color" content="#0B3B5C" />
 
-    <!-- Favicon -->
+    <!-- Favicon - DÜZELTİLDİ: alternate keyword'ü kaldırıldı -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
 
     <!-- ========== GA4 (SPA — manual page_view in App.tsx) ========== -->
     <script
@@ -32,10 +37,6 @@
       gtag("js", new Date());
       gtag("config", "G-WPWD3K7JHR", { send_page_view: false });
     </script>
-
-    <!-- ========== LCP: preload logo ========== -->
-
-    <!-- Tüm Google Fonts linkleri KALDIRILDI. Fontlar lokal olarak index.css'den yükleniyor. -->
 
     <!-- Minimal critical CSS — prevents FOUC before Tailwind loads -->
     <style>

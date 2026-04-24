@@ -10,6 +10,7 @@ interface SEOProps {
   publishedTime?: string;
   modifiedTime?: string;
   noindex?: boolean;
+  tags?: string[]; // Eklendi
 }
 
 const defaultTitle = "Adriatica D.O.O. - Marine Engineering & Consultancy";
@@ -20,15 +21,12 @@ const defaultOgImageAlt = "Adriatica D.O.O. - Marine Engineering & Consultancy";
 const siteUrl = "https://www.adriaticadoo.com";
 
 function normalizeUrl(url: string): string {
-  // Ana domain'i koru, diğerlerinden trailing slash'ı temizle
   const stripped = url.replace(/\/$/, "");
   return stripped === "" ? siteUrl : stripped;
 }
 
 function resolveImageUrl(image: string): string {
-  // Absolute URL (http/https veya protocol-relative) ise dokunma
   if (/^(https?:)?\/\//.test(image)) return image;
-  // Relative path ise site URL ile birleştir
   return `${siteUrl}${image.startsWith("/") ? "" : "/"}${image}`;
 }
 
@@ -42,6 +40,7 @@ export function SEO({
   publishedTime,
   modifiedTime,
   noindex = false,
+  tags,
 }: SEOProps) {
   const pageTitle = title ? `${title} | Adriatica D.O.O.` : defaultTitle;
   const metaDescription = description || defaultDescription;
@@ -61,9 +60,7 @@ export function SEO({
         content={noindex ? "noindex, nofollow" : "index, follow"}
       />
       <meta name="author" content="Adriatica D.O.O." />
-      <meta name="theme-color" content="#0B3B5C" />
-      <meta name="format-detection" content="telephone=no" />
-
+      
       {/* Open Graph */}
       <meta property="og:type" content={ogType} />
       <meta property="og:url" content={canonicalUrl} />
@@ -73,6 +70,7 @@ export function SEO({
       <meta property="og:image:alt" content={metaOgImageAlt} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
+      <meta property="og:image:type" content="image/png" />
       <meta property="og:site_name" content="Adriatica D.O.O." />
       <meta property="og:locale" content="en_GB" />
 
@@ -83,7 +81,7 @@ export function SEO({
       <meta name="twitter:image" content={metaOgImage} />
       <meta name="twitter:image:alt" content={metaOgImageAlt} />
 
-      {/* Article specific — fragment yerine tekil koşullar */}
+      {/* Article specific — DÜZELTİLDİ: Fragment yerine tekil koşullu return'lar kullanıldı */}
       {isArticle && publishedTime && (
         <meta property="article:published_time" content={publishedTime} />
       )}
@@ -93,6 +91,9 @@ export function SEO({
       {isArticle && (
         <meta property="article:author" content="Adriatica D.O.O." />
       )}
+      {isArticle && tags && tags.length > 0 && tags.map((tag) => (
+        <meta key={tag} property="article:tag" content={tag} />
+      ))}
     </Helmet>
   );
 }

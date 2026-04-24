@@ -6,6 +6,7 @@ import { Shield, AlertTriangle } from "lucide-react";
 import { EexiCalculator } from "@/components/tools/EexiCalculator";
 import { CiiCalculator } from "@/components/tools/CiiCalculator";
 import { BwtsCalculator } from "@/components/tools/BwtsCalculator";
+import { Helmet } from "react-helmet-async"; // EKLENDİ
 
 const TABS = [
   { id: "eexi", label: "EEXI Calculator", component: EexiCalculator },
@@ -13,17 +14,97 @@ const TABS = [
   { id: "bwts", label: "BWTS Sizing", component: BwtsCalculator },
 ];
 
+// DÜZELTİLDİ: Schema JSON objesi bileşeni ayrıldı ve Helmet içine alındı
+const toolsPageSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://www.adriaticadoo.com/#website",
+      "url": "https://www.adriaticadoo.com/",
+      "name": "Adriatica D.O.O.",
+      "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.adriaticadoo.com/tools/#webpage",
+      "url": "https://www.adriaticadoo.com/tools",
+      "name": "Marine Engineering Compliance Calculators",
+      "description": "Interactive tools for preliminary EEXI calculation, CII rating prediction, and BWTS capacity sizing.",
+      "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
+      "about": {
+        "@type": "ItemList",
+        "name": "Engineering Compliance Tools",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "item": {
+              "@type": "SoftwareApplication",
+              "name": "EEXI Calculator",
+              "applicationCategory": "EngineeringApplication",
+              "operatingSystem": "Web Browser",
+              "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "item": {
+              "@type": "SoftwareApplication",
+              "name": "CII Operational Predictor",
+              "applicationCategory": "EngineeringApplication",
+              "operatingSystem": "Web Browser",
+              "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "item": {
+              "@type": "SoftwareApplication",
+              "name": "BWTS Capacity Sizing",
+              "applicationCategory": "EngineeringApplication",
+              "operatingSystem": "Web Browser",
+              "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+            }
+          }
+        ]
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://www.adriaticadoo.com/#organization",
+      "name": "Adriatica D.O.O.",
+      "url": "https://www.adriaticadoo.com/",
+      "logo": { "@type": "ImageObject", "url": "https://www.adriaticadoo.com/logo.png" }
+    }
+  ]
+};
+
 export default function Tools() {
   const [activeTab, setActiveTab] = useState("eexi");
   const ActiveComponent = TABS.find(t => t.id === activeTab)?.component;
 
   return (
     <>
+      {/* SEO meta etiketleri */}
       <SEO
         title="Marine Engineering Calculators"
-        description="Free preliminary EEXI, CII, and BWTS sizing calculators based on IMO regulations. Download branded PDF reports."
+        description="Calculate preliminary EEXI attained values, predict CII operational ratings, and size BWTS systems based on IMO MEPC regulations. Free maritime compliance tools."
         canonical="https://www.adriaticadoo.com/tools"
       />
+
+      {/* DÜZELTİLDİ: Schema doğrudan Helmet ile <head> içine basılıyor */}
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(toolsPageSchema).replace(/</g, "\\u003c")}
+        </script>
+      </Helmet>
+
       <div className="min-h-screen bg-background font-body selection:bg-primary/20">
         <Navigation />
         
@@ -40,7 +121,7 @@ export default function Tools() {
               </p>
             </div>
 
-            {/* Hızlı Bilgi Kartları (Consultation sayfasındaki gibi) */}
+            {/* Hızlı Bilgi Kartları */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-5xl mx-auto">
               <div className="bg-neutral-50 border-l-2 border-primary p-5 rounded-sm">
                 <div className="flex items-center gap-3 mb-2">
@@ -77,7 +158,7 @@ export default function Tools() {
               </div>
             </div>
 
-            {/* Ana İçerik Grid'i (Consultation sayfasıyla aynı oran: 7/5) */}
+            {/* Ana İçerik Grid'i */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
               
               {/* Sol Taraf: Hesaplama Araçları */}
@@ -103,7 +184,7 @@ export default function Tools() {
                 {ActiveComponent && <ActiveComponent />}
               </div>
 
-              {/* Sağ Taraf: Sabit Yan Panel (Consultation sayfasındaki yapı) */}
+              {/* Sağ Taraf: Sabit Yan Panel */}
               <div className="lg:col-span-5">
                 <div className="bg-neutral-50 border border-border/20 rounded-sm p-6 md:p-8 shadow-sm sticky top-24">
                   <p className="text-sm text-muted-foreground mb-4 pb-2 border-b border-border/20">
