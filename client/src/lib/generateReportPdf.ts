@@ -70,9 +70,14 @@ export async function generateReportPdf(
   const element = pdfRef.current.cloneNode(true) as HTMLElement;
   element.classList.add("pdf-mode");
   
-  element.style.position = "absolute";
-  element.style.left = "-9999px";
+  // Görünür layout'ta tut ama kullanıcıya gösterme (off-screen yerine fixed + opacity)
+  element.style.position = "fixed";
   element.style.top = "0";
+  element.style.left = "0";
+  element.style.width = "800px";
+  element.style.zIndex = "-1";
+  element.style.opacity = "0";
+  element.style.pointerEvents = "none";
 
   // 2. ADVANCED FORM STATE FIX (Select, Checkbox, Textarea, React Edge-case)
   const formElements = element.querySelectorAll('input, select, textarea');
