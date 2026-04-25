@@ -1,5 +1,4 @@
-import { useState, useCallback } from "react";
-import type { KeyboardEvent } from "react";
+import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -8,6 +7,7 @@ import { SEO } from "@/components/SEO";
 import { Helmet } from "react-helmet-async";
 import { deliverables } from "@/data/deliverables";
 import { PDFViewer } from "@/components/PDFViewer";
+import { trackEvent } from "@/lib/analytics";
 
 // Deliverable tipi — typeof yerine açık tip
 type Deliverable = (typeof deliverables)[number];
@@ -20,21 +20,70 @@ export default function Deliverables() {
   const [category, setCategory] = useState<Category>("All");
   const [previewItem, setPreviewItem] = useState<Deliverable | null>(null);
 
+  // Modal container ref — focus yönetimi için
+  const modalRef = useRef<HTMLDivElement>(null);
+
   const closeModal = useCallback(() => setPreviewItem(null), []);
 
-  // Klavye ile modal kapatma (Escape)
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeModal();
-    },
-    [closeModal],
-  );
+  // Modal açıldığında focus al, kapandığında body'ye geri ver
+  useEffect(() => {
+    if (!previewItem) return;
 
-  const filtered = (
-    category === "All"
-      ? deliverables
-      : deliverables.filter((d) => d.category === category)
-  ).sort((a, b) => a.title.localeCompare(b.title));
+    const previousFocus = document.activeElement as HTMLElement | null;
+
+    // Sonraki frame'de focus ver — modal DOM'a mount olduktan sonra
+    const raf = requestAnimationFrame(() => {
+      modalRef.current?.focus();
+    });
+
+    return () => {
+      cancelAnimationFrame(raf);
+      previousFocus?.focus();
+    };
+  }, [previewItem]);
+
+  // Escape ile modal kapatma — native event listener (en güvenilir yöntem)
+  useEffect(() => {
+    if (!previewItem) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeModal();
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [previewItem, closeModal]);
+
+  // Scroll lock — modal açıkken body scroll'u engelle
+  useEffect(() => {
+    if (previewItem) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [previewItem]);
+
+  // Preview tıklamasını izle — useCallback ile memolandı
+  const handlePreview = useCallback((item: Deliverable) => {
+    setPreviewItem(item);
+    trackEvent("deliverable_preview", {
+      title: item.title,
+      category: item.category,
+    });
+  }, []);
+
+  // useMemo — category değişmediğinde gereksiz sort/filter önlendi
+  const filtered = useMemo(
+    () =>
+      (category === "All"
+        ? deliverables
+        : deliverables.filter((d) => d.category === category)
+      ).sort((a, b) => a.title.localeCompare(b.title)),
+    [category]
+  );
 
   return (
     <>
@@ -138,7 +187,7 @@ export default function Deliverables() {
                     Request a quote →
                   </HashLink>
                   <button
-                    onClick={() => setPreviewItem(item)}
+                    onClick={() => handlePreview(item)}
                     className="text-primary text-sm hover:underline"
                   >
                     Preview →
@@ -150,9 +199,7 @@ export default function Deliverables() {
 
           {/* Alt CTA */}
           <div className="mt-16 text-center p-6 bg-neutral-50 border border-border/10 rounded-sm">
-            <p className="text-muted-foreground mb-3">
-              Don't see what you need?
-            </p>
+            <p className="text-muted-foreground mb-3">Don't see what you need?</p>
             <HashLink
               href="/request-consultation"
               className="inline-block bg-primary text-white px-6 py-3 rounded-sm font-medium hover:bg-primary/90 transition"
@@ -169,14 +216,17 @@ export default function Deliverables() {
           <div
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
             onClick={closeModal}
-            onKeyDown={handleKeyDown}
             role="dialog"
             aria-modal="true"
             aria-label={`Preview: ${previewItem.title}`}
           >
             <div
-              className="bg-white rounded-sm max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col relative"
+              ref={modalRef}
+              className="bg-white rounded-sm max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col relative outline-none"
               onClick={(e) => e.stopPropagation()}
+              // tabIndex ile focus alabilir hale getirildi
+              // outline-none görsel halka kaldırıldı (kendi header'ı var)
+              tabIndex={-1}
             >
               {/* Header */}
               <div className="p-4 border-b flex items-start justify-between sticky top-0 bg-white z-10">
@@ -211,12 +261,9 @@ export default function Deliverables() {
               <div className="flex-1 overflow-auto p-4">
                 <div className="bg-neutral-50 p-4 rounded-sm">
                   <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 mb-4 text-sm text-yellow-800">
-                    <p className="font-semibold">
-                      📄 Sample from a real project (redacted).
-                    </p>
+                    <p className="font-semibold">📄 Sample from a real project (redacted).</p>
                     <p>
-                      Your version will be custom‑prepared for your vessel after
-                      service agreement.
+                      Your version will be custom‑prepared for your vessel after service agreement.
                     </p>
                   </div>
 
