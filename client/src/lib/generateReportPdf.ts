@@ -18,6 +18,9 @@ export class PdfError extends Error {
   }
 }
 
+// ============================
+// TİPLER
+// ============================
 type ReportInput = {
   label: string;
   value: string | number | boolean;
@@ -29,14 +32,14 @@ type ReportOptions = {
   signal?: AbortSignal;
 };
 
-// ------------------------------
+// ============================
 // EŞZAMANLI İŞLEM KİLİDİ
-// ------------------------------
+// ============================
 let activeRender = false;
 
-// ------------------------------
-// LOGO CACHE (yeniden deneme + geri çekilme)
-// ------------------------------
+// ============================
+// LOGO CACHE
+// ============================
 let cachedLogo: string | null = null;
 
 const getLogoBase64 = async (signal?: AbortSignal): Promise<string> => {
@@ -70,9 +73,9 @@ const getLogoBase64 = async (signal?: AbortSignal): Promise<string> => {
   throw new PdfError("Logo fetch failure", "LOGO_FETCH");
 };
 
-// ------------------------------
-// ANA PDF OLUŞTURMA
-// ------------------------------
+// ============================
+// ANA PDF OLUŞTURMA - REVİZE EDİLMİŞ
+// ============================
 export async function generateReportPdf(
   pdfRef: React.RefObject<HTMLDivElement | null>,
   filename: string,
@@ -99,34 +102,36 @@ export async function generateReportPdf(
       throw new PdfError("PDF reference not found", "RENDER_UNKNOWN");
     }
 
-    const headerTitle =
-      options?.headerTitle || "PRELIMINARY ASSESSMENT - ADRIATICA D.O.O.";
+    const headerTitle = options?.headerTitle || "PRELIMINARY ASSESSMENT - ADRIATICA D.O.O.";
     const toolName = options?.toolName || "";
 
     // ============================
-    // 1. KLONLAMA VE GEÇİCİ GÖRÜNÜR HALE GETİRME
+    // 1. KLONLAMA - Düzeltilmiş pozisyonlama
     // ============================
     const element = pdfRef.current.cloneNode(true) as HTMLElement;
     element.classList.add("pdf-mode");
 
-    // Tailwind kirliliğini sıfırla + render için tam görünürlük sağla
     Object.assign(element.style, {
-      position: "fixed",      // Viewport'a sabitle
-      top: "0",
+      position: "absolute",
+      top: "-9999px",           // left: -9999px yerine top kullanıyoruz
       left: "0",
-      width: "800px",
-      opacity: "1",           // Tam opak (boyama garantisi)
-      zIndex: "99999",        // En üst katman
-      pointerEvents: "none",  // Kullanıcı etkileşimi yok
-      padding: "0",
+      width: "750px",
+      padding: "25px",          // sıfırlamıyoruz, güvenli padding
       margin: "0",
       border: "none",
       boxShadow: "none",
-      backgroundColor: "white",
+      opacity: "1",
+      visibility: "visible",
+      pointerEvents: "none",
+      zIndex: "-1",
+      backgroundColor: "#ffffff",
     });
 
+    document.body.appendChild(element);
+    checkAbort();
+
     // ============================
-    // 2. FORM ALANLARINI SENKRONİZE ET
+    // 2. FORM SENKRONİZASYONU
     // ============================
     element.querySelectorAll("input, select, textarea").forEach((el: any) => {
       if (el.tagName === "SELECT") {
@@ -144,25 +149,22 @@ export async function generateReportPdf(
       }
     });
 
-    document.body.appendChild(element);
-    checkAbort();
-
     // ============================
-    // 3. GİRDİ ÖZETİ (DOM API)
+    // 3. GİRDİ ÖZETİ
     // ============================
     const summary = document.createElement("div");
     summary.style.cssText =
-      "margin-top:0;margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid #ddd;font-size:11px;";
+      "margin-top:0; margin-bottom:20px; padding-bottom:15px; border-bottom:1px solid #ddd; font-size:11px;";
 
     const headerRow = document.createElement("div");
     headerRow.style.cssText =
-      "display:flex;justify-content:space-between;margin-bottom:8px;font-weight:bold;";
+      "display:flex; justify-content:space-between; margin-bottom:8px; font-weight:bold;";
 
     const titleEl = document.createElement("span");
     titleEl.textContent = "VESSEL INPUT SUMMARY";
 
-    const ts =
-      new Date().toISOString().replace("T", " ").slice(0, 16) + " UTC";
+    const ts = new Date().toISOString().replace("T", " ").slice(0, 16) + " UTC";
+
     const metaEl = document.createElement("span");
     metaEl.style.fontWeight = "normal";
     metaEl.textContent = toolName
@@ -195,31 +197,23 @@ export async function generateReportPdf(
     element.prepend(summary);
 
     // ============================
-    // 4. YAZI TİPİ ve BOYAMA HAZIRLIĞI
+    // 4. RENDER HAZIRLIĞI + BEKLEME
     // ============================
-    if (document.fonts?.ready) {
-      try { await document.fonts.ready; } catch {}
-    }
+    if (document.fonts?.ready) await document.fonts.ready.catch(() => {});
     await new Promise((r) => requestAnimationFrame(r));
-    await new Promise((r) => setTimeout(r, 30));
+    await new Promise((r) => setTimeout(r, 100));   // React render için önemli
     checkAbort();
 
     // ============================
-    // 5. RESİM YÜKLEME (zaman aşımı + temizlik)
+    // 5. RESİM YÜKLEME
     // ============================
     const images = element.querySelectorAll("img");
     await Promise.all(
       Array.from(images).map((img) => {
-        if (img.complete && img.naturalWidth > 0) return;
+        if (img.complete && img.naturalWidth > 0) return Promise.resolve();
         return new Promise<void>((resolve) => {
           let done = false;
-          const finalize = () => {
-            if (done) return;
-            done = true;
-            img.onload = null;
-            img.onerror = null;
-            resolve();
-          };
+          const finalize = () => { if (!done) { done = true; img.onload = img.onerror = null; resolve(); } };
           const timeout = setTimeout(finalize, 5000);
           img.onload = () => { clearTimeout(timeout); finalize(); };
           img.onerror = () => { clearTimeout(timeout); finalize(); };
@@ -228,7 +222,7 @@ export async function generateReportPdf(
     );
 
     // ============================
-    // 6. LOGO (hata olsa da devam)
+    // 6. LOGO
     // ============================
     let logoBase64: string | null = null;
     try {
@@ -236,61 +230,62 @@ export async function generateReportPdf(
     } catch {
       console.warn("Logo yüklenemedi, rapor logosuz devam edecek.");
     }
+
     checkAbort();
 
     // ============================
-    // 7. BELLEK VE BOYUT KONTROLÜ
+    // 7. BOYUT KONTROLÜ
     // ============================
     const contentHeight = element.scrollHeight;
-    const contentWidth = element.offsetWidth;
-    const dpr = window.devicePixelRatio || 1;
+    console.log("[PDF Debug] Content Height:", contentHeight); // debug
 
     let scale = 2;
     if (contentHeight > 12000) scale = 1.1;
     else if (contentHeight > 9000) scale = 1.3;
     else if (contentHeight > 6000) scale = 1.6;
 
-    const maxCanvasDim = 32767;
-    if (
-      contentHeight * scale * dpr > maxCanvasDim ||
-      contentWidth * scale * dpr > maxCanvasDim
-    ) {
-      throw new PdfError("Canvas dimension limit exceeded", "RENDER_MEMORY");
-    }
-
-    const totalPixels =
-      contentWidth * contentHeight * scale * scale * dpr * dpr;
-    if (totalPixels > 20_000_000) {
-      scale = 1;
-    }
-
     // ============================
-    // 8. PDF AYARLARI VE ÜRETİM
+    // 8. PDF ÜRETİMİ - ÖNEMLİ DEĞİŞİKLİKLER BURADA
     // ============================
     const worker = html2pdf()
       .set({
-        margin: [35, 15, 35, 15],   // simetrik marjlar
+        margin: [35, 15, 35, 15],
         pagebreak: { mode: ['css', 'legacy'], avoid: '.no-break' },
         image: { type: "jpeg", quality: 0.95 },
         html2canvas: {
           scale,
           useCORS: true,
-          allowTaint: false,
+          allowTaint: true,
           scrollY: 0,
-          windowWidth: 800,
+          windowWidth: 750,
+          logging: false,
           onclone: (clonedDoc: Document) => {
-            const el = clonedDoc.querySelector(".pdf-mode") as HTMLElement;
-            if (el) {
-              el.style.opacity = "1";
-              el.style.visibility = "visible";
-              el.style.padding = "0px";
-              el.style.background = "white";
+            const pdfModeEl = clonedDoc.querySelector(".pdf-mode") as HTMLElement;
+            if (pdfModeEl) {
+              pdfModeEl.style.position = "relative";
+              pdfModeEl.style.top = "0";
+              pdfModeEl.style.left = "0";
+              pdfModeEl.style.width = "750px";
+              pdfModeEl.style.padding = "25px";
+              pdfModeEl.style.margin = "0";
+              pdfModeEl.style.backgroundColor = "#ffffff";
+              pdfModeEl.style.opacity = "1";
+              pdfModeEl.style.visibility = "visible";
             }
+
+            // En agresif stil reset
             const style = clonedDoc.createElement("style");
             style.innerHTML = `
-              body, p, span, div, table, td, th,
-              h1, h2, h3, h4, li, label {
+              .pdf-mode, .pdf-mode * {
                 font-family: Arial, Helvetica, sans-serif !important;
+                color: #000000 !important;
+                background-color: #ffffff !important;
+                border-color: #d1d5db !important;
+                line-height: 1.5 !important;
+              }
+              .pdf-mode .no-break {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
               }
             `;
             clonedDoc.head.appendChild(style);
@@ -301,13 +296,13 @@ export async function generateReportPdf(
           format: "a4",
           orientation: "portrait",
         },
-      } as any)   // TypeScript'in pagebreak'i tanımamasını engellemek için
+      } as any)
       .from(element);
 
     const pdf: any = await worker.toPdf().get("pdf");
 
     // ============================
-    // 9. BAŞLIK / ALT BİLGİ (sayfa numarası dahil)
+    // 9. HEADER / FOOTER
     // ============================
     const totalPages = pdf.getNumberOfPages();
     const pageHeight = pdf.internal.pageSize.height;
@@ -323,9 +318,9 @@ export async function generateReportPdf(
       pdf.setFontSize(10);
       pdf.setTextColor(11, 59, 92);
       pdf.text(headerTitle, pageWidth - 15, 20, { align: "right" });
+
       pdf.setDrawColor(200, 200, 200);
       pdf.line(15, 28, pageWidth - 15, 28);
-
       pdf.line(15, pageHeight - 30, pageWidth - 15, pageHeight - 30);
 
       pdf.setFontSize(8);
@@ -334,20 +329,8 @@ export async function generateReportPdf(
 
       pdf.setFontSize(7);
       pdf.setTextColor(120, 120, 120);
-      pdf.text(
-        "Marine Engineering & Technical Consultancy",
-        pageWidth / 2,
-        pageHeight - 17,
-        { align: "center" }
-      );
-      pdf.text(
-        "info@adriaticadoo.com | www.adriaticadoo.com",
-        pageWidth / 2,
-        pageHeight - 12,
-        { align: "center" }
-      );
-
-      // Sayfa numarası
+      pdf.text("Marine Engineering & Technical Consultancy", pageWidth / 2, pageHeight - 17, { align: "center" });
+      pdf.text("info@adriaticadoo.com | www.adriaticadoo.com", pageWidth / 2, pageHeight - 12, { align: "center" });
       pdf.text(`${i} / ${totalPages}`, pageWidth - 15, pageHeight - 12, { align: "right" });
     }
 
@@ -356,21 +339,17 @@ export async function generateReportPdf(
     // ============================
     const sanitized = filename.replace(/[^\w.-]/g, "_");
     const safeFilename = sanitized.endsWith(".pdf") ? sanitized : sanitized + ".pdf";
-    pdf.save(safeFilename);
 
-    // Worker temizliği
+    pdf.save(safeFilename);
     (worker as any).destroy?.();
+
   } catch (error) {
     if (error instanceof PdfError) throw error;
+    console.error("PDF Generation Error:", error);
     throw new PdfError("Unexpected PDF error", "RENDER_UNKNOWN");
   } finally {
     activeRender = false;
-
-    // Görünürlüğü kapat ve DOM'dan kaldır
-    const strayElement = document.querySelector(".pdf-mode") as HTMLElement;
-    if (strayElement) {
-      strayElement.style.opacity = "0";
-      strayElement.remove();
-    }
+    const strayElement = document.querySelector(".pdf-mode");
+    if (strayElement) strayElement.remove();
   }
 }
