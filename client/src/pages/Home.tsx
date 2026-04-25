@@ -354,6 +354,93 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── ENGINEERING TOOLS ───────────────────────────────────── */}
+<section className="py-20 bg-white border-b border-border/10">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    {/* HEADER */}
+    <div className="text-center mb-12">
+      <p className="text-xs uppercase tracking-[0.25em] text-primary/70 mb-3">
+        Diagnostic Tools
+      </p>
+      <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-4">
+        Check Your Compliance Status
+      </h2>
+      <p className="text-foreground/75 max-w-2xl mx-auto">
+        Run a quick engineering assessment to identify compliance risks before committing to a full project.
+      </p>
+    </div>
+
+    {/* CARDS */}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      {/* EEXI */}
+      <Link
+        href="/tools?tool=eexi"
+        className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white"
+      >
+        <h3 className="text-lg font-bold text-primary mb-2">
+          EEXI Calculator
+        </h3>
+        <p className="text-sm text-foreground/70 mb-4">
+          Evaluate your vessel’s Energy Efficiency Existing Ship Index compliance.
+        </p>
+        <span className="text-sm font-medium text-primary group-hover:underline">
+          Run Assessment →
+        </span>
+      </Link>
+
+      {/* CII */}
+      <Link
+        href="/tools?tool=cii"
+        className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white"
+      >
+        <h3 className="text-lg font-bold text-primary mb-2">
+          CII Rating Tool
+        </h3>
+        <p className="text-sm text-foreground/70 mb-4">
+          Estimate your Carbon Intensity Indicator rating and operational impact.
+        </p>
+        <span className="text-sm font-medium text-primary group-hover:underline">
+          Run Assessment →
+        </span>
+      </Link>
+
+      {/* BWTS */}
+      <Link
+        href="/tools?tool=bwts"
+        className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white"
+      >
+        <h3 className="text-lg font-bold text-primary mb-2">
+          BWTS Compliance
+        </h3>
+        <p className="text-sm text-foreground/70 mb-4">
+          Check ballast water treatment system compliance and retrofit needs.
+        </p>
+        <span className="text-sm font-medium text-primary group-hover:underline">
+          Run Assessment →
+        </span>
+      </Link>
+
+    </div>
+
+    {/* BOTTOM HOOK */}
+    <div className="text-center mt-12">
+      <p className="text-sm text-foreground/60 mb-4">
+        If your vessel is non-compliant, we provide full engineering support — from assessment to implementation.
+      </p>
+
+      <Link
+        href="/request-consultation"
+        className="inline-block px-6 py-3 bg-primary text-white text-sm uppercase tracking-wide hover:bg-[hsl(var(--color-lapis-800))] transition-colors"
+      >
+        Request Technical Support
+      </Link>
+    </div>
+
+  </div>
+</section>
+
         {/* ── VALUE PROPOSITION ───────────────────────────────────────────── */}
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
