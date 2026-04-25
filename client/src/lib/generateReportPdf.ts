@@ -29,7 +29,7 @@ type ReportInput = {
 type ReportOptions = {
   headerTitle?: string;
   toolName?: string;
-  signal?: AbortSignal; // İptal sinyali
+  signal?: AbortSignal;
 };
 
 // ============================
@@ -82,7 +82,6 @@ export async function generateReportPdf(
   inputs: ReportInput[],
   options?: ReportOptions
 ): Promise<void> {
-  // Aynı anda sadece bir PDF oluşturulmasına izin ver
   if (activeRender) {
     throw new PdfError(
       "Another PDF is already being generated",
@@ -93,7 +92,6 @@ export async function generateReportPdf(
   activeRender = true;
   const signal = options?.signal;
 
-  // İptal kontrolü
   const checkAbort = () => {
     if (signal?.aborted) {
       throw new PdfError("PDF generation aborted", "RENDER_ABORTED");
@@ -264,7 +262,6 @@ export async function generateReportPdf(
     const contentWidth = element.offsetWidth;
     const dpr = window.devicePixelRatio || 1;
 
-    // Kademeli ölçeklendirme
     let scale = 2;
     if (contentHeight > 12000) scale = 1.1;
     else if (contentHeight > 9000) scale = 1.3;
@@ -285,7 +282,6 @@ export async function generateReportPdf(
       contentWidth * contentHeight * scale * scale * dpr * dpr;
 
     if (totalPixels > 20_000_000) {
-      // Çökmek yerine ölçeği düşür
       scale = 1;
     }
 
@@ -301,7 +297,11 @@ export async function generateReportPdf(
           useCORS: true,
           allowTaint: false,
           onclone: (clonedDoc: Document) => {
-            // Sistem fontu yerine Arial kullan (kararlı baskı)
+            // Opaklık düzeltmesi: Klonlanan dokümanda tam görünürlük sağla
+            clonedDoc.body.style.opacity = "1";
+            clonedDoc.body.style.visibility = "visible";
+
+            // Font dayatması (kararlı baskı)
             const style = clonedDoc.createElement("style");
             style.innerHTML = `
               body, p, span, div, table, td, th,
@@ -333,17 +333,14 @@ export async function generateReportPdf(
       pdf.setPage(i);
 
       if (logoBase64) {
-        // Orijinal logo oranı 553:152
         pdf.addImage(logoBase64, "PNG", 20, 12, 40, 11);
       }
 
-      // Başlık
       pdf.setFontSize(10);
       pdf.setTextColor(11, 59, 92);
       pdf.text(headerTitle, pageWidth - 20, 22, { align: "right" });
       pdf.line(20, 30, pageWidth - 20, 30);
 
-      // Alt bilgi
       pdf.line(20, pageHeight - 25, pageWidth - 20, pageHeight - 25);
       pdf.setFontSize(9);
       pdf.setTextColor(11, 59, 92);
@@ -383,7 +380,6 @@ export async function generateReportPdf(
   } finally {
     activeRender = false;
 
-    // DOM'da kalan .pdf-mode elementini temizle
     const strayElement = document.querySelector(".pdf-mode");
     if (strayElement) strayElement.remove();
   }
