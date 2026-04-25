@@ -86,17 +86,38 @@
 }
 
 /*
-  ====================== PDF MODE ======================
-  ÖNEMLI NOT:
+  FIX #3 — Unused CSS: @tailwindcss/typography plugin prose
+  token'larını burada design system renkleriyle eşleştiriyoruz.
+  Plugin'in ürettiği ~8 KiB genel reset'i değil, sadece
+  CSS custom property override'larını kullanıyoruz.
+  .prose class'ı olmayan hiçbir sayfaya bu stiller uygulanmaz.
+*/
+@layer components {
+  .prose {
+    --tw-prose-body: hsl(var(--foreground));
+    --tw-prose-headings: hsl(var(--foreground));
+    --tw-prose-links: hsl(var(--primary));
+    --tw-prose-bold: hsl(var(--foreground));
+    --tw-prose-counters: hsl(var(--muted-foreground));
+    --tw-prose-bullets: hsl(var(--muted-foreground));
+    --tw-prose-hr: hsl(var(--border));
+    --tw-prose-quotes: hsl(var(--foreground));
+    --tw-prose-quote-borders: hsl(var(--primary));
+    --tw-prose-captions: hsl(var(--muted-foreground));
+    --tw-prose-code: hsl(var(--foreground));
+    --tw-prose-pre-code: hsl(var(--foreground));
+    --tw-prose-pre-bg: hsl(var(--muted));
+    --tw-prose-th-borders: hsl(var(--border));
+    --tw-prose-td-borders: hsl(var(--border));
+  }
+}
+
+/* ====================== PDF MODE ====================== */
+/*
   Bu sınıf artık sadece sayfa kesme kontrolü için kullanılıyor.
   Renk, border, font gibi tüm stiller generateReportPdf.ts
-  içindeki applyPdfStyles() fonksiyonu tarafından
-  window.getComputedStyle ile inline olarak uygulanıyor.
-  Burada genel bir * reset YAPMIYORUZ — bu html2canvas'ın
-  layout hesaplamasını bozuyordu.
+  içindeki applyPdfStyles() tarafından inline olarak uygulanıyor.
 */
-
-/* Sayfa kesme kontrolü — sadece bu kalıyor */
 .no-break {
   page-break-inside: avoid !important;
   break-inside: avoid !important;

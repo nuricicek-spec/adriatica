@@ -17,28 +17,60 @@
     <meta name="geo.placename" content="Montenegro" />
     <meta name="theme-color" content="#0B3B5C" />
 
-    <!-- Favicon - DÜZELTİLDİ: alternate keyword'ü kaldırıldı -->
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json" />
 
-    <!-- LCP görselini önceden yükle -->
-    <link rel="preload" as="image" href="/logo.svg" fetchpriority="high">
+    <!--
+      FIX #4 — Font preload: @font-face ile tanımlı fontlar CSS parse
+      edilene kadar discovered edilemez. Preload ile kritik path
+      836ms → ~200ms'e düşer. crossorigin zorunlu, woff2 CORS gerektirir.
+    -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/manrope.woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/cinzel.woff2"
+      crossorigin="anonymous"
+    />
 
-    <!-- ========== GA4 (SPA — manual page_view in App.tsx) ========== -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-WPWD3K7JHR"
-    ></script>
+    <!-- LCP görseli preload -->
+    <link rel="preload" as="image" href="/logo.svg" fetchpriority="high" />
+
+    <!--
+      FIX #2 — GTM defer: async script bile main thread parse
+      maliyeti yaratır. requestIdleCallback ile defer edilir;
+      tarayıcı boşta iken yüklenir. Fallback: 3sn timeout.
+    -->
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
+      function gtag() { dataLayer.push(arguments); }
       gtag("js", new Date());
       gtag("config", "G-WPWD3K7JHR", { send_page_view: false });
+
+      function loadGtag() {
+        var s = document.createElement("script");
+        s.src = "https://www.googletagmanager.com/gtag/js?id=G-WPWD3K7JHR";
+        s.async = true;
+        document.head.appendChild(s);
+      }
+
+      if ("requestIdleCallback" in window) {
+        requestIdleCallback(loadGtag, { timeout: 3000 });
+      } else {
+        // Safari fallback
+        setTimeout(loadGtag, 3000);
+      }
     </script>
 
     <!-- Kritik stiller inline — FOUC'u engeller -->
@@ -46,6 +78,12 @@
       body {
         margin: 0;
         font-family: "Manrope", sans-serif;
+        background-color: hsl(40, 20%, 97%);
+      }
+      /* Skeleton — root boşken beyaz flash önlenir */
+      #root:empty {
+        min-height: 100dvh;
+        background-color: hsl(40, 20%, 97%);
       }
     </style>
   </head>
