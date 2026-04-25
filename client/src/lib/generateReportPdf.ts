@@ -8,16 +8,10 @@ export class PdfError extends Error {
     | "LOGO_FETCH"
     | "RENDER_MEMORY"
     | "RENDER_ABORTED"
+    | "RENDER_CONCURRENT"
     | "RENDER_UNKNOWN";
 
-  constructor(
-    message: string,
-    code:
-      | "LOGO_FETCH"
-      | "RENDER_MEMORY"
-      | "RENDER_ABORTED"
-      | "RENDER_UNKNOWN"
-  ) {
+  constructor(message: string, code: PdfError["code"]) {
     super(message);
     this.name = "PdfError";
     this.code = code;
@@ -35,11 +29,16 @@ type ReportInput = {
 type ReportOptions = {
   headerTitle?: string;
   toolName?: string;
-  signal?: AbortSignal;
+  signal?: AbortSignal; // İptal sinyali
 };
 
 // ============================
-// LOGO CACHE (tekrar dene + backoff)
+// EŞZAMANLI İŞLEM KİLİDİ
+// ============================
+let activeRender = false;
+
+// ============================
+// LOGO CACHE (tekrar deneme + geri çekilme)
 // ============================
 let cachedLogo: string | null = null;
 
@@ -64,10 +63,9 @@ const getLogoBase64 = async (signal?: AbortSignal): Promise<string> => {
     try {
       cachedLogo = await fetchOnce();
       return cachedLogo;
-    } catch (err) {
-      if (i === 1) {
+    } catch {
+      if (i === 1)
         throw new PdfError("Logo fetch failed after retry", "LOGO_FETCH");
-      }
       await new Promise((r) => setTimeout(r, 300 * (i + 1)));
     }
   }
@@ -76,7 +74,7 @@ const getLogoBase64 = async (signal?: AbortSignal): Promise<string> => {
 };
 
 // ============================
-// ANA FONKSİYON
+// ANA PDF OLUŞTURMA
 // ============================
 export async function generateReportPdf(
   pdfRef: React.RefObject<HTMLDivElement | null>,
@@ -84,126 +82,121 @@ export async function generateReportPdf(
   inputs: ReportInput[],
   options?: ReportOptions
 ): Promise<void> {
+  // Aynı anda sadece bir PDF oluşturulmasına izin ver
+  if (activeRender) {
+    throw new PdfError(
+      "Another PDF is already being generated",
+      "RENDER_CONCURRENT"
+    );
+  }
+
+  activeRender = true;
   const signal = options?.signal;
 
-  // -- iptal kontrolü --
+  // İptal kontrolü
   const checkAbort = () => {
     if (signal?.aborted) {
       throw new PdfError("PDF generation aborted", "RENDER_ABORTED");
     }
   };
 
-  checkAbort();
-
-  if (!pdfRef.current) {
-    throw new PdfError("PDF reference not found", "RENDER_UNKNOWN");
-  }
-
-  const headerTitle =
-    options?.headerTitle || "PRELIMINARY ASSESSMENT - ADRIATICA D.O.O.";
-  const toolName = options?.toolName || "";
-
-  // ============================
-  // 1. KLONLAMA VE İZOLASYON
-  // ============================
-  const element = pdfRef.current.cloneNode(true) as HTMLElement;
-  element.classList.add("pdf-mode");
-
-  Object.assign(element.style, {
-    position: "fixed",
-    top: "0",
-    left: "0",
-    width: "800px",
-    opacity: "0.01",
-    zIndex: "0",
-    pointerEvents: "none",
-  });
-
-  // ============================
-  // 2. FORM STATE SENKRONİZASYONU
-  // ============================
-  element.querySelectorAll("input, select, textarea").forEach((el: any) => {
-    if (el.tagName === "SELECT") {
-      el.querySelectorAll("option").forEach((opt: any) => {
-        if (opt.value === el.value) opt.setAttribute("selected", "selected");
-      });
-    } else if (el.type === "checkbox" || el.type === "radio") {
-      if (el.checked) {
-        el.setAttribute("checked", "checked");
-        el.defaultChecked = true;
-      } else {
-        el.removeAttribute("checked");
-        el.defaultChecked = false;
-      }
-    } else if (el.tagName === "TEXTAREA") {
-      el.textContent = el.value;
-    } else {
-      el.setAttribute("value", String(el.value));
-      el.value = el.value;
-    }
-  });
-
-  let appended = false;
-
   try {
+    checkAbort();
+
+    if (!pdfRef.current) {
+      throw new PdfError("PDF reference not found", "RENDER_UNKNOWN");
+    }
+
+    const headerTitle =
+      options?.headerTitle || "PRELIMINARY ASSESSMENT - ADRIATICA D.O.O.";
+    const toolName = options?.toolName || "";
+
+    // ============================
+    // 1. KLONLAMA VE GİZLEME
+    // ============================
+    const element = pdfRef.current.cloneNode(true) as HTMLElement;
+    element.classList.add("pdf-mode");
+
+    Object.assign(element.style, {
+      position: "fixed",
+      top: "0",
+      left: "0",
+      width: "800px",
+      opacity: "0.01",
+      pointerEvents: "none",
+      zIndex: "0",
+    });
+
+    // ============================
+    // 2. FORM ALANLARINI SENKRONİZE ET
+    // ============================
+    element.querySelectorAll("input, select, textarea").forEach((el: any) => {
+      if (el.tagName === "SELECT") {
+        el.querySelectorAll("option").forEach((opt: any) => {
+          if (opt.value === el.value)
+            opt.setAttribute("selected", "selected");
+        });
+      } else if (el.type === "checkbox" || el.type === "radio") {
+        el.checked
+          ? el.setAttribute("checked", "checked")
+          : el.removeAttribute("checked");
+      } else if (el.tagName === "TEXTAREA") {
+        el.textContent = el.value;
+      } else {
+        el.setAttribute("value", el.value);
+      }
+    });
+
     document.body.appendChild(element);
-    appended = true;
     checkAbort();
 
     // ============================
-    // 3. GİRDİ ÖZETİ (DOM API, innerHTML yok)
+    // 3. GİRDİ ÖZETİ (DOM API)
     // ============================
     const summary = document.createElement("div");
-    summary.className = "no-break";
     summary.style.cssText =
-      "margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid #d1d5db;";
+      "margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid #ddd;font-size:11px;";
 
-    const headRow = document.createElement("div");
-    headRow.style.cssText =
-      "display:flex;justify-content:space-between;margin-bottom:10px;";
+    const headerRow = document.createElement("div");
+    headerRow.style.cssText =
+      "display:flex;justify-content:space-between;margin-bottom:8px;font-weight:bold;";
 
-    const titleSpan = document.createElement("span");
-    titleSpan.style.cssText =
-      "font-weight:bold;color:#0B3B5C;font-size:12px;";
-    titleSpan.textContent = "VESSEL INPUT SUMMARY";
+    const titleEl = document.createElement("span");
+    titleEl.textContent = "VESSEL INPUT SUMMARY";
 
     const ts =
       new Date().toISOString().replace("T", " ").slice(0, 16) + " UTC";
-    const audit = document.createElement("span");
-    audit.style.cssText = "font-size:10px;color:#6b7280;";
-    audit.textContent = toolName
-      ? `Generated: ${ts} | Tool: ${toolName}`
+
+    const metaEl = document.createElement("span");
+    metaEl.style.fontWeight = "normal";
+    metaEl.textContent = toolName
+      ? `Generated: ${ts} | ${toolName}`
       : `Generated: ${ts}`;
 
-    headRow.appendChild(titleSpan);
-    headRow.appendChild(audit);
-    summary.appendChild(headRow);
-
-    const table = document.createElement("table");
-    table.style.cssText =
-      "width:100%;border-collapse:collapse;font-size:11px;";
+    headerRow.appendChild(titleEl);
+    headerRow.appendChild(metaEl);
+    summary.appendChild(headerRow);
 
     inputs.forEach((input) => {
       if (input.value === "" || input.value === undefined) return;
 
-      const tr = document.createElement("tr");
+      const row = document.createElement("div");
+      row.style.display = "flex";
 
-      const tdLabel = document.createElement("td");
-      tdLabel.style.cssText =
-        "padding:3px 0;color:#6b7280;width:40%;";
-      tdLabel.textContent = String(input.label);
+      const left = document.createElement("div");
+      left.style.width = "40%";
+      left.style.color = "#666";
+      left.textContent = String(input.label);
 
-      const tdValue = document.createElement("td");
-      tdValue.style.cssText =
-        "padding:3px 0;font-weight:bold;color:#0B3B5C;";
-      tdValue.textContent = String(input.value);
+      const right = document.createElement("div");
+      right.style.fontWeight = "bold";
+      right.textContent = String(input.value);
 
-      tr.appendChild(tdLabel);
-      tr.appendChild(tdValue);
-      table.appendChild(tr);
+      row.appendChild(left);
+      row.appendChild(right);
+      summary.appendChild(row);
     });
 
-    summary.appendChild(table);
     element.prepend(summary);
 
     // ============================
@@ -214,6 +207,7 @@ export async function generateReportPdf(
         await document.fonts.ready;
       } catch {}
     }
+
     await new Promise((r) => requestAnimationFrame(r));
     await new Promise((r) => setTimeout(r, 30));
     checkAbort();
@@ -227,23 +221,25 @@ export async function generateReportPdf(
         if (img.complete && img.naturalWidth > 0) return;
 
         return new Promise<void>((resolve) => {
-          const timeout = setTimeout(() => {
-            img.onload = null;
-            img.onerror = null;
-            resolve();
-          }, 5000);
+          let done = false;
 
-          img.onload = () => {
-            clearTimeout(timeout);
+          const finalize = () => {
+            if (done) return;
+            done = true;
             img.onload = null;
             img.onerror = null;
             resolve();
           };
+
+          const timeout = setTimeout(finalize, 5000);
+
+          img.onload = () => {
+            clearTimeout(timeout);
+            finalize();
+          };
           img.onerror = () => {
             clearTimeout(timeout);
-            img.onload = null;
-            img.onerror = null;
-            resolve();
+            finalize();
           };
         });
       })
@@ -258,42 +254,39 @@ export async function generateReportPdf(
     } catch {
       console.warn("Logo yüklenemedi, rapor logosuz devam edecek.");
     }
+
     checkAbort();
 
     // ============================
     // 7. BELLEK VE BOYUT KONTROLÜ
     // ============================
-    const h = Math.max(
-      element.scrollHeight,
-      element.offsetHeight,
-      element.getBoundingClientRect().height
-    );
-    const w = element.offsetWidth;
+    const contentHeight = element.scrollHeight;
+    const contentWidth = element.offsetWidth;
     const dpr = window.devicePixelRatio || 1;
 
+    // Kademeli ölçeklendirme
     let scale = 2;
-    if (h > 12000) scale = 1.1;
-    else if (h > 9000) scale = 1.3;
-    else if (h > 6000) scale = 1.6;
+    if (contentHeight > 12000) scale = 1.1;
+    else if (contentHeight > 9000) scale = 1.3;
+    else if (contentHeight > 6000) scale = 1.6;
 
-    const canvasPixelHeight = h * scale * dpr;
-    if (canvasPixelHeight > 32767) {
+    const maxCanvasDim = 32767;
+    if (
+      contentHeight * scale * dpr > maxCanvasDim ||
+      contentWidth * scale * dpr > maxCanvasDim
+    ) {
       throw new PdfError(
-        "Content height exceeds canvas rendering limit",
+        "Canvas dimension limit exceeded",
         "RENDER_MEMORY"
       );
     }
 
-    const pixelBudget = w * h * scale * scale * dpr * dpr;
-    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-    const MEMORY_LIMIT = isMobile ? 8_000_000 : 20_000_000;
-    if (pixelBudget > MEMORY_LIMIT) {
-      throw new PdfError(
-        `Content exceeds safe rendering limit (${Math.round(
-          pixelBudget / 1e6
-        )}M pixels)`,
-        "RENDER_MEMORY"
-      );
+    const totalPixels =
+      contentWidth * contentHeight * scale * scale * dpr * dpr;
+
+    if (totalPixels > 20_000_000) {
+      // Çökmek yerine ölçeği düşür
+      scale = 1;
     }
 
     // ============================
@@ -302,15 +295,17 @@ export async function generateReportPdf(
     const worker = html2pdf()
       .set({
         margin: [40, 20, 45, 20],
-        image: { type: "jpeg", quality: 0.92 },
+        image: { type: "jpeg", quality: 0.9 },
         html2canvas: {
           scale,
           useCORS: true,
           allowTaint: false,
           onclone: (clonedDoc: Document) => {
+            // Sistem fontu yerine Arial kullan (kararlı baskı)
             const style = clonedDoc.createElement("style");
             style.innerHTML = `
-              body, p, span, div, table, td, th, h1, h2, h3, h4, li, label {
+              body, p, span, div, table, td, th,
+              h1, h2, h3, h4, li, label {
                 font-family: Arial, Helvetica, sans-serif !important;
               }
             `;
@@ -338,24 +333,24 @@ export async function generateReportPdf(
       pdf.setPage(i);
 
       if (logoBase64) {
-        const logoWidth = 40;
-        const logoHeight = logoWidth * (152 / 553);
-        pdf.addImage(logoBase64, "PNG", 20, 12, logoWidth, logoHeight);
+        // Orijinal logo oranı 553:152
+        pdf.addImage(logoBase64, "PNG", 20, 12, 40, 11);
       }
 
+      // Başlık
       pdf.setFontSize(10);
       pdf.setTextColor(11, 59, 92);
       pdf.text(headerTitle, pageWidth - 20, 22, { align: "right" });
-      pdf.setDrawColor(200, 200, 200);
-      pdf.setLineWidth(0.5);
       pdf.line(20, 30, pageWidth - 20, 30);
 
+      // Alt bilgi
       pdf.line(20, pageHeight - 25, pageWidth - 20, pageHeight - 25);
       pdf.setFontSize(9);
       pdf.setTextColor(11, 59, 92);
       pdf.text("ADRIATICA D.O.O.", pageWidth / 2, pageHeight - 18, {
         align: "center",
       });
+
       pdf.setFontSize(7);
       pdf.setTextColor(100, 100, 100);
       pdf.text(
@@ -375,31 +370,21 @@ export async function generateReportPdf(
     // ============================
     // 10. KAYDET
     // ============================
-    const sanitized = filename
-      .replace(/[^a-z0-9_\-\.]/gi, "_")
-      .replace(/\.{2,}/g, ".")
-      .replace(/^\.+/, "")
-      .replace(/\.+$/, "");
-    const safeFilename = sanitized.toLowerCase().endsWith(".pdf")
+    const sanitized = filename.replace(/[^\w.-]/g, "_");
+    const safeFilename = sanitized.endsWith(".pdf")
       ? sanitized
-      : `${sanitized}.pdf`;
+      : sanitized + ".pdf";
 
     pdf.save(safeFilename);
-
-    // Worker temizliği
-    await Promise.resolve();
     (worker as any).destroy?.();
   } catch (error) {
     if (error instanceof PdfError) throw error;
-    console.error("Unexpected PDF failure:", error);
-    throw new PdfError(
-      "An unexpected error occurred during PDF generation.",
-      "RENDER_UNKNOWN"
-    );
+    throw new PdfError("Unexpected PDF error", "RENDER_UNKNOWN");
   } finally {
-    if (appended && document.body.contains(element)) {
-      element.style.opacity = "0";
-      document.body.removeChild(element);
-    }
+    activeRender = false;
+
+    // DOM'da kalan .pdf-mode elementini temizle
+    const strayElement = document.querySelector(".pdf-mode");
+    if (strayElement) strayElement.remove();
   }
 }
