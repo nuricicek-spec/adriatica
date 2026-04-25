@@ -116,13 +116,13 @@ export async function generateReportPdf(
     element.classList.add("pdf-mode");
 
     Object.assign(element.style, {
-      position: "fixed",
+      position: "absolute",
       top: "0",
-      left: "0",
+      left: "-9999px",
       width: "800px",
-      opacity: "0.01",
+      opacity: "1",
       pointerEvents: "none",
-      zIndex: "0",
+      zIndex: "-1",
     });
 
     // ============================
@@ -291,13 +291,16 @@ export async function generateReportPdf(
     const worker = html2pdf()
       .set({
         margin: [40, 20, 45, 20],
+        pagebreak: { mode: ['css', 'legacy'], avoid: '.no-break' },
         image: { type: "jpeg", quality: 0.9 },
         html2canvas: {
           scale,
           useCORS: true,
           allowTaint: false,
+          scrollY: 0,
+          windowWidth: 800,
           onclone: (clonedDoc: Document) => {
-            // 🔥 Asıl hedef: .pdf-mode elementinin opaklığını 1 yap
+            // .pdf-mode elementinin opaklığını 1 yap
             const pdfModeEl = clonedDoc.querySelector(".pdf-mode") as HTMLElement;
             if (pdfModeEl) {
               pdfModeEl.style.opacity = "1";
@@ -320,7 +323,7 @@ export async function generateReportPdf(
           format: "a4",
           orientation: "portrait",
         },
-      })
+      } as any) // ← TypeScript tip hatasını bu cast ile aşıyoruz
       .from(element);
 
     const pdf: any = await worker.toPdf().get("pdf");
