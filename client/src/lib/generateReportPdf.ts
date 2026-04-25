@@ -18,9 +18,6 @@ export class PdfError extends Error {
   }
 }
 
-// ============================
-// TİPLER
-// ============================
 type ReportInput = {
   label: string;
   value: string | number | boolean;
@@ -32,14 +29,14 @@ type ReportOptions = {
   signal?: AbortSignal;
 };
 
-// ============================
+// ------------------------------
 // EŞZAMANLI İŞLEM KİLİDİ
-// ============================
+// ------------------------------
 let activeRender = false;
 
-// ============================
-// LOGO CACHE (tekrar deneme + geri çekilme)
-// ============================
+// ------------------------------
+// LOGO CACHE (yeniden deneme + geri çekilme)
+// ------------------------------
 let cachedLogo: string | null = null;
 
 const getLogoBase64 = async (signal?: AbortSignal): Promise<string> => {
@@ -73,9 +70,9 @@ const getLogoBase64 = async (signal?: AbortSignal): Promise<string> => {
   throw new PdfError("Logo fetch failure", "LOGO_FETCH");
 };
 
-// ============================
+// ------------------------------
 // ANA PDF OLUŞTURMA
-// ============================
+// ------------------------------
 export async function generateReportPdf(
   pdfRef: React.RefObject<HTMLDivElement | null>,
   filename: string,
@@ -83,10 +80,7 @@ export async function generateReportPdf(
   options?: ReportOptions
 ): Promise<void> {
   if (activeRender) {
-    throw new PdfError(
-      "Another PDF is already being generated",
-      "RENDER_CONCURRENT"
-    );
+    throw new PdfError("Another PDF is already being generated", "RENDER_CONCURRENT");
   }
 
   activeRender = true;
@@ -110,23 +104,25 @@ export async function generateReportPdf(
     const toolName = options?.toolName || "";
 
     // ============================
-    // 1. KLONLAMA VE TAILWIND KİRLİLİĞİNİ TEMİZLEME
+    // 1. KLONLAMA VE GEÇİCİ GÖRÜNÜR HALE GETİRME
     // ============================
     const element = pdfRef.current.cloneNode(true) as HTMLElement;
     element.classList.add("pdf-mode");
 
+    // Tailwind kirliliğini sıfırla + render için tam görünürlük sağla
     Object.assign(element.style, {
-      position: "absolute",
+      position: "fixed",      // Viewport'a sabitle
       top: "0",
-      left: "-9999px",
-      width: "750px",      // A4 içerik alanı için ideal genişlik
-      padding: "0",         // Tailwind p-6 vb. sıfırla
+      left: "0",
+      width: "800px",
+      opacity: "1",           // Tam opak (boyama garantisi)
+      zIndex: "99999",        // En üst katman
+      pointerEvents: "none",  // Kullanıcı etkileşimi yok
+      padding: "0",
       margin: "0",
       border: "none",
       boxShadow: "none",
-      opacity: "1",
-      pointerEvents: "none",
-      zIndex: "-1",
+      backgroundColor: "white",
     });
 
     // ============================
@@ -135,8 +131,7 @@ export async function generateReportPdf(
     element.querySelectorAll("input, select, textarea").forEach((el: any) => {
       if (el.tagName === "SELECT") {
         el.querySelectorAll("option").forEach((opt: any) => {
-          if (opt.value === el.value)
-            opt.setAttribute("selected", "selected");
+          if (opt.value === el.value) opt.setAttribute("selected", "selected");
         });
       } else if (el.type === "checkbox" || el.type === "radio") {
         el.checked
@@ -153,7 +148,7 @@ export async function generateReportPdf(
     checkAbort();
 
     // ============================
-    // 3. GİRDİ ÖZETİ (DOM API) – Üst boşluğu sıfırla
+    // 3. GİRDİ ÖZETİ (DOM API)
     // ============================
     const summary = document.createElement("div");
     summary.style.cssText =
@@ -168,7 +163,6 @@ export async function generateReportPdf(
 
     const ts =
       new Date().toISOString().replace("T", " ").slice(0, 16) + " UTC";
-
     const metaEl = document.createElement("span");
     metaEl.style.fontWeight = "normal";
     metaEl.textContent = toolName
@@ -181,7 +175,6 @@ export async function generateReportPdf(
 
     inputs.forEach((input) => {
       if (input.value === "" || input.value === undefined) return;
-
       const row = document.createElement("div");
       row.style.display = "flex";
 
@@ -202,14 +195,11 @@ export async function generateReportPdf(
     element.prepend(summary);
 
     // ============================
-    // 4. YAZI TİPİ VE BOYAMA HAZIRLIĞI
+    // 4. YAZI TİPİ ve BOYAMA HAZIRLIĞI
     // ============================
     if (document.fonts?.ready) {
-      try {
-        await document.fonts.ready;
-      } catch {}
+      try { await document.fonts.ready; } catch {}
     }
-
     await new Promise((r) => requestAnimationFrame(r));
     await new Promise((r) => setTimeout(r, 30));
     checkAbort();
@@ -221,10 +211,8 @@ export async function generateReportPdf(
     await Promise.all(
       Array.from(images).map((img) => {
         if (img.complete && img.naturalWidth > 0) return;
-
         return new Promise<void>((resolve) => {
           let done = false;
-
           const finalize = () => {
             if (done) return;
             done = true;
@@ -232,17 +220,9 @@ export async function generateReportPdf(
             img.onerror = null;
             resolve();
           };
-
           const timeout = setTimeout(finalize, 5000);
-
-          img.onload = () => {
-            clearTimeout(timeout);
-            finalize();
-          };
-          img.onerror = () => {
-            clearTimeout(timeout);
-            finalize();
-          };
+          img.onload = () => { clearTimeout(timeout); finalize(); };
+          img.onerror = () => { clearTimeout(timeout); finalize(); };
         });
       })
     );
@@ -256,7 +236,6 @@ export async function generateReportPdf(
     } catch {
       console.warn("Logo yüklenemedi, rapor logosuz devam edecek.");
     }
-
     checkAbort();
 
     // ============================
@@ -276,15 +255,11 @@ export async function generateReportPdf(
       contentHeight * scale * dpr > maxCanvasDim ||
       contentWidth * scale * dpr > maxCanvasDim
     ) {
-      throw new PdfError(
-        "Canvas dimension limit exceeded",
-        "RENDER_MEMORY"
-      );
+      throw new PdfError("Canvas dimension limit exceeded", "RENDER_MEMORY");
     }
 
     const totalPixels =
       contentWidth * contentHeight * scale * scale * dpr * dpr;
-
     if (totalPixels > 20_000_000) {
       scale = 1;
     }
@@ -294,7 +269,7 @@ export async function generateReportPdf(
     // ============================
     const worker = html2pdf()
       .set({
-        margin: [35, 15, 35, 15], // Üst 35, Sağ 15, Alt 35, Sol 15
+        margin: [35, 15, 35, 15],   // simetrik marjlar
         pagebreak: { mode: ['css', 'legacy'], avoid: '.no-break' },
         image: { type: "jpeg", quality: 0.95 },
         html2canvas: {
@@ -302,18 +277,15 @@ export async function generateReportPdf(
           useCORS: true,
           allowTaint: false,
           scrollY: 0,
-          windowWidth: 750, // width ile aynı
+          windowWidth: 800,
           onclone: (clonedDoc: Document) => {
-            // Klon içinde .pdf-mode opacity ve padding garantisi
-            const pdfModeEl = clonedDoc.querySelector(".pdf-mode") as HTMLElement;
-            if (pdfModeEl) {
-              pdfModeEl.style.opacity = "1";
-              pdfModeEl.style.visibility = "visible";
-              pdfModeEl.style.padding = "0px";
-              pdfModeEl.style.background = "white";
+            const el = clonedDoc.querySelector(".pdf-mode") as HTMLElement;
+            if (el) {
+              el.style.opacity = "1";
+              el.style.visibility = "visible";
+              el.style.padding = "0px";
+              el.style.background = "white";
             }
-
-            // Font dayatması (kararlı baskı)
             const style = clonedDoc.createElement("style");
             style.innerHTML = `
               body, p, span, div, table, td, th,
@@ -329,13 +301,13 @@ export async function generateReportPdf(
           format: "a4",
           orientation: "portrait",
         },
-      } as any)
+      } as any)   // TypeScript'in pagebreak'i tanımamasını engellemek için
       .from(element);
 
     const pdf: any = await worker.toPdf().get("pdf");
 
     // ============================
-    // 9. BAŞLIK / ALT BİLGİ (YENİ KOORDİNATLAR)
+    // 9. BAŞLIK / ALT BİLGİ (sayfa numarası dahil)
     // ============================
     const totalPages = pdf.getNumberOfPages();
     const pageHeight = pdf.internal.pageSize.height;
@@ -344,31 +316,22 @@ export async function generateReportPdf(
     for (let i = 1; i <= totalPages; i++) {
       pdf.setPage(i);
 
-      // Logo
       if (logoBase64) {
         pdf.addImage(logoBase64, "PNG", 15, 12, 35, 10);
       }
 
-      // Başlık
       pdf.setFontSize(10);
       pdf.setTextColor(11, 59, 92);
       pdf.text(headerTitle, pageWidth - 15, 20, { align: "right" });
-
-      // Üst çizgi (28mm)
       pdf.setDrawColor(200, 200, 200);
       pdf.line(15, 28, pageWidth - 15, 28);
 
-      // Alt çizgi (sayfa sonu - 30mm)
       pdf.line(15, pageHeight - 30, pageWidth - 15, pageHeight - 30);
 
-      // Şirket adı
       pdf.setFontSize(8);
       pdf.setTextColor(11, 59, 92);
-      pdf.text("ADRIATICA D.O.O.", pageWidth / 2, pageHeight - 22, {
-        align: "center",
-      });
+      pdf.text("ADRIATICA D.O.O.", pageWidth / 2, pageHeight - 22, { align: "center" });
 
-      // Alt bilgiler
       pdf.setFontSize(7);
       pdf.setTextColor(120, 120, 120);
       pdf.text(
@@ -385,20 +348,17 @@ export async function generateReportPdf(
       );
 
       // Sayfa numarası
-      pdf.text(`${i} / ${totalPages}`, pageWidth - 15, pageHeight - 12, {
-        align: "right",
-      });
+      pdf.text(`${i} / ${totalPages}`, pageWidth - 15, pageHeight - 12, { align: "right" });
     }
 
     // ============================
     // 10. KAYDET
     // ============================
     const sanitized = filename.replace(/[^\w.-]/g, "_");
-    const safeFilename = sanitized.endsWith(".pdf")
-      ? sanitized
-      : sanitized + ".pdf";
-
+    const safeFilename = sanitized.endsWith(".pdf") ? sanitized : sanitized + ".pdf";
     pdf.save(safeFilename);
+
+    // Worker temizliği
     (worker as any).destroy?.();
   } catch (error) {
     if (error instanceof PdfError) throw error;
@@ -406,7 +366,11 @@ export async function generateReportPdf(
   } finally {
     activeRender = false;
 
-    const strayElement = document.querySelector(".pdf-mode");
-    if (strayElement) strayElement.remove();
+    // Görünürlüğü kapat ve DOM'dan kaldır
+    const strayElement = document.querySelector(".pdf-mode") as HTMLElement;
+    if (strayElement) {
+      strayElement.style.opacity = "0";
+      strayElement.remove();
+    }
   }
 }
