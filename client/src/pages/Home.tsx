@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import type { FormEvent } from "react";
-import { motion } from "framer-motion";
+import { LazyMotion, domAnimation, m } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { FeatureCard } from "@/components/FeatureCard";
@@ -30,10 +30,11 @@ export default function Home() {
   const [errorType, setErrorType] = useState<"generic" | "rate-limit" | null>(null);
 
   // FIX #2 (kod): dependency array'e insights eklendi — ESLint exhaustive-deps uyarısı giderildi
+  // Date parsing riski: new Date() yerine string karşılaştırma kullanıldı
   const recentInsights = useMemo(
     () =>
       [...insights]
-        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        .sort((a, b) => b.date.localeCompare(a.date))
         .slice(0, 3),
     [insights]
   );
@@ -76,7 +77,7 @@ export default function Home() {
   };
 
   return (
-    <>
+    <LazyMotion features={domAnimation}>
       <SEO
         title="Home"
         description="Adriatica D.O.O. - Marine engineering consultancy specializing in structural integrity, regulatory compliance, and sustainable technologies. Serving Montenegro, Adriatic Coast, and European maritime industry."
@@ -227,7 +228,7 @@ export default function Home() {
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-24 items-center">
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
@@ -264,7 +265,7 @@ export default function Home() {
                     </span>
                   </div>
                   <p className="text-base md:text-lg lg:text-xl text-foreground/75 leading-relaxed max-w-xl mx-auto lg:mx-0">
-                    <a
+                    <Link
                       href="/news"
                       className="hover:underline hover:text-primary transition-colors"
                     >
@@ -272,7 +273,7 @@ export default function Home() {
                       biofouling is becoming an operational and regulatory risk.
                       The 2026 IMO enforcement timeline accelerates the need for
                       action.
-                    </a>
+                    </Link>
                   </p>
                 </div>
 
@@ -290,9 +291,9 @@ export default function Home() {
                     Explore Services
                   </button>
                 </div>
-              </motion.div>
+              </m.div>
 
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, scale: 0.9, rotate: 5 }}
                 animate={{ opacity: 1, scale: 1, rotate: 0 }}
                 transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
@@ -301,7 +302,6 @@ export default function Home() {
                 {/* FIX #3: mobilde max-w-[200px] → max-w-[240px] — daha iyi görsel denge */}
                 <div className="relative w-full max-w-[240px] sm:max-w-[280px] lg:max-w-md aspect-square flex items-center justify-center">
                   <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-3xl" />
-                  {/* FIX #1 (kod): fetchPriority → fetchpriority (küçük harf) — TypeScript/HTML spec uyumu */}
                   <img
                     src="/logo.svg"
                     alt="Adriatica D.O.O. Symbol"
@@ -311,11 +311,11 @@ export default function Home() {
                     className="w-full h-auto drop-shadow-2xl"
                   />
                 </div>
-              </motion.div>
+              </m.div>
             </div>
           </div>
 
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5, duration: 1 }}
@@ -323,7 +323,7 @@ export default function Home() {
           >
             <span className="text-xs uppercase tracking-widest mb-2">Scroll</span>
             <ArrowDown className="animate-bounce w-5 h-5" />
-          </motion.div>
+          </m.div>
         </section>
 
         {/* ── TRUST STRIP ─────────────────────────────────────────────────── */}
@@ -340,7 +340,6 @@ export default function Home() {
                 Vessels Supported
               </span>
               <span className="text-white/20 hidden sm:inline">·</span>
-              {/* FIX #4: "PSC Detentions" → "Detention Record" — negatif algı riski giderildi */}
               <span className="flex items-center gap-2">
                 <span className="text-[#D4AF37] font-bold">{TRUST_METRICS.pscDetentions}</span>
                 Detention Record
@@ -542,7 +541,6 @@ export default function Home() {
               From PSC preparation to structural life extension — we assess, plan, and deliver.
               Tell us about your vessel.
             </p>
-            {/* FIX #6: hover #C9A961 → #B8952A — WCAG AA kontrast fix */}
             <Link
               href="/request-consultation"
               className="inline-block bg-[#D4AF37] text-black font-medium px-8 py-4 rounded-sm text-sm uppercase tracking-wide shadow-lg hover:bg-[#B8952A] transition-all duration-300"
@@ -581,11 +579,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── ENGINEERING TOOLS ───────────────────────────────────────────────
-            FIX #1 (UX konumlandırma): Trust Strip'ten sonra değil,
-            Operational Region'dan sonra yerleştirildi. Kullanıcı güveni
-            inşa ettikten sonra "şimdi kontrol et" mesajı çok daha ikna edici.
-        ─────────────────────────────────────────────────────────────────────── */}
+        {/* ── ENGINEERING TOOLS ─────────────────────────────────────────────── */}
         <section className="py-20 bg-neutral-50 border-b border-border/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
@@ -601,7 +595,6 @@ export default function Home() {
               </p>
             </div>
 
-            {/* FIX #2 (UX CTA): pill button efekti — kartın altında görsel ağırlık eklendi */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Link
                 href="/tools?tool=eexi"
@@ -753,7 +746,6 @@ export default function Home() {
                   </div>
                 )}
 
-                {/* FIX #5: font-size küçültüldü + opacity düşürüldü — odak CTA'da kalıyor */}
                 <p className="text-[11px] text-center text-muted-foreground pt-1">
                   By submitting, you agree to our{" "}
                   <a
@@ -770,6 +762,6 @@ export default function Home() {
 
         <Footer />
       </div>
-    </>
+    </LazyMotion>
   );
 }
