@@ -29,13 +29,13 @@ export default function Home() {
   >("idle");
   const [errorType, setErrorType] = useState<"generic" | "rate-limit" | null>(null);
 
-  // useMemo ile hesapla — insights değişirse güncel kalır, gereksiz sort yapılmaz
+  // FIX #2 (kod): dependency array'e insights eklendi — ESLint exhaustive-deps uyarısı giderildi
   const recentInsights = useMemo(
     () =>
       [...insights]
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
         .slice(0, 3),
-    []
+    [insights]
   );
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -69,7 +69,6 @@ export default function Home() {
     }
   };
 
-  // useCallback kaldırıldı — inline fonksiyon yeterince hafif, gereksiz memoization
   const scrollToServices = () => {
     document
       .getElementById("core-competencies")
@@ -280,7 +279,7 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                   <Link
                     href="/request-consultation"
-                    className="px-8 py-4 bg-[#D4AF37] text-black font-medium rounded-sm shadow-lg shadow-gold/20 hover:bg-[#C9A961] transition-all duration-300 uppercase tracking-wide text-sm text-center"
+                    className="px-8 py-4 bg-[#D4AF37] text-black font-medium rounded-sm shadow-lg shadow-gold/20 hover:bg-[#B8952A] transition-all duration-300 uppercase tracking-wide text-sm text-center"
                   >
                     Request Technical Assessment
                   </Link>
@@ -299,8 +298,10 @@ export default function Home() {
                 transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
                 className="relative flex justify-center items-center mt-8 lg:mt-0"
               >
-                <div className="relative w-full max-w-[200px] sm:max-w-[280px] lg:max-w-md aspect-square flex items-center justify-center">
+                {/* FIX #3: mobilde max-w-[200px] → max-w-[240px] — daha iyi görsel denge */}
+                <div className="relative w-full max-w-[240px] sm:max-w-[280px] lg:max-w-md aspect-square flex items-center justify-center">
                   <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-3xl" />
+                  {/* FIX #1 (kod): fetchPriority → fetchpriority (küçük harf) — TypeScript/HTML spec uyumu */}
                   <img
                     src="/logo.svg"
                     alt="Adriatica D.O.O. Symbol"
@@ -339,9 +340,10 @@ export default function Home() {
                 Vessels Supported
               </span>
               <span className="text-white/20 hidden sm:inline">·</span>
+              {/* FIX #4: "PSC Detentions" → "Detention Record" — negatif algı riski giderildi */}
               <span className="flex items-center gap-2">
                 <span className="text-[#D4AF37] font-bold">{TRUST_METRICS.pscDetentions}</span>
-                PSC Detentions
+                Detention Record
               </span>
               <span className="text-white/20 hidden sm:inline">·</span>
               <Link
@@ -353,79 +355,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-{/* ── ENGINEERING TOOLS ───────────────────────────────────── */}
-<section className="py-20 bg-neutral-50 border-b border-border/10">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-    {/* HEADER */}
-    <div className="text-center mb-12">
-      <p className="text-xs uppercase tracking-[0.25em] text-primary/70 mb-3">
-        Diagnostic Tools
-      </p>
-      <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-4">
-        Check Your Compliance Status
-      </h2>
-      <p className="text-foreground/75 max-w-2xl mx-auto">
-        Run a quick engineering assessment to identify compliance risks before committing to a full project.
-      </p>
-    </div>
-
-    {/* CARDS */}
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-      {/* EEXI */}
-      <Link
-        href="/tools?tool=eexi"
-        className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white"
-      >
-        <h3 className="text-lg font-bold text-primary mb-2">
-          EEXI Calculator
-        </h3>
-        <p className="text-sm text-foreground/70 mb-4">
-          Evaluate your vessel’s Energy Efficiency Existing Ship Index compliance.
-        </p>
-        <span className="text-sm font-medium text-primary group-hover:underline">
-          Run Assessment →
-        </span>
-      </Link>
-
-      {/* CII */}
-      <Link
-        href="/tools?tool=cii"
-        className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white"
-      >
-        <h3 className="text-lg font-bold text-primary mb-2">
-          CII Rating Tool
-        </h3>
-        <p className="text-sm text-foreground/70 mb-4">
-          Estimate your Carbon Intensity Indicator rating and operational impact.
-        </p>
-        <span className="text-sm font-medium text-primary group-hover:underline">
-          Run Assessment →
-        </span>
-      </Link>
-
-      {/* BWTS */}
-      <Link
-        href="/tools?tool=bwts"
-        className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white"
-      >
-        <h3 className="text-lg font-bold text-primary mb-2">
-          BWTS Compliance
-        </h3>
-        <p className="text-sm text-foreground/70 mb-4">
-          Check ballast water treatment system compliance and retrofit needs.
-        </p>
-        <span className="text-sm font-medium text-primary group-hover:underline">
-          Run Assessment →
-        </span>
-      </Link>
-
-    </div>
-
-  </div>
-</section>
 
         {/* ── VALUE PROPOSITION ───────────────────────────────────────────── */}
         <section className="py-20 bg-white">
@@ -613,9 +542,10 @@ export default function Home() {
               From PSC preparation to structural life extension — we assess, plan, and deliver.
               Tell us about your vessel.
             </p>
+            {/* FIX #6: hover #C9A961 → #B8952A — WCAG AA kontrast fix */}
             <Link
               href="/request-consultation"
-              className="inline-block bg-[#D4AF37] text-black font-medium px-8 py-4 rounded-sm text-sm uppercase tracking-wide shadow-lg hover:bg-[#C9A961] transition-all duration-300"
+              className="inline-block bg-[#D4AF37] text-black font-medium px-8 py-4 rounded-sm text-sm uppercase tracking-wide shadow-lg hover:bg-[#B8952A] transition-all duration-300"
             >
               Submit Project Inquiry
             </Link>
@@ -647,6 +577,70 @@ export default function Home() {
                   height={215}
                 />
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── ENGINEERING TOOLS ───────────────────────────────────────────────
+            FIX #1 (UX konumlandırma): Trust Strip'ten sonra değil,
+            Operational Region'dan sonra yerleştirildi. Kullanıcı güveni
+            inşa ettikten sonra "şimdi kontrol et" mesajı çok daha ikna edici.
+        ─────────────────────────────────────────────────────────────────────── */}
+        <section className="py-20 bg-neutral-50 border-b border-border/10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <p className="text-xs uppercase tracking-[0.25em] text-primary/70 mb-3">
+                Diagnostic Tools
+              </p>
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-4">
+                Check Your Compliance Status
+              </h2>
+              <p className="text-foreground/75 max-w-2xl mx-auto">
+                Run a quick engineering assessment to identify compliance risks before
+                committing to a full project.
+              </p>
+            </div>
+
+            {/* FIX #2 (UX CTA): pill button efekti — kartın altında görsel ağırlık eklendi */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Link
+                href="/tools?tool=eexi"
+                className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col"
+              >
+                <h3 className="text-lg font-bold text-primary mb-2">EEXI Calculator</h3>
+                <p className="text-sm text-foreground/70 mb-6 flex-1">
+                  Evaluate your vessel's Energy Efficiency Existing Ship Index compliance.
+                </p>
+                <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
+                  Run Assessment →
+                </span>
+              </Link>
+
+              <Link
+                href="/tools?tool=cii"
+                className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col"
+              >
+                <h3 className="text-lg font-bold text-primary mb-2">CII Rating Tool</h3>
+                <p className="text-sm text-foreground/70 mb-6 flex-1">
+                  Estimate your Carbon Intensity Indicator rating and operational impact.
+                </p>
+                <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
+                  Run Assessment →
+                </span>
+              </Link>
+
+              <Link
+                href="/tools?tool=bwts"
+                className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col"
+              >
+                <h3 className="text-lg font-bold text-primary mb-2">BWTS Compliance</h3>
+                <p className="text-sm text-foreground/70 mb-6 flex-1">
+                  Check ballast water treatment system compliance and retrofit needs.
+                </p>
+                <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
+                  Run Assessment →
+                </span>
+              </Link>
             </div>
           </div>
         </section>
@@ -735,6 +729,7 @@ export default function Home() {
                     disabled={formStatus === "submitting"}
                   />
                 </div>
+
                 <button
                   type="submit"
                   disabled={formStatus === "submitting"}
@@ -758,11 +753,12 @@ export default function Home() {
                   </div>
                 )}
 
-                <p className="text-xs text-center text-muted-foreground pt-2">
+                {/* FIX #5: font-size küçültüldü + opacity düşürüldü — odak CTA'da kalıyor */}
+                <p className="text-[11px] text-center text-muted-foreground/60 pt-1">
                   By submitting, you agree to our{" "}
                   <a
                     href="/privacy-policy"
-                    className="text-primary underline decoration-primary/50 hover:decoration-primary transition-colors"
+                    className="underline decoration-muted-foreground/40 hover:text-muted-foreground hover:decoration-muted-foreground transition-colors"
                   >
                     Privacy Policy
                   </a>.
