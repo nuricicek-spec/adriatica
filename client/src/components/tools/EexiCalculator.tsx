@@ -1,12 +1,20 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { generateReportPdf, PdfError } from "@/lib/generateReportPdf";
-import { VESSEL_TYPES, FUEL_TYPES, DEFAULT_SFC_ME, DEFAULT_SFC_AUX, EEXI_REDUCTION_FACTORS, getEediBaseline } from "@/data/calculators";
+import {
+  VESSEL_TYPES,
+  FUEL_TYPES,
+  DEFAULT_SFC_ME,
+  DEFAULT_SFC_AUX,
+  EEXI_REDUCTION_FACTORS,
+  getEediBaseline,
+} from "@/data/calculators";
+import { trackToolUsage, trackPdfGenerated, trackComplianceFail } from "@/lib/analytics";
 
 export function EexiCalculator() {
   const [vesselType, setVesselType] = useState("bulkCarrier");
   const [dwt, setDwt] = useState("");
   const [targetYear, setTargetYear] = useState("2026");
-  
+
   const [meMcr, setMeMcr] = useState("");
   const [meFuel, setMeFuel] = useState("HFO");
   const [meSfc, setMeSfc] = useState(DEFAULT_SFC_ME.toString());
@@ -17,10 +25,18 @@ export function EexiCalculator() {
   const [ptoEff, setPtoEff] = useState("1.0");
   const [auxPower, setAuxPower] = useState("");
   const [auxSfc, setAuxSfc] = useState(DEFAULT_SFC_AUX.toString());
-  
+
   const [result, setResult] = useState<any>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const pdfRef = useRef<HTMLDivElement>(null);
+
+  // StrictMode'da çift çalışmayı önlemek için ref ile guard
+  const tracked = useRef(false);
+  useEffect(() => {
+    if (tracked.current) return;
+    tracked.current = true;
+    trackToolUsage("eexi");
+  }, []);
 
   const handleCalculate = () => {
     const dwtNum = parseFloat(dwt);
@@ -33,59 +49,68 @@ export function EexiCalculator() {
     const ptoEffNum = parseFloat(ptoEff) || 1.0;
     const yearNum = parseInt(targetYear);
 
-    if (isNaN(dwtNum) || isNaN(mcrNum) || isNaN(vrefNum) || dwtNum <= 0 || mcrNum <= 0 || vrefNum <= 0) return;
+    if (
+      isNaN(dwtNum) || isNaN(mcrNum) || isNaN(vrefNum) ||
+      dwtNum <= 0 || mcrNum <= 0 || vrefNum <= 0
+    ) return;
 
     const typeData = VESSEL_TYPES.find(v => v.value === vesselType);
     const fuelData = FUEL_TYPES.find(f => f.value === meFuel);
     if (!typeData || !fuelData) return;
 
-    // MEPC.338(76) — Ana makine emisyonu: SFC_ME × CF × MCR / 1e6
+    // MEPC.338(76) — Ana makine emisyonu
     const meEmissions = (sfcMe * fuelData.cf * mcrNum) / 1e6;
 
     // MEPC.338(76) — PTO indirimi: feff × P_PTO × SFC_ME × CF / 1e6
-    // (Düzeltme: orijinal kodda SFC_ME çarpanı eksikti)
     const ptoReduction = hasPto
       ? (ptoEffNum * ptoNum * sfcMe * fuelData.cf) / 1e6
       : 0;
 
-    // Yardımcı makine emisyonu: SFC_AUX × CF × PAE / 1e6
+    // Yardımcı makine emisyonu
     const auxEmissions = (sfcAux * fuelData.cf * auxNum) / 1e6;
 
     const totalEmissions = Math.max(0, meEmissions - ptoReduction + auxEmissions);
 
-    // Attained EEXI = (totalEmissions × 1e6) / (fi × fc × DWT × Vref)
-    const attainedEexi = (totalEmissions * 1e6) / (typeData.fi * typeData.fc * dwtNum * vrefNum);
+    // Attained EEXI
+    const attainedEexi =
+      (totalEmissions * 1e6) / (typeData.fi * typeData.fc * dwtNum * vrefNum);
 
     const baselineEedi = getEediBaseline(dwtNum, vesselType);
     const reductionFactor = EEXI_REDUCTION_FACTORS[yearNum] || 0.08;
     const requiredEexi = baselineEedi * (1 - reductionFactor);
 
-    // EPL hesabı: MCR × (required/attained)^(1/3.5) — sadece non-compliant ise
-    let eplLimit = null;
+    // EPL — sadece non-compliant ise hesapla
+    let eplLimit: string | null = null;
     if (attainedEexi > requiredEexi) {
-      eplLimit = mcrNum * Math.pow(requiredEexi / attainedEexi, 1 / 3.5);
+      eplLimit = (mcrNum * Math.pow(requiredEexi / attainedEexi, 1 / 3.5)).toFixed(0);
     }
 
     const finalResult = {
       attained: attainedEexi.toFixed(2),
       required: requiredEexi.toFixed(2),
       isCompliant: attainedEexi <= requiredEexi,
-      eplLimit: eplLimit ? eplLimit.toFixed(0) : null,
+      eplLimit,
       baselineEedi: baselineEedi.toFixed(2),
     };
 
     setResult(finalResult);
+
+    if (!finalResult.isCompliant) {
+      trackComplianceFail("eexi");
+    }
+
     window.dispatchEvent(new CustomEvent("tool_compliance_update", {
       detail: { status: finalResult.isCompliant ? "compliant" : "non-compliant" },
     }));
   };
 
   const handleDownloadPdf = async () => {
-    if (!result) return;
+    if (result === null) return;
     setIsGenerating(true);
 
     try {
       const typeData = VESSEL_TYPES.find(v => v.value === vesselType);
+
       await generateReportPdf(
         pdfRef,
         "Adriatica_EEXI_Preliminary_Report.pdf",
@@ -109,6 +134,8 @@ export function EexiCalculator() {
         ],
         { toolName: "EEXI Preliminary Calculator" }
       );
+
+      trackPdfGenerated("eexi");
     } catch (err) {
       if (err instanceof PdfError && err.code === "RENDER_MEMORY") {
         alert("PDF content is too large to process safely. Please try again or contact support.");
@@ -130,7 +157,9 @@ export function EexiCalculator() {
       <div className="space-y-6">
         {/* Vessel Parameters */}
         <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
-          <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">Vessel Parameters</h3>
+          <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">
+            Vessel Parameters
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-muted-foreground mb-1">Vessel Type</label>
@@ -155,13 +184,17 @@ export function EexiCalculator() {
               />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-xs font-medium text-muted-foreground mb-1">Target Compliance Year</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1">
+                Target Compliance Year
+              </label>
               <select
                 value={targetYear}
                 onChange={e => setTargetYear(e.target.value)}
                 className="w-full p-2 border rounded-sm bg-white text-sm focus:border-primary outline-none"
               >
-                {Object.keys(EEXI_REDUCTION_FACTORS).map(y => <option key={y} value={y}>{y}</option>)}
+                {Object.keys(EEXI_REDUCTION_FACTORS).map(y => (
+                  <option key={y} value={y}>{y}</option>
+                ))}
               </select>
             </div>
           </div>
@@ -169,7 +202,9 @@ export function EexiCalculator() {
 
         {/* Main Engine */}
         <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
-          <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">Main Engine (ME)</h3>
+          <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">
+            Main Engine (ME)
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-muted-foreground mb-1">MCR (kW)</label>
@@ -235,7 +270,9 @@ export function EexiCalculator() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">Aux SFC (g/kWh)</label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                  Aux SFC (g/kWh)
+                </label>
                 <input
                   type="number"
                   value={auxSfc}
@@ -299,7 +336,7 @@ export function EexiCalculator() {
         Calculate Attained EEXI
       </button>
 
-      {result && (
+      {result !== null && (
         <div ref={pdfRef} className="mt-6 p-6 bg-white border-2 rounded-sm no-break">
           <h3 className="text-lg font-bold text-[#0B3B5C]">PRELIMINARY EEXI ASSESSMENT</h3>
           <p className="text-xs text-gray-500 mb-6">Generated by Adriatica D.O.O. Engineering Tools</p>
@@ -350,7 +387,7 @@ export function EexiCalculator() {
         </div>
       )}
 
-      {result && (
+      {result !== null && (
         <button
           onClick={handleDownloadPdf}
           disabled={isGenerating}

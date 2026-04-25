@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useMemo } from "react";
 import type { FormEvent } from "react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
@@ -21,17 +21,22 @@ import {
 import { SEO } from "@/components/SEO";
 import { insights } from "@/data/insights";
 import { TRUST_METRICS } from "@/config/trustMetrics";
-
-// En son 3 makale
-const recentInsights = [...insights]
-  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-  .slice(0, 3);
+import { trackEmailSignup } from "@/lib/analytics";
 
 export default function Home() {
   const [formStatus, setFormStatus] = useState<
     "idle" | "submitting" | "success" | "error"
   >("idle");
   const [errorType, setErrorType] = useState<"generic" | "rate-limit" | null>(null);
+
+  // useMemo ile hesapla — insights değişirse güncel kalır, gereksiz sort yapılmaz
+  const recentInsights = useMemo(
+    () =>
+      [...insights]
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        .slice(0, 3),
+    []
+  );
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,6 +57,7 @@ export default function Home() {
       if (response.ok) {
         setFormStatus("success");
         form.reset();
+        trackEmailSignup("homepage");
       } else {
         setFormStatus("error");
         if (response.status === 429) setErrorType("rate-limit");
@@ -63,11 +69,12 @@ export default function Home() {
     }
   };
 
-  const scrollToServices = useCallback(() => {
+  // useCallback kaldırıldı — inline fonksiyon yeterince hafif, gereksiz memoization
+  const scrollToServices = () => {
     document
       .getElementById("core-competencies")
       ?.scrollIntoView({ behavior: "smooth" });
-  }, []);
+  };
 
   return (
     <>
@@ -212,7 +219,7 @@ export default function Home() {
       <div className="min-h-screen bg-background font-body selection:bg-primary/20">
         <Navigation />
 
-        {/* ── HERO ────────────────────────────────────────────────────────────── */}
+        {/* ── HERO ─────────────────────────────────────────────────────────── */}
         <section className="relative min-h-screen flex overflow-hidden pt-32 pb-16 md:pt-24 md:pb-24">
           <div className="absolute inset-0 z-0">
             <div className="absolute top-0 right-0 w-2/3 h-full bg-[hsl(var(--color-lapis-800))]/5 -skew-x-12 transform origin-top" />
@@ -313,35 +320,27 @@ export default function Home() {
             transition={{ delay: 1.5, duration: 1 }}
             className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-primary/70"
           >
-            <span className="text-xs uppercase tracking-widest mb-2">
-              Scroll
-            </span>
+            <span className="text-xs uppercase tracking-widest mb-2">Scroll</span>
             <ArrowDown className="animate-bounce w-5 h-5" />
           </motion.div>
         </section>
 
-        {/* ── TRUST STRIP ─────────────────────────────────────────────────────── */}
+        {/* ── TRUST STRIP ─────────────────────────────────────────────────── */}
         <section className="py-4 bg-primary border-y border-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-2 text-sm text-white/85">
               <span className="flex items-center gap-2">
-                <span className="text-[#D4AF37] font-bold">
-                  {TRUST_METRICS.yearsExperience}+
-                </span>
+                <span className="text-[#D4AF37] font-bold">{TRUST_METRICS.yearsExperience}+</span>
                 Years {TRUST_METRICS.field}
               </span>
               <span className="text-white/20 hidden sm:inline">·</span>
               <span className="flex items-center gap-2">
-                <span className="text-[#D4AF37] font-bold">
-                  {TRUST_METRICS.vesselsSupported}+
-                </span>
+                <span className="text-[#D4AF37] font-bold">{TRUST_METRICS.vesselsSupported}+</span>
                 Vessels Supported
               </span>
               <span className="text-white/20 hidden sm:inline">·</span>
               <span className="flex items-center gap-2">
-                <span className="text-[#D4AF37] font-bold">
-                  {TRUST_METRICS.pscDetentions}
-                </span>
+                <span className="text-[#D4AF37] font-bold">{TRUST_METRICS.pscDetentions}</span>
                 PSC Detentions
               </span>
               <span className="text-white/20 hidden sm:inline">·</span>
@@ -355,7 +354,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── VALUE PROPOSITION ───────────────────────────────────────────────── */}
+        {/* ── VALUE PROPOSITION ───────────────────────────────────────────── */}
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
@@ -363,8 +362,7 @@ export default function Home() {
                 Why Choose Adriatica
               </h2>
               <p className="text-foreground/75 max-w-2xl mx-auto mb-2">
-                Engineering management that delivers compliance, efficiency, and
-                peace of mind.
+                Engineering management that delivers compliance, efficiency, and peace of mind.
               </p>
               <p className="text-primary text-sm font-medium uppercase tracking-wider">
                 The Adriatica Integrity Cycle – Align · Execute · Verify
@@ -398,15 +396,14 @@ export default function Home() {
                 </h3>
                 <p className="text-foreground/75">
                   We act as your technical eyes and ears in shipyards, ensuring
-                  quality control and budget adherence – so you can focus on
-                  operations.
+                  quality control and budget adherence – so you can focus on operations.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ── HOW WE WORK ─────────────────────────────────────────────────────── */}
+        {/* ── HOW WE WORK ─────────────────────────────────────────────────── */}
         <section className="py-20 bg-neutral-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
@@ -414,12 +411,10 @@ export default function Home() {
                 How We Work
               </h2>
               <p className="text-foreground/75 max-w-2xl mx-auto mb-2">
-                A structured approach to deliver clarity, compliance, and
-                results.
+                A structured approach to deliver clarity, compliance, and results.
               </p>
               <p className="text-primary text-sm font-medium uppercase tracking-wider">
-                Following the Adriatica Integrity Cycle – Align · Execute ·
-                Verify
+                Following the Adriatica Integrity Cycle – Align · Execute · Verify
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -429,8 +424,7 @@ export default function Home() {
                   1. Brief & Information
                 </h3>
                 <p className="text-foreground/75">
-                  You share vessel details, operational profile, and specific
-                  concerns.
+                  You share vessel details, operational profile, and specific concerns.
                 </p>
               </div>
               <div className="text-center p-6 border-l-2 border-primary/20">
@@ -439,8 +433,7 @@ export default function Home() {
                   2. Analysis & Planning
                 </h3>
                 <p className="text-foreground/75">
-                  We perform technical assessment, risk identification, and
-                  scope definition.
+                  We perform technical assessment, risk identification, and scope definition.
                 </p>
               </div>
               <div className="text-center p-6 border-l-2 border-primary/20">
@@ -449,8 +442,7 @@ export default function Home() {
                   3. Execution & Supervision
                 </h3>
                 <p className="text-foreground/75">
-                  We handle engineering oversight, contractor coordination, and
-                  quality control.
+                  We handle engineering oversight, contractor coordination, and quality control.
                 </p>
               </div>
               <div className="text-center p-6 border-l-2 border-primary/20">
@@ -459,34 +451,22 @@ export default function Home() {
                   4. Documentation & Handover
                 </h3>
                 <p className="text-foreground/75">
-                  You receive complete records, audit‑ready reports, and
-                  as‑built documentation.
+                  You receive complete records, audit‑ready reports, and as‑built documentation.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ── CORE COMPETENCIES ───────────────────────────────────────────────── */}
-        <section
-          id="core-competencies"
-          className="py-24 md:py-32 bg-white relative"
-        >
+        {/* ── CORE COMPETENCIES ───────────────────────────────────────────── */}
+        <section id="core-competencies" className="py-24 md:py-32 bg-white relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionHeading
-              title="Marine Engineering"
-              subtitle="Core Competencies"
-            />
+            <SectionHeading title="Marine Engineering" subtitle="Core Competencies" />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               <FeatureCard
                 number="01"
                 title="Engineering Plans"
-                items={[
-                  "Structural Drawings",
-                  "As-Built Drawing Sets",
-                  "Arrangement Plans",
-                  "Fire & Safety Plans",
-                ]}
+                items={["Structural Drawings", "As-Built Drawing Sets", "Arrangement Plans", "Fire & Safety Plans"]}
                 delay={0.1}
                 linkTo="engineering-plans"
                 linkText="Learn more about Engineering Plans"
@@ -495,12 +475,7 @@ export default function Home() {
               <FeatureCard
                 number="02"
                 title="Engineering Documentation"
-                items={[
-                  "As-Built P&ID / System Manuals",
-                  "Electrical Load Analysis (EAB)",
-                  "Fuel Management & Quality Booklet",
-                  "IHM (Inventory of Hazardous Materials)",
-                ]}
+                items={["As-Built P&ID / System Manuals", "Electrical Load Analysis (EAB)", "Fuel Management & Quality Booklet", "IHM (Inventory of Hazardous Materials)"]}
                 delay={0.2}
                 linkTo="engineering-documentation"
                 linkText="Learn more about Engineering Documentation"
@@ -509,12 +484,7 @@ export default function Home() {
               <FeatureCard
                 number="03"
                 title="Structural Integrity"
-                items={[
-                  "Structural Integrity & Life Extension Studies",
-                  "Hull Condition Analysis",
-                  "Modification Consultancy",
-                  "Vibration & Noise Diagnostic",
-                ]}
+                items={["Structural Integrity & Life Extension Studies", "Hull Condition Analysis", "Modification Consultancy", "Vibration & Noise Diagnostic"]}
                 delay={0.3}
                 linkTo="structural-integrity"
                 linkText="Learn more about Structural Integrity"
@@ -523,12 +493,7 @@ export default function Home() {
               <FeatureCard
                 number="04"
                 title="Sustainable Tech"
-                items={[
-                  "Biofouling Management Plan (IMO MEPC.378(80))",
-                  "Eco-friendly Coating Advisory",
-                  "Energy Audit & Efficiency Surveys",
-                  "MRV Monitoring Plan (EU MRV Regulation)",
-                ]}
+                items={["Biofouling Management Plan (IMO MEPC.378(80))", "Eco-friendly Coating Advisory", "Energy Audit & Efficiency Surveys", "MRV Monitoring Plan (EU MRV Regulation)"]}
                 delay={0.4}
                 linkTo="sustainable-technologies"
                 linkText="Learn more about Sustainable Technologies"
@@ -537,13 +502,7 @@ export default function Home() {
               <FeatureCard
                 number="05"
                 title="Regulatory Compliance"
-                items={[
-                  "Ballast Water Management Plan (BWMP)",
-                  "Shipboard Oil Pollution Emergency Plan (SoPEP)",
-                  "Ship Energy Efficiency Management Plan (SEEMP)",
-                  "Garbage Management Plan",
-                  "Emergency Response Manuals",
-                ]}
+                items={["Ballast Water Management Plan (BWMP)", "Shipboard Oil Pollution Emergency Plan (SoPEP)", "Ship Energy Efficiency Management Plan (SEEMP)", "Garbage Management Plan", "Emergency Response Manuals"]}
                 delay={0.5}
                 linkTo="regulatory-compliance"
                 linkText="Learn more about Regulatory Compliance"
@@ -552,12 +511,7 @@ export default function Home() {
               <FeatureCard
                 number="06"
                 title="Project Management"
-                items={[
-                  "Owner's Rep & Refit Supervision",
-                  "Dry-Docking Specification & Management",
-                  "On-site Technical Troubleshooting",
-                  "Yacht Survey & Inspection",
-                ]}
+                items={["Owner's Rep & Refit Supervision", "Dry-Docking Specification & Management", "On-site Technical Troubleshooting", "Yacht Survey & Inspection"]}
                 delay={0.6}
                 linkTo="project-management"
                 linkText="Learn more about Project Management"
@@ -567,30 +521,24 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── MID-PAGE CTA ────────────────────────────────────────────────────── */}
+        {/* ── MID-PAGE CTA ────────────────────────────────────────────────── */}
         <section className="relative py-20 bg-primary overflow-hidden">
           <div className="absolute inset-0 z-0 pointer-events-none">
             <div className="absolute top-0 right-0 w-2/3 h-full bg-[hsl(var(--color-lapis-800))]/20 -skew-x-12 transform origin-top" />
             <div className="absolute inset-0 opacity-10">
-              <svg
-                className="h-full w-full"
-                viewBox="0 0 100 100"
-                preserveAspectRatio="none"
-              >
+              <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
                 <path d="M0 100 L100 0 L100 100 Z" fill="white" />
               </svg>
             </div>
           </div>
           <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p className="text-xs uppercase tracking-[0.25em] text-white/85 mb-4">
-              Ready to solve it?
-            </p>
+            <p className="text-xs uppercase tracking-[0.25em] text-white/85 mb-4">Ready to solve it?</p>
             <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">
               Have a specific technical challenge?
             </h2>
             <p className="text-white/85 mb-8 max-w-xl mx-auto">
-              From PSC preparation to structural life extension — we assess,
-              plan, and deliver. Tell us about your vessel.
+              From PSC preparation to structural life extension — we assess, plan, and deliver.
+              Tell us about your vessel.
             </p>
             <Link
               href="/request-consultation"
@@ -601,7 +549,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── OPERATIONAL REGION ──────────────────────────────────────────────── */}
+        {/* ── OPERATIONAL REGION ──────────────────────────────────────────── */}
         <section className="py-20 bg-neutral-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -610,10 +558,9 @@ export default function Home() {
                   Operational Region
                 </h2>
                 <p className="text-lg text-foreground/75 leading-relaxed">
-                  You benefit from our engineering management and technical
-                  advisory services across a wide range of vessels –
-                  superyachts, commercial vessels, and fishing boats – operating
-                  in the <strong>Adriatic Sea</strong>,{" "}
+                  You benefit from our engineering management and technical advisory services
+                  across a wide range of vessels – superyachts, commercial vessels, and fishing
+                  boats – operating in the <strong>Adriatic Sea</strong>,{" "}
                   <strong>Mediterranean Basin</strong>, and{" "}
                   <strong>European coastal waters</strong>.
                 </p>
@@ -631,16 +578,12 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── RECENT INSIGHTS ─────────────────────────────────────────────────── */}
+        {/* ── RECENT INSIGHTS ─────────────────────────────────────────────── */}
         <section className="py-24 bg-primary relative overflow-hidden">
           <div className="absolute inset-0 z-0 pointer-events-none">
             <div className="absolute top-0 left-0 w-1/2 h-full bg-[hsl(var(--color-lapis-800))]/10 skew-x-12 transform origin-top" />
             <div className="absolute inset-0 opacity-5">
-              <svg
-                className="h-full w-full"
-                viewBox="0 0 100 100"
-                preserveAspectRatio="none"
-              >
+              <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
                 <path d="M0 0 L100 100 L0 100 Z" fill="white" />
               </svg>
             </div>
@@ -665,40 +608,29 @@ export default function Home() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {recentInsights.map((insight) => (
-                <InsightCard
-                  key={insight.slug}
-                  insight={insight}
-                  variant="dark"
-                />
+              {recentInsights.map(insight => (
+                <InsightCard key={insight.slug} insight={insight} variant="dark" />
               ))}
             </div>
           </div>
         </section>
 
-        {/* ── BEGIN YOUR VOYAGE ────────────────────────────────────────────────── */}
-        <section
-          id="begin-voyage"
-          className="py-24 bg-neutral-50 border-t border-border/10"
-        >
+        {/* ── BEGIN YOUR VOYAGE ───────────────────────────────────────────── */}
+        <section id="begin-voyage" className="py-24 bg-neutral-50 border-t border-border/10">
           <div className="max-w-4xl mx-auto px-4 text-center">
             <h2 className="font-display text-4xl md:text-5xl font-bold text-primary mb-6">
               Begin Your Voyage
             </h2>
             <p className="text-lg text-foreground/75 mb-10 max-w-2xl mx-auto">
-              Share your vessel’s technical challenge. Our principal engineers
-              will review and respond within 24 hours. Accepting commissions for
-              Q2 2026.
+              Share your vessel's technical challenge. Our principal engineers will review and
+              respond within 24 hours. Accepting commissions for Q2 2026.
             </p>
 
             {formStatus === "success" ? (
               <div className="max-w-md mx-auto p-8 bg-white border border-green-200 rounded-sm shadow-sm">
-                <p className="text-green-800 text-lg font-medium mb-2">
-                  Thank you!
-                </p>
+                <p className="text-green-800 text-lg font-medium mb-2">Thank you!</p>
                 <p className="text-foreground/75">
-                  Your consultation request has been received. We'll be in touch
-                  shortly.
+                  Your consultation request has been received. We'll be in touch shortly.
                 </p>
                 <button
                   onClick={() => setFormStatus("idle")}
@@ -714,15 +646,12 @@ export default function Home() {
                 onSubmit={handleSubmit}
                 className="max-w-md mx-auto space-y-4 text-left"
               >
-                {/* Honeypot */}
                 <div className="hidden" aria-hidden="true">
                   <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" />
                 </div>
 
                 <div>
-                  <label htmlFor="home-email" className="sr-only">
-                    Email address
-                  </label>
+                  <label htmlFor="home-email" className="sr-only">Email address</label>
                   <input
                     type="email"
                     name="email"
@@ -738,11 +667,9 @@ export default function Home() {
                   disabled={formStatus === "submitting"}
                   className="w-full py-4 bg-primary text-white font-medium hover:bg-[hsl(var(--color-lapis-800))] transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {formStatus === "submitting"
-                    ? "Sending..."
-                    : "Request Consultation"}
+                  {formStatus === "submitting" ? "Sending..." : "Request Consultation"}
                 </button>
-                
+
                 {formStatus === "error" && (
                   <div className="text-red-600 text-sm text-center mt-2" role="alert">
                     {errorType === "rate-limit" ? (
@@ -760,7 +687,10 @@ export default function Home() {
 
                 <p className="text-xs text-center text-muted-foreground pt-2">
                   By submitting, you agree to our{" "}
-                  <a href="/privacy-policy" className="text-primary underline decoration-primary/50 hover:decoration-primary transition-colors">
+                  <a
+                    href="/privacy-policy"
+                    className="text-primary underline decoration-primary/50 hover:decoration-primary transition-colors"
+                  >
                     Privacy Policy
                   </a>.
                 </p>
