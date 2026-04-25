@@ -1,4 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
+/* ====================== LOCAL FONTLAR ====================== */
+@font-face {
+  font-family: 'Cinzel';
+  src: url('/fonts/cinzel.woff2') format('woff2');
+  font-weight: 400 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Manrope';
+  src: url('/fonts/manrope.woff2') format('woff2');
+  font-weight: 200 800;
+  font-display: swap;
+}
 
 @tailwind base;
 @tailwind components;
