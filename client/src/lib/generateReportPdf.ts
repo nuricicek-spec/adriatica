@@ -297,9 +297,12 @@ export async function generateReportPdf(
           useCORS: true,
           allowTaint: false,
           onclone: (clonedDoc: Document) => {
-            // Opaklık düzeltmesi: Klonlanan dokümanda tam görünürlük sağla
-            clonedDoc.body.style.opacity = "1";
-            clonedDoc.body.style.visibility = "visible";
+            // 🔥 Asıl hedef: .pdf-mode elementinin opaklığını 1 yap
+            const pdfModeEl = clonedDoc.querySelector(".pdf-mode") as HTMLElement;
+            if (pdfModeEl) {
+              pdfModeEl.style.opacity = "1";
+              pdfModeEl.style.visibility = "visible";
+            }
 
             // Font dayatması (kararlı baskı)
             const style = clonedDoc.createElement("style");
