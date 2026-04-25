@@ -354,8 +354,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── ENGINEERING TOOLS ───────────────────────────────────── */}
-<section className="py-20 bg-white border-b border-border/10">
+{/* ── ENGINEERING TOOLS ───────────────────────────────────── */}
+<section className="py-20 bg-neutral-50 border-b border-border/10">
   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
     {/* HEADER */}
@@ -422,20 +422,6 @@ export default function Home() {
         </span>
       </Link>
 
-    </div>
-
-    {/* BOTTOM HOOK */}
-    <div className="text-center mt-12">
-      <p className="text-sm text-foreground/60 mb-4">
-        If your vessel is non-compliant, we provide full engineering support — from assessment to implementation.
-      </p>
-
-      <Link
-        href="/request-consultation"
-        className="inline-block px-6 py-3 bg-primary text-white text-sm uppercase tracking-wide hover:bg-[hsl(var(--color-lapis-800))] transition-colors"
-      >
-        Request Technical Support
-      </Link>
     </div>
 
   </div>
