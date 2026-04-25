@@ -754,11 +754,11 @@ export default function Home() {
                 )}
 
                 {/* FIX #5: font-size küçültüldü + opacity düşürüldü — odak CTA'da kalıyor */}
-                <p className="text-[11px] text-center text-muted-foreground/60 pt-1">
+                <p className="text-[11px] text-center text-muted-foreground pt-1">
                   By submitting, you agree to our{" "}
                   <a
                     href="/privacy-policy"
-                    className="underline decoration-muted-foreground/40 hover:text-muted-foreground hover:decoration-muted-foreground transition-colors"
+                    className="underline decoration-muted-foreground/50 hover:text-foreground hover:decoration-foreground transition-colors"
                   >
                     Privacy Policy
                   </a>.
