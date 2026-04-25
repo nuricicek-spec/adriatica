@@ -1,0 +1,16 @@
+{
+  "name": "Adriatica D.O.O. - Marine Engineering & Consultancy",
+  "short_name": "Adriatica",
+  "description": "Independent marine engineering consultancy, technical project management, and regulatory compliance services.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0B3B5C",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
