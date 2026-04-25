@@ -10,7 +10,7 @@ export class PdfError extends Error {
 }
 
 type ReportInput = { label: string; value: string | number | boolean };
-type ReportOptions = { headerTitle?: string; toolName?: string; signal?: AbortSignal };
+type ReportOptions = { headerTitle?: string; toolName?: string; signal?: AbortSignal; };
 
 let activeRender = false;
 let cachedLogo: string | null = null;
@@ -56,7 +56,7 @@ export async function generateReportPdf(
     const headerTitle = options?.headerTitle || "PRELIMINARY ASSESSMENT - ADRIATICA D.O.O.";
     const toolName = options?.toolName || "";
 
-    // 1. Klonla
+    // 1. KLONLAMA VE GİZLEME
     const element = pdfRef.current.cloneNode(true) as HTMLElement;
     element.classList.add("pdf-mode");
     Object.assign(element.style, {
@@ -93,11 +93,11 @@ export async function generateReportPdf(
     footerDiv.innerHTML = `
       <div style="margin-bottom: 3px;">ADRIATICA D.O.O.</div>
       <div>Marine Engineering & Technical Consultancy</div>
-      <div>info@adriaticadoo.com | www.adriaticadoo.com</div>
+      <div>info@adriaticadoo.com | www.adriaticao.com</div>
     `;
     element.appendChild(footerDiv);
 
-    // 4. Form senkronizasyonu
+    // 4. FORM senkronizasyonu
     element.querySelectorAll("input, select, textarea").forEach((el: any) => {
       if (el.tagName === "SELECT") {
         el.querySelectorAll("option").forEach((opt: any) => {
@@ -112,7 +112,7 @@ export async function generateReportPdf(
       }
     });
 
-    // 5. Özet
+    // 5. Özet (Özet, header'in hemen altına)
     const summary = document.createElement("div");
     summary.style.cssText = "margin-bottom:20px; padding-bottom:15px; border-bottom:1px solid #ddd; font-size:11px;";
     const headerRow = document.createElement("div");
@@ -148,7 +148,7 @@ export async function generateReportPdf(
     await new Promise((r) => requestAnimationFrame(r));
     await new Promise((r) => setTimeout(r, 100));
 
-    // 7. PDF oluştur (manuel header/footer yok)
+    // 7. PDF oluştur
     await html2pdf()
       .set({
         margin: [25, 15, 25, 15],
@@ -156,10 +156,8 @@ export async function generateReportPdf(
         image: { type: "jpeg", quality: 0.95 },
         html2canvas: {
           scale: 2,
-          useCORS: true,
-          allowTaint: true,
-          scrollY: 0,
-          windowWidth: 750,
+          useCORS: false, // Eğer gerçekten cross-origin sorun yoksa false, HTML dahilinde zaten logolar var
+          ignoreElements: ".pdf-header, .pdf-footer",
           logging: false,
           onclone: (clonedDoc: Document) => {
             const pdfModeEl = clonedDoc.querySelector(".pdf-mode") as HTMLElement;
@@ -190,7 +188,7 @@ export async function generateReportPdf(
           },
         },
         jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-      } as any)  // TypeScript hatasını geç
+      } as any)
       .from(element)
       .save(filename);
 
