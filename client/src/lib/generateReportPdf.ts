@@ -110,7 +110,7 @@ export async function generateReportPdf(
     const toolName = options?.toolName || "";
 
     // ============================
-    // 1. KLONLAMA VE GİZLEME
+    // 1. KLONLAMA VE TAILWIND KİRLİLİĞİNİ TEMİZLEME
     // ============================
     const element = pdfRef.current.cloneNode(true) as HTMLElement;
     element.classList.add("pdf-mode");
@@ -119,7 +119,11 @@ export async function generateReportPdf(
       position: "absolute",
       top: "0",
       left: "-9999px",
-      width: "800px",
+      width: "750px",      // A4 içerik alanı için ideal genişlik
+      padding: "0",         // Tailwind p-6 vb. sıfırla
+      margin: "0",
+      border: "none",
+      boxShadow: "none",
       opacity: "1",
       pointerEvents: "none",
       zIndex: "-1",
@@ -149,11 +153,11 @@ export async function generateReportPdf(
     checkAbort();
 
     // ============================
-    // 3. GİRDİ ÖZETİ (DOM API)
+    // 3. GİRDİ ÖZETİ (DOM API) – Üst boşluğu sıfırla
     // ============================
     const summary = document.createElement("div");
     summary.style.cssText =
-      "margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid #ddd;font-size:11px;";
+      "margin-top:0;margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid #ddd;font-size:11px;";
 
     const headerRow = document.createElement("div");
     headerRow.style.cssText =
@@ -290,21 +294,23 @@ export async function generateReportPdf(
     // ============================
     const worker = html2pdf()
       .set({
-        margin: [40, 20, 45, 20],
+        margin: [35, 15, 35, 15], // Üst 35, Sağ 15, Alt 35, Sol 15
         pagebreak: { mode: ['css', 'legacy'], avoid: '.no-break' },
-        image: { type: "jpeg", quality: 0.9 },
+        image: { type: "jpeg", quality: 0.95 },
         html2canvas: {
           scale,
           useCORS: true,
           allowTaint: false,
           scrollY: 0,
-          windowWidth: 800,
+          windowWidth: 750, // width ile aynı
           onclone: (clonedDoc: Document) => {
-            // .pdf-mode elementinin opaklığını 1 yap
+            // Klon içinde .pdf-mode opacity ve padding garantisi
             const pdfModeEl = clonedDoc.querySelector(".pdf-mode") as HTMLElement;
             if (pdfModeEl) {
               pdfModeEl.style.opacity = "1";
               pdfModeEl.style.visibility = "visible";
+              pdfModeEl.style.padding = "0px";
+              pdfModeEl.style.background = "white";
             }
 
             // Font dayatması (kararlı baskı)
@@ -323,13 +329,13 @@ export async function generateReportPdf(
           format: "a4",
           orientation: "portrait",
         },
-      } as any) // ← TypeScript tip hatasını bu cast ile aşıyoruz
+      } as any)
       .from(element);
 
     const pdf: any = await worker.toPdf().get("pdf");
 
     // ============================
-    // 9. BAŞLIK / ALT BİLGİ
+    // 9. BAŞLIK / ALT BİLGİ (YENİ KOORDİNATLAR)
     // ============================
     const totalPages = pdf.getNumberOfPages();
     const pageHeight = pdf.internal.pageSize.height;
@@ -338,36 +344,50 @@ export async function generateReportPdf(
     for (let i = 1; i <= totalPages; i++) {
       pdf.setPage(i);
 
+      // Logo
       if (logoBase64) {
-        pdf.addImage(logoBase64, "PNG", 20, 12, 40, 11);
+        pdf.addImage(logoBase64, "PNG", 15, 12, 35, 10);
       }
 
+      // Başlık
       pdf.setFontSize(10);
       pdf.setTextColor(11, 59, 92);
-      pdf.text(headerTitle, pageWidth - 20, 22, { align: "right" });
-      pdf.line(20, 30, pageWidth - 20, 30);
+      pdf.text(headerTitle, pageWidth - 15, 20, { align: "right" });
 
-      pdf.line(20, pageHeight - 25, pageWidth - 20, pageHeight - 25);
-      pdf.setFontSize(9);
+      // Üst çizgi (28mm)
+      pdf.setDrawColor(200, 200, 200);
+      pdf.line(15, 28, pageWidth - 15, 28);
+
+      // Alt çizgi (sayfa sonu - 30mm)
+      pdf.line(15, pageHeight - 30, pageWidth - 15, pageHeight - 30);
+
+      // Şirket adı
+      pdf.setFontSize(8);
       pdf.setTextColor(11, 59, 92);
-      pdf.text("ADRIATICA D.O.O.", pageWidth / 2, pageHeight - 18, {
+      pdf.text("ADRIATICA D.O.O.", pageWidth / 2, pageHeight - 22, {
         align: "center",
       });
 
+      // Alt bilgiler
       pdf.setFontSize(7);
-      pdf.setTextColor(100, 100, 100);
+      pdf.setTextColor(120, 120, 120);
       pdf.text(
         "Marine Engineering & Technical Consultancy",
         pageWidth / 2,
-        pageHeight - 13,
+        pageHeight - 17,
         { align: "center" }
       );
       pdf.text(
-        "Podgorica, Montenegro | info@adriaticadoo.com | www.adriaticadoo.com",
+        "info@adriaticadoo.com | www.adriaticadoo.com",
         pageWidth / 2,
-        pageHeight - 8,
+        pageHeight - 12,
         { align: "center" }
       );
+
+      // Sayfa numarası
+      pdf.text(`${i} / ${totalPages}`, pageWidth - 15, pageHeight - 12, {
+        align: "right",
+      });
     }
 
     // ============================
