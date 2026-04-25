@@ -24,6 +24,9 @@
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json" />
 
+    <!-- LCP görselini önceden yükle -->
+    <link rel="preload" as="image" href="/logo.svg" fetchpriority="high">
+
     <!-- ========== GA4 (SPA — manual page_view in App.tsx) ========== -->
     <script
       async
@@ -38,7 +41,7 @@
       gtag("config", "G-WPWD3K7JHR", { send_page_view: false });
     </script>
 
-    <!-- Minimal critical CSS — prevents FOUC before Tailwind loads -->
+    <!-- Kritik stiller inline — FOUC'u engeller -->
     <style>
       body {
         margin: 0;
