@@ -72,96 +72,19 @@
   }
 }
 
-/* ====================== PDF MODE - AGRESİF RESET ====================== */
-.pdf-mode {
-  width: 750px !important;
-  max-width: 750px !important;
-  padding: 25px !important;
-  margin: 0 !important;
-  box-sizing: border-box !important;
-  overflow: visible !important;
-  position: relative !important;
-  background-color: #ffffff !important;
-  color: #000000 !important;
-  font-family: Arial, Helvetica, sans-serif !important;
-  border: none !important;
-  box-shadow: none !important;
-  -webkit-print-color-adjust: exact !important;
-  print-color-adjust: exact !important;
-}
+/*
+  ====================== PDF MODE ======================
+  ÖNEMLI NOT:
+  Bu sınıf artık sadece sayfa kesme kontrolü için kullanılıyor.
+  Renk, border, font gibi tüm stiller generateReportPdf.ts
+  içindeki applyPdfStyles() fonksiyonu tarafından
+  window.getComputedStyle ile inline olarak uygulanıyor.
+  Burada genel bir * reset YAPMIYORUZ — bu html2canvas'ın
+  layout hesaplamasını bozuyordu.
+*/
 
-/* Tüm elementler için en güçlü reset */
-.pdf-mode,
-.pdf-mode * {
-  font-family: Arial, Helvetica, sans-serif !important;
-  color: #000000 !important;
-  background-color: #ffffff !important;
-  border-color: #d1d5db !important;
-  border-width: 1px !important;
-  border-style: solid !important;
-  box-shadow: none !important;
-  line-height: 1.5 !important;
-  -webkit-print-color-adjust: exact !important;
-  print-color-adjust: exact !important;
-}
-
-/* Resimler */
-.pdf-mode img {
-  max-width: 100% !important;
-  height: auto !important;
-  display: block !important;
-}
-
-/* Font boyutları */
-.pdf-mode .text-3xl,
-.pdf-mode .text-4xl { font-size: 24px !important; }
-.pdf-mode .text-xl { font-size: 18px !important; }
-.pdf-mode .text-base { font-size: 14px !important; }
-.pdf-mode .text-sm { font-size: 12px !important; }
-.pdf-mode .text-xs,
-.pdf-mode .text-\[10px\] { font-size: 10px !important; }
-
-/* ====================== RENK İSTİSNALARI ====================== */
-.pdf-mode .text-primary,
-.pdf-mode .text-\[\#0B3B5C\] { color: #0B3B5C !important; }
-
-.pdf-mode .bg-primary\/5,
-.pdf-mode .bg-primary\/10 { 
-  background-color: rgba(11, 59, 92, 0.05) !important; 
-}
-
-.pdf-mode .border-primary,
-.pdf-mode .border-\[\#0B3B5C\] { 
-  border-color: #0B3B5C !important; 
-}
-
-.pdf-mode .border-green-500 { border-color: #22c55e !important; }
-.pdf-mode .bg-green-50 { background-color: #f0fdf4 !important; }
-.pdf-mode .text-green-800 { color: #166534 !important; }
-
-.pdf-mode .border-red-500 { border-color: #ef4444 !important; }
-.pdf-mode .bg-red-50 { background-color: #fef2f2 !important; }
-.pdf-mode .text-red-800 { color: #991b1b !important; }
-
-.pdf-mode .bg-gray-50,
-.pdf-mode .bg-neutral-50 { 
-  background-color: #f9fafb !important; 
-}
-
-.pdf-mode .text-gray-500 { color: #6b7280 !important; }
-.pdf-mode .text-gray-600 { color: #4b5563 !important; }
-.pdf-mode .text-gray-700 { color: #374151 !important; }
-
-.pdf-mode .border-border\/20,
-.pdf-mode .border-black\/10 { 
-  border-color: rgba(0, 0, 0, 0.1) !important; 
-}
-
-.pdf-mode .border-red-300 { border-color: #fca5a5 !important; }
-.pdf-mode .bg-white\/50 { background-color: rgba(255,255,255,0.5) !important; }
-
-/* Sayfa kesme kontrolü */
-.pdf-mode .no-break {
+/* Sayfa kesme kontrolü — sadece bu kalıyor */
+.no-break {
   page-break-inside: avoid !important;
   break-inside: avoid !important;
 }
