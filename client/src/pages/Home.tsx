@@ -621,14 +621,14 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <p className="text-xs uppercase tracking-[0.25em] text-primary/70 mb-3">
-                Diagnostic Tools
+                Free Compliance Tools
               </p>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-4">
-                Check Your Compliance Status
+                Identify Compliance Risks Before Inspection
               </h2>
               <p className="text-foreground/75 max-w-2xl mx-auto">
-                Run a quick engineering assessment to identify compliance risks before
-                committing to a full project.
+                Most risks are silent — find them before the inspector does.
+                Run a quick assessment in under 2 minutes.
               </p>
             </div>
 
