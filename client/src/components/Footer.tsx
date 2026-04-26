@@ -49,7 +49,7 @@ export function Footer() {
                 <p className="text-xs uppercase tracking-wider text-white/85 mb-0.5">
                   Address
                 </p>
-                <p>Budva, Montenegro</p>
+                <p>Podgorica, Montenegro</p>
               </div>
               <div>
                 <p className="text-xs uppercase tracking-wider text-white/85 mb-0.5">
