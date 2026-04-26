@@ -407,7 +407,7 @@ export default function Home() {
         {/* ── HOW WE WORK ─────────────────────────────────────────────────── */}
         <section className="py-20 bg-neutral-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
+            <div className="text-center mb-16">
               <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-3">
                 How We Work
               </h2>
@@ -418,47 +418,84 @@ export default function Home() {
                 Following the Adriatica Integrity Cycle – Align · Execute · Verify
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              <div className="text-center p-6 border-l-2 border-primary/20">
-                <Clipboard className="h-12 w-12 text-primary mx-auto mb-4" />
-                <h3 className="font-display text-xl font-bold text-primary mb-2">
-                  1. Brief & Information
-                </h3>
-                <p className="text-foreground/75">
-                  You share vessel details, operational profile, and specific concerns.
-                </p>
-              </div>
-              <div className="text-center p-6 border-l-2 border-primary/20">
-                <Search className="h-12 w-12 text-primary mx-auto mb-4" />
-                <h3 className="font-display text-xl font-bold text-primary mb-2">
-                  2. Analysis & Planning
-                </h3>
-                <p className="text-foreground/75">
-                  We perform technical assessment, risk identification, and scope definition.
-                </p>
-              </div>
-              <div className="text-center p-6 border-l-2 border-primary/20">
-                <Wrench className="h-12 w-12 text-primary mx-auto mb-4" />
-                <h3 className="font-display text-xl font-bold text-primary mb-2">
-                  3. Execution & Supervision
-                </h3>
-                <p className="text-foreground/75">
-                  We handle engineering oversight, contractor coordination, and quality control.
-                </p>
-              </div>
-              <div className="text-center p-6 border-l-2 border-primary/20">
-                <FileText className="h-12 w-12 text-primary mx-auto mb-4" />
-                <h3 className="font-display text-xl font-bold text-primary mb-2">
-                  4. Documentation & Handover
-                </h3>
-                <p className="text-foreground/75">
-                  You receive complete records, audit‑ready reports, and as‑built documentation.
-                </p>
+
+            <div className="relative">
+              {/* Dikey bağlantı çizgisi (masaüstünde ortada) */}
+              <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary/20 transform -translate-x-1/2 hidden md:block" />
+
+              <div className="space-y-12">
+                {/* Adım 1 — solda metin */}
+                <div className="relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
+                  <div className="flex-1 md:text-right md:pr-16">
+                    <div className="flex items-center gap-3 mb-2 md:justify-end">
+                      <Clipboard className="h-6 w-6 text-primary shrink-0" />
+                      <h3 className="font-display text-xl font-bold text-primary">Brief & Information</h3>
+                    </div>
+                    <p className="text-foreground/75">
+                      You share vessel details, operational profile, and specific concerns.
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-white font-bold text-lg z-10 shrink-0">
+                    1
+                  </div>
+                  <div className="flex-1 md:pl-16 hidden md:block" />
+                </div>
+
+                {/* Adım 2 — sağda metin */}
+                <div className="relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
+                  <div className="flex-1 md:pr-16 hidden md:block" />
+                  <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-white font-bold text-lg z-10 shrink-0">
+                    2
+                  </div>
+                  <div className="flex-1 md:pl-16">
+                    <div className="flex items-center gap-3 mb-2">
+                      <Search className="h-6 w-6 text-primary shrink-0" />
+                      <h3 className="font-display text-xl font-bold text-primary">Analysis & Planning</h3>
+                    </div>
+                    <p className="text-foreground/75">
+                      We perform technical assessment, risk identification, and scope definition.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Adım 3 — solda metin */}
+                <div className="relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
+                  <div className="flex-1 md:text-right md:pr-16">
+                    <div className="flex items-center gap-3 mb-2 md:justify-end">
+                      <Wrench className="h-6 w-6 text-primary shrink-0" />
+                      <h3 className="font-display text-xl font-bold text-primary">Execution & Supervision</h3>
+                    </div>
+                    <p className="text-foreground/75">
+                      We handle engineering oversight, contractor coordination, and quality control.
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-white font-bold text-lg z-10 shrink-0">
+                    3
+                  </div>
+                  <div className="flex-1 md:pl-16 hidden md:block" />
+                </div>
+
+                {/* Adım 4 — sağda metin */}
+                <div className="relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
+                  <div className="flex-1 md:pr-16 hidden md:block" />
+                  <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-white font-bold text-lg z-10 shrink-0">
+                    4
+                  </div>
+                  <div className="flex-1 md:pl-16">
+                    <div className="flex items-center gap-3 mb-2">
+                      <FileText className="h-6 w-6 text-primary shrink-0" />
+                      <h3 className="font-display text-xl font-bold text-primary">Documentation & Handover</h3>
+                    </div>
+                    <p className="text-foreground/75">
+                      You receive complete records, audit‑ready reports, and as‑built documentation.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </section>
-
+      
         {/* ── CORE COMPETENCIES ───────────────────────────────────────────── */}
         <section id="core-competencies" className="py-24 md:py-32 bg-white relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
