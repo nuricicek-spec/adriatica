@@ -6,12 +6,16 @@ import { Shield, AlertTriangle, ArrowRight } from "lucide-react";
 import { EexiCalculator } from "@/components/tools/EexiCalculator";
 import { CiiCalculator } from "@/components/tools/CiiCalculator";
 import { BwtsCalculator } from "@/components/tools/BwtsCalculator";
+import { EtsCalculator } from "@/components/tools/EtsCalculator"; // YENİ EKLENDİ
+import { FueleuCalculator } from "@/components/tools/FueleuCalculator"; // YENİ EKLENDİ
 import { Helmet } from "react-helmet-async";
 
 const TABS = [
   { id: "eexi", label: "EEXI Calculator", component: EexiCalculator },
   { id: "cii", label: "CII Predictor", component: CiiCalculator },
   { id: "bwts", label: "BWTS Sizing", component: BwtsCalculator },
+  { id: "ets", label: "EU ETS Cost", component: EtsCalculator }, // YENİ EKLENDİ
+  { id: "fueleu", label: "FuelEU Penalty", component: FueleuCalculator }, // YENİ EKLENDİ
 ];
 
 // Orijinal, detaylı Schema kodun (hiçbir şey eksilmedi)
@@ -32,7 +36,7 @@ const toolsPageSchema = {
       "@id": "https://www.adriaticadoo.com/tools/#webpage",
       "url": "https://www.adriaticadoo.com/tools",
       "name": "Marine Engineering Compliance Calculators",
-      "description": "Interactive tools for preliminary EEXI calculation, CII rating prediction, and BWTS capacity sizing.",
+      "description": "Interactive tools for preliminary EEXI calculation, CII rating prediction, BWTS capacity sizing, EU ETS cost forecasting, and FuelEU penalty assessment.", // YENİ EKLENDİ
       "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
       "about": {
         "@type": "ItemList",
@@ -66,6 +70,30 @@ const toolsPageSchema = {
             "item": {
               "@type": "SoftwareApplication",
               "name": "BWTS Capacity Sizing",
+              "applicationCategory": "EngineeringApplication",
+              "operatingSystem": "Web Browser",
+              "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+            }
+          },
+          // YENİ EKLENDİ (EU ETS)
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "item": {
+              "@type": "SoftwareApplication",
+              "name": "EU ETS Cost Predictor",
+              "applicationCategory": "EngineeringApplication",
+              "operatingSystem": "Web Browser",
+              "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+            }
+          },
+          // YENİ EKLENDİ (FuelEU)
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "item": {
+              "@type": "SoftwareApplication",
+              "name": "FuelEU Penalty Predictor",
               "applicationCategory": "EngineeringApplication",
               "operatingSystem": "Web Browser",
               "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
