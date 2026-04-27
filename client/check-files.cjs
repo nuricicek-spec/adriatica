@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const p = require('path');
 const fs = require('fs');
 const base = p.join(process.cwd(), 'public');
