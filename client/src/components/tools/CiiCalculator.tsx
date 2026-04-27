@@ -3,8 +3,7 @@ import { generateReportPdf, PdfError } from "@/lib/generateReportPdf";
 import { VESSEL_TYPES, FUEL_TYPES, CII_REDUCTION_FACTORS, getCiiReference } from "@/data/calculators";
 import { trackToolUsage, trackPdfGenerated, trackComplianceFail } from "@/lib/analytics";
 
-// Rating renk sınıfları — component dışında sabit obje olarak tanımlandı.
-// Her render'da yeniden oluşturulmasını önler.
+// Rating renk sınıfları — component dışında sabit obje
 const RATING_COLORS: Record<string, string> = {
   A: "text-green-800 bg-green-100 border-green-400",
   B: "text-blue-800 bg-blue-100 border-blue-400",
@@ -16,7 +15,8 @@ const RATING_COLORS: Record<string, string> = {
 export function CiiCalculator() {
   const [vesselType, setVesselType] = useState("bulkCarrier");
   const [dwt, setDwt] = useState("");
-  const [fuelType, setFuelType] = useState("HFO");
+  // FIX: default fuel VLSFO — gerçek dünya kullanımı ile uyumlu
+  const [fuelType, setFuelType] = useState("VLSFO");
   const [totalFuel, setTotalFuel] = useState("");
   const [totalDistance, setTotalDistance] = useState("");
   const [targetYear, setTargetYear] = useState("2026");
@@ -24,7 +24,6 @@ export function CiiCalculator() {
   const [isGenerating, setIsGenerating] = useState(false);
   const pdfRef = useRef<HTMLDivElement>(null);
 
-  // StrictMode'da çift çalışmayı önlemek için ref ile guard
   const tracked = useRef(false);
   useEffect(() => {
     if (tracked.current) return;
@@ -33,23 +32,27 @@ export function CiiCalculator() {
   }, []);
 
   const handleCalculate = () => {
-    const dwtNum = parseFloat(dwt);
+    const dwtNum  = parseFloat(dwt);
     const fuelNum = parseFloat(totalFuel);
     const distNum = parseFloat(totalDistance);
     const yearNum = parseInt(targetYear);
 
     if (
       isNaN(dwtNum) || isNaN(fuelNum) || isNaN(distNum) ||
-      dwtNum <= 0 || fuelNum <= 0 || distNum <= 0
+      dwtNum <= 0   || fuelNum <= 0   || distNum <= 0
     ) return;
 
     const fuelData = FUEL_TYPES.find(f => f.value === fuelType);
     if (!fuelData) return;
 
-    const attainedCii = (fuelNum * fuelData.cf * 1e6) / (dwtNum * distNum);
+    // CII formülü — MEPC.364(79)
+    // Yakıt MT × CF(tCO2/t) × 1e6 → gCO2
+    // Payda: DWT(t) × Mesafe(NM)
+    // Sonuç: gCO2 / (DWT·NM)
+    const attainedCii  = (fuelNum * fuelData.cf * 1e6) / (dwtNum * distNum);
     const ciiReference = getCiiReference(dwtNum, vesselType);
     const reductionFactor = CII_REDUCTION_FACTORS[yearNum] || 0.11;
-    const requiredCii = ciiReference * (1 - reductionFactor);
+    const requiredCii  = ciiReference * (1 - reductionFactor);
 
     // MEPC.364(79) rating bantları
     const upperA = requiredCii * 0.80;
@@ -58,18 +61,18 @@ export function CiiCalculator() {
     const upperD = requiredCii * 1.10;
 
     let rating = "E";
-    if (attainedCii <= upperA) rating = "A";
+    if (attainedCii <= upperA)      rating = "A";
     else if (attainedCii <= upperB) rating = "B";
     else if (attainedCii <= upperC) rating = "C";
     else if (attainedCii <= upperD) rating = "D";
 
     const finalResult = {
-      attained: attainedCii.toFixed(2),
-      required: requiredCii.toFixed(2),
-      reference: ciiReference.toFixed(2),
+      attained:     attainedCii.toFixed(2),
+      required:     requiredCii.toFixed(2),
+      reference:    ciiReference.toFixed(2),
       rating,
-      factor: reductionFactor,
-      isCompliant: rating !== "D" && rating !== "E",
+      factor:       reductionFactor,
+      isCompliant:  rating !== "D" && rating !== "E",
     };
 
     setResult(finalResult);
@@ -95,12 +98,12 @@ export function CiiCalculator() {
         pdfRef,
         "Adriatica_CII_Preliminary_Report.pdf",
         [
-          { label: "Vessel Type", value: typeData?.label || vesselType },
-          { label: "Deadweight (DWT)", value: dwt },
-          { label: "Target Year", value: targetYear },
-          { label: "Fuel Type", value: fuelData?.label || fuelType },
+          { label: "Vessel Type",             value: typeData?.label || vesselType },
+          { label: "Deadweight (DWT)",         value: dwt },
+          { label: "Target Year",              value: targetYear },
+          { label: "Fuel Type",               value: fuelData?.label || fuelType },
           { label: "Total Fuel Consumed (MT)", value: totalFuel },
-          { label: "Total Distance (NM)", value: totalDistance },
+          { label: "Total Distance (NM)",      value: totalDistance },
         ],
         { toolName: "CII Operational Predictor" }
       );
@@ -121,7 +124,7 @@ export function CiiCalculator() {
     <div className="bg-white border border-border/40 rounded-sm p-6 md:p-8 shadow-sm">
       <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mb-1">CII Operational Predictor</h2>
       <p className="text-xs text-muted-foreground mb-6">
-        Using MEPC.364(79) exact formula: CII_ref = a × DWT^(-c)
+        Using MEPC.364(79) exact formula: CII_ref = a × DWT^(‑c)
       </p>
 
       <div className="space-y-6">
@@ -157,7 +160,9 @@ export function CiiCalculator() {
                 onChange={e => setTargetYear(e.target.value)}
                 className="w-full p-2 border rounded-sm bg-white text-sm focus:border-primary outline-none"
               >
-                {Object.keys(CII_REDUCTION_FACTORS).map(y => <option key={y} value={y}>{y}</option>)}
+                {Object.keys(CII_REDUCTION_FACTORS).map(y => (
+                  <option key={y} value={y}>{y}</option>
+                ))}
               </select>
             </div>
           </div>
@@ -254,10 +259,10 @@ export function CiiCalculator() {
           <div className="bg-gray-50 p-3 rounded-sm border text-[10px] text-gray-600 leading-relaxed">
             <p className="font-bold text-[#0B3B5C] mb-1">CALCULATION METHODOLOGY & ASSUMPTIONS:</p>
             <p>
-              Uses exact MEPC.364(79) Table 1 coefficients (a, c). Assumes standard fuel Carbon
-              Factors (CF). Does not account for weather routing adjustments or ice-class
-              corrections. D/E ratings indicate non-compliance for operational planning purposes;
-              formal enforcement requires consecutive year assessment per MEPC.364(79).
+              Uses exact MEPC.364(79) Table 1 coefficients (a, c). Carbon Factors per MEPC.344(78).
+              D/E ratings indicate non-compliance for operational planning purposes; formal
+              enforcement per MEPC.364(79) requires consecutive-year assessment.
+              Does not account for weather routing adjustments or ice-class corrections.
               This is NOT an official CII verification statement.
             </p>
           </div>

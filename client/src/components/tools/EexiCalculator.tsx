@@ -16,7 +16,7 @@ export function EexiCalculator() {
   const [targetYear, setTargetYear] = useState("2026");
 
   const [meMcr, setMeMcr] = useState("");
-  const [meFuel, setMeFuel] = useState("HFO");
+  const [meFuel, setMeFuel] = useState("VLSFO");
   const [meSfc, setMeSfc] = useState(DEFAULT_SFC_ME.toString());
   const [vref, setVref] = useState("");
 
@@ -30,7 +30,6 @@ export function EexiCalculator() {
   const [isGenerating, setIsGenerating] = useState(false);
   const pdfRef = useRef<HTMLDivElement>(null);
 
-  // StrictMode'da çift çalışmayı önlemek için ref ile guard
   const tracked = useRef(false);
   useEffect(() => {
     if (tracked.current) return;
@@ -39,58 +38,90 @@ export function EexiCalculator() {
   }, []);
 
   const handleCalculate = () => {
-    const dwtNum = parseFloat(dwt);
-    const mcrNum = parseFloat(meMcr);
+    const dwtNum  = parseFloat(dwt);
+    const mcrNum  = parseFloat(meMcr);
     const vrefNum = parseFloat(vref);
-    const sfcMe = parseFloat(meSfc) || DEFAULT_SFC_ME;
-    const sfcAux = parseFloat(auxSfc) || DEFAULT_SFC_AUX;
-    const auxNum = parseFloat(auxPower) || 0;
-    const ptoNum = parseFloat(ptoPower) || 0;
+    const sfcMe   = parseFloat(meSfc)   || DEFAULT_SFC_ME;
+    const sfcAux  = parseFloat(auxSfc)  || DEFAULT_SFC_AUX;
+    const auxNum  = parseFloat(auxPower) || 0;
+    const ptoNum  = parseFloat(ptoPower) || 0;
     const ptoEffNum = parseFloat(ptoEff) || 1.0;
     const yearNum = parseInt(targetYear);
 
     if (
       isNaN(dwtNum) || isNaN(mcrNum) || isNaN(vrefNum) ||
-      dwtNum <= 0 || mcrNum <= 0 || vrefNum <= 0
+      dwtNum <= 0   || mcrNum <= 0   || vrefNum <= 0
     ) return;
 
     const typeData = VESSEL_TYPES.find(v => v.value === vesselType);
     const fuelData = FUEL_TYPES.find(f => f.value === meFuel);
     if (!typeData || !fuelData) return;
 
-    // MEPC.338(76) — Ana makine emisyonu
-    const meEmissions = (sfcMe * fuelData.cf * mcrNum) / 1e6;
+    // ─────────────────────────────────────────────────────────────────
+    // EEXI FORMÜLÜ — MEPC.338(76)
+    //
+    // FIX #2: /1e6 + *1e6 çiftlemesi temizlendi.
+    //
+    // SFC birimi:  g/kWh
+    // MCR birimi:  kW
+    // CF birimi:   tCO2/t_fuel
+    //
+    // meEmissions  = SFC[g/kWh] × MCR[kW] × CF[tCO2/t]
+    //              = g/kWh × kW × tCO2/t
+    //
+    // Birimleri sadeleştirmek için CF'yi gCO2/g_fuel'e çevirmek gerekir:
+    //   CF[tCO2/t] = CF (sayısal olarak aynı, birim oranı 1:1)
+    //   çünkü 1 tCO2 / 1 t_fuel = 1 gCO2 / 1 g_fuel
+    //
+    // meEmissions  = SFC × MCR × CF   → birim: gCO2/h
+    // ptoReduction = feff × P_PTO × SFC × CF  → birim: gCO2/h
+    // auxEmissions = SFC_aux × PAE × CF  → birim: gCO2/h
+    //
+    // Attained EEXI = totalEmissions[gCO2/h]
+    //                 ─────────────────────────────────────────
+    //                 fi × fc × DWT[t] × Vref[knots]
+    //
+    // Bölümün payı gCO2/h, paydası t·knots → EEXI birimi: gCO2/(t·NM)
+    // Bu MEPC.308(73) ve MEPC.338(76) ile tutarlıdır.
+    // ─────────────────────────────────────────────────────────────────
 
-    // MEPC.338(76) — PTO indirimi: feff × P_PTO × SFC_ME × CF / 1e6
-    const ptoReduction = hasPto
-      ? (ptoEffNum * ptoNum * sfcMe * fuelData.cf) / 1e6
-      : 0;
-
-    // Yardımcı makine emisyonu
-    const auxEmissions = (sfcAux * fuelData.cf * auxNum) / 1e6;
+    const meEmissions   = sfcMe  * fuelData.cf * mcrNum;
+    const ptoReduction  = hasPto ? (ptoEffNum * ptoNum * sfcMe * fuelData.cf) : 0;
+    const auxEmissions  = sfcAux * fuelData.cf * auxNum;
 
     const totalEmissions = Math.max(0, meEmissions - ptoReduction + auxEmissions);
 
-    // Attained EEXI
     const attainedEexi =
-      (totalEmissions * 1e6) / (typeData.fi * typeData.fc * dwtNum * vrefNum);
+      totalEmissions / (typeData.fi * typeData.fc * dwtNum * vrefNum);
 
-    const baselineEedi = getEediBaseline(dwtNum, vesselType);
+    const baselineEedi    = getEediBaseline(dwtNum, vesselType);
     const reductionFactor = EEXI_REDUCTION_FACTORS[yearNum] || 0.08;
-    const requiredEexi = baselineEedi * (1 - reductionFactor);
+    const requiredEexi    = baselineEedi * (1 - reductionFactor);
 
-    // EPL — sadece non-compliant ise hesapla
+    // ─────────────────────────────────────────────────────────────────
+    // EPL HESABI — MEPC.338(76)
+    //
+    // FIX #1: Üs 1/3.5 → 1/3 olarak düzeltildi.
+    //
+    // EEXI ∝ MCR^(1/3) ilişkisine göre:
+    //   EPL = MCR × (requiredEEXI / attainedEEXI)^3
+    //       = MCR × (R/A)^3
+    //
+    // Math.pow(x, 1/3) = küp kök = IMO MEPC.338(76) resmi formülü.
+    // 1/3.5 kullanmak EPL'yi gerçekten daha yüksek (daha az kesim)
+    // gösteriyordu — Class onayında reddedilir.
+    // ─────────────────────────────────────────────────────────────────
     let eplLimit: string | null = null;
     if (attainedEexi > requiredEexi) {
-      eplLimit = (mcrNum * Math.pow(requiredEexi / attainedEexi, 1 / 3.5)).toFixed(0);
+      eplLimit = (mcrNum * Math.pow(requiredEexi / attainedEexi, 1 / 3)).toFixed(0);
     }
 
     const finalResult = {
-      attained: attainedEexi.toFixed(2),
-      required: requiredEexi.toFixed(2),
-      isCompliant: attainedEexi <= requiredEexi,
+      attained:     attainedEexi.toFixed(4), // 4 ondalık — EEXI küçük sayılar
+      required:     requiredEexi.toFixed(4),
+      isCompliant:  attainedEexi <= requiredEexi,
       eplLimit,
-      baselineEedi: baselineEedi.toFixed(2),
+      baselineEedi: baselineEedi.toFixed(4),
     };
 
     setResult(finalResult);
@@ -115,22 +146,22 @@ export function EexiCalculator() {
         pdfRef,
         "Adriatica_EEXI_Preliminary_Report.pdf",
         [
-          { label: "Vessel Type", value: typeData?.label || vesselType },
-          { label: "Deadweight (DWT)", value: dwt },
-          { label: "Target Year", value: targetYear },
-          { label: "Main Engine MCR (kW)", value: meMcr },
-          { label: "Fuel Type", value: meFuel },
-          { label: "SFC ME (g/kWh)", value: meSfc },
-          { label: "Vref (Knots)", value: vref },
-          { label: "PTO Installed", value: hasPto ? "Yes" : "No" },
+          { label: "Vessel Type",            value: typeData?.label || vesselType },
+          { label: "Deadweight (DWT)",        value: dwt },
+          { label: "Target Year",             value: targetYear },
+          { label: "Main Engine MCR (kW)",    value: meMcr },
+          { label: "Fuel Type",               value: meFuel },
+          { label: "SFC ME (g/kWh)",          value: meSfc },
+          { label: "Vref (Knots)",            value: vref },
+          { label: "PTO Installed",           value: hasPto ? "Yes" : "No" },
           ...(hasPto
             ? [
-                { label: "PTO Power (kW)", value: ptoPower },
+                { label: "PTO Power (kW)",         value: ptoPower },
                 { label: "PTO Efficiency (f_eff)", value: ptoEff },
               ]
             : []),
           { label: "Auxiliary Power PAE (kW)", value: auxPower },
-          { label: "SFC AUX (g/kWh)", value: auxSfc },
+          { label: "SFC AUX (g/kWh)",          value: auxSfc },
         ],
         { toolName: "EEXI Preliminary Calculator" }
       );
@@ -151,7 +182,7 @@ export function EexiCalculator() {
     <div className="bg-white border border-border/40 rounded-sm p-6 md:p-8 shadow-sm">
       <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mb-1">EEXI Calculation</h2>
       <p className="text-xs text-muted-foreground mb-6">
-        Based on MEPC.338(76) - Including PTO/PTI and Auxiliary Engine parameters.
+        Based on MEPC.338(76) — Including PTO/PTI and Auxiliary Engine parameters.
       </p>
 
       <div className="space-y-6">
@@ -259,7 +290,7 @@ export function EexiCalculator() {
             <div className="space-y-4">
               <div>
                 <label className="block text-xs font-medium text-muted-foreground mb-1">
-                  Total Auxiliary Power - PAE (kW)
+                  Total Auxiliary Power — PAE (kW)
                 </label>
                 <input
                   type="number"
@@ -368,7 +399,7 @@ export function EexiCalculator() {
                 <h5 className="font-bold text-sm text-red-800 mb-1">EPL LIMITATION ESTIMATE</h5>
                 <p className="font-mono font-bold text-lg text-[#0B3B5C]">
                   {result.eplLimit} kW{" "}
-                  <span className="text-xs font-normal text-gray-600">(from {meMcr} kW)</span>
+                  <span className="text-xs font-normal text-gray-600">(from {meMcr} kW MCR)</span>
                 </p>
               </div>
             )}
@@ -377,11 +408,11 @@ export function EexiCalculator() {
           <div className="bg-gray-50 p-3 rounded-sm border text-[10px] text-gray-600 leading-relaxed">
             <p className="font-bold text-[#0B3B5C] mb-1">CALCULATION METHODOLOGY & ASSUMPTIONS:</p>
             <p>
-              This estimation uses a simplified baseline formula derived from MEPC.338(76) guidelines,
-              mapping vessel parameters to Attained EEDI baselines. PTO reduction applied as:
-              f_eff × P_PTO × SFC_ME × CF / 1,000,000. Weather corrections (fw) assume standard sea
-              trials. Excludes specific hull line optimization factors (C_FV). This document is NOT
-              an IEE Certificate or Class-approved EEXI technical file.
+              Attained EEXI calculated per MEPC.338(76): (SFC × CF × MCR) / (fi × fc × DWT × Vref).
+              PTO reduction applied as: f_eff × P_PTO × SFC_ME × CF. EPL estimated using cubic
+              relationship: EPL = MCR × (Required/Attained)^(1/3) per MEPC.338(76).
+              Weather corrections (fw) assume standard sea trials. Excludes C_FV hull correction
+              factors. This document is NOT an IEE Certificate or Class-approved EEXI technical file.
             </p>
           </div>
         </div>

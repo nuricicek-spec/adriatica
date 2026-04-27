@@ -10,7 +10,6 @@ export function BwtsCalculator() {
   const [isGenerating, setIsGenerating] = useState(false);
   const pdfRef = useRef<HTMLDivElement>(null);
 
-  // StrictMode'da çift çalışmayı önlemek için ref ile guard
   const tracked = useRef(false);
   useEffect(() => {
     if (tracked.current) return;
@@ -19,12 +18,14 @@ export function BwtsCalculator() {
   }, []);
 
   const handleCalculate = () => {
-    const capNum = parseFloat(pumpDesignCap);
+    const capNum   = parseFloat(pumpDesignCap);
     const countNum = parseInt(pumpCount);
     const marginNum = parseFloat(safetyMargin) || 1.10;
 
     if (isNaN(capNum) || isNaN(countNum) || capNum <= 0 || countNum <= 0) return;
 
+    // BWTS kapasitesi = Eş zamanlı çalışan maksimum pompa akışı × güvenlik marjini
+    // Kullanıcı "simultaneous" seçimini yaptığı için bu formül doğrudur.
     const requiredCapacity = capNum * countNum * marginNum;
     setResult(parseFloat(requiredCapacity.toFixed(1)));
 
@@ -47,9 +48,9 @@ export function BwtsCalculator() {
         pdfRef,
         "Adriatica_BWTS_Sizing_Report.pdf",
         [
-          { label: "Largest Ballast Pump Design Capacity (m³/h)", value: pumpDesignCap },
-          { label: "Number of Parallel Pumps", value: pumpCount },
-          { label: "Design Safety Margin", value: marginLabel },
+          { label: "Largest Ballast Pump Design Capacity (m³/h)",       value: pumpDesignCap },
+          { label: "Pumps Operating Simultaneously",                     value: pumpCount },
+          { label: "Design Safety Margin",                               value: marginLabel },
         ],
         { toolName: "BWTS Capacity Sizing" }
       );
@@ -94,19 +95,32 @@ export function BwtsCalculator() {
                 * Use the design capacity from the pump nameplate, not operational estimates.
               </p>
             </div>
-            <div>
+            <div className="md:col-span-2">
+              {/*
+                FIX #5: Label ve açıklama güncellendi.
+                Önceki: "Number of Parallel Pumps" — operasyonda kaç pompa
+                çalıştırıldığını sormuyordu, toplam pompa sayısını soruyordu.
+                Bu durum gereğinden büyük (pahalı) BWTS seçimine yol açıyordu.
+                Şimdi: "Pumps operating simultaneously" — BWTS kapasitesi
+                aynı anda sisteme girebilecek maksimum akış üzerinden belirlenir.
+              */}
               <label className="block text-xs font-medium text-muted-foreground mb-1">
-                Number of Parallel Pumps
+                Pumps Operating Simultaneously
               </label>
               <select
                 value={pumpCount}
                 onChange={e => setPumpCount(e.target.value)}
                 className="w-full p-2 border rounded-sm bg-white text-sm focus:border-primary outline-none"
               >
-                <option value="1">1 (Single Pump Setup)</option>
-                <option value="2">2 (Twin Pump Setup)</option>
-                <option value="3">3 (Triple Pump Setup)</option>
+                <option value="1">1 pump at a time (most vessels)</option>
+                <option value="2">2 pumps simultaneously</option>
+                <option value="3">3 pumps simultaneously</option>
               </select>
+              <p className="text-[10px] text-muted-foreground mt-1">
+                * Select the maximum number of pumps that can discharge into the ballast system
+                at the same time. If pumps are never run simultaneously, select 1.
+                Over-selecting leads to unnecessary oversizing of the BWTS unit.
+              </p>
             </div>
           </div>
         </div>
@@ -160,7 +174,8 @@ export function BwtsCalculator() {
               </p>
             </div>
             <p className="text-[10px] text-gray-600">
-              Calculated with {(parseFloat(safetyMargin) - 1) * 100}% system margin
+              Calculated with {(parseFloat(safetyMargin) - 1) * 100}% system margin —
+              based on {pumpCount} pump(s) operating simultaneously
             </p>
           </div>
 
@@ -177,9 +192,10 @@ export function BwtsCalculator() {
           <div className="mt-4 bg-gray-50 p-3 rounded-sm border text-[10px] text-gray-600 leading-relaxed">
             <p className="font-bold text-[#0B3B5C] mb-1">CALCULATION METHODOLOGY:</p>
             <p>
-              Sizing based on peak ballast pump discharge flow rates multiplied by a user-defined
-              safety factor. This does not account for specific filter backwash volumes or system
-              self-cleaning cycles unique to individual OEM technologies.
+              BWTS capacity sized on peak simultaneous ballast pump discharge flow multiplied by
+              a user-defined safety factor. "Simultaneous" refers to pumps that can discharge into
+              the ballast system at the same time during worst-case operations. Does not account
+              for filter backwash volumes or OEM-specific self-cleaning cycles.
             </p>
           </div>
         </div>
