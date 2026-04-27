@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import type { FormEvent } from "react";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import { Helmet } from "react-helmet-async";
@@ -17,34 +17,28 @@ import {
   Search,
   Wrench,
   FileText,
-  CheckCircle2,
 } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { insights } from "@/data/insights";
 import { TRUST_METRICS } from "@/config/trustMetrics";
-import { trackEmailSignup, trackEvent } from "@/lib/analytics";
-
-// Static — module scope, no useMemo needed
-const recentInsights = [...insights]
-  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-  .slice(0, 3);
+import { trackEmailSignup } from "@/lib/analytics";
 
 export default function Home() {
   const [formStatus, setFormStatus] = useState<
     "idle" | "submitting" | "success" | "error"
   >("idle");
-  const [errorType, setErrorType] = useState<
-    "generic" | "rate-limit" | "timeout" | null
-  >(null);
+  const [errorType, setErrorType] = useState<"generic" | "rate-limit" | null>(null);
 
-  // FIX Tools lead capture state
-  const [toolEmail, setToolEmail] = useState("");
-  const [toolEmailStatus, setToolEmailStatus] = useState<
-    "idle" | "submitting" | "success" | "error"
-  >("idle");
-  const [pendingToolHref, setPendingToolHref] = useState<string | null>(null);
+  // FIX #2 (kod): dependency array'e insights eklendi — ESLint exhaustive-deps uyarısı giderildi
+  // Date parsing riski: new Date() yerine string karşılaştırma kullanıldı
+  const recentInsights = useMemo(
+    () =>
+      [...insights]
+        .sort((a, b) => b.date.localeCompare(a.date))
+        .slice(0, 3),
+    [insights]
+  );
 
-  // AbortController + 10sn timeout
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormStatus("submitting");
@@ -54,18 +48,12 @@ export default function Home() {
     const formData = new FormData(form);
     formData.set("_subject", "New General Inquiry from Homepage");
 
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10_000);
-
     try {
       const response = await fetch(form.action, {
         method: "POST",
         body: formData,
         headers: { Accept: "application/json" },
-        signal: controller.signal,
       });
-
-      clearTimeout(timeoutId);
 
       if (response.ok) {
         setFormStatus("success");
@@ -76,50 +64,10 @@ export default function Home() {
         if (response.status === 429) setErrorType("rate-limit");
         else setErrorType("generic");
       }
-    } catch (err) {
-      clearTimeout(timeoutId);
-      setFormStatus("error");
-      if (err instanceof Error && err.name === "AbortError") {
-        setErrorType("timeout");
-      } else {
-        setErrorType("generic");
-      }
-    }
-  };
-
-  // Tools lead capture — email alındıktan sonra araca yönlendir
-  const handleToolEmailSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!pendingToolHref) return;
-    setToolEmailStatus("submitting");
-
-    const formData = new FormData();
-    formData.set("email", toolEmail);
-    formData.set("_subject", "Tool Access Request from Homepage");
-
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8_000);
-
-    try {
-      await fetch("https://formspree.io/f/myknqjbz", {
-        method: "POST",
-        body: formData,
-        headers: { Accept: "application/json" },
-        signal: controller.signal,
-      });
-      clearTimeout(timeoutId);
     } catch {
-      clearTimeout(timeoutId);
-      // Email capture başarısız olsa bile araca yönlendir — friction yaratma
+      setFormStatus("error");
+      setErrorType("generic");
     }
-
-    trackEvent("tool_email_capture", { tool: pendingToolHref });
-    setToolEmailStatus("success");
-
-    // Kısa delay sonra navigate — kullanıcı "success" görür
-    setTimeout(() => {
-      window.location.href = pendingToolHref;
-    }, 800);
   };
 
   const scrollToServices = () => {
@@ -273,14 +221,17 @@ export default function Home() {
 
         {/* ── HERO ─────────────────────────────────────────────────────────── */}
         <section className="relative min-h-screen flex overflow-hidden pt-32 pb-16 md:pt-24 md:pb-24">
-          <div className="absolute inset-0 z-0 bg-background" />
+          <div className="absolute inset-0 z-0">
+            <div className="absolute top-0 right-0 w-2/3 h-full bg-[hsl(var(--color-lapis-800))]/5 -skew-x-12 transform origin-top" />
+            <div className="absolute bottom-0 left-0 w-1/3 h-2/3 bg-primary/5 skew-x-12 transform origin-bottom" />
+          </div>
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-24 items-center">
               <m.div
-                initial={{ x: -30 }}
-                animate={{ x: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
                 className="text-center lg:text-left mb-10 lg:mb-0"
               >
                 <p className="text-primary font-medium tracking-[0.2em] uppercase mb-4">
@@ -335,7 +286,6 @@ export default function Home() {
                   </Link>
                   <button
                     onClick={scrollToServices}
-                    aria-label="Scroll to services section"
                     className="px-8 py-4 bg-transparent border border-primary text-primary font-medium rounded-sm hover:bg-primary/5 transition-all duration-300 uppercase tracking-wide text-sm"
                   >
                     Explore Services
@@ -344,22 +294,21 @@ export default function Home() {
               </m.div>
 
               <m.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
+                initial={{ opacity: 0, scale: 0.9, rotate: 5 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
                 className="relative flex justify-center items-center mt-8 lg:mt-0"
               >
+                {/* FIX #3: mobilde max-w-[200px] → max-w-[240px] — daha iyi görsel denge */}
                 <div className="relative w-full max-w-[240px] sm:max-w-[280px] lg:max-w-md aspect-square flex items-center justify-center">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent rounded-full" />
-                  {/* FIX: decoding="async" eklendi — main thread parse maliyeti azaltıldı */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-3xl" />
                   <img
                     src="/logo.svg"
                     alt="Adriatica D.O.O. Symbol"
                     width={400}
                     height={400}
                     fetchPriority="high"
-                    decoding="async"
-                    className="w-full h-auto drop-shadow-xl"
+                    className="w-full h-auto drop-shadow-2xl"
                   />
                 </div>
               </m.div>
@@ -371,7 +320,6 @@ export default function Home() {
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5, duration: 1 }}
             className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-primary/70"
-            aria-hidden="true"
           >
             <span className="text-xs uppercase tracking-widest mb-2">Scroll</span>
             <ArrowDown className="animate-bounce w-5 h-5" />
@@ -423,7 +371,7 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center p-6 border-l-2 border-primary/20">
-                <ShieldCheck className="h-12 w-12 text-primary mx-auto mb-4" aria-hidden="true" />
+                <ShieldCheck className="h-12 w-12 text-primary mx-auto mb-4" />
                 <h3 className="font-display text-xl font-bold text-primary mb-2">
                   Technical Excellence & Compliance
                 </h3>
@@ -433,7 +381,7 @@ export default function Home() {
                 </p>
               </div>
               <div className="text-center p-6 border-l-2 border-primary/20">
-                <Gauge className="h-12 w-12 text-primary mx-auto mb-4" aria-hidden="true" />
+                <Gauge className="h-12 w-12 text-primary mx-auto mb-4" />
                 <h3 className="font-display text-xl font-bold text-primary mb-2">
                   Operational Efficiency
                 </h3>
@@ -443,7 +391,7 @@ export default function Home() {
                 </p>
               </div>
               <div className="text-center p-6 border-l-2 border-primary/20">
-                <Handshake className="h-12 w-12 text-primary mx-auto mb-4" aria-hidden="true" />
+                <Handshake className="h-12 w-12 text-primary mx-auto mb-4" />
                 <h3 className="font-display text-xl font-bold text-primary mb-2">
                   Owner's Trusted Representative
                 </h3>
@@ -472,35 +420,36 @@ export default function Home() {
             </div>
 
             <div className="relative">
-              <div
-                className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary/20 transform -translate-x-1/2 hidden md:block"
-                aria-hidden="true"
-              />
+              {/* Dikey bağlantı çizgisi (masaüstünde ortada) */}
+              <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary/20 transform -translate-x-1/2 hidden md:block" />
+
               <div className="space-y-12">
+                {/* Adım 1 — solda metin */}
                 <div className="relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
                   <div className="flex-1 md:text-right md:pr-16">
                     <div className="flex items-center gap-3 mb-2 md:justify-end">
-                      <Clipboard className="h-6 w-6 text-primary shrink-0" aria-hidden="true" />
+                      <Clipboard className="h-6 w-6 text-primary shrink-0" />
                       <h3 className="font-display text-xl font-bold text-primary">Brief & Information</h3>
                     </div>
                     <p className="text-foreground/75">
                       You share vessel details, operational profile, and specific concerns.
                     </p>
                   </div>
-                  <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-white font-bold text-lg z-10 shrink-0" aria-label="Step 1">
+                  <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-white font-bold text-lg z-10 shrink-0">
                     1
                   </div>
                   <div className="flex-1 md:pl-16 hidden md:block" />
                 </div>
 
+                {/* Adım 2 — sağda metin */}
                 <div className="relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
                   <div className="flex-1 md:pr-16 hidden md:block" />
-                  <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-white font-bold text-lg z-10 shrink-0" aria-label="Step 2">
+                  <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-white font-bold text-lg z-10 shrink-0">
                     2
                   </div>
                   <div className="flex-1 md:pl-16">
                     <div className="flex items-center gap-3 mb-2">
-                      <Search className="h-6 w-6 text-primary shrink-0" aria-hidden="true" />
+                      <Search className="h-6 w-6 text-primary shrink-0" />
                       <h3 className="font-display text-xl font-bold text-primary">Analysis & Planning</h3>
                     </div>
                     <p className="text-foreground/75">
@@ -509,30 +458,32 @@ export default function Home() {
                   </div>
                 </div>
 
+                {/* Adım 3 — solda metin */}
                 <div className="relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
                   <div className="flex-1 md:text-right md:pr-16">
                     <div className="flex items-center gap-3 mb-2 md:justify-end">
-                      <Wrench className="h-6 w-6 text-primary shrink-0" aria-hidden="true" />
+                      <Wrench className="h-6 w-6 text-primary shrink-0" />
                       <h3 className="font-display text-xl font-bold text-primary">Execution & Supervision</h3>
                     </div>
                     <p className="text-foreground/75">
                       We handle engineering oversight, contractor coordination, and quality control.
                     </p>
                   </div>
-                  <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-white font-bold text-lg z-10 shrink-0" aria-label="Step 3">
+                  <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-white font-bold text-lg z-10 shrink-0">
                     3
                   </div>
                   <div className="flex-1 md:pl-16 hidden md:block" />
                 </div>
 
+                {/* Adım 4 — sağda metin */}
                 <div className="relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
                   <div className="flex-1 md:pr-16 hidden md:block" />
-                  <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-white font-bold text-lg z-10 shrink-0" aria-label="Step 4">
+                  <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-white font-bold text-lg z-10 shrink-0">
                     4
                   </div>
                   <div className="flex-1 md:pl-16">
                     <div className="flex items-center gap-3 mb-2">
-                      <FileText className="h-6 w-6 text-primary shrink-0" aria-hidden="true" />
+                      <FileText className="h-6 w-6 text-primary shrink-0" />
                       <h3 className="font-display text-xl font-bold text-primary">Documentation & Handover</h3>
                     </div>
                     <p className="text-foreground/75">
@@ -544,7 +495,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-
+      
         {/* ── CORE COMPETENCIES ───────────────────────────────────────────── */}
         <section id="core-competencies" className="py-24 md:py-32 bg-white relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -610,7 +561,7 @@ export default function Home() {
 
         {/* ── MID-PAGE CTA ────────────────────────────────────────────────── */}
         <section className="relative py-20 bg-primary overflow-hidden">
-          <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
+          <div className="absolute inset-0 z-0 pointer-events-none">
             <div className="absolute top-0 right-0 w-2/3 h-full bg-[hsl(var(--color-lapis-800))]/20 -skew-x-12 transform origin-top" />
             <div className="absolute inset-0 opacity-10">
               <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -659,19 +610,13 @@ export default function Home() {
                   className="w-full max-w-[300px] h-auto"
                   width={300}
                   height={215}
-                  decoding="async"
                 />
               </div>
             </div>
           </div>
         </section>
 
-        {/* ── ENGINEERING TOOLS — LEAD CAPTURE ────────────────────────────────
-            FIX: Sadece link değil — email capture funnel.
-            Kullanıcı "Run Assessment" tıkladığında email sorar,
-            ardından araca yönlendirir. Email capture başarısız
-            olsa bile araç erişimi engellenmez (friction sıfır).
-        ─────────────────────────────────────────────────────────────────────── */}
+        {/* ── ENGINEERING TOOLS ─────────────────────────────────────────────── */}
         <section className="py-20 bg-neutral-50 border-b border-border/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
@@ -687,95 +632,52 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Email capture modal — tool seçilince görünür */}
-            {pendingToolHref !== null && toolEmailStatus !== "success" && (
-              <div
-                className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
-                onClick={() => setPendingToolHref(null)}
-                role="dialog"
-                aria-modal="true"
-                aria-label="Access compliance tool"
-              >
-                <div
-                  className="bg-white rounded-sm max-w-md w-full p-8 shadow-xl"
-                  onClick={e => e.stopPropagation()}
-                >
-                  <h3 className="font-display text-xl font-bold text-primary mb-2">
-                    Get Your Free Assessment
-                  </h3>
-                  <p className="text-sm text-muted-foreground mb-6">
-                    Enter your email to access the tool and receive a summary of your results.
-                    No commitment required.
-                  </p>
-                  <form onSubmit={handleToolEmailSubmit} className="space-y-3">
-                    <input
-                      type="email"
-                      value={toolEmail}
-                      onChange={e => setToolEmail(e.target.value)}
-                      placeholder="your@email.com"
-                      required
-                      autoFocus
-                      className="w-full px-4 py-3 border border-border rounded-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-sm"
-                    />
-                    <button
-                      type="submit"
-                      disabled={toolEmailStatus === "submitting"}
-                      className="w-full py-3 bg-primary text-white font-medium rounded-sm hover:bg-[hsl(var(--color-lapis-800))] transition-colors disabled:opacity-50"
-                    >
-                      {toolEmailStatus === "submitting" ? "Opening tool..." : "Access Free Tool →"}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        // Email vermeden de erişime izin ver — friction sıfır
-                        window.location.href = pendingToolHref!;
-                      }}
-                      className="w-full text-xs text-muted-foreground hover:text-foreground transition-colors pt-1"
-                    >
-                      Skip — access without email
-                    </button>
-                  </form>
-                </div>
-              </div>
-            )}
-
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                {
-                  href: "/tools?tool=eexi",
-                  title: "EEXI Calculator",
-                  description: "Evaluate your vessel's Energy Efficiency Existing Ship Index compliance.",
-                },
-                {
-                  href: "/tools?tool=cii",
-                  title: "CII Rating Tool",
-                  description: "Estimate your Carbon Intensity Indicator rating and operational impact.",
-                },
-                {
-                  href: "/tools?tool=bwts",
-                  title: "BWTS Compliance",
-                  description: "Check ballast water treatment system compliance and retrofit needs.",
-                },
-              ].map(tool => (
-                <button
-                  key={tool.href}
-                  onClick={() => setPendingToolHref(tool.href)}
-                  className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col text-left w-full"
-                >
-                  <h3 className="text-lg font-bold text-primary mb-2">{tool.title}</h3>
-                  <p className="text-sm text-foreground/70 mb-6 flex-1">{tool.description}</p>
-                  <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
-                    Run Assessment →
-                  </span>
-                </button>
-              ))}
+              <Link
+                href="/tools?tool=eexi"
+                className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col"
+              >
+                <h3 className="text-lg font-bold text-primary mb-2">EEXI Calculator</h3>
+                <p className="text-sm text-foreground/70 mb-6 flex-1">
+                  Evaluate your vessel's Energy Efficiency Existing Ship Index compliance.
+                </p>
+                <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
+                  Run Assessment →
+                </span>
+              </Link>
+
+              <Link
+                href="/tools?tool=cii"
+                className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col"
+              >
+                <h3 className="text-lg font-bold text-primary mb-2">CII Rating Tool</h3>
+                <p className="text-sm text-foreground/70 mb-6 flex-1">
+                  Estimate your Carbon Intensity Indicator rating and operational impact.
+                </p>
+                <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
+                  Run Assessment →
+                </span>
+              </Link>
+
+              <Link
+                href="/tools?tool=bwts"
+                className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col"
+              >
+                <h3 className="text-lg font-bold text-primary mb-2">BWTS Compliance</h3>
+                <p className="text-sm text-foreground/70 mb-6 flex-1">
+                  Check ballast water treatment system compliance and retrofit needs.
+                </p>
+                <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
+                  Run Assessment →
+                </span>
+              </Link>
             </div>
           </div>
         </section>
 
         {/* ── RECENT INSIGHTS ─────────────────────────────────────────────── */}
         <section className="py-24 bg-primary relative overflow-hidden">
-          <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
+          <div className="absolute inset-0 z-0 pointer-events-none">
             <div className="absolute top-0 left-0 w-1/2 h-full bg-[hsl(var(--color-lapis-800))]/10 skew-x-12 transform origin-top" />
             <div className="absolute inset-0 opacity-5">
               <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -821,117 +723,77 @@ export default function Home() {
               respond within 24 hours. Accepting commissions for Q2 2026.
             </p>
 
-            {/*
-              FIX CLS: DOM her iki state'te de mevcut, sadece visibility
-              değişiyor. Layout shift sıfır.
-              FIX CRO: Form üstüne value exchange metni eklendi.
-            */}
-            <div className="max-w-md mx-auto relative">
-              {/* Success state */}
-              <div
-                className={`transition-opacity duration-300 ${
-                  formStatus === "success"
-                    ? "opacity-100 relative"
-                    : "opacity-0 absolute inset-0 pointer-events-none"
-                }`}
-                aria-hidden={formStatus !== "success"}
-              >
-                <div className="p-8 bg-white border border-green-200 rounded-sm shadow-sm">
-                  <CheckCircle2 className="h-10 w-10 text-green-600 mx-auto mb-3" aria-hidden="true" />
-                  <p className="text-green-800 text-lg font-medium mb-2">Thank you!</p>
-                  <p className="text-foreground/75 text-sm">
-                    Your consultation request has been received. We'll be in touch shortly.
-                  </p>
-                  <button
-                    onClick={() => setFormStatus("idle")}
-                    className="mt-6 text-primary hover:underline text-sm"
-                  >
-                    Send another request →
-                  </button>
-                </div>
-              </div>
-
-              {/* Form state */}
-              <div
-                className={`transition-opacity duration-300 ${
-                  formStatus !== "success"
-                    ? "opacity-100 relative"
-                    : "opacity-0 absolute inset-0 pointer-events-none"
-                }`}
-                aria-hidden={formStatus === "success"}
-              >
-                {/* FIX CRO: value exchange metni — friction azaltır */}
-                <div className="flex items-center justify-center gap-6 mb-6 text-xs text-muted-foreground">
-                  <span className="flex items-center gap-1.5">
-                    <CheckCircle2 className="h-3.5 w-3.5 text-primary shrink-0" aria-hidden="true" />
-                    Free 15-min technical review
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <CheckCircle2 className="h-3.5 w-3.5 text-primary shrink-0" aria-hidden="true" />
-                    No commitment required
-                  </span>
-                </div>
-
-                <form
-                  action="https://formspree.io/f/myknqjbz"
-                  method="POST"
-                  onSubmit={handleSubmit}
-                  className="space-y-4 text-left w-full"
+            {formStatus === "success" ? (
+              <div className="max-w-md mx-auto p-8 bg-white border border-green-200 rounded-sm shadow-sm">
+                <p className="text-green-800 text-lg font-medium mb-2">Thank you!</p>
+                <p className="text-foreground/75">
+                  Your consultation request has been received. We'll be in touch shortly.
+                </p>
+                <button
+                  onClick={() => setFormStatus("idle")}
+                  className="mt-6 text-primary hover:underline text-sm"
                 >
-                  <div className="hidden" aria-hidden="true">
-                    <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" />
-                  </div>
-
-                  <div>
-                    <label htmlFor="home-email" className="sr-only">Email address</label>
-                    <input
-                      type="email"
-                      name="email"
-                      id="home-email"
-                      placeholder="Enter your email address"
-                      className="w-full px-6 py-4 bg-white border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
-                      required
-                      disabled={formStatus === "submitting"}
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={formStatus === "submitting"}
-                    className="w-full py-4 bg-primary text-white font-medium hover:bg-[hsl(var(--color-lapis-800))] transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {formStatus === "submitting" ? "Sending..." : "Request Consultation"}
-                  </button>
-
-                  {formStatus === "error" && (
-                    <div className="text-red-600 text-sm text-center mt-2" role="alert" aria-live="polite">
-                      {errorType === "rate-limit" ? (
-                        <span>Too many requests. Please wait a moment and try again.</span>
-                      ) : errorType === "timeout" ? (
-                        <span>Request timed out. Please check your connection and try again.</span>
-                      ) : (
-                        <>
-                          Something went wrong. Please try again or contact us at{" "}
-                          <a href="mailto:info@adriaticadoo.com" className="underline font-medium">
-                            info@adriaticadoo.com
-                          </a>.
-                        </>
-                      )}
-                    </div>
-                  )}
-
-                  <p className="text-[11px] text-center text-muted-foreground pt-1">
-                    By submitting, you agree to our{" "}
-                    <a
-                      href="/privacy-policy"
-                      className="underline decoration-muted-foreground/50 hover:text-foreground hover:decoration-foreground transition-colors"
-                    >
-                      Privacy Policy
-                    </a>.
-                  </p>
-                </form>
+                  Send another request →
+                </button>
               </div>
-            </div>
+            ) : (
+              <form
+                action="https://formspree.io/f/myknqjbz"
+                method="POST"
+                onSubmit={handleSubmit}
+                className="max-w-md mx-auto space-y-4 text-left"
+              >
+                <div className="hidden" aria-hidden="true">
+                  <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" />
+                </div>
+
+                <div>
+                  <label htmlFor="home-email" className="sr-only">Email address</label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="home-email"
+                    placeholder="Enter your email address"
+                    className="w-full px-6 py-4 bg-white border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                    required
+                    disabled={formStatus === "submitting"}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={formStatus === "submitting"}
+                  className="w-full py-4 bg-primary text-white font-medium hover:bg-[hsl(var(--color-lapis-800))] transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {formStatus === "submitting" ? "Sending..." : "Request Consultation"}
+                </button>
+
+                {formStatus === "error" && (
+                  <div className="text-red-600 text-sm text-center mt-2" role="alert">
+                    {errorType === "rate-limit" ? (
+                      <span>Too many requests. Please wait a moment and try again.</span>
+                    ) : (
+                      <>
+                        Something went wrong. Please try again or contact us directly at{" "}
+                        <a href="mailto:info@adriaticadoo.com" className="underline font-medium">
+                          info@adriaticadoo.com
+                        </a>.
+                      </>
+                    )}
+                  </div>
+                )}
+
+                <p className="text-[11px] text-center text-muted-foreground pt-1">
+                  By submitting, you agree to our{" "}
+                  <a
+                    href="/privacy-policy"
+                    className="underline decoration-muted-foreground/50 hover:text-foreground hover:decoration-foreground transition-colors"
+                  >
+                    Privacy Policy
+                  </a>.
+                </p>
+              </form>
+            )}
           </div>
         </section>
 
