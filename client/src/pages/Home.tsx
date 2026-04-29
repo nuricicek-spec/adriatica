@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import type { FormEvent } from "react";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import { Helmet } from "react-helmet-async";
@@ -17,68 +17,28 @@ import {
   Search,
   Wrench,
   FileText,
-  CheckCircle2,
 } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { insights } from "@/data/insights";
 import { TRUST_METRICS } from "@/config/trustMetrics";
-import { trackEmailSignup, trackEvent } from "@/lib/analytics";
-
-// Static sort — module scope, no useMemo needed
-const recentInsights = [...insights]
-  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-  .slice(0, 3);
-
-// Tool definitions — single source of truth shared between card grid and email modal
-const TOOLS = [
-  {
-    id: "eexi",
-    href: "/tools?tool=eexi",
-    title: "EEXI Calculator",
-    description: "Evaluate your vessel's Energy Efficiency Existing Ship Index compliance.",
-  },
-  {
-    id: "cii",
-    href: "/tools?tool=cii",
-    title: "CII Rating Tool",
-    description: "Estimate your Carbon Intensity Indicator rating and operational impact.",
-  },
-  {
-    id: "bwts",
-    href: "/tools?tool=bwts",
-    title: "BWTS Compliance",
-    description: "Check ballast water treatment system compliance and retrofit needs.",
-  },
-  {
-    id: "ets",
-    href: "/tools?tool=ets",
-    title: "EU ETS Cost",
-    description: "Forecast your EU Emissions Trading System allowance costs for 2024–2026.",
-  },
-  {
-    id: "fueleu",
-    href: "/tools?tool=fueleu",
-    title: "FuelEU Penalty",
-    description: "Estimate your FuelEU Maritime non-compliance penalty exposure.",
-  },
-] as const;
+import { trackEmailSignup } from "@/lib/analytics";
 
 export default function Home() {
   const [formStatus, setFormStatus] = useState<
     "idle" | "submitting" | "success" | "error"
   >("idle");
-  const [errorType, setErrorType] = useState<
-    "generic" | "rate-limit" | "timeout" | null
-  >(null);
+  const [errorType, setErrorType] = useState<"generic" | "rate-limit" | null>(null);
 
-  // Tool lead-capture state
-  const [toolEmail, setToolEmail] = useState("");
-  const [toolEmailStatus, setToolEmailStatus] = useState<
-    "idle" | "submitting" | "success" | "error"
-  >("idle");
-  const [pendingToolHref, setPendingToolHref] = useState<string | null>(null);
+  // FIX #2 (kod): dependency array'e insights eklendi — ESLint exhaustive-deps uyarısı giderildi
+  // Date parsing riski: new Date() yerine string karşılaştırma kullanıldı
+  const recentInsights = useMemo(
+    () =>
+      [...insights]
+        .sort((a, b) => b.date.localeCompare(a.date))
+        .slice(0, 3),
+    [insights]
+  );
 
-  // AbortController + 10s timeout
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormStatus("submitting");
@@ -88,17 +48,12 @@ export default function Home() {
     const formData = new FormData(form);
     formData.set("_subject", "New General Inquiry from Homepage");
 
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10_000);
-
     try {
       const response = await fetch(form.action, {
         method: "POST",
         body: formData,
         headers: { Accept: "application/json" },
-        signal: controller.signal,
       });
-      clearTimeout(timeoutId);
 
       if (response.ok) {
         setFormStatus("success");
@@ -109,47 +64,16 @@ export default function Home() {
         if (response.status === 429) setErrorType("rate-limit");
         else setErrorType("generic");
       }
-    } catch (err) {
-      clearTimeout(timeoutId);
-      setFormStatus("error");
-      if (err instanceof Error && err.name === "AbortError") setErrorType("timeout");
-      else setErrorType("generic");
-    }
-  };
-
-  // Tool email capture → redirect
-  const handleToolEmailSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!pendingToolHref) return;
-    setToolEmailStatus("submitting");
-
-    const formData = new FormData();
-    formData.set("email", toolEmail);
-    formData.set("_subject", "Tool Access Request from Homepage");
-
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8_000);
-
-    try {
-      await fetch("https://formspree.io/f/myknqjbz", {
-        method: "POST",
-        body: formData,
-        headers: { Accept: "application/json" },
-        signal: controller.signal,
-      });
-      clearTimeout(timeoutId);
     } catch {
-      clearTimeout(timeoutId);
-      // Capture failure — still redirect, never block access
+      setFormStatus("error");
+      setErrorType("generic");
     }
-
-    trackEvent("tool_email_capture", { tool: pendingToolHref });
-    setToolEmailStatus("success");
-    setTimeout(() => { window.location.href = pendingToolHref!; }, 800);
   };
 
   const scrollToServices = () => {
-    document.getElementById("core-competencies")?.scrollIntoView({ behavior: "smooth" });
+    document
+      .getElementById("core-competencies")
+      ?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -169,20 +93,59 @@ export default function Home() {
             "@id": "https://www.adriaticadoo.com/#organization",
             name: "Adriatica D.O.O.",
             url: "https://www.adriaticadoo.com/",
-            logo: { "@type": "ImageObject", url: "https://www.adriaticadoo.com/logo.svg", width: 400, height: 400 },
-            image: { "@type": "ImageObject", url: "https://www.adriaticadoo.com/og-image-default.png", width: 1200, height: 630 },
-            description: "Marine engineering consultancy specialising in structural integrity, regulatory compliance, and sustainable technologies for yachts, commercial vessels, and fishing boats in the Adriatic and Mediterranean.",
+            logo: {
+              "@type": "ImageObject",
+              url: "https://www.adriaticadoo.com/logo.svg",
+              width: 400,
+              height: 400,
+            },
+            image: {
+              "@type": "ImageObject",
+              url: "https://www.adriaticadoo.com/og-image-default.png",
+              width: 1200,
+              height: 630,
+            },
+            description:
+              "Marine engineering consultancy specialising in structural integrity, regulatory compliance, and sustainable technologies for yachts, commercial vessels, and fishing boats in the Adriatic and Mediterranean.",
             taxID: "03612807",
             telephone: "+382 68 591 757",
             email: "info@adriaticadoo.com",
-            address: { "@type": "PostalAddress", addressLocality: "Budva", addressRegion: "Budva Municipality", addressCountry: "ME" },
-            geo: { "@type": "GeoCoordinates", latitude: 42.2864, longitude: 18.84 },
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: "Budva",
+              addressRegion: "Budva Municipality",
+              addressCountry: "ME",
+            },
+            geo: {
+              "@type": "GeoCoordinates",
+              latitude: 42.2864,
+              longitude: 18.84,
+            },
             hasMap: "https://www.google.com/maps/place/Budva,+Montenegro/",
-            openingHoursSpecification: [{ "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], opens: "09:00", closes: "18:00" }],
+            openingHoursSpecification: [
+              {
+                "@type": "OpeningHoursSpecification",
+                dayOfWeek: [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday",
+                ],
+                opens: "09:00",
+                closes: "18:00",
+              },
+            ],
             knowsLanguage: ["en", "hr", "sr", "tr", "ru"],
             currenciesAccepted: "EUR, USD, GBP",
             paymentAccepted: "Bank transfer, PayPal, Wise",
-            priceSpecification: { "@type": "PriceSpecification", priceCurrency: "EUR", valueAddedTaxIncluded: true, description: "Project-based pricing – contact for quote" },
+            priceSpecification: {
+              "@type": "PriceSpecification",
+              priceCurrency: "EUR",
+              valueAddedTaxIncluded: true,
+              description: "Project-based pricing – contact for quote",
+            },
             areaServed: [
               { "@type": "Place", name: "Montenegro" },
               { "@type": "Place", name: "Adriatic Sea" },
@@ -193,16 +156,62 @@ export default function Home() {
               "@type": "OfferCatalog",
               name: "Marine Engineering Services",
               itemListElement: [
-                { "@type": "Offer", itemOffered: { "@type": "Service", name: "Engineering Plans", url: "https://www.adriaticadoo.com/services/engineering-plans" } },
-                { "@type": "Offer", itemOffered: { "@type": "Service", name: "Engineering Documentation", url: "https://www.adriaticadoo.com/services/engineering-documentation" } },
-                { "@type": "Offer", itemOffered: { "@type": "Service", name: "Structural Integrity", url: "https://www.adriaticadoo.com/services/structural-integrity" } },
-                { "@type": "Offer", itemOffered: { "@type": "Service", name: "Sustainable Technologies", url: "https://www.adriaticadoo.com/services/sustainable-technologies" } },
-                { "@type": "Offer", itemOffered: { "@type": "Service", name: "Regulatory Compliance", url: "https://www.adriaticadoo.com/services/regulatory-compliance" } },
-                { "@type": "Offer", itemOffered: { "@type": "Service", name: "Project Management", url: "https://www.adriaticadoo.com/services/project-management" } },
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Engineering Plans",
+                    url: "https://www.adriaticadoo.com/services/engineering-plans",
+                  },
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Engineering Documentation",
+                    url: "https://www.adriaticadoo.com/services/engineering-documentation",
+                  },
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Structural Integrity",
+                    url: "https://www.adriaticadoo.com/services/structural-integrity",
+                  },
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Sustainable Technologies",
+                    url: "https://www.adriaticadoo.com/services/sustainable-technologies",
+                  },
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Regulatory Compliance",
+                    url: "https://www.adriaticadoo.com/services/regulatory-compliance",
+                  },
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Project Management",
+                    url: "https://www.adriaticadoo.com/services/project-management",
+                  },
+                },
               ],
             },
             sameAs: ["https://www.linkedin.com/company/adriatica-d-o-o"],
-            numberOfEmployees: { "@type": "QuantitativeValue", minValue: 1, maxValue: 10 },
+            numberOfEmployees: {
+              "@type": "QuantitativeValue",
+              minValue: 1,
+              maxValue: 10,
+            },
           }).replace(/</g, "\\u003c")}
         </script>
       </Helmet>
@@ -212,30 +221,41 @@ export default function Home() {
 
         {/* ── HERO ─────────────────────────────────────────────────────────── */}
         <section className="relative min-h-screen flex overflow-hidden pt-32 pb-16 md:pt-24 md:pb-24">
-          <div className="absolute inset-0 z-0 bg-background" />
+          <div className="absolute inset-0 z-0">
+            <div className="absolute top-0 right-0 w-2/3 h-full bg-[hsl(var(--color-lapis-800))]/5 -skew-x-12 transform origin-top" />
+            <div className="absolute bottom-0 left-0 w-1/3 h-2/3 bg-primary/5 skew-x-12 transform origin-bottom" />
+          </div>
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-24 items-center">
               <m.div
-                initial={{ x: -30 }}
-                animate={{ x: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
                 className="text-center lg:text-left mb-10 lg:mb-0"
               >
-                <p className="text-primary font-medium tracking-[0.2em] uppercase mb-4">Est. 2025</p>
+                <p className="text-primary font-medium tracking-[0.2em] uppercase mb-4">
+                  Est. 2025
+                </p>
                 <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-primary leading-[1.1] mb-6 uppercase">
                   WISDOM IN <br />
                   <span className="text-secondary">ENGINEERING</span>
                 </h1>
+
                 <p className="text-sm uppercase tracking-wide text-foreground/75 mt-2">
-                  For Superyacht Owners & Commercial Fleet Operators in the Adriatic and Mediterranean
+                  For Superyacht Owners & Commercial Fleet Operators in the
+                  Adriatic and Mediterranean
                 </p>
+
                 <p className="text-xl md:text-2xl font-bold text-primary mt-4 mb-4 max-w-2xl">
-                  Engineering-grade outputs for compliance, documentation, and vessel performance.
+                  Engineering-grade outputs for compliance, documentation, and
+                  vessel performance.
                 </p>
+
                 <p className="text-base text-foreground/75 mb-6 max-w-xl">
-                  We deliver technical plans, documentation, and assessments — enabling informed
-                  decisions, regulatory readiness, and operational clarity.
+                  We deliver technical plans, documentation, and assessments —
+                  enabling informed decisions, regulatory readiness, and
+                  operational clarity.
                 </p>
 
                 <div className="border-l-2 border-primary pl-6 mb-10">
@@ -245,10 +265,14 @@ export default function Home() {
                     </span>
                   </div>
                   <p className="text-base md:text-lg lg:text-xl text-foreground/75 leading-relaxed max-w-xl mx-auto lg:mx-0">
-                    <Link href="/news" className="hover:underline hover:text-primary transition-colors">
-                      With increasing PSC scrutiny across Europe, unmanaged biofouling is becoming
-                      an operational and regulatory risk. The 2026 IMO enforcement timeline
-                      accelerates the need for action.
+                    <Link
+                      href="/news"
+                      className="hover:underline hover:text-primary transition-colors"
+                    >
+                      With increasing PSC scrutiny across Europe, unmanaged
+                      biofouling is becoming an operational and regulatory risk.
+                      The 2026 IMO enforcement timeline accelerates the need for
+                      action.
                     </Link>
                   </p>
                 </div>
@@ -262,7 +286,6 @@ export default function Home() {
                   </Link>
                   <button
                     onClick={scrollToServices}
-                    aria-label="Scroll to services section"
                     className="px-8 py-4 bg-transparent border border-primary text-primary font-medium rounded-sm hover:bg-primary/5 transition-all duration-300 uppercase tracking-wide text-sm"
                   >
                     Explore Services
@@ -271,21 +294,21 @@ export default function Home() {
               </m.div>
 
               <m.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
+                initial={{ opacity: 0, scale: 0.9, rotate: 5 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
                 className="relative flex justify-center items-center mt-8 lg:mt-0"
               >
+                {/* FIX #3: mobilde max-w-[200px] → max-w-[240px] — daha iyi görsel denge */}
                 <div className="relative w-full max-w-[240px] sm:max-w-[280px] lg:max-w-md aspect-square flex items-center justify-center">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent rounded-full" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-3xl" />
                   <img
                     src="/logo.svg"
                     alt="Adriatica D.O.O. Symbol"
                     width={400}
                     height={400}
                     fetchPriority="high"
-                    decoding="async"
-                    className="w-full h-auto drop-shadow-xl"
+                    className="w-full h-auto drop-shadow-2xl"
                   />
                 </div>
               </m.div>
@@ -297,7 +320,6 @@ export default function Home() {
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5, duration: 1 }}
             className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-primary/70"
-            aria-hidden="true"
           >
             <span className="text-xs uppercase tracking-widest mb-2">Scroll</span>
             <ArrowDown className="animate-bounce w-5 h-5" />
@@ -337,7 +359,9 @@ export default function Home() {
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-3">Why Choose Adriatica</h2>
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-3">
+                Why Choose Adriatica
+              </h2>
               <p className="text-foreground/75 max-w-2xl mx-auto mb-2">
                 Engineering management that delivers compliance, efficiency, and peace of mind.
               </p>
@@ -347,19 +371,34 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center p-6 border-l-2 border-primary/20">
-                <ShieldCheck className="h-12 w-12 text-primary mx-auto mb-4" aria-hidden="true" />
-                <h3 className="font-display text-xl font-bold text-primary mb-2">Technical Excellence & Compliance</h3>
-                <p className="text-foreground/75">Your projects are managed in full alignment with IMO, MARPOL, and IACS standards – so you get zero PSC risk.</p>
+                <ShieldCheck className="h-12 w-12 text-primary mx-auto mb-4" />
+                <h3 className="font-display text-xl font-bold text-primary mb-2">
+                  Technical Excellence & Compliance
+                </h3>
+                <p className="text-foreground/75">
+                  Your projects are managed in full alignment with IMO, MARPOL,
+                  and IACS standards – so you get zero PSC risk.
+                </p>
               </div>
               <div className="text-center p-6 border-l-2 border-primary/20">
-                <Gauge className="h-12 w-12 text-primary mx-auto mb-4" aria-hidden="true" />
-                <h3 className="font-display text-xl font-bold text-primary mb-2">Operational Efficiency</h3>
-                <p className="text-foreground/75">Smart planning and digital documentation cut dry‑dock time and improve fuel performance – saving you time and money.</p>
+                <Gauge className="h-12 w-12 text-primary mx-auto mb-4" />
+                <h3 className="font-display text-xl font-bold text-primary mb-2">
+                  Operational Efficiency
+                </h3>
+                <p className="text-foreground/75">
+                  Smart planning and digital documentation cut dry‑dock time and
+                  improve fuel performance – saving you time and money.
+                </p>
               </div>
               <div className="text-center p-6 border-l-2 border-primary/20">
-                <Handshake className="h-12 w-12 text-primary mx-auto mb-4" aria-hidden="true" />
-                <h3 className="font-display text-xl font-bold text-primary mb-2">Owner's Trusted Representative</h3>
-                <p className="text-foreground/75">We act as your technical eyes and ears in shipyards, ensuring quality control and budget adherence – so you can focus on operations.</p>
+                <Handshake className="h-12 w-12 text-primary mx-auto mb-4" />
+                <h3 className="font-display text-xl font-bold text-primary mb-2">
+                  Owner's Trusted Representative
+                </h3>
+                <p className="text-foreground/75">
+                  We act as your technical eyes and ears in shipyards, ensuring
+                  quality control and budget adherence – so you can focus on operations.
+                </p>
               </div>
             </div>
           </div>
@@ -369,90 +408,180 @@ export default function Home() {
         <section className="py-20 bg-neutral-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-3">How We Work</h2>
-              <p className="text-foreground/75 max-w-2xl mx-auto mb-2">A structured approach to deliver clarity, compliance, and results.</p>
-              <p className="text-primary text-sm font-medium uppercase tracking-wider">Following the Adriatica Integrity Cycle – Align · Execute · Verify</p>
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-3">
+                How We Work
+              </h2>
+              <p className="text-foreground/75 max-w-2xl mx-auto mb-2">
+                A structured approach to deliver clarity, compliance, and results.
+              </p>
+              <p className="text-primary text-sm font-medium uppercase tracking-wider">
+                Following the Adriatica Integrity Cycle – Align · Execute · Verify
+              </p>
             </div>
+
             <div className="relative">
-              <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary/20 transform -translate-x-1/2 hidden md:block" aria-hidden="true" />
+              {/* Dikey bağlantı çizgisi (masaüstünde ortada) */}
+              <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary/20 transform -translate-x-1/2 hidden md:block" />
+
               <div className="space-y-12">
+                {/* Adım 1 — solda metin */}
                 <div className="relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
                   <div className="flex-1 md:text-right md:pr-16">
                     <div className="flex items-center gap-3 mb-2 md:justify-end">
-                      <Clipboard className="h-6 w-6 text-primary shrink-0" aria-hidden="true" />
+                      <Clipboard className="h-6 w-6 text-primary shrink-0" />
                       <h3 className="font-display text-xl font-bold text-primary">Brief & Information</h3>
                     </div>
-                    <p className="text-foreground/75">You share vessel details, operational profile, and specific concerns.</p>
+                    <p className="text-foreground/75">
+                      You share vessel details, operational profile, and specific concerns.
+                    </p>
                   </div>
-                  <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-white font-bold text-lg z-10 shrink-0" aria-label="Step 1">1</div>
+                  <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-white font-bold text-lg z-10 shrink-0">
+                    1
+                  </div>
                   <div className="flex-1 md:pl-16 hidden md:block" />
                 </div>
+
+                {/* Adım 2 — sağda metin */}
                 <div className="relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
                   <div className="flex-1 md:pr-16 hidden md:block" />
-                  <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-white font-bold text-lg z-10 shrink-0" aria-label="Step 2">2</div>
+                  <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-white font-bold text-lg z-10 shrink-0">
+                    2
+                  </div>
                   <div className="flex-1 md:pl-16">
                     <div className="flex items-center gap-3 mb-2">
-                      <Search className="h-6 w-6 text-primary shrink-0" aria-hidden="true" />
+                      <Search className="h-6 w-6 text-primary shrink-0" />
                       <h3 className="font-display text-xl font-bold text-primary">Analysis & Planning</h3>
                     </div>
-                    <p className="text-foreground/75">We perform technical assessment, risk identification, and scope definition.</p>
+                    <p className="text-foreground/75">
+                      We perform technical assessment, risk identification, and scope definition.
+                    </p>
                   </div>
                 </div>
+
+                {/* Adım 3 — solda metin */}
                 <div className="relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
                   <div className="flex-1 md:text-right md:pr-16">
                     <div className="flex items-center gap-3 mb-2 md:justify-end">
-                      <Wrench className="h-6 w-6 text-primary shrink-0" aria-hidden="true" />
+                      <Wrench className="h-6 w-6 text-primary shrink-0" />
                       <h3 className="font-display text-xl font-bold text-primary">Execution & Supervision</h3>
                     </div>
-                    <p className="text-foreground/75">We handle engineering oversight, contractor coordination, and quality control.</p>
+                    <p className="text-foreground/75">
+                      We handle engineering oversight, contractor coordination, and quality control.
+                    </p>
                   </div>
-                  <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-white font-bold text-lg z-10 shrink-0" aria-label="Step 3">3</div>
+                  <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-white font-bold text-lg z-10 shrink-0">
+                    3
+                  </div>
                   <div className="flex-1 md:pl-16 hidden md:block" />
                 </div>
+
+                {/* Adım 4 — sağda metin */}
                 <div className="relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
                   <div className="flex-1 md:pr-16 hidden md:block" />
-                  <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-white font-bold text-lg z-10 shrink-0" aria-label="Step 4">4</div>
+                  <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-white font-bold text-lg z-10 shrink-0">
+                    4
+                  </div>
                   <div className="flex-1 md:pl-16">
                     <div className="flex items-center gap-3 mb-2">
-                      <FileText className="h-6 w-6 text-primary shrink-0" aria-hidden="true" />
+                      <FileText className="h-6 w-6 text-primary shrink-0" />
                       <h3 className="font-display text-xl font-bold text-primary">Documentation & Handover</h3>
                     </div>
-                    <p className="text-foreground/75">You receive complete records, audit‑ready reports, and as‑built documentation.</p>
+                    <p className="text-foreground/75">
+                      You receive complete records, audit‑ready reports, and as‑built documentation.
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
-
+      
         {/* ── CORE COMPETENCIES ───────────────────────────────────────────── */}
         <section id="core-competencies" className="py-24 md:py-32 bg-white relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeading title="Marine Engineering" subtitle="Core Competencies" />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-              <FeatureCard number="01" title="Engineering Plans" items={["Structural Drawings","As-Built Drawing Sets","Arrangement Plans","Fire & Safety Plans"]} delay={0.1} linkTo="engineering-plans" linkText="Learn more about Engineering Plans" isDeliverable={true} />
-              <FeatureCard number="02" title="Engineering Documentation" items={["As-Built P&ID / System Manuals","Electrical Load Analysis (EAB)","Fuel Management & Quality Booklet","IHM (Inventory of Hazardous Materials)"]} delay={0.2} linkTo="engineering-documentation" linkText="Learn more about Engineering Documentation" isDeliverable={true} />
-              <FeatureCard number="03" title="Structural Integrity" items={["Structural Integrity & Life Extension Studies","Hull Condition Analysis","Modification Consultancy","Vibration & Noise Diagnostic"]} delay={0.3} linkTo="structural-integrity" linkText="Learn more about Structural Integrity" isDeliverable={true} />
-              <FeatureCard number="04" title="Sustainable Tech" items={["Biofouling Management Plan (IMO MEPC.378(80))","Eco-friendly Coating Advisory","Energy Audit & Efficiency Surveys","MRV Monitoring Plan (EU MRV Regulation)"]} delay={0.4} linkTo="sustainable-technologies" linkText="Learn more about Sustainable Technologies" isDeliverable={false} />
-              <FeatureCard number="05" title="Regulatory Compliance" items={["Ballast Water Management Plan (BWMP)","Shipboard Oil Pollution Emergency Plan (SoPEP)","Ship Energy Efficiency Management Plan (SEEMP)","Garbage Management Plan","Emergency Response Manuals"]} delay={0.5} linkTo="regulatory-compliance" linkText="Learn more about Regulatory Compliance" isDeliverable={false} />
-              <FeatureCard number="06" title="Project Management" items={["Owner's Rep & Refit Supervision","Dry-Docking Specification & Management","On-site Technical Troubleshooting","Yacht Survey & Inspection"]} delay={0.6} linkTo="project-management" linkText="Learn more about Project Management" isDeliverable={false} />
+              <FeatureCard
+                number="01"
+                title="Engineering Plans"
+                items={["Structural Drawings", "As-Built Drawing Sets", "Arrangement Plans", "Fire & Safety Plans"]}
+                delay={0.1}
+                linkTo="engineering-plans"
+                linkText="Learn more about Engineering Plans"
+                isDeliverable={true}
+              />
+              <FeatureCard
+                number="02"
+                title="Engineering Documentation"
+                items={["As-Built P&ID / System Manuals", "Electrical Load Analysis (EAB)", "Fuel Management & Quality Booklet", "IHM (Inventory of Hazardous Materials)"]}
+                delay={0.2}
+                linkTo="engineering-documentation"
+                linkText="Learn more about Engineering Documentation"
+                isDeliverable={true}
+              />
+              <FeatureCard
+                number="03"
+                title="Structural Integrity"
+                items={["Structural Integrity & Life Extension Studies", "Hull Condition Analysis", "Modification Consultancy", "Vibration & Noise Diagnostic"]}
+                delay={0.3}
+                linkTo="structural-integrity"
+                linkText="Learn more about Structural Integrity"
+                isDeliverable={true}
+              />
+              <FeatureCard
+                number="04"
+                title="Sustainable Tech"
+                items={["Biofouling Management Plan (IMO MEPC.378(80))", "Eco-friendly Coating Advisory", "Energy Audit & Efficiency Surveys", "MRV Monitoring Plan (EU MRV Regulation)"]}
+                delay={0.4}
+                linkTo="sustainable-technologies"
+                linkText="Learn more about Sustainable Technologies"
+                isDeliverable={false}
+              />
+              <FeatureCard
+                number="05"
+                title="Regulatory Compliance"
+                items={["Ballast Water Management Plan (BWMP)", "Shipboard Oil Pollution Emergency Plan (SoPEP)", "Ship Energy Efficiency Management Plan (SEEMP)", "Garbage Management Plan", "Emergency Response Manuals"]}
+                delay={0.5}
+                linkTo="regulatory-compliance"
+                linkText="Learn more about Regulatory Compliance"
+                isDeliverable={false}
+              />
+              <FeatureCard
+                number="06"
+                title="Project Management"
+                items={["Owner's Rep & Refit Supervision", "Dry-Docking Specification & Management", "On-site Technical Troubleshooting", "Yacht Survey & Inspection"]}
+                delay={0.6}
+                linkTo="project-management"
+                linkText="Learn more about Project Management"
+                isDeliverable={false}
+              />
             </div>
           </div>
         </section>
 
         {/* ── MID-PAGE CTA ────────────────────────────────────────────────── */}
         <section className="relative py-20 bg-primary overflow-hidden">
-          <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
+          <div className="absolute inset-0 z-0 pointer-events-none">
             <div className="absolute top-0 right-0 w-2/3 h-full bg-[hsl(var(--color-lapis-800))]/20 -skew-x-12 transform origin-top" />
             <div className="absolute inset-0 opacity-10">
-              <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0 100 L100 0 L100 100 Z" fill="white" /></svg>
+              <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path d="M0 100 L100 0 L100 100 Z" fill="white" />
+              </svg>
             </div>
           </div>
           <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p className="text-xs uppercase tracking-[0.25em] text-white/85 mb-4">Ready to solve it?</p>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">Have a specific technical challenge?</h2>
-            <p className="text-white/85 mb-8 max-w-xl mx-auto">From PSC preparation to structural life extension — we assess, plan, and deliver. Tell us about your vessel.</p>
-            <Link href="/request-consultation" className="inline-block bg-[#D4AF37] text-black font-medium px-8 py-4 rounded-sm text-sm uppercase tracking-wide shadow-lg hover:bg-[#B8952A] transition-all duration-300">
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">
+              Have a specific technical challenge?
+            </h2>
+            <p className="text-white/85 mb-8 max-w-xl mx-auto">
+              From PSC preparation to structural life extension — we assess, plan, and deliver.
+              Tell us about your vessel.
+            </p>
+            <Link
+              href="/request-consultation"
+              className="inline-block bg-[#D4AF37] text-black font-medium px-8 py-4 rounded-sm text-sm uppercase tracking-wide shadow-lg hover:bg-[#B8952A] transition-all duration-300"
+            >
               Submit Project Inquiry
             </Link>
           </div>
@@ -463,117 +592,118 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-4">Operational Region</h2>
+                <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-4">
+                  Operational Region
+                </h2>
                 <p className="text-lg text-foreground/75 leading-relaxed">
-                  You benefit from our engineering management and technical advisory services across a wide range of vessels – superyachts, commercial vessels, and fishing boats – operating in the <strong>Adriatic Sea</strong>,{" "}
-                  <strong>Mediterranean Basin</strong>, and <strong>European coastal waters</strong>.
+                  You benefit from our engineering management and technical advisory services
+                  across a wide range of vessels – superyachts, commercial vessels, and fishing
+                  boats – operating in the <strong>Adriatic Sea</strong>,{" "}
+                  <strong>Mediterranean Basin</strong>, and{" "}
+                  <strong>European coastal waters</strong>.
                 </p>
               </div>
               <div className="flex justify-center">
-                <img src="/map.svg" alt="Adriatic and Mediterranean region outline" className="w-full max-w-[300px] h-auto" width={300} height={215} decoding="async" />
+                <img
+                  src="/map.svg"
+                  alt="Adriatic and Mediterranean region outline"
+                  className="w-full max-w-[300px] h-auto"
+                  width={300}
+                  height={215}
+                />
               </div>
             </div>
           </div>
         </section>
 
-        {/* ── ENGINEERING TOOLS — LEAD CAPTURE ────────────────────────────────
-            5 tool — 3 kolonlu grid (mobil: 1 col, md: 2 col, lg: 3 col)
-            Son 2 tool ortalanmış görünür. Lead capture modal korundu.
-        ─────────────────────────────────────────────────────────────────────── */}
+        {/* ── ENGINEERING TOOLS ─────────────────────────────────────────────── */}
         <section className="py-20 bg-neutral-50 border-b border-border/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <p className="text-xs uppercase tracking-[0.25em] text-primary/70 mb-3">Free Compliance Tools</p>
+              <p className="text-xs uppercase tracking-[0.25em] text-primary/70 mb-3">
+                Free Compliance Tools
+              </p>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-4">
                 Identify Compliance Risks Before Inspection
               </h2>
               <p className="text-foreground/75 max-w-2xl mx-auto">
-                Most risks are silent — find them before the inspector does. Run a quick assessment in under 2 minutes.
+                Most risks are silent — find them before the inspector does.
+                Run a quick assessment in under 2 minutes.
               </p>
             </div>
 
-            {/* Email capture modal */}
-            {pendingToolHref !== null && toolEmailStatus !== "success" && (
-              <div
-                className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
-                onClick={() => { setPendingToolHref(null); setToolEmailStatus("idle"); }}
-                role="dialog"
-                aria-modal="true"
-                aria-label="Access compliance tool"
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Link
+                href="/tools?tool=eexi"
+                className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col"
               >
-                <div
-                  className="bg-white rounded-sm max-w-md w-full p-8 shadow-xl"
-                  onClick={e => e.stopPropagation()}
-                >
-                  <h3 className="font-display text-xl font-bold text-primary mb-2">Get Your Free Assessment</h3>
-                  <p className="text-sm text-muted-foreground mb-6">
-                    Enter your email to access the tool and receive a summary of your results. No commitment required.
-                  </p>
-                  <form onSubmit={handleToolEmailSubmit} className="space-y-3">
-                    <input
-                      type="email"
-                      value={toolEmail}
-                      onChange={e => setToolEmail(e.target.value)}
-                      placeholder="your@email.com"
-                      required
-                      autoFocus
-                      className="w-full px-4 py-3 border border-border rounded-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-sm"
-                    />
-                    <button
-                      type="submit"
-                      disabled={toolEmailStatus === "submitting"}
-                      className="w-full py-3 bg-primary text-white font-medium rounded-sm hover:bg-[hsl(var(--color-lapis-800))] transition-colors disabled:opacity-50"
-                    >
-                      {toolEmailStatus === "submitting" ? "Opening tool..." : "Access Free Tool →"}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => { window.location.href = pendingToolHref!; }}
-                      className="w-full text-xs text-muted-foreground hover:text-foreground transition-colors pt-1"
-                    >
-                      Skip — access without email
-                    </button>
-                  </form>
-                </div>
-              </div>
-            )}
+                <h3 className="text-lg font-bold text-primary mb-2">EEXI Calculator</h3>
+                <p className="text-sm text-foreground/70 mb-6 flex-1">
+                  Evaluate your vessel's Energy Efficiency Existing Ship Index compliance.
+                </p>
+                <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
+                  Run Assessment →
+                </span>
+              </Link>
 
-            {/*
-              5 kartı 3 kolonlu grid'e sığdır.
-              Son 2 kart ortalanmış görünmesi için wrapper ile justify-center.
-              İlk 3 → normal grid, son 2 → centered row ayrı.
-            */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {TOOLS.slice(0, 3).map(tool => (
-                <ToolCard key={tool.id} tool={tool} onClick={() => setPendingToolHref(tool.href)} />
-              ))}
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 lg:max-w-[66.666%] lg:mx-auto">
-              {TOOLS.slice(3).map(tool => (
-                <ToolCard key={tool.id} tool={tool} onClick={() => setPendingToolHref(tool.href)} />
-              ))}
+              <Link
+                href="/tools?tool=cii"
+                className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col"
+              >
+                <h3 className="text-lg font-bold text-primary mb-2">CII Rating Tool</h3>
+                <p className="text-sm text-foreground/70 mb-6 flex-1">
+                  Estimate your Carbon Intensity Indicator rating and operational impact.
+                </p>
+                <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
+                  Run Assessment →
+                </span>
+              </Link>
+
+              <Link
+                href="/tools?tool=bwts"
+                className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col"
+              >
+                <h3 className="text-lg font-bold text-primary mb-2">BWTS Compliance</h3>
+                <p className="text-sm text-foreground/70 mb-6 flex-1">
+                  Check ballast water treatment system compliance and retrofit needs.
+                </p>
+                <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
+                  Run Assessment →
+                </span>
+              </Link>
             </div>
           </div>
         </section>
 
         {/* ── RECENT INSIGHTS ─────────────────────────────────────────────── */}
         <section className="py-24 bg-primary relative overflow-hidden">
-          <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
+          <div className="absolute inset-0 z-0 pointer-events-none">
             <div className="absolute top-0 left-0 w-1/2 h-full bg-[hsl(var(--color-lapis-800))]/10 skew-x-12 transform origin-top" />
             <div className="absolute inset-0 opacity-5">
-              <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0 0 L100 100 L0 100 Z" fill="white" /></svg>
+              <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path d="M0 0 L100 100 L0 100 Z" fill="white" />
+              </svg>
             </div>
           </div>
+
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-12 gap-4">
               <div>
-                <p className="text-xs uppercase tracking-[0.25em] text-white/85 mb-2">From the knowledge base</p>
-                <h2 className="font-display text-3xl md:text-4xl font-bold text-white">Recent Insights</h2>
+                <p className="text-xs uppercase tracking-[0.25em] text-white/85 mb-2">
+                  From the knowledge base
+                </p>
+                <h2 className="font-display text-3xl md:text-4xl font-bold text-white">
+                  Recent Insights
+                </h2>
               </div>
-              <Link href="/insights" className="text-sm text-[#D4AF37] hover:text-white transition-colors uppercase tracking-wider font-medium shrink-0">
+              <Link
+                href="/insights"
+                className="text-sm text-[#D4AF37] hover:text-white transition-colors uppercase tracking-wider font-medium shrink-0"
+              >
                 All Insights →
               </Link>
             </div>
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {recentInsights.map(insight => (
                 <InsightCard key={insight.slug} insight={insight} variant="dark" />
@@ -585,118 +715,90 @@ export default function Home() {
         {/* ── BEGIN YOUR VOYAGE ───────────────────────────────────────────── */}
         <section id="begin-voyage" className="py-24 bg-neutral-50 border-t border-border/10">
           <div className="max-w-4xl mx-auto px-4 text-center">
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-primary mb-6">Begin Your Voyage</h2>
+            <h2 className="font-display text-4xl md:text-5xl font-bold text-primary mb-6">
+              Begin Your Voyage
+            </h2>
             <p className="text-lg text-foreground/75 mb-10 max-w-2xl mx-auto">
-              Share your vessel's technical challenge. Our principal engineers will review and respond within 24 hours.
-              Accepting commissions for Q2 2026.
+              Share your vessel's technical challenge. Our principal engineers will review and
+              respond within 24 hours. Accepting commissions for Q2 2026.
             </p>
 
-            {/* CLS fix: both states in DOM, visibility toggled */}
-            <div className="max-w-md mx-auto relative">
-              <div
-                className={`transition-opacity duration-300 ${formStatus === "success" ? "opacity-100 relative" : "opacity-0 absolute inset-0 pointer-events-none"}`}
-                aria-hidden={formStatus !== "success"}
-              >
-                <div className="p-8 bg-white border border-green-200 rounded-sm shadow-sm">
-                  <CheckCircle2 className="h-10 w-10 text-green-600 mx-auto mb-3" aria-hidden="true" />
-                  <p className="text-green-800 text-lg font-medium mb-2">Thank you!</p>
-                  <p className="text-foreground/75 text-sm">Your consultation request has been received. We'll be in touch shortly.</p>
-                  <button onClick={() => setFormStatus("idle")} className="mt-6 text-primary hover:underline text-sm">Send another request →</button>
-                </div>
-              </div>
-
-              <div
-                className={`transition-opacity duration-300 ${formStatus !== "success" ? "opacity-100 relative" : "opacity-0 absolute inset-0 pointer-events-none"}`}
-                aria-hidden={formStatus === "success"}
-              >
-                <div className="flex items-center justify-center gap-6 mb-6 text-xs text-muted-foreground">
-                  <span className="flex items-center gap-1.5">
-                    <CheckCircle2 className="h-3.5 w-3.5 text-primary shrink-0" aria-hidden="true" />
-                    Free 15-min technical review
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <CheckCircle2 className="h-3.5 w-3.5 text-primary shrink-0" aria-hidden="true" />
-                    No commitment required
-                  </span>
-                </div>
-
-                <form
-                  action="https://formspree.io/f/myknqjbz"
-                  method="POST"
-                  onSubmit={handleSubmit}
-                  className="space-y-4 text-left w-full"
+            {formStatus === "success" ? (
+              <div className="max-w-md mx-auto p-8 bg-white border border-green-200 rounded-sm shadow-sm">
+                <p className="text-green-800 text-lg font-medium mb-2">Thank you!</p>
+                <p className="text-foreground/75">
+                  Your consultation request has been received. We'll be in touch shortly.
+                </p>
+                <button
+                  onClick={() => setFormStatus("idle")}
+                  className="mt-6 text-primary hover:underline text-sm"
                 >
-                  <div className="hidden" aria-hidden="true">
-                    <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" />
-                  </div>
-                  <div>
-                    <label htmlFor="home-email" className="sr-only">Email address</label>
-                    <input
-                      type="email"
-                      name="email"
-                      id="home-email"
-                      placeholder="Enter your email address"
-                      className="w-full px-6 py-4 bg-white border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
-                      required
-                      disabled={formStatus === "submitting"}
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    disabled={formStatus === "submitting"}
-                    className="w-full py-4 bg-primary text-white font-medium hover:bg-[hsl(var(--color-lapis-800))] transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {formStatus === "submitting" ? "Sending..." : "Request Consultation"}
-                  </button>
-
-                  {formStatus === "error" && (
-                    <div className="text-red-600 text-sm text-center mt-2" role="alert" aria-live="polite">
-                      {errorType === "rate-limit" ? (
-                        <span>Too many requests. Please wait a moment and try again.</span>
-                      ) : errorType === "timeout" ? (
-                        <span>Request timed out. Please check your connection and try again.</span>
-                      ) : (
-                        <>
-                          Something went wrong. Please try again or contact us at{" "}
-                          <a href="mailto:info@adriaticadoo.com" className="underline font-medium">info@adriaticadoo.com</a>.
-                        </>
-                      )}
-                    </div>
-                  )}
-
-                  <p className="text-[11px] text-center text-muted-foreground pt-1">
-                    By submitting, you agree to our{" "}
-                    <a href="/privacy-policy" className="underline decoration-muted-foreground/50 hover:text-foreground hover:decoration-foreground transition-colors">
-                      Privacy Policy
-                    </a>.
-                  </p>
-                </form>
+                  Send another request →
+                </button>
               </div>
-            </div>
+            ) : (
+              <form
+                action="https://formspree.io/f/myknqjbz"
+                method="POST"
+                onSubmit={handleSubmit}
+                className="max-w-md mx-auto space-y-4 text-left"
+              >
+                <div className="hidden" aria-hidden="true">
+                  <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" />
+                </div>
+
+                <div>
+                  <label htmlFor="home-email" className="sr-only">Email address</label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="home-email"
+                    placeholder="Enter your email address"
+                    className="w-full px-6 py-4 bg-white border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                    required
+                    disabled={formStatus === "submitting"}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={formStatus === "submitting"}
+                  className="w-full py-4 bg-primary text-white font-medium hover:bg-[hsl(var(--color-lapis-800))] transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {formStatus === "submitting" ? "Sending..." : "Request Consultation"}
+                </button>
+
+                {formStatus === "error" && (
+                  <div className="text-red-600 text-sm text-center mt-2" role="alert">
+                    {errorType === "rate-limit" ? (
+                      <span>Too many requests. Please wait a moment and try again.</span>
+                    ) : (
+                      <>
+                        Something went wrong. Please try again or contact us directly at{" "}
+                        <a href="mailto:info@adriaticadoo.com" className="underline font-medium">
+                          info@adriaticadoo.com
+                        </a>.
+                      </>
+                    )}
+                  </div>
+                )}
+
+                <p className="text-[11px] text-center text-muted-foreground pt-1">
+                  By submitting, you agree to our{" "}
+                  <a
+                    href="/privacy-policy"
+                    className="underline decoration-muted-foreground/50 hover:text-foreground hover:decoration-foreground transition-colors"
+                  >
+                    Privacy Policy
+                  </a>.
+                </p>
+              </form>
+            )}
           </div>
         </section>
 
         <Footer />
       </div>
     </LazyMotion>
-  );
-}
-
-// ── TOOL CARD ─────────────────────────────────────────────────────────────────
-// Extracted to avoid repetition in the 5-card grid
-type ToolDef = typeof TOOLS[number];
-
-function ToolCard({ tool, onClick }: { tool: ToolDef; onClick: () => void }) {
-  return (
-    <button
-      onClick={onClick}
-      className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col text-left w-full"
-    >
-      <h3 className="text-lg font-bold text-primary mb-2">{tool.title}</h3>
-      <p className="text-sm text-foreground/70 mb-6 flex-1">{tool.description}</p>
-      <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
-        Run Assessment →
-      </span>
-    </button>
   );
 }
