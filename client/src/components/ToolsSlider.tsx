@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "wouter";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -34,6 +34,10 @@ export default function ToolsSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  
+  // Swipe (Parmağla kaydırma) işlemleri için referanslar
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
 
   // Ekran boyutunu dinle (Mobil mi Desktop mu?)
   useEffect(() => {
@@ -64,6 +68,29 @@ export default function ToolsSlider() {
 
   // Yüzde bazlı kaydırma (Piksel hatası yaşatmaz, responsive'e tam uyumlu)
   const slidePercentage = (currentIndex / TOOLS_DATA.length) * 100;
+
+  // --- DOKUNMATİK (SWIPE) FONKSİYONLARI ---
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.nativeEvent.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.nativeEvent.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    // Parmağın kaydığı mesafeyi hesapla (Sağa kaydırsa eksi, sola kaydırsa artı değer çıkar)
+    const distance = touchStartX.current - touchEndX.current;
+    
+    // Eğer parmak 50 piksel'den fazla kaydırsa ileri/geri git
+    if (Math.abs(distance) > 50) {
+      if (distance > 0) {
+        next(); // Sola kaydırdıysa -> İleri
+      } else {
+        prev(); // Sağa kaydırdıysa -> Geri
+      }
+    }
+  };
 
   return (
     <section className="py-20 bg-neutral-50 border-b border-border/10 overflow-hidden">
@@ -104,8 +131,13 @@ export default function ToolsSlider() {
             <ChevronRight className="w-5 h-5" />
           </button>
 
-          {/* Kaydırma Çerçevesi */}
-          <div className="overflow-hidden">
+          {/* Kaydırma Çerçevesi + DOKUNMATİK EVENT'LARI BURAYA EKLEDİK */}
+          <div 
+            className="overflow-hidden"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             
             {/* Kartların Hareket Ettiği Şerit */}
             <div
@@ -115,10 +147,8 @@ export default function ToolsSlider() {
               {TOOLS_DATA.map((tool) => (
                 <div
                   key={tool.href}
-                  // Mobilde tam ekran, Masada 3'te 1 yer kaplasın. Aralarına boşluk (px-2) verelim.
-                  className={`flex-shrink-0 px-2 ${
-                    isMobile ? "w-full" : "w-1/3"
-                  }`}
+                  // DÜZELTME: Mobilde taşmayı önlemek için px-2 yerine px-1 kullandık ve mobilde w-full yaptık
+                  className={`flex-shrink-0 ${isMobile ? "w-full px-1" : "w-1/3 px-2"}`}
                 >
                   <Link
                     href={tool.href}
