@@ -31,15 +31,15 @@ export default function Home() {
   >("idle");
   const [errorType, setErrorType] = useState<"generic" | "rate-limit" | null>(null);
 
-  const rotatingWords = ["compliance", "documentation", "safety", "efficiency", "reliability"];
+  const rotatingWords = ["Compliance", "Safety", "Efficiency", "Reliability", "Performance"];
   const [wordIndex, setWordIndex] = useState(0);
 
   useEffect(() => {
-  const interval = setInterval(() => {
-    setWordIndex(prev => (prev + 1) % rotatingWords.length);
-  }, 3000);
-  return () => clearInterval(interval);
-}, []);
+    const interval = setInterval(() => {
+      setWordIndex(prev => (prev + 1) % rotatingWords.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   // FIX #2 (kod): dependency array'e insights eklendi — ESLint exhaustive-deps uyarısı giderildi
   // Date parsing riski: new Date() yerine string karşılaştırma kullanıldı
@@ -231,123 +231,119 @@ export default function Home() {
       <div className="min-h-screen bg-background font-body selection:bg-primary/20">
         <Navigation />
 
-{/* ── HERO ─────────────────────────────────────────────────────────── */}
-<section className="relative min-h-screen flex overflow-hidden pt-32 pb-16 md:pt-24 md:pb-24">
-  <div className="absolute inset-0 z-0">
-    <div className="absolute top-0 right-0 w-2/3 h-full bg-[hsl(var(--color-lapis-800))]/5 -skew-x-12 transform origin-top" />
-    <div className="absolute bottom-0 left-0 w-1/3 h-2/3 bg-primary/5 skew-x-12 transform origin-bottom" />
-  </div>
-
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-24 items-center">
-      <m.div
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="text-center lg:text-left mb-10 lg:mb-0"
-      >
-        <p className="text-primary font-medium tracking-[0.2em] uppercase mb-4">
-          Est. 2025
-        </p>
-        <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-primary leading-[1.1] mb-6 uppercase">
-          WISDOM IN <br />
-          <span className="text-secondary">ENGINEERING</span>
-        </h1>
-
-        <p className="text-sm uppercase tracking-wide text-foreground/75 mt-2">
-          For Superyacht Owners & Commercial Fleet Operators in the
-          Adriatic and Mediterranean
-        </p>
-
-        <p className="text-xl md:text-2xl font-bold text-primary mt-4 mb-4 max-w-2xl">
-          Engineering-grade outputs for{" "}
-          <AnimatePresence mode="wait">
-            <m.span
-              key={rotatingWords[wordIndex]}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
-              className="inline-block text-secondary"
-            >
-              {rotatingWords[wordIndex]}
-            </m.span>
-          </AnimatePresence>
-          , documentation, and vessel performance.
-        </p>
-
-        <p className="text-base text-foreground/75 mb-6 max-w-xl">
-          We deliver technical plans, documentation, and assessments —
-          enabling informed decisions, regulatory readiness, and
-          operational clarity.
-        </p>
-
-        <div className="border-l-2 border-primary pl-6 mb-10">
-          <div className="flex flex-wrap items-center gap-3 mb-2">
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
-              IMO 2026 Priority
-            </span>
+        {/* ── HERO ─────────────────────────────────────────────────────────── */}
+        <section className="relative min-h-screen flex overflow-hidden pt-32 pb-16 md:pt-24 md:pb-24">
+          <div className="absolute inset-0 z-0">
+            <div className="absolute top-0 right-0 w-2/3 h-full bg-[hsl(var(--color-lapis-800))]/5 -skew-x-12 transform origin-top" />
+            <div className="absolute bottom-0 left-0 w-1/3 h-2/3 bg-primary/5 skew-x-12 transform origin-bottom" />
           </div>
-          <p className="text-base md:text-lg lg:text-xl text-foreground/75 leading-relaxed max-w-xl mx-auto lg:mx-0">
-            <Link
-              href="/news"
-              className="hover:underline hover:text-primary transition-colors"
-            >
-              With increasing PSC scrutiny across Europe, unmanaged
-              biofouling is becoming an operational and regulatory risk.
-              The 2026 IMO enforcement timeline accelerates the need for
-              action.
-            </Link>
-          </p>
-        </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-          <Link
-            href="/request-consultation"
-            className="px-8 py-4 bg-[#D4AF37] text-black font-medium rounded-sm shadow-lg shadow-gold/20 hover:bg-[#B8952A] transition-all duration-300 uppercase tracking-wide text-sm text-center"
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-24 items-center">
+              <m.div
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="text-center lg:text-left mb-10 lg:mb-0"
+              >
+                <p className="text-primary font-medium tracking-[0.2em] uppercase mb-4">
+                  Est. 2025
+                </p>
+                <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-primary leading-[1.1] mb-6 uppercase">
+                  WISDOM IN <br />
+                  <span className="text-secondary">ENGINEERING</span>
+                </h1>
+
+                <p className="text-sm uppercase tracking-wide text-foreground/75 mt-2">
+                  For Superyacht Owners & Commercial Fleet Operators in the
+                  Adriatic and Mediterranean
+                </p>
+
+                <p className="text-xl md:text-2xl font-bold text-primary mt-4 mb-2 max-w-2xl">
+                  Engineering-grade outputs for{" "}
+                  <AnimatePresence mode="wait">
+                    <m.span
+                      key={rotatingWords[wordIndex]}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.4 }}
+                      className="inline-block text-secondary"
+                    >
+                      {rotatingWords[wordIndex]}
+                    </m.span>
+                  </AnimatePresence>
+                </p>
+                <p className="text-base text-foreground/75 mb-6 max-w-xl">
+                  Technical documentation, assessment, and management tools to ensure your vessel meets IMO, EU, and class standards.
+                </p>
+
+                <div className="border-l-2 border-primary pl-6 mb-10">
+                  <div className="flex flex-wrap items-center gap-3 mb-2">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                      IMO 2026 Priority
+                    </span>
+                  </div>
+                  <p className="text-base md:text-lg lg:text-xl text-foreground/75 leading-relaxed max-w-xl mx-auto lg:mx-0">
+                    <Link
+                      href="/news"
+                      className="hover:underline hover:text-primary transition-colors"
+                    >
+                      With increasing PSC scrutiny across Europe, unmanaged
+                      biofouling is becoming an operational and regulatory risk.
+                      The 2026 IMO enforcement timeline accelerates the need for
+                      action.
+                    </Link>
+                  </p>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                  <Link
+                    href="/request-consultation"
+                    className="px-8 py-4 bg-[#D4AF37] text-black font-medium rounded-sm shadow-lg shadow-gold/20 hover:bg-[#B8952A] transition-all duration-300 uppercase tracking-wide text-sm text-center"
+                  >
+                    Request Technical Assessment
+                  </Link>
+                  <button
+                    onClick={scrollToServices}
+                    className="px-8 py-4 bg-transparent border border-primary text-primary font-medium rounded-sm hover:bg-primary/5 transition-all duration-300 uppercase tracking-wide text-sm"
+                  >
+                    Explore Services
+                  </button>
+                </div>
+              </m.div>
+
+              <m.div
+                initial={{ opacity: 0, scale: 0.9, rotate: 5 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+                className="relative flex justify-center items-center mt-8 lg:mt-0"
+              >
+                <div className="relative w-full max-w-[240px] sm:max-w-[280px] lg:max-w-md aspect-square flex items-center justify-center">
+                  <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-3xl" />
+                  <img
+                    src="/logo.svg"
+                    alt="Adriatica D.O.O. Symbol"
+                    width={400}
+                    height={400}
+                    fetchPriority="high"
+                    className="w-full h-auto drop-shadow-2xl"
+                  />
+                </div>
+              </m.div>
+            </div>
+          </div>
+
+          <m.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5, duration: 1 }}
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-primary/70"
           >
-            Request Technical Assessment
-          </Link>
-          <button
-            onClick={scrollToServices}
-            className="px-8 py-4 bg-transparent border border-primary text-primary font-medium rounded-sm hover:bg-primary/5 transition-all duration-300 uppercase tracking-wide text-sm"
-          >
-            Explore Services
-          </button>
-        </div>
-      </m.div>
-
-      <m.div
-        initial={{ opacity: 0, scale: 0.9, rotate: 5 }}
-        animate={{ opacity: 1, scale: 1, rotate: 0 }}
-        transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-        className="relative flex justify-center items-center mt-8 lg:mt-0"
-      >
-        <div className="relative w-full max-w-[240px] sm:max-w-[280px] lg:max-w-md aspect-square flex items-center justify-center">
-          <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-3xl" />
-          <img
-            src="/logo.svg"
-            alt="Adriatica D.O.O. Symbol"
-            width={400}
-            height={400}
-            fetchPriority="high"
-            className="w-full h-auto drop-shadow-2xl"
-          />
-        </div>
-      </m.div>
-    </div>
-  </div>
-
-  <m.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ delay: 1.5, duration: 1 }}
-    className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-primary/70"
-  >
-    <span className="text-xs uppercase tracking-widest mb-2">Scroll</span>
-    <ArrowDown className="animate-bounce w-5 h-5" />
-  </m.div>
-</section>
+            <span className="text-xs uppercase tracking-widest mb-2">Scroll</span>
+            <ArrowDown className="animate-bounce w-5 h-5" />
+          </m.div>
+        </section>
 
         {/* ── TRUST STRIP ─────────────────────────────────────────────────── */}
         <section className="py-4 bg-primary border-y border-white/10">
