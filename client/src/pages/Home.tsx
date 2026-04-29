@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import type { FormEvent } from "react";
 import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
 import { Helmet } from "react-helmet-async";
@@ -33,6 +33,13 @@ export default function Home() {
 
   const rotatingWords = ["compliance", "documentation", "safety", "efficiency", "reliability"];
   const [wordIndex, setWordIndex] = useState(0);
+
+  useEffect(() => {
+  const interval = setInterval(() => {
+    setWordIndex(prev => (prev + 1) % rotatingWords.length);
+  }, 3000);
+  return () => clearInterval(interval);
+}, []);
 
   // FIX #2 (kod): dependency array'e insights eklendi — ESLint exhaustive-deps uyarısı giderildi
   // Date parsing riski: new Date() yerine string karşılaştırma kullanıldı
