@@ -7,7 +7,9 @@ import { FeatureCard } from "@/components/FeatureCard";
 import { InsightCard } from "@/components/InsightCard";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Footer } from "@/components/Footer";
+import ToolsSlider from "@/components/ToolsSlider";
 import { Link } from "wouter";
+
 import {
   ArrowDown,
   ShieldCheck,
@@ -616,69 +618,8 @@ export default function Home() {
           </div>
         </section>
 
-{/* ── ENGINEERING TOOLS ─────────────────────────────────────────────── */}
-<section className="py-20 bg-neutral-50 border-b border-border/10">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="text-center mb-12">
-      <p className="text-xs uppercase tracking-[0.25em] text-primary/70 mb-3">
-        Free Compliance Tools
-      </p>
-      <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-4">
-        Identify Compliance Risks Before Inspection
-      </h2>
-      <p className="text-foreground/75 max-w-2xl mx-auto">
-        Most risks are silent — find them before the inspector does.
-        Run a quick assessment in under 2 minutes.
-      </p>
-    </div>
-
-    {/* Modern yatay kaydırılabilir kart satırı */}
-    <div
-      className="flex flex-nowrap overflow-x-auto gap-5 pb-4 snap-x snap-mandatory touch-pan-x"
-      style={{ WebkitOverflowScrolling: "touch" }}
-    >
-      {[
-        {
-          href: "/tools?tool=eexi",
-          title: "EEXI Calculator",
-          desc: "Evaluate your vessel's Energy Efficiency Existing Ship Index compliance.",
-        },
-        {
-          href: "/tools?tool=cii",
-          title: "CII Rating Tool",
-          desc: "Estimate your Carbon Intensity Indicator rating and operational impact.",
-        },
-        {
-          href: "/tools?tool=bwts",
-          title: "BWTS Compliance",
-          desc: "Check ballast water treatment system compliance and retrofit needs.",
-        },
-        {
-          href: "/tools?tool=ets",
-          title: "EU ETS Cost",
-          desc: "Forecast your vessel's carbon allowance costs under the EU Emissions Trading System.",
-        },
-        {
-          href: "/tools?tool=fueleu",
-          title: "FuelEU Penalty",
-          desc: "Assess potential penalties under FuelEU Maritime regulation for non-compliant fuel.",
-        },
-      ].map((tool) => (
-        <Link
-          key={tool.href}
-          href={tool.href}
-          className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col min-w-[260px] sm:min-w-[300px] flex-shrink-0 snap-start"
-        >
-          <h3 className="text-lg font-bold text-primary mb-2">{tool.title}</h3>
-          <p className="text-sm text-foreground/70 mb-6 flex-1">{tool.desc}</p>
-          <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
-            Run Assessment →
-          </span>
-        </Link>
-      ))}
-    </div>
-  </div>
-</section>
+      {/* ── ENGINEERING TOOLS ─────────────────────────────────────────────── */}
+      <ToolsSlider />
 
         {/* ── RECENT INSIGHTS ─────────────────────────────────────────────── */}
         <section className="py-24 bg-primary relative overflow-hidden">
