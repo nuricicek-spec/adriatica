@@ -616,64 +616,98 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── ENGINEERING TOOLS ─────────────────────────────────────────────── */}
-        <section className="py-20 bg-neutral-50 border-b border-border/10">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <p className="text-xs uppercase tracking-[0.25em] text-primary/70 mb-3">
-                Free Compliance Tools
-              </p>
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-4">
-                Identify Compliance Risks Before Inspection
-              </h2>
-              <p className="text-foreground/75 max-w-2xl mx-auto">
-                Most risks are silent — find them before the inspector does.
-                Run a quick assessment in under 2 minutes.
-              </p>
-            </div>
+{/* ── ENGINEERING TOOLS ─────────────────────────────────────────────── */}
+<section className="py-20 bg-neutral-50 border-b border-border/10">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-12">
+      <p className="text-xs uppercase tracking-[0.25em] text-primary/70 mb-3">
+        Free Compliance Tools
+      </p>
+      <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-4">
+        Identify Compliance Risks Before Inspection
+      </h2>
+      <p className="text-foreground/75 max-w-2xl mx-auto">
+        Most risks are silent — find them before the inspector does.
+        Run a quick assessment in under 2 minutes.
+      </p>
+    </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Link
-                href="/tools?tool=eexi"
-                className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col"
-              >
-                <h3 className="text-lg font-bold text-primary mb-2">EEXI Calculator</h3>
-                <p className="text-sm text-foreground/70 mb-6 flex-1">
-                  Evaluate your vessel's Energy Efficiency Existing Ship Index compliance.
-                </p>
-                <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
-                  Run Assessment →
-                </span>
-              </Link>
+    {/* Yatay kaydırılabilir kart satırı */}
+    <div className="flex flex-nowrap overflow-x-auto gap-6 pb-4 snap-x snap-mandatory">
+      
+      {/* EEXI Calculator */}
+      <Link
+        href="/tools?tool=eexi"
+        className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col min-w-[280px] md:min-w-[300px] flex-shrink-0 snap-start"
+      >
+        <h3 className="text-lg font-bold text-primary mb-2">EEXI Calculator</h3>
+        <p className="text-sm text-foreground/70 mb-6 flex-1">
+          Evaluate your vessel's Energy Efficiency Existing Ship Index compliance.
+        </p>
+        <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
+          Run Assessment →
+        </span>
+      </Link>
 
-              <Link
-                href="/tools?tool=cii"
-                className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col"
-              >
-                <h3 className="text-lg font-bold text-primary mb-2">CII Rating Tool</h3>
-                <p className="text-sm text-foreground/70 mb-6 flex-1">
-                  Estimate your Carbon Intensity Indicator rating and operational impact.
-                </p>
-                <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
-                  Run Assessment →
-                </span>
-              </Link>
+      {/* CII Rating Tool */}
+      <Link
+        href="/tools?tool=cii"
+        className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col min-w-[280px] md:min-w-[300px] flex-shrink-0 snap-start"
+      >
+        <h3 className="text-lg font-bold text-primary mb-2">CII Rating Tool</h3>
+        <p className="text-sm text-foreground/70 mb-6 flex-1">
+          Estimate your Carbon Intensity Indicator rating and operational impact.
+        </p>
+        <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
+          Run Assessment →
+        </span>
+      </Link>
 
-              <Link
-                href="/tools?tool=bwts"
-                className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col"
-              >
-                <h3 className="text-lg font-bold text-primary mb-2">BWTS Compliance</h3>
-                <p className="text-sm text-foreground/70 mb-6 flex-1">
-                  Check ballast water treatment system compliance and retrofit needs.
-                </p>
-                <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
-                  Run Assessment →
-                </span>
-              </Link>
-            </div>
-          </div>
-        </section>
+      {/* BWTS Compliance */}
+      <Link
+        href="/tools?tool=bwts"
+        className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col min-w-[280px] md:min-w-[300px] flex-shrink-0 snap-start"
+      >
+        <h3 className="text-lg font-bold text-primary mb-2">BWTS Compliance</h3>
+        <p className="text-sm text-foreground/70 mb-6 flex-1">
+          Check ballast water treatment system compliance and retrofit needs.
+        </p>
+        <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
+          Run Assessment →
+        </span>
+      </Link>
+
+      {/* EU ETS Cost */}
+      <Link
+        href="/tools?tool=ets"
+        className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col min-w-[280px] md:min-w-[300px] flex-shrink-0 snap-start"
+      >
+        <h3 className="text-lg font-bold text-primary mb-2">EU ETS Cost</h3>
+        <p className="text-sm text-foreground/70 mb-6 flex-1">
+          Forecast your vessel's carbon allowance costs under the EU Emissions Trading System.
+        </p>
+        <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
+          Run Assessment →
+        </span>
+      </Link>
+
+      {/* FuelEU Penalty */}
+      <Link
+        href="/tools?tool=fueleu"
+        className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col min-w-[280px] md:min-w-[300px] flex-shrink-0 snap-start"
+      >
+        <h3 className="text-lg font-bold text-primary mb-2">FuelEU Penalty</h3>
+        <p className="text-sm text-foreground/70 mb-6 flex-1">
+          Assess potential penalties under FuelEU Maritime regulation for non-compliant fuel.
+        </p>
+        <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
+          Run Assessment →
+        </span>
+      </Link>
+
+    </div>
+  </div>
+</section>
 
         {/* ── RECENT INSIGHTS ─────────────────────────────────────────────── */}
         <section className="py-24 bg-primary relative overflow-hidden">
