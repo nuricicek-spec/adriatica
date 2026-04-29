@@ -28,13 +28,16 @@ const TOOLS_DATA = [
     title: "FuelEU Penalty",
     desc: "Assess potential penalties under FuelEU Maritime regulation.",
   },
-];
+] as const;
+
+const AUTOPLAY_INTERVAL = 5000;
+const SWIPE_THRESHOLD = 50;
 
 export default function ToolsSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
-  
+
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
 
@@ -48,6 +51,11 @@ export default function ToolsSlider() {
   const itemsPerPage = isMobile ? 1 : 3;
   const maxIndex = Math.max(0, TOOLS_DATA.length - itemsPerPage);
 
+  // currentIndex, maxIndex değiştiğinde sınır dışına çıkmasın
+  useEffect(() => {
+    setCurrentIndex((prev) => Math.min(prev, maxIndex));
+  }, [maxIndex]);
+
   const next = useCallback(() => {
     setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
   }, [maxIndex]);
@@ -58,35 +66,38 @@ export default function ToolsSlider() {
 
   useEffect(() => {
     if (isPaused) return;
-    const timer = setInterval(next, 5000);
+    const timer = setInterval(next, AUTOPLAY_INTERVAL);
     return () => clearInterval(timer);
   }, [next, isPaused]);
 
   const slidePercentage = currentIndex * (100 / itemsPerPage);
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.nativeEvent.touches[0].clientX;
+    touchStartX.current = e.touches[0].clientX;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.nativeEvent.touches[0].clientX;
+    touchEndX.current = e.touches[0].clientX;
   };
 
   const handleTouchEnd = () => {
     const distance = touchStartX.current - touchEndX.current;
-    if (Math.abs(distance) > 50) {
+    if (Math.abs(distance) > SWIPE_THRESHOLD) {
       if (distance > 0) {
         next();
       } else {
         prev();
       }
     }
+    // Sonraki swipe için sıfırla
+    touchStartX.current = 0;
+    touchEndX.current = 0;
   };
 
   return (
     <section className="py-20 bg-neutral-50 border-b border-border/10 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         <div className="text-center mb-12">
           <p className="text-xs uppercase tracking-[0.25em] text-primary/70 mb-3">
             Free Compliance Tools
@@ -99,7 +110,7 @@ export default function ToolsSlider() {
           </p>
         </div>
 
-        <div 
+        <div
           className="relative"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
@@ -119,7 +130,7 @@ export default function ToolsSlider() {
             <ChevronRight className="w-5 h-5" />
           </button>
 
-          <div 
+          <div
             className="overflow-hidden touch-pan-y"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
@@ -160,8 +171,8 @@ export default function ToolsSlider() {
                 onClick={() => setCurrentIndex(i)}
                 className={`h-2.5 rounded-full transition-all duration-300 ${
                   currentIndex === i
-                    ? "bg-primary w-6" 
-                    : "bg-neutral-300 hover:bg-neutral-400 w-2.5" 
+                    ? "bg-primary w-6"
+                    : "bg-neutral-300 hover:bg-neutral-400 w-2.5"
                 }`}
                 aria-label={`Go to slide ${i + 1}`}
               />
