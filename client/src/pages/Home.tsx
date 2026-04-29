@@ -632,79 +632,50 @@ export default function Home() {
       </p>
     </div>
 
-    {/* Yatay kaydırılabilir kart satırı */}
-    <div className="flex flex-nowrap overflow-x-auto gap-6 pb-4 snap-x snap-mandatory">
-      
-      {/* EEXI Calculator */}
-      <Link
-        href="/tools?tool=eexi"
-        className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col min-w-[280px] md:min-w-[300px] flex-shrink-0 snap-start"
-      >
-        <h3 className="text-lg font-bold text-primary mb-2">EEXI Calculator</h3>
-        <p className="text-sm text-foreground/70 mb-6 flex-1">
-          Evaluate your vessel's Energy Efficiency Existing Ship Index compliance.
-        </p>
-        <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
-          Run Assessment →
-        </span>
-      </Link>
-
-      {/* CII Rating Tool */}
-      <Link
-        href="/tools?tool=cii"
-        className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col min-w-[280px] md:min-w-[300px] flex-shrink-0 snap-start"
-      >
-        <h3 className="text-lg font-bold text-primary mb-2">CII Rating Tool</h3>
-        <p className="text-sm text-foreground/70 mb-6 flex-1">
-          Estimate your Carbon Intensity Indicator rating and operational impact.
-        </p>
-        <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
-          Run Assessment →
-        </span>
-      </Link>
-
-      {/* BWTS Compliance */}
-      <Link
-        href="/tools?tool=bwts"
-        className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col min-w-[280px] md:min-w-[300px] flex-shrink-0 snap-start"
-      >
-        <h3 className="text-lg font-bold text-primary mb-2">BWTS Compliance</h3>
-        <p className="text-sm text-foreground/70 mb-6 flex-1">
-          Check ballast water treatment system compliance and retrofit needs.
-        </p>
-        <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
-          Run Assessment →
-        </span>
-      </Link>
-
-      {/* EU ETS Cost */}
-      <Link
-        href="/tools?tool=ets"
-        className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col min-w-[280px] md:min-w-[300px] flex-shrink-0 snap-start"
-      >
-        <h3 className="text-lg font-bold text-primary mb-2">EU ETS Cost</h3>
-        <p className="text-sm text-foreground/70 mb-6 flex-1">
-          Forecast your vessel's carbon allowance costs under the EU Emissions Trading System.
-        </p>
-        <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
-          Run Assessment →
-        </span>
-      </Link>
-
-      {/* FuelEU Penalty */}
-      <Link
-        href="/tools?tool=fueleu"
-        className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col min-w-[280px] md:min-w-[300px] flex-shrink-0 snap-start"
-      >
-        <h3 className="text-lg font-bold text-primary mb-2">FuelEU Penalty</h3>
-        <p className="text-sm text-foreground/70 mb-6 flex-1">
-          Assess potential penalties under FuelEU Maritime regulation for non-compliant fuel.
-        </p>
-        <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
-          Run Assessment →
-        </span>
-      </Link>
-
+    {/* Modern yatay kaydırılabilir kart satırı */}
+    <div
+      className="flex flex-nowrap overflow-x-auto gap-5 pb-4 snap-x snap-mandatory touch-pan-x"
+      style={{ WebkitOverflowScrolling: "touch" }}
+    >
+      {[
+        {
+          href: "/tools?tool=eexi",
+          title: "EEXI Calculator",
+          desc: "Evaluate your vessel's Energy Efficiency Existing Ship Index compliance.",
+        },
+        {
+          href: "/tools?tool=cii",
+          title: "CII Rating Tool",
+          desc: "Estimate your Carbon Intensity Indicator rating and operational impact.",
+        },
+        {
+          href: "/tools?tool=bwts",
+          title: "BWTS Compliance",
+          desc: "Check ballast water treatment system compliance and retrofit needs.",
+        },
+        {
+          href: "/tools?tool=ets",
+          title: "EU ETS Cost",
+          desc: "Forecast your vessel's carbon allowance costs under the EU Emissions Trading System.",
+        },
+        {
+          href: "/tools?tool=fueleu",
+          title: "FuelEU Penalty",
+          desc: "Assess potential penalties under FuelEU Maritime regulation for non-compliant fuel.",
+        },
+      ].map((tool) => (
+        <Link
+          key={tool.href}
+          href={tool.href}
+          className="group p-6 border border-border hover:border-primary transition-all duration-300 bg-white flex flex-col min-w-[260px] sm:min-w-[300px] flex-shrink-0 snap-start"
+        >
+          <h3 className="text-lg font-bold text-primary mb-2">{tool.title}</h3>
+          <p className="text-sm text-foreground/70 mb-6 flex-1">{tool.desc}</p>
+          <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
+            Run Assessment →
+          </span>
+        </Link>
+      ))}
     </div>
   </div>
 </section>
