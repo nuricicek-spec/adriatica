@@ -25,30 +25,33 @@ import { insights } from "@/data/insights";
 import { TRUST_METRICS } from "@/config/trustMetrics";
 import { trackEmailSignup } from "@/lib/analytics";
 
-export default function Home() {
-  const [formStatus, setFormStatus] = useState<
-    "idle" | "submitting" | "success" | "error"
-  >("idle");
-  const [errorType, setErrorType] = useState<"generic" | "rate-limit" | null>(null);
+// Sabit dizi component dışında tanımlandı — her render'da yeniden oluşturulması engellendi
+const ROTATING_WORDS = ["Compliance", "Safety", "Efficiency", "Reliability", "Performance"] as const;
 
-  const rotatingWords = ["Compliance", "Safety", "Efficiency", "Reliability", "Performance"];
+const FORMSPREE_URL = "https://formspree.io/f/myknqjbz";
+
+type FormStatus = "idle" | "submitting" | "success" | "error";
+type ErrorType = "generic" | "rate-limit" | null;
+
+export default function Home() {
+  const [formStatus, setFormStatus] = useState<FormStatus>("idle");
+  const [errorType, setErrorType] = useState<ErrorType>(null);
   const [wordIndex, setWordIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setWordIndex(prev => (prev + 1) % rotatingWords.length);
+      setWordIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
     }, 3000);
     return () => clearInterval(interval);
   }, []);
 
-  // FIX #2 (kod): dependency array'e insights eklendi — ESLint exhaustive-deps uyarısı giderildi
-  // Date parsing riski: new Date() yerine string karşılaştırma kullanıldı
+  // insights sabit bir modül import'u olduğundan dependency array boş bırakıldı
   const recentInsights = useMemo(
     () =>
       [...insights]
         .sort((a, b) => b.date.localeCompare(a.date))
         .slice(0, 3),
-    [insights]
+    [] // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -61,7 +64,7 @@ export default function Home() {
     formData.set("_subject", "New General Inquiry from Homepage");
 
     try {
-      const response = await fetch(form.action, {
+      const response = await fetch(FORMSPREE_URL, {
         method: "POST",
         body: formData,
         headers: { Accept: "application/json" },
@@ -72,13 +75,12 @@ export default function Home() {
         form.reset();
         trackEmailSignup("homepage");
       } else {
+        setErrorType(response.status === 429 ? "rate-limit" : "generic");
         setFormStatus("error");
-        if (response.status === 429) setErrorType("rate-limit");
-        else setErrorType("generic");
       }
     } catch {
-      setFormStatus("error");
       setErrorType("generic");
+      setFormStatus("error");
     }
   };
 
@@ -263,14 +265,14 @@ export default function Home() {
                   Engineering-grade outputs for{" "}
                   <AnimatePresence mode="wait">
                     <m.span
-                      key={rotatingWords[wordIndex]}
+                      key={ROTATING_WORDS[wordIndex]}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -20 }}
                       transition={{ duration: 0.4 }}
                       className="inline-block text-secondary"
                     >
-                      {rotatingWords[wordIndex]}
+                      {ROTATING_WORDS[wordIndex]}
                     </m.span>
                   </AnimatePresence>
                 </p>
@@ -439,11 +441,9 @@ export default function Home() {
             </div>
 
             <div className="relative">
-              {/* Dikey bağlantı çizgisi (masaüstünde ortada) */}
               <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary/20 transform -translate-x-1/2 hidden md:block" />
 
               <div className="space-y-12">
-                {/* Adım 1 — solda metin */}
                 <div className="relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
                   <div className="flex-1 md:text-right md:pr-16">
                     <div className="flex items-center gap-3 mb-2 md:justify-end">
@@ -460,7 +460,6 @@ export default function Home() {
                   <div className="flex-1 md:pl-16 hidden md:block" />
                 </div>
 
-                {/* Adım 2 — sağda metin */}
                 <div className="relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
                   <div className="flex-1 md:pr-16 hidden md:block" />
                   <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-white font-bold text-lg z-10 shrink-0">
@@ -477,7 +476,6 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Adım 3 — solda metin */}
                 <div className="relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
                   <div className="flex-1 md:text-right md:pr-16">
                     <div className="flex items-center gap-3 mb-2 md:justify-end">
@@ -494,7 +492,6 @@ export default function Home() {
                   <div className="flex-1 md:pl-16 hidden md:block" />
                 </div>
 
-                {/* Adım 4 — sağda metin */}
                 <div className="relative flex flex-col md:flex-row items-start gap-6 md:gap-0">
                   <div className="flex-1 md:pr-16 hidden md:block" />
                   <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary text-white font-bold text-lg z-10 shrink-0">
@@ -514,7 +511,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-      
+
         {/* ── CORE COMPETENCIES ───────────────────────────────────────────── */}
         <section id="core-competencies" className="py-24 md:py-32 bg-white relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -635,8 +632,8 @@ export default function Home() {
           </div>
         </section>
 
-      {/* ── ENGINEERING TOOLS ─────────────────────────────────────────────── */}
-      <ToolsSlider />
+        {/* ── ENGINEERING TOOLS ─────────────────────────────────────────────── */}
+        <ToolsSlider />
 
         {/* ── RECENT INSIGHTS ─────────────────────────────────────────────── */}
         <section className="py-24 bg-primary relative overflow-hidden">
@@ -668,7 +665,7 @@ export default function Home() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {recentInsights.map(insight => (
+              {recentInsights.map((insight) => (
                 <InsightCard key={insight.slug} insight={insight} variant="dark" />
               ))}
             </div>
@@ -701,11 +698,12 @@ export default function Home() {
               </div>
             ) : (
               <form
-                action="https://formspree.io/f/myknqjbz"
+                action={FORMSPREE_URL}
                 method="POST"
                 onSubmit={handleSubmit}
                 className="max-w-md mx-auto space-y-4 text-left"
               >
+                {/* Honeypot — spam koruması */}
                 <div className="hidden" aria-hidden="true">
                   <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" />
                 </div>
