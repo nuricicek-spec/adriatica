@@ -35,11 +35,9 @@ export default function ToolsSlider() {
   const [isMobile, setIsMobile] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   
-  // Swipe (Parmağla kaydırma) işlemleri için referanslar
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
 
-  // Ekran boyutunu dinle (Mobil mi Desktop mu?)
   useEffect(() => {
     const checkSize = () => setIsMobile(window.innerWidth < 768);
     checkSize();
@@ -47,7 +45,6 @@ export default function ToolsSlider() {
     return () => window.removeEventListener("resize", checkSize);
   }, []);
 
-  // Mobilde 1, Masada 3 kart gösterilecek
   const itemsPerPage = isMobile ? 1 : 3;
   const maxIndex = Math.max(0, TOOLS_DATA.length - itemsPerPage);
 
@@ -59,17 +56,14 @@ export default function ToolsSlider() {
     setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
   }, [maxIndex]);
 
-  // Otomatik kaydırma (Mouse üzerine geldiğinde durur)
   useEffect(() => {
     if (isPaused) return;
     const timer = setInterval(next, 5000);
     return () => clearInterval(timer);
   }, [next, isPaused]);
 
-  // Yüzde bazlı kaydırma (Piksel hatası yaşatmaz, responsive'e tam uyumlu)
-  const slidePercentage = (currentIndex / TOOLS_DATA.length) * 100;
+  const slidePercentage = currentIndex * (100 / itemsPerPage);
 
-  // --- DOKUNMATİK (SWIPE) FONKSİYONLARI ---
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.nativeEvent.touches[0].clientX;
   };
@@ -79,15 +73,12 @@ export default function ToolsSlider() {
   };
 
   const handleTouchEnd = () => {
-    // Parmağın kaydığı mesafeyi hesapla (Sağa kaydırsa eksi, sola kaydırsa artı değer çıkar)
     const distance = touchStartX.current - touchEndX.current;
-    
-    // Eğer parmak 50 piksel'den fazla kaydırsa ileri/geri git
     if (Math.abs(distance) > 50) {
       if (distance > 0) {
-        next(); // Sola kaydırdıysa -> İleri
+        next();
       } else {
-        prev(); // Sağa kaydırdıysa -> Geri
+        prev();
       }
     }
   };
@@ -96,7 +87,6 @@ export default function ToolsSlider() {
     <section className="py-20 bg-neutral-50 border-b border-border/10 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Başlık Kısmı */}
         <div className="text-center mb-12">
           <p className="text-xs uppercase tracking-[0.25em] text-primary/70 mb-3">
             Free Compliance Tools
@@ -109,13 +99,11 @@ export default function ToolsSlider() {
           </p>
         </div>
 
-        {/* Slider Alanı */}
         <div 
           className="relative"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          {/* Ok Butonları (Sadece Masaüstünde Görünür) */}
           <button
             onClick={prev}
             className="hidden md:flex absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white border border-border rounded-full shadow-lg items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-all duration-200"
@@ -131,15 +119,12 @@ export default function ToolsSlider() {
             <ChevronRight className="w-5 h-5" />
           </button>
 
-          {/* Kaydırma Çerçevesi + DOKUNMATİK EVENT'LARI BURAYA EKLEDİK */}
           <div 
-            className="overflow-hidden"
+            className="overflow-hidden touch-pan-y"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            
-            {/* Kartların Hareket Ettiği Şerit */}
             <div
               className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${slidePercentage}%)` }}
@@ -147,20 +132,19 @@ export default function ToolsSlider() {
               {TOOLS_DATA.map((tool) => (
                 <div
                   key={tool.href}
-                  // DÜZELTME: Mobilde taşmayı önlemek için px-2 yerine px-1 kullandık ve mobilde w-full yaptık
-                  className={`flex-shrink-0 ${isMobile ? "w-full px-1" : "w-1/3 px-2"}`}
+                  className={`flex-shrink-0 ${isMobile ? "w-full" : "w-1/3"}`}
                 >
                   <Link
                     href={tool.href}
-                    className="group block h-full p-6 md:p-8 border border-border hover:border-primary transition-all duration-300 bg-white rounded-sm"
+                    className="group flex flex-col h-full p-6 md:p-8 mx-1 md:mx-2 border border-border hover:border-primary transition-all duration-300 bg-white rounded-sm"
                   >
                     <h3 className="text-lg font-bold text-primary mb-2 group-hover:underline decoration-2 underline-offset-4">
                       {tool.title}
                     </h3>
-                    <p className="text-sm text-foreground/70 mb-6 leading-relaxed">
+                    <p className="text-sm text-foreground/70 leading-relaxed flex-1">
                       {tool.desc}
                     </p>
-                    <span className="inline-flex items-center px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200">
+                    <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200 mt-6">
                       Run Assessment →
                     </span>
                   </Link>
@@ -169,7 +153,6 @@ export default function ToolsSlider() {
             </div>
           </div>
 
-          {/* Alt Noktalar (Dots) */}
           <div className="flex justify-center gap-2 mt-8">
             {Array.from({ length: maxIndex + 1 }).map((_, i) => (
               <button
@@ -177,8 +160,8 @@ export default function ToolsSlider() {
                 onClick={() => setCurrentIndex(i)}
                 className={`h-2.5 rounded-full transition-all duration-300 ${
                   currentIndex === i
-                    ? "bg-primary w-6" // Aktif olan yatay uzar
-                    : "bg-neutral-300 hover:bg-neutral-400 w-2.5" // Pasif olan yuvarlak kalır
+                    ? "bg-primary w-6" 
+                    : "bg-neutral-300 hover:bg-neutral-400 w-2.5" 
                 }`}
                 aria-label={`Go to slide ${i + 1}`}
               />
