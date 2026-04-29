@@ -6,131 +6,85 @@ import { Shield, AlertTriangle, ArrowRight } from "lucide-react";
 import { EexiCalculator } from "@/components/tools/EexiCalculator";
 import { CiiCalculator } from "@/components/tools/CiiCalculator";
 import { BwtsCalculator } from "@/components/tools/BwtsCalculator";
-import { EtsCalculator } from "@/components/tools/EtsCalculator"; // YENİ EKLENDİ
-import { FueleuCalculator } from "@/components/tools/FueleuCalculator"; // YENİ EKLENDİ
+import { EtsCalculator } from "@/components/tools/EtsCalculator";
+import { FueleuCalculator } from "@/components/tools/FueleuCalculator";
 import { Helmet } from "react-helmet-async";
 
 const TABS = [
-  { id: "eexi", label: "EEXI Calculator", component: EexiCalculator },
-  { id: "cii", label: "CII Predictor", component: CiiCalculator },
-  { id: "bwts", label: "BWTS Sizing", component: BwtsCalculator },
-  { id: "ets", label: "EU ETS Cost", component: EtsCalculator }, // YENİ EKLENDİ
-  { id: "fueleu", label: "FuelEU Penalty", component: FueleuCalculator }, // YENİ EKLENDİ
+  { id: "eexi",   label: "EEXI Calculator",    shortLabel: "EEXI",    component: EexiCalculator   },
+  { id: "cii",    label: "CII Predictor",       shortLabel: "CII",     component: CiiCalculator    },
+  { id: "bwts",   label: "BWTS Sizing",         shortLabel: "BWTS",    component: BwtsCalculator   },
+  { id: "ets",    label: "EU ETS Cost",         shortLabel: "EU ETS",  component: EtsCalculator    },
+  { id: "fueleu", label: "FuelEU Penalty",      shortLabel: "FuelEU",  component: FueleuCalculator },
 ];
 
-// Orijinal, detaylı Schema kodun (hiçbir şey eksilmedi)
 const toolsPageSchema = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebSite",
       "@id": "https://www.adriaticadoo.com/#website",
-      "url": "https://www.adriaticadoo.com/",
-      "name": "Adriatica D.O.O.",
-      "description": "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
-      "inLanguage": "en",
-      "publisher": { "@id": "https://www.adriaticadoo.com/#organization" }
+      url: "https://www.adriaticadoo.com/",
+      name: "Adriatica D.O.O.",
+      description: "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+      inLanguage: "en",
+      publisher: { "@id": "https://www.adriaticadoo.com/#organization" },
     },
     {
       "@type": "WebPage",
       "@id": "https://www.adriaticadoo.com/tools/#webpage",
-      "url": "https://www.adriaticadoo.com/tools",
-      "name": "Marine Engineering Compliance Calculators",
-      "description": "Interactive tools for preliminary EEXI calculation, CII rating prediction, BWTS capacity sizing, EU ETS cost forecasting, and FuelEU penalty assessment.", // YENİ EKLENDİ
-      "isPartOf": { "@id": "https://www.adriaticadoo.com/#website" },
-      "about": {
+      url: "https://www.adriaticadoo.com/tools",
+      name: "Marine Engineering Compliance Calculators",
+      description:
+        "Interactive tools for preliminary EEXI calculation, CII rating prediction, BWTS capacity sizing, EU ETS cost forecasting, and FuelEU penalty assessment.",
+      isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
+      about: {
         "@type": "ItemList",
-        "name": "Engineering Compliance Tools",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "item": {
-              "@type": "SoftwareApplication",
-              "name": "EEXI Calculator",
-              "applicationCategory": "EngineeringApplication",
-              "operatingSystem": "Web Browser",
-              "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
-            }
+        name: "Engineering Compliance Tools",
+        itemListElement: TABS.map((tab, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          item: {
+            "@type": "SoftwareApplication",
+            name: tab.label,
+            applicationCategory: "EngineeringApplication",
+            operatingSystem: "Web Browser",
+            offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
           },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "item": {
-              "@type": "SoftwareApplication",
-              "name": "CII Operational Predictor",
-              "applicationCategory": "EngineeringApplication",
-              "operatingSystem": "Web Browser",
-              "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
-            }
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "item": {
-              "@type": "SoftwareApplication",
-              "name": "BWTS Capacity Sizing",
-              "applicationCategory": "EngineeringApplication",
-              "operatingSystem": "Web Browser",
-              "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
-            }
-          },
-          // YENİ EKLENDİ (EU ETS)
-          {
-            "@type": "ListItem",
-            "position": 4,
-            "item": {
-              "@type": "SoftwareApplication",
-              "name": "EU ETS Cost Predictor",
-              "applicationCategory": "EngineeringApplication",
-              "operatingSystem": "Web Browser",
-              "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
-            }
-          },
-          // YENİ EKLENDİ (FuelEU)
-          {
-            "@type": "ListItem",
-            "position": 5,
-            "item": {
-              "@type": "SoftwareApplication",
-              "name": "FuelEU Penalty Predictor",
-              "applicationCategory": "EngineeringApplication",
-              "operatingSystem": "Web Browser",
-              "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
-            }
-          }
-        ]
+        })),
       },
-      "inLanguage": "en"
+      inLanguage: "en",
     },
     {
       "@type": "Organization",
       "@id": "https://www.adriaticadoo.com/#organization",
-      "name": "Adriatica D.O.O.",
-      "url": "https://www.adriaticadoo.com/",
-      "logo": { "@type": "ImageObject", "url": "https://www.adriaticadoo.com/logo.png" }
-    }
-  ]
+      name: "Adriatica D.O.O.",
+      url: "https://www.adriaticadoo.com/",
+      logo: { "@type": "ImageObject", url: "https://www.adriaticadoo.com/logo.png" },
+    },
+  ],
 };
 
 export default function Tools() {
   const [activeTab, setActiveTab] = useState("eexi");
   const ActiveComponent = TABS.find(t => t.id === activeTab)?.component;
-  
-  // Dinamik CTA State
   const [complianceStatus, setComplianceStatus] = useState<string>("idle");
 
-  // Calculator'lardan gelen sinyalleri dinle
+  // URL param ile doğrudan tab açma (?tool=cii gibi)
   useEffect(() => {
-    const handleStatusUpdate = (e: any) => {
-      setComplianceStatus(e.detail.status);
-    };
+    const params = new URLSearchParams(window.location.search);
+    const tool = params.get("tool");
+    if (tool && TABS.some(t => t.id === tool)) {
+      setActiveTab(tool);
+    }
+  }, []);
 
+  useEffect(() => {
+    const handleStatusUpdate = (e: any) => setComplianceStatus(e.detail.status);
     window.addEventListener("tool_compliance_update", handleStatusUpdate);
     return () => window.removeEventListener("tool_compliance_update", handleStatusUpdate);
   }, []);
 
-  // Sekme değiştiğinde statüyü sıfırla
   useEffect(() => {
     setComplianceStatus("idle");
   }, [activeTab]);
@@ -139,7 +93,7 @@ export default function Tools() {
     <>
       <SEO
         title="Marine Engineering Calculators"
-        description="Calculate preliminary EEXI attained values, predict CII operational ratings, and size BWTS systems based on IMO MEPC regulations. Free maritime compliance tools."
+        description="Calculate preliminary EEXI attained values, predict CII operational ratings, size BWTS systems, forecast EU ETS costs, and assess FuelEU penalties. Free maritime compliance tools."
         canonical="https://www.adriaticadoo.com/tools"
       />
 
@@ -151,50 +105,45 @@ export default function Tools() {
 
       <div className="min-h-screen bg-background font-body selection:bg-primary/20">
         <Navigation />
-        
+
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto fade-in">
-            {/* Üst Başlık Alanı */}
+
+            {/* Header */}
             <div className="text-center mb-8">
               <h1 className="font-display text-4xl md:text-5xl font-bold text-[#0B3B5C] mb-4">
                 Marine Engineering Calculators
               </h1>
               <p className="text-lg text-foreground/75 max-w-3xl mx-auto">
-                Preliminary compliance assessments based on IMO regulations. 
+                Preliminary compliance assessments based on IMO and EU regulations.
                 Evaluate your vessel's status before dry-dock or survey.
               </p>
             </div>
 
-            {/* Hızlı Bilgi Kartları */}
+            {/* Info cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-5xl mx-auto">
               <div className="bg-neutral-50 border-l-2 border-primary p-5 rounded-sm">
                 <div className="flex items-center gap-3 mb-2">
-                  <Shield className="h-6 w-6 text-primary shrink-0" />
-                  <h2 className="font-display font-bold text-[#0B3B5C] text-base">
-                    IMO Aligned
-                  </h2>
+                  <Shield className="h-6 w-6 text-primary shrink-0" aria-hidden="true" />
+                  <h2 className="font-display font-bold text-[#0B3B5C] text-base">IMO & EU Aligned</h2>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Calculations based on MEPC.338(76) and MARPOL Annex VI guidelines.
+                  MEPC.338(76), MARPOL Annex VI, EU ETS Directive, and FuelEU Maritime.
                 </p>
               </div>
               <div className="bg-neutral-50 border-l-2 border-primary p-5 rounded-sm">
                 <div className="flex items-center gap-3 mb-2">
-                  <AlertTriangle className="h-6 w-6 text-primary shrink-0" />
-                  <h2 className="font-display font-bold text-[#0B3B5C] text-base">
-                    Instant Baseline
-                  </h2>
+                  <AlertTriangle className="h-6 w-6 text-primary shrink-0" aria-hidden="true" />
+                  <h2 className="font-display font-bold text-[#0B3B5C] text-base">Instant Baseline</h2>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Identify compliance gaps and EPL requirements in seconds.
+                  Identify compliance gaps and cost exposure in seconds.
                 </p>
               </div>
               <div className="bg-neutral-50 border-l-2 border-primary p-5 rounded-sm">
                 <div className="flex items-center gap-3 mb-2">
-                  <Shield className="h-6 w-6 text-primary shrink-0" />
-                  <h2 className="font-display font-bold text-[#0B3B5C] text-base">
-                    No Obligation
-                  </h2>
+                  <Shield className="h-6 w-6 text-primary shrink-0" aria-hidden="true" />
+                  <h2 className="font-display font-bold text-[#0B3B5C] text-base">No Obligation</h2>
                 </div>
                 <p className="text-sm text-muted-foreground">
                   Use freely to assess your fleet before contacting engineering support.
@@ -202,61 +151,101 @@ export default function Tools() {
               </div>
             </div>
 
-            {/* Ana İçerik Grid'i */}
+            {/* Main grid */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
-              
-              {/* Sol Taraf: Hesaplama Araçları */}
+
+              {/* Left: Calculator */}
               <div className="lg:col-span-7">
-                {/* Sekmeler */}
-                <div className="flex gap-2 mb-6 border-b border-border/20 pb-4">
+
+                {/*
+                  TAB NAVİGASYON
+                  ─ Mobil  (<md): native <select> — en az friction, sistem klavyesi
+                  ─ Desktop (md+): tab buton row — görsel, tıklanabilir
+                */}
+
+                {/* Mobil dropdown */}
+                <div className="block md:hidden mb-6">
+                  <label htmlFor="tool-select" className="block text-xs font-medium text-muted-foreground mb-1">
+                    Select Tool
+                  </label>
+                  <select
+                    id="tool-select"
+                    value={activeTab}
+                    onChange={e => setActiveTab(e.target.value)}
+                    className="w-full px-4 py-3 border border-border rounded-sm bg-white text-sm font-medium text-[#0B3B5C] focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+                  >
+                    {TABS.map(tab => (
+                      <option key={tab.id} value={tab.id}>
+                        {tab.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Desktop tab row */}
+                <div
+                  className="hidden md:flex gap-2 mb-6 border-b border-border/20 pb-4 flex-wrap"
+                  role="tablist"
+                  aria-label="Calculator tools"
+                >
                   {TABS.map(tab => (
                     <button
                       key={tab.id}
+                      role="tab"
+                      aria-selected={activeTab === tab.id}
+                      aria-controls={`tabpanel-${tab.id}`}
                       onClick={() => setActiveTab(tab.id)}
-                      className={`px-4 py-2 text-sm font-medium rounded-sm transition-colors ${
-                        activeTab === tab.id 
-                          ? "bg-primary text-white" 
+                      className={`px-4 py-2 text-sm font-medium rounded-sm transition-colors whitespace-nowrap ${
+                        activeTab === tab.id
+                          ? "bg-primary text-white"
                           : "bg-neutral-100 text-muted-foreground hover:bg-neutral-200"
                       }`}
                     >
-                      {tab.label}
+                      {tab.shortLabel}
                     </button>
                   ))}
                 </div>
 
-                {/* Aktif Hesaplayıcı Component'i */}
-                {ActiveComponent && <ActiveComponent />}
+                {/* Active calculator */}
+                <div
+                  id={`tabpanel-${activeTab}`}
+                  role="tabpanel"
+                  aria-label={TABS.find(t => t.id === activeTab)?.label}
+                >
+                  {ActiveComponent && <ActiveComponent />}
+                </div>
               </div>
 
-              {/* Sağ Taraf: Sabit Yan Panel */}
+              {/* Right: Sticky sidebar */}
               <div className="lg:col-span-5">
                 <div className="bg-neutral-50 border border-border/20 rounded-sm p-6 md:p-8 shadow-sm sticky top-24">
-                  
-                  {/* EĞER UYUŞMUZSA: KIRMIZI ALARM CTA (ALTIN BUTON YOK) */}
+
                   {complianceStatus === "non-compliant" && (
                     <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-sm animate-in fade-in duration-300">
                       <div className="flex items-start gap-3">
-                        <AlertTriangle className="h-6 w-6 text-red-600 shrink-0 mt-0.5" />
+                        <AlertTriangle className="h-6 w-6 text-red-600 shrink-0 mt-0.5" aria-hidden="true" />
                         <div>
                           <h4 className="font-bold text-red-800 text-sm mb-1">Compliance Gap Detected</h4>
                           <p className="text-xs text-red-700 leading-relaxed mb-3">
-                            Based on your inputs, the vessel does not meet current IMO thresholds. Avoid dry-dock delays or PSC detentions.
+                            Based on your inputs, the vessel does not meet current IMO thresholds.
+                            Avoid dry-dock delays or PSC detentions.
                           </p>
                           <a
                             href="/request-consultation"
                             className="w-full inline-flex items-center justify-center gap-2 bg-red-600 text-white font-medium px-4 py-2.5 rounded-sm shadow-lg hover:bg-red-700 transition-all uppercase tracking-wide text-xs text-center"
                           >
-                            Get Technical Solution <ArrowRight className="h-3 w-3" />
+                            Get Technical Solution{" "}
+                            <ArrowRight className="h-3 w-3" aria-hidden="true" />
                           </a>
                         </div>
                       </div>
                     </div>
                   )}
 
-                  {/* EĞER UYUMLU İSE VEYA HENÜZ HESAP YAPILMADIYSA: STANDART BİLGİ METNİ */}
                   {complianceStatus !== "non-compliant" && (
                     <p className="text-sm text-muted-foreground mb-4 pb-2 border-b border-border/20">
-                      These tools provide preliminary estimations — not a substitute for official class approval.
+                      These tools provide preliminary estimations — not a substitute for official
+                      class approval.
                     </p>
                   )}
 
@@ -267,7 +256,9 @@ export default function Tools() {
                     Facing a PSC inspection or preparing for dry-dock?
                   </p>
                   <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-                    Whether you're a superyacht captain, a commercial fleet technical manager, or an owner — use these calculators to quickly understand your vessel's regulatory standing before investing in official engineering studies.
+                    Whether you're a superyacht captain, a commercial fleet technical manager, or
+                    an owner — use these calculators to quickly understand your vessel's regulatory
+                    standing before investing in official engineering studies.
                   </p>
 
                   <h3 className="font-display font-bold text-[#0B3B5C] mb-3 mt-6">
@@ -282,24 +273,25 @@ export default function Tools() {
                   <div className="mt-6 pt-6 border-t border-border/30">
                     <div className="flex items-start gap-3">
                       <div className="bg-primary/10 p-2 rounded-full">
-                        <AlertTriangle className="h-5 w-5 text-primary" />
+                        <AlertTriangle className="h-5 w-5 text-primary" aria-hidden="true" />
                       </div>
                       <div>
                         <h4 className="font-medium text-[#0B3B5C] text-sm">
                           Disclaimer: Preliminary Data Only
                         </h4>
                         <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                          Results are based on user-provided estimations, not as-built or sea trial data. They do not replace official EEXI verification, EPL calculation, or Class Society approval packages.
+                          Results are based on user-provided estimations, not as-built or sea trial
+                          data. They do not replace official EEXI verification, EPL calculation, or
+                          Class Society approval packages.
                         </p>
                       </div>
                     </div>
                   </div>
 
-                  {/* EĞER UYUŞMUZSA ALTIN BUTONU TAMAMEN GİZLE */}
                   {complianceStatus !== "non-compliant" && (
                     <a
                       href="/request-consultation"
-                      className="mt-6 w-full inline-flex items-center justify-center bg-[#D4AF37] text-black font-medium px-6 py-3 rounded-sm shadow-lg shadow-[#D4AF37]/20 hover:bg-[#C9A961] transition-all duration-300 uppercase tracking-wide text-sm text-center"
+                      className="mt-6 w-full inline-flex items-center justify-center bg-[#D4AF37] text-black font-medium px-6 py-3 rounded-sm shadow-lg shadow-[#D4AF37]/20 hover:bg-[#B8952A] transition-all duration-300 uppercase tracking-wide text-sm text-center"
                     >
                       Request Official Study
                     </a>
@@ -310,6 +302,7 @@ export default function Tools() {
             </div>
           </div>
         </main>
+
         <Footer />
       </div>
     </>
