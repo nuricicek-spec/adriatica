@@ -51,7 +51,6 @@ export default function ToolsSlider() {
   const itemsPerPage = isMobile ? 1 : 3;
   const maxIndex = Math.max(0, TOOLS_DATA.length - itemsPerPage);
 
-  // currentIndex, maxIndex değiştiğinde sınır dışına çıkmasın
   useEffect(() => {
     setCurrentIndex((prev) => Math.min(prev, maxIndex));
   }, [maxIndex]);
@@ -89,7 +88,6 @@ export default function ToolsSlider() {
         prev();
       }
     }
-    // Sonraki swipe için sıfırla
     touchStartX.current = 0;
     touchEndX.current = 0;
   };
@@ -164,18 +162,36 @@ export default function ToolsSlider() {
             </div>
           </div>
 
-          <div className="flex justify-center gap-2 mt-8">
+          {/*
+            WCAG 2.5.5 — Minimum Touch Target Size (24×24px).
+            Görsel dot 10×10px olarak korundu (tasarım bozulmuyor).
+            Her button'a p-2 (8px padding) eklendi → toplam tıklanabilir alan
+            26×26px oldu, WCAG AA minimumunu (24×24px) karşılıyor.
+            role="tablist" + aria-selected ile ekran okuyucu desteği eklendi.
+          -->
+          */}
+          <div
+            className="flex justify-center gap-1 mt-8"
+            role="tablist"
+            aria-label="Slider navigation"
+          >
             {Array.from({ length: maxIndex + 1 }).map((_, i) => (
               <button
                 key={i}
                 onClick={() => setCurrentIndex(i)}
-                className={`h-2.5 rounded-full transition-all duration-300 ${
-                  currentIndex === i
-                    ? "bg-primary w-6"
-                    : "bg-neutral-300 hover:bg-neutral-400 w-2.5"
-                }`}
+                role="tab"
+                aria-selected={currentIndex === i}
                 aria-label={`Go to slide ${i + 1}`}
-              />
+                className="p-2 flex items-center justify-center"
+              >
+                <span
+                  className={`block h-2.5 rounded-full transition-all duration-300 ${
+                    currentIndex === i
+                      ? "bg-primary w-6"
+                      : "bg-neutral-300 hover:bg-neutral-400 w-2.5"
+                  }`}
+                />
+              </button>
             ))}
           </div>
         </div>
