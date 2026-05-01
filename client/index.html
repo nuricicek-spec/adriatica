@@ -4,11 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Default title & description — react-helmet-async overrides these per page -->
-    <!-- Description: 150 karakter — Bing/Google önerilen limit 150–160 -->
     <title>Adriatica D.O.O. - Marine Engineering & Consultancy</title>
-    <!-- Statik description kaldırıldı – React (react-helmet-async) kendi description'ını ekleyecek -->
-
     <meta name="author" content="Adriatica D.O.O." />
     <meta name="robots" content="index, follow" />
     <meta name="geo.region" content="ME" />
@@ -41,7 +37,7 @@
     <!-- LCP görseli preload -->
     <link rel="preload" as="image" href="/logo.svg" fetchpriority="high" />
 
-    <!-- GTM defer -->
+    <!-- GTM defer (isteğe bağlı) -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
@@ -84,11 +80,7 @@
     </style>
   </head>
   <body>
-    <!--
-      Crawler fallback: JS render etmeyen bot'lar için statik semantic içerik.
-      React mount olduktan sonra #root bu div'in önüne geçer, kullanıcı görmez.
-      aria-hidden="true" → ekran okuyucular çift H1 algılamaz.
-    -->
+    <!-- Crawler fallback – sadece botlar için, kullanıcı görmez -->
     <div class="crawler-content" aria-hidden="true">
       <!-- H2 kullanıldı → sayfada yalnızca React içindeki asıl H1 kalır -->
       <h2>Adriatica D.O.O. — Marine Engineering &amp; Consultancy</h2>
