@@ -4,8 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Default title & description — react-helmet-async overrides these per page -->
-    <!-- Description: 149 karakter — Bing/Google önerilen limit 150–160, güvenli taraf için 149 -->
+    <!--
+      Title ve description react-helmet-async tarafından her sayfada override edilir.
+      Buradaki değerler yalnızca crawler'ın JS render etmeden önce gördüğü
+      geçici fallback'tir — react-helmet-async mount olunca bunların yerini alır.
+      149 karakter — Bing/Google önerilen limit içinde.
+    -->
     <title>Adriatica D.O.O. - Marine Engineering & Consultancy</title>
     <meta
       name="description"
@@ -26,9 +30,8 @@
     <link rel="manifest" href="/manifest.json" />
 
     <!--
-      Font preload: @font-face ile tanımlı fontlar CSS parse
-      edilene kadar discovered edilemez. Preload ile kritik path kısalır.
-      crossorigin zorunlu — woff2 CORS gerektirir.
+      Font preload: @font-face ile tanımlı fontlar CSS parse edilene kadar
+      discovered edilemez. crossorigin zorunlu — woff2 CORS gerektirir.
     -->
     <link
       rel="preload"
@@ -84,46 +87,9 @@
         min-height: 100dvh;
         background-color: hsl(40, 20%, 97%);
       }
-      /*
-        Crawler fallback içeriği görsel olarak gizlenir.
-        Bing/Googlebot JS render etmeden HTML'i çektiğinde okur,
-        kullanıcı görmez. aria-hidden ile ekran okuyucular atlar.
-      */
-      .crawler-content {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        overflow: hidden;
-        clip: rect(0 0 0 0);
-        white-space: nowrap;
-      }
     </style>
   </head>
   <body>
-    <!--
-      Crawler fallback: JS render etmeyen bot'lar için statik semantic içerik.
-      React mount olduktan sonra #root bu div'in önüne geçer, kullanıcı görmez.
-      aria-hidden="true" → ekran okuyucular çift H1 algılamaz.
-    -->
-    <div class="crawler-content" aria-hidden="true">
-      <h1>Adriatica D.O.O. — Marine Engineering &amp; Consultancy</h1>
-      <p>
-        Independent marine engineering consultancy based in Budva, Montenegro.
-        Specialising in structural integrity, regulatory compliance, and sustainable
-        technologies for superyachts, commercial vessels, and fishing boats in the
-        Adriatic and Mediterranean.
-      </p>
-      <nav>
-        <a href="/services/engineering-plans">Engineering Plans</a>
-        <a href="/services/engineering-documentation">Engineering Documentation</a>
-        <a href="/services/structural-integrity">Structural Integrity</a>
-        <a href="/services/sustainable-technologies">Sustainable Technologies</a>
-        <a href="/services/regulatory-compliance">Regulatory Compliance</a>
-        <a href="/services/project-management">Project Management</a>
-        <a href="/request-consultation">Request Consultation</a>
-      </nav>
-    </div>
-
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
