@@ -84,7 +84,11 @@
     </style>
   </head>
   <body>
-    <!-- Crawler fallback – sadece botlar için, kullanıcı görmez -->
+    <!--
+      Crawler fallback: JS render etmeyen bot'lar için statik semantic içerik.
+      React mount olduktan sonra #root bu div'in önüne geçer, kullanıcı görmez.
+      aria-hidden="true" → ekran okuyucular çift H1 algılamaz.
+    -->
     <div class="crawler-content" aria-hidden="true">
       <!-- H2 kullanıldı → sayfada yalnızca React içindeki asıl H1 kalır -->
       <h2>Adriatica D.O.O. — Marine Engineering &amp; Consultancy</h2>
