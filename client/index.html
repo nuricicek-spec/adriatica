@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Default title & description — react-helmet-async overrides these per page -->
+    <!-- Description: 150 karakter — Bing/Google önerilen limit 150–160 -->
     <title>Adriatica D.O.O. - Marine Engineering & Consultancy</title>
     <meta
       name="description"
-      content="Adriatica D.O.O. provides independent marine engineering consultancy, technical project management, and regulatory compliance services for yachts, commercial vessels, and fishing boats."
+      content="Marine engineering consultancy for yachts, commercial vessels and fishing boats. Structural integrity, regulatory compliance and sustainable technologies."
     />
 
     <meta name="author" content="Adriatica D.O.O." />
@@ -25,9 +26,9 @@
     <link rel="manifest" href="/manifest.json" />
 
     <!--
-      FIX #4 — Font preload: @font-face ile tanımlı fontlar CSS parse
-      edilene kadar discovered edilemez. Preload ile kritik path
-      836ms → ~200ms'e düşer. crossorigin zorunlu, woff2 CORS gerektirir.
+      Font preload: @font-face ile tanımlı fontlar CSS parse
+      edilene kadar discovered edilemez. Preload ile kritik path kısalır.
+      crossorigin zorunlu — woff2 CORS gerektirir.
     -->
     <link
       rel="preload"
@@ -48,9 +49,8 @@
     <link rel="preload" as="image" href="/logo.svg" fetchpriority="high" />
 
     <!--
-      FIX #2 — GTM defer: async script bile main thread parse
-      maliyeti yaratır. requestIdleCallback ile defer edilir;
-      tarayıcı boşta iken yüklenir. Fallback: 3sn timeout.
+      GTM defer: requestIdleCallback ile defer edilir;
+      tarayıcı boşta iken yüklenir. Fallback: 3sn timeout (Safari).
     -->
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -68,7 +68,6 @@
       if ("requestIdleCallback" in window) {
         requestIdleCallback(loadGtag, { timeout: 3000 });
       } else {
-        // Safari fallback
         setTimeout(loadGtag, 3000);
       }
     </script>
@@ -85,9 +84,46 @@
         min-height: 100dvh;
         background-color: hsl(40, 20%, 97%);
       }
+      /*
+        Crawler fallback içeriği görsel olarak gizlenir.
+        Bing/Googlebot HTML'i JS render etmeden çektiğinde okur,
+        kullanıcı görmez, ekran okuyucular aria-hidden ile atlar.
+      */
+      .crawler-content {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
     </style>
   </head>
   <body>
+    <!--
+      Crawler fallback: JS render etmeyen bot'lar için statik semantic içerik.
+      React mount olduktan sonra #root bu div'in önüne geçer, kullanıcı görmez.
+      aria-hidden="true" → ekran okuyucular çift H1 algılamaz.
+    -->
+    <div class="crawler-content" aria-hidden="true">
+      <h1>Adriatica D.O.O. — Marine Engineering &amp; Consultancy</h1>
+      <p>
+        Independent marine engineering consultancy based in Budva, Montenegro.
+        Specialising in structural integrity, regulatory compliance, and sustainable
+        technologies for superyachts, commercial vessels, and fishing boats in the
+        Adriatic and Mediterranean.
+      </p>
+      <nav>
+        <a href="/services/engineering-plans">Engineering Plans</a>
+        <a href="/services/engineering-documentation">Engineering Documentation</a>
+        <a href="/services/structural-integrity">Structural Integrity</a>
+        <a href="/services/sustainable-technologies">Sustainable Technologies</a>
+        <a href="/services/regulatory-compliance">Regulatory Compliance</a>
+        <a href="/services/project-management">Project Management</a>
+        <a href="/request-consultation">Request Consultation</a>
+      </nav>
+    </div>
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
