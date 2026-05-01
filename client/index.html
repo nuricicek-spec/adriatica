@@ -5,16 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!--
-      Title ve description react-helmet-async tarafından her sayfada override edilir.
-      Buradaki değerler yalnızca crawler'ın JS render etmeden önce gördüğü
-      geçici fallback'tir — react-helmet-async mount olunca bunların yerini alır.
-      149 karakter — Bing/Google önerilen limit içinde.
+      Title ve meta description burada YOK — react-helmet-async her sayfada
+      bunları data-rh="true" attribute'u ile inject eder. Statik bir fallback
+      bırakmak duplicate tag sorununa yol açar (Bing ikisini de görür).
     -->
-    <title>Adriatica D.O.O. - Marine Engineering & Consultancy</title>
-    <meta
-      name="description"
-      content="Marine engineering consultancy for yachts, commercial vessels and fishing boats. Structural integrity, regulatory compliance and sustainable technologies."
-    />
 
     <meta name="author" content="Adriatica D.O.O." />
     <meta name="robots" content="index, follow" />
