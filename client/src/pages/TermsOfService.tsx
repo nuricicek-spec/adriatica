@@ -2,38 +2,13 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { motion } from "framer-motion";
 import { SEO } from "@/components/SEO";
-import { Helmet } from "react-helmet-async";
 
 export default function TermsOfService() {
-  const termsOfServiceSchema = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebPage",
-        "@id": "https://www.adriaticadoo.com/terms-of-service/#webpage",
-        url: "https://www.adriaticadoo.com/terms-of-service",
-        name: "Terms of Service | Adriatica D.O.O.",
-        description:
-          "Terms of service for Adriatica D.O.O. – by accessing our website, you agree to these terms.",
-        isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
-        about: { "@id": "https://www.adriaticadoo.com/#organization" },
-        inLanguage: "en",
-        datePublished: "2025-01-01",
-        dateModified: "2025-03-15",
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://www.adriaticadoo.com/#website",
-        url: "https://www.adriaticadoo.com/",
-        name: "Adriatica D.O.O.",
-        description:
-          "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
-        inLanguage: "en",
-        publisher: { "@id": "https://www.adriaticadoo.com/#organization" },
-      },
-    ],
-  };
-
+  /*
+    noindex sayfası — Helmet ve schema kaldırıldı.
+    Bot'ların bu sayfayı parse etmesine gerek yok.
+    SEO component yalnızca noindex sinyali için bırakıldı.
+  */
   return (
     <>
       <SEO
@@ -42,11 +17,6 @@ export default function TermsOfService() {
         canonical="https://www.adriaticadoo.com/terms-of-service"
         noindex={true}
       />
-      <Helmet>
-        <script type="application/ld+json">
-          {JSON.stringify(termsOfServiceSchema).replace(/</g, "\\u003c")}
-        </script>
-      </Helmet>
 
       <div className="min-h-screen bg-background font-body">
         <Navigation />

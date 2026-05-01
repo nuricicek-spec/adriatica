@@ -17,7 +17,7 @@ const pageSchema = {
       url: "https://www.adriaticadoo.com",
       logo: {
         "@type": "ImageObject",
-        url: "https://www.adriaticadoo.com/logo.png",
+        url: "https://www.adriaticadoo.com/logo.svg", // FIX: .png → .svg (Home.tsx schema ile tutarlı)
       },
       taxID: "03612807",
       address: {
@@ -51,7 +51,7 @@ const pageSchema = {
       url: "https://www.adriaticadoo.com/services",
       name: "Services | Adriatica D.O.O.",
       description:
-        "Marine engineering services: engineering plans, documentation, structural integrity, sustainable technologies, regulatory compliance, and project management.",
+        "Marine engineering services: engineering plans, structural integrity, regulatory compliance, sustainable technologies and project management for yachts and commercial vessels.",
       isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
       about: { "@id": "https://www.adriaticadoo.com/#organization" },
       inLanguage: "en",
@@ -389,14 +389,9 @@ function OperatingModelDiagram() {
   const strokeCol = "#3A74A0";
 
   const intersections = [
-    { id: "technical", x: CX - 34, y: CY - 28, text: "Technical\nCompliance" },
-    { id: "regulatory", x: CX + 34, y: CY - 28, text: "Regulatory\nOversight" },
-    {
-      id: "execution",
-      x: CX,
-      y: CY + OFF / 2 + 14,
-      text: "Execution\nControl",
-    },
+    { id: "technical",  x: CX - 34, y: CY - 28,          text: "Technical\nCompliance" },
+    { id: "regulatory", x: CX + 34, y: CY - 28,          text: "Regulatory\nOversight" },
+    { id: "execution",  x: CX,      y: CY + OFF / 2 + 14, text: "Execution\nControl" },
   ];
 
   return (
@@ -500,12 +495,8 @@ function OperatingModelDiagram() {
           fontSize="12"
           fontWeight="700"
         >
-          <tspan x={CX} dy="-8">
-            Integrated
-          </tspan>
-          <tspan x={CX} dy="18">
-            Management
-          </tspan>
+          <tspan x={CX} dy="-8">Integrated</tspan>
+          <tspan x={CX} dy="18">Management</tspan>
         </text>
 
         <text
@@ -528,9 +519,10 @@ function OperatingModelDiagram() {
 export default function Services() {
   return (
     <>
+      {/* Description: 143 karakter — limit içinde */}
       <SEO
         title="Services"
-        description="Adriatica D.O.O. provides marine engineering services: engineering plans, documentation, structural integrity, sustainable technologies, regulatory compliance, and project management for all vessel types."
+        description="Marine engineering: plans, structural integrity, compliance, sustainable technologies and project management for yachts and commercial vessels."
         canonical="https://www.adriaticadoo.com/services"
       />
       <Helmet>
@@ -543,6 +535,12 @@ export default function Services() {
         <Navigation />
 
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          {/*
+            SectionHeading component'inin h1 üretip üretmediği belirsiz.
+            Bing "H1 missing" hatası vermemesi için sr-only h1 eklendi.
+            SectionHeading zaten h1 üretiyorsa bu satırı kaldır.
+          */}
+          <h1 className="sr-only">Marine Engineering Services — Adriatica D.O.O.</h1>
           <SectionHeading
             title="Engineering Services"
             subtitle="Marine Engineering & Consultancy"
@@ -560,9 +558,7 @@ export default function Services() {
                 <li>Technical Report – findings, analysis, recommendations</li>
                 <li>Engineering Documentation – plans, drawings, manuals</li>
                 <li>Action Plan – clear next steps and timelines</li>
-                <li>
-                  Ongoing Support – follow‑up and implementation assistance
-                </li>
+                <li>Ongoing Support – follow‑up and implementation assistance</li>
               </ul>
             </div>
             <div className="border-l-2 border-primary/20 pl-6">

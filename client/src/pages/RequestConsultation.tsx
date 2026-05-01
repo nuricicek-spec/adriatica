@@ -15,13 +15,19 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { trackConsultationRequest } from "@/lib/analytics";
 
-// Lazy load kaldırıldı — Navigation ve Footer aynı bundle'da oldukları için
-// lazy+Suspense burada hydration layout shift'ine ve SEO sorununa yol açıyordu.
+// PAGE_TITLE yalnızca schema ve sayfaiçi kullanım için —
+// SEO component'e title prop olarak değil, description prop olarak geçilmez.
+// SEO title prop'u kısa tutulmalı: component "title | Adriatica D.O.O." formatına çevirir.
+const PAGE_TITLE = "Request Technical Consultation | Adriatica D.O.O.";
 
-const PAGE_TITLE =
-  "Request Technical Consultation | Compliance & Engineering Management";
+// 140 karakter — Bing/Google önerilen limit içinde
 const PAGE_DESCRIPTION =
-  "Request a technical consultation to address your vessel's specific compliance, structural, or documentation challenges. PSC readiness, dry-dock planning, and technical audits.";
+  "Technical consultation for vessel compliance, structural integrity and documentation. PSC readiness, dry-dock planning and technical audits.";
+
+const FORMSPREE_URL = "https://formspree.io/f/myknqjbz";
+
+type FormStatus = "idle" | "submitting" | "success" | "error";
+type ErrorType = "generic" | "rate-limit" | null;
 
 const consultationSchema = {
   "@context": "https://schema.org",
@@ -33,7 +39,7 @@ const consultationSchema = {
       url: "https://www.adriaticadoo.com/",
       logo: {
         "@type": "ImageObject",
-        url: "https://www.adriaticadoo.com/logo.png",
+        url: "https://www.adriaticadoo.com/logo.svg", // FIX: .png → .svg
       },
       description:
         "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
@@ -67,10 +73,8 @@ const consultationSchema = {
 };
 
 export default function RequestConsultation() {
-  const [formStatus, setFormStatus] = useState<
-    "idle" | "submitting" | "success" | "error"
-  >("idle");
-  const [errorType, setErrorType] = useState<"generic" | "rate-limit" | null>(null);
+  const [formStatus, setFormStatus] = useState<FormStatus>("idle");
+  const [errorType, setErrorType] = useState<ErrorType>(null);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -88,7 +92,7 @@ export default function RequestConsultation() {
     }
 
     try {
-      const response = await fetch("https://formspree.io/f/myknqjbz", {
+      const response = await fetch(FORMSPREE_URL, {
         method: "POST",
         body: formData,
         headers: { Accept: "application/json" },
@@ -99,20 +103,24 @@ export default function RequestConsultation() {
         form.reset();
         trackConsultationRequest("request_consultation");
       } else {
+        // errorType önce set edilir, ardından formStatus — render tutarlılığı için
+        setErrorType(response.status === 429 ? "rate-limit" : "generic");
         setFormStatus("error");
-        if (response.status === 429) setErrorType("rate-limit");
-        else setErrorType("generic");
       }
     } catch {
-      setFormStatus("error");
       setErrorType("generic");
+      setFormStatus("error");
     }
   };
 
   return (
     <>
+      {/*
+        title prop kısa tutuldu — SEO component "Request Consultation | Adriatica D.O.O."
+        formatına çevirir. PAGE_TITLE tam başlığı schema için kullanılıyor.
+      */}
       <SEO
-        title={PAGE_TITLE}
+        title="Request Consultation"
         description={PAGE_DESCRIPTION}
         canonical="https://www.adriaticadoo.com/request-consultation"
       />
@@ -219,6 +227,7 @@ export default function RequestConsultation() {
                       onSubmit={handleSubmit}
                       className="bg-white border border-border/20 rounded-sm p-6 md:p-8 shadow-sm"
                     >
+                      {/* Honeypot — spam koruması */}
                       <div className="hidden" aria-hidden="true">
                         <input
                           type="text"

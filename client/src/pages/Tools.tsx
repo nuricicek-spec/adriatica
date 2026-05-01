@@ -11,12 +11,15 @@ import { FueleuCalculator } from "@/components/tools/FueleuCalculator";
 import { Helmet } from "react-helmet-async";
 
 const TABS = [
-  { id: "eexi",   label: "EEXI Calculator",    shortLabel: "EEXI",    component: EexiCalculator   },
-  { id: "cii",    label: "CII Predictor",       shortLabel: "CII",     component: CiiCalculator    },
-  { id: "bwts",   label: "BWTS Sizing",         shortLabel: "BWTS",    component: BwtsCalculator   },
-  { id: "ets",    label: "EU ETS Cost",         shortLabel: "EU ETS",  component: EtsCalculator    },
-  { id: "fueleu", label: "FuelEU Penalty",      shortLabel: "FuelEU",  component: FueleuCalculator },
-];
+  { id: "eexi",   label: "EEXI Calculator",  shortLabel: "EEXI",   component: EexiCalculator   },
+  { id: "cii",    label: "CII Predictor",     shortLabel: "CII",    component: CiiCalculator    },
+  { id: "bwts",   label: "BWTS Sizing",       shortLabel: "BWTS",   component: BwtsCalculator   },
+  { id: "ets",    label: "EU ETS Cost",       shortLabel: "EU ETS", component: EtsCalculator    },
+  { id: "fueleu", label: "FuelEU Penalty",    shortLabel: "FuelEU", component: FueleuCalculator },
+] as const;
+
+type TabId = (typeof TABS)[number]["id"];
+type ComplianceStatus = "idle" | "compliant" | "non-compliant";
 
 const toolsPageSchema = {
   "@context": "https://schema.org",
@@ -60,29 +63,33 @@ const toolsPageSchema = {
       "@id": "https://www.adriaticadoo.com/#organization",
       name: "Adriatica D.O.O.",
       url: "https://www.adriaticadoo.com/",
-      logo: { "@type": "ImageObject", url: "https://www.adriaticadoo.com/logo.png" },
+      logo: { "@type": "ImageObject", url: "https://www.adriaticadoo.com/logo.svg" },
     },
   ],
 };
 
 export default function Tools() {
-  const [activeTab, setActiveTab] = useState("eexi");
-  const ActiveComponent = TABS.find(t => t.id === activeTab)?.component;
-  const [complianceStatus, setComplianceStatus] = useState<string>("idle");
+  const [activeTab, setActiveTab] = useState<TabId>("eexi");
+  const [complianceStatus, setComplianceStatus] = useState<ComplianceStatus>("idle");
+
+  const ActiveComponent = TABS.find((t) => t.id === activeTab)?.component;
 
   // URL param ile doğrudan tab açma (?tool=cii gibi)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const tool = params.get("tool");
-    if (tool && TABS.some(t => t.id === tool)) {
-      setActiveTab(tool);
+    if (tool && TABS.some((t) => t.id === tool)) {
+      setActiveTab(tool as TabId);
     }
   }, []);
 
+  // CustomEvent tiplemesi — `any` kaldırıldı
   useEffect(() => {
-    const handleStatusUpdate = (e: any) => setComplianceStatus(e.detail.status);
-    window.addEventListener("tool_compliance_update", handleStatusUpdate);
-    return () => window.removeEventListener("tool_compliance_update", handleStatusUpdate);
+    const handleStatusUpdate = (e: CustomEvent<{ status: ComplianceStatus }>) => {
+      setComplianceStatus(e.detail.status);
+    };
+    window.addEventListener("tool_compliance_update", handleStatusUpdate as EventListener);
+    return () => window.removeEventListener("tool_compliance_update", handleStatusUpdate as EventListener);
   }, []);
 
   useEffect(() => {
@@ -91,9 +98,10 @@ export default function Tools() {
 
   return (
     <>
+      {/* Description: 146 karakter — limit içinde */}
       <SEO
         title="Marine Engineering Calculators"
-        description="Calculate preliminary EEXI attained values, predict CII operational ratings, size BWTS systems, forecast EU ETS costs, and assess FuelEU penalties. Free maritime compliance tools."
+        description="Free EEXI, CII, BWTS, EU ETS and FuelEU calculators for preliminary vessel compliance. Identify regulatory gaps before dry-dock or PSC inspection."
         canonical="https://www.adriaticadoo.com/tools"
       />
 
@@ -157,12 +165,6 @@ export default function Tools() {
               {/* Left: Calculator */}
               <div className="lg:col-span-7">
 
-                {/*
-                  TAB NAVİGASYON
-                  ─ Mobil  (<md): native <select> — en az friction, sistem klavyesi
-                  ─ Desktop (md+): tab buton row — görsel, tıklanabilir
-                */}
-
                 {/* Mobil dropdown */}
                 <div className="block md:hidden mb-6">
                   <label htmlFor="tool-select" className="block text-xs font-medium text-muted-foreground mb-1">
@@ -171,10 +173,10 @@ export default function Tools() {
                   <select
                     id="tool-select"
                     value={activeTab}
-                    onChange={e => setActiveTab(e.target.value)}
+                    onChange={(e) => setActiveTab(e.target.value as TabId)}
                     className="w-full px-4 py-3 border border-border rounded-sm bg-white text-sm font-medium text-[#0B3B5C] focus:border-primary focus:ring-1 focus:ring-primary outline-none"
                   >
-                    {TABS.map(tab => (
+                    {TABS.map((tab) => (
                       <option key={tab.id} value={tab.id}>
                         {tab.label}
                       </option>
@@ -188,7 +190,7 @@ export default function Tools() {
                   role="tablist"
                   aria-label="Calculator tools"
                 >
-                  {TABS.map(tab => (
+                  {TABS.map((tab) => (
                     <button
                       key={tab.id}
                       role="tab"
@@ -210,7 +212,7 @@ export default function Tools() {
                 <div
                   id={`tabpanel-${activeTab}`}
                   role="tabpanel"
-                  aria-label={TABS.find(t => t.id === activeTab)?.label}
+                  aria-label={TABS.find((t) => t.id === activeTab)?.label}
                 >
                   {ActiveComponent && <ActiveComponent />}
                 </div>

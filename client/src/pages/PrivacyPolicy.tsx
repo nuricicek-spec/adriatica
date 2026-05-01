@@ -2,38 +2,13 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { motion } from "framer-motion";
 import { SEO } from "@/components/SEO";
-import { Helmet } from "react-helmet-async";
 
 export default function PrivacyPolicy() {
-  const privacyPolicySchema = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebPage",
-        "@id": "https://www.adriaticadoo.com/privacy-policy/#webpage",
-        url: "https://www.adriaticadoo.com/privacy-policy",
-        name: "Privacy Policy | Adriatica D.O.O.",
-        description:
-          "Privacy policy of Adriatica D.O.O. – how we collect, use, and protect your personal information.",
-        isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
-        about: { "@id": "https://www.adriaticadoo.com/#organization" },
-        inLanguage: "en",
-        datePublished: "2025-01-01",
-        dateModified: "2025-03-15",
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://www.adriaticadoo.com/#website",
-        url: "https://www.adriaticadoo.com/",
-        name: "Adriatica D.O.O.",
-        description:
-          "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
-        inLanguage: "en",
-        publisher: { "@id": "https://www.adriaticadoo.com/#organization" },
-      },
-    ],
-  };
-
+  /*
+    noindex sayfası — Helmet ve schema kaldırıldı.
+    TermsOfService ile aynı yaklaşım.
+    SEO component yalnızca noindex sinyali için bırakıldı.
+  */
   return (
     <>
       <SEO
@@ -42,11 +17,6 @@ export default function PrivacyPolicy() {
         canonical="https://www.adriaticadoo.com/privacy-policy"
         noindex={true}
       />
-      <Helmet>
-        <script type="application/ld+json">
-          {JSON.stringify(privacyPolicySchema).replace(/</g, "\\u003c")}
-        </script>
-      </Helmet>
 
       <div className="min-h-screen bg-background font-body">
         <Navigation />

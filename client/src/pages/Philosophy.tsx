@@ -280,7 +280,7 @@ export default function Philosophy() {
         url: "https://www.adriaticadoo.com",
         logo: {
           "@type": "ImageObject",
-          url: "https://www.adriaticadoo.com/logo.png",
+          url: "https://www.adriaticadoo.com/logo.svg", // FIX: .png → .svg
         },
       },
       {
@@ -297,7 +297,7 @@ export default function Philosophy() {
         url: "https://www.adriaticadoo.com/philosophy",
         name: "Our Philosophy | Adriatica D.O.O.",
         description:
-          "The Adriatica D.O.O. standard: Wisdom, resilience, and precision in marine engineering. Discover the Sumerian pinecone symbolism and our reductive approach to structural integrity.",
+          "Marine engineering philosophy: wisdom, resilience and precision. Sumerian pinecone symbolism and reductive approach to structural integrity.",
         isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
         about: { "@id": "https://www.adriaticadoo.com/#organization" },
         inLanguage: "en",
@@ -307,9 +307,10 @@ export default function Philosophy() {
 
   return (
     <>
+      {/* Description: 140 karakter — limit içinde */}
       <SEO
         title="Our Philosophy"
-        description="The Adriatica D.O.O. standard: Wisdom, resilience, and precision in marine engineering. Discover the Sumerian pinecone symbolism and our reductive approach to structural integrity."
+        description="Marine engineering philosophy: wisdom, resilience and precision. Sumerian pinecone symbolism and reductive approach to structural integrity."
         canonical="https://www.adriaticadoo.com/philosophy"
       />
       <Helmet>
@@ -338,7 +339,6 @@ export default function Philosophy() {
         <main>
           {/* ── HERO ────────────────────────────────────────────────────────── */}
           <section className="relative pt-40 pb-24 overflow-hidden bg-background">
-            {/* Arka plan kırılma efekti — Home'daki hero ile aynı dil */}
             <div className="absolute inset-0 z-0 pointer-events-none">
               <div className="absolute top-0 right-0 w-2/3 h-full bg-[#1A4B7A]/5 -skew-x-12 transform origin-top" />
               <div className="absolute bottom-0 left-0 w-1/3 h-2/3 bg-[#0B3B5C]/5 skew-x-12 transform origin-bottom" />
@@ -387,7 +387,7 @@ export default function Philosophy() {
                   </p>
                 </motion.div>
 
-                {/* Sağ: Prenspler */}
+                {/* Sağ: Prensipler */}
                 <div className="flex flex-col gap-10 lg:pt-4">
                   <motion.div
                     initial={{ opacity: 0, x: 24 }}
@@ -440,7 +440,6 @@ export default function Philosophy() {
 
           {/* ── DARK BANNER — The Standard ──────────────────────────────────── */}
           <section className="relative py-24 bg-[#0B3B5C] text-white overflow-hidden">
-            {/* Arka plan geometrisi */}
             <div className="absolute inset-0 z-0 pointer-events-none">
               <div className="absolute top-0 right-0 w-2/3 h-full bg-[#1A4B7A]/10 -skew-x-12 transform origin-top" />
               <div className="absolute inset-0 opacity-10">
