@@ -10,12 +10,15 @@ interface SEOProps {
   publishedTime?: string;
   modifiedTime?: string;
   noindex?: boolean;
-  tags?: string[]; // Eklendi
+  tags?: string[];
 }
 
 const defaultTitle = "Adriatica D.O.O. - Marine Engineering & Consultancy";
+
+// 149 karakter — Bing/Google önerilen limit 150–160, güvenli taraf için 149
 const defaultDescription =
-  "Adriatica D.O.O. provides independent marine engineering consultancy, technical project management, and regulatory compliance services for yachts, commercial vessels, and fishing boats.";
+  "Marine engineering consultancy for yachts, commercial vessels and fishing boats. Structural integrity, regulatory compliance and sustainable technologies.";
+
 const defaultOgImage = "/og-image-default.png";
 const defaultOgImageAlt = "Adriatica D.O.O. - Marine Engineering & Consultancy";
 const siteUrl = "https://www.adriaticadoo.com";
@@ -60,7 +63,7 @@ export function SEO({
         content={noindex ? "noindex, nofollow" : "index, follow"}
       />
       <meta name="author" content="Adriatica D.O.O." />
-      
+
       {/* Open Graph */}
       <meta property="og:type" content={ogType} />
       <meta property="og:url" content={canonicalUrl} />
@@ -81,7 +84,7 @@ export function SEO({
       <meta name="twitter:image" content={metaOgImage} />
       <meta name="twitter:image:alt" content={metaOgImageAlt} />
 
-      {/* Article specific — DÜZELTİLDİ: Fragment yerine tekil koşullu return'lar kullanıldı */}
+      {/* Article specific */}
       {isArticle && publishedTime && (
         <meta property="article:published_time" content={publishedTime} />
       )}

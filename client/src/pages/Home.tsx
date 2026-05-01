@@ -30,6 +30,11 @@ const ROTATING_WORDS = ["Compliance", "Safety", "Efficiency", "Reliability", "Pe
 
 const FORMSPREE_URL = "https://formspree.io/f/myknqjbz";
 
+// SEO.tsx'teki defaultDescription ile aynı metin — tutarlılık için senkronize tutulmalı
+// 149 karakter
+const HOME_DESCRIPTION =
+  "Marine engineering consultancy for yachts, commercial vessels and fishing boats. Structural integrity, regulatory compliance and sustainable technologies.";
+
 type FormStatus = "idle" | "submitting" | "success" | "error";
 type ErrorType = "generic" | "rate-limit" | null;
 
@@ -94,7 +99,7 @@ export default function Home() {
     <LazyMotion features={domAnimation}>
       <SEO
         title="Home"
-        description="Adriatica D.O.O. - Marine engineering consultancy specializing in structural integrity, regulatory compliance, and sustainable technologies. Serving Montenegro, Adriatic Coast, and European maritime industry."
+        description={HOME_DESCRIPTION}
         canonical="https://www.adriaticadoo.com/"
         ogImage="/og-image-default.png"
       />

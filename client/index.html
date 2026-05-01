@@ -4,7 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- Default title & description — react-helmet-async overrides these per page -->
+    <!-- Description: 149 karakter — Bing/Google önerilen limit 150–160, güvenli taraf için 149 -->
     <title>Adriatica D.O.O. - Marine Engineering & Consultancy</title>
+    <meta
+      name="description"
+      content="Marine engineering consultancy for yachts, commercial vessels and fishing boats. Structural integrity, regulatory compliance and sustainable technologies."
+    />
+
     <meta name="author" content="Adriatica D.O.O." />
     <meta name="robots" content="index, follow" />
     <meta name="geo.region" content="ME" />
@@ -18,7 +25,11 @@
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json" />
 
-    <!-- Font preload -->
+    <!--
+      Font preload: @font-face ile tanımlı fontlar CSS parse
+      edilene kadar discovered edilemez. Preload ile kritik path kısalır.
+      crossorigin zorunlu — woff2 CORS gerektirir.
+    -->
     <link
       rel="preload"
       as="font"
@@ -37,7 +48,10 @@
     <!-- LCP görseli preload -->
     <link rel="preload" as="image" href="/logo.svg" fetchpriority="high" />
 
-    <!-- GTM defer (isteğe bağlı) -->
+    <!--
+      GTM defer: requestIdleCallback ile defer edilir;
+      tarayıcı boşta iken yüklenir. Fallback: 3sn timeout (Safari).
+    -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
@@ -58,17 +72,23 @@
       }
     </script>
 
-    <!-- Kritik stiller inline -->
+    <!-- Kritik stiller inline — FOUC'u engeller -->
     <style>
       body {
         margin: 0;
         font-family: "Manrope", sans-serif;
         background-color: hsl(40, 20%, 97%);
       }
+      /* Skeleton — root boşken beyaz flash önlenir */
       #root:empty {
         min-height: 100dvh;
         background-color: hsl(40, 20%, 97%);
       }
+      /*
+        Crawler fallback içeriği görsel olarak gizlenir.
+        Bing/Googlebot JS render etmeden HTML'i çektiğinde okur,
+        kullanıcı görmez. aria-hidden ile ekran okuyucular atlar.
+      */
       .crawler-content {
         position: absolute;
         width: 1px;
@@ -80,10 +100,13 @@
     </style>
   </head>
   <body>
-    <!-- Crawler fallback – sadece botlar için, kullanıcı görmez -->
+    <!--
+      Crawler fallback: JS render etmeyen bot'lar için statik semantic içerik.
+      React mount olduktan sonra #root bu div'in önüne geçer, kullanıcı görmez.
+      aria-hidden="true" → ekran okuyucular çift H1 algılamaz.
+    -->
     <div class="crawler-content" aria-hidden="true">
-      <!-- H2 kullanıldı → sayfada yalnızca React içindeki asıl H1 kalır -->
-      <h2>Adriatica D.O.O. — Marine Engineering &amp; Consultancy</h2>
+      <h1>Adriatica D.O.O. — Marine Engineering &amp; Consultancy</h1>
       <p>
         Independent marine engineering consultancy based in Budva, Montenegro.
         Specialising in structural integrity, regulatory compliance, and sustainable
