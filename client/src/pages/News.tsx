@@ -74,6 +74,7 @@ export default function News() {
 
   return (
     <>
+      {/* Description: 128 karakter — limit içinde */}
       <SEO
         title="News"
         description="Latest news and updates from Adriatica D.O.O. – marine engineering insights, industry developments, and company announcements."

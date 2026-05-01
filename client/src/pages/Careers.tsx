@@ -36,6 +36,7 @@ export default function Careers() {
 
   return (
     <>
+      {/* Description: 148 karakter — limit içinde */}
       <SEO
         title="Careers"
         description="Join Adriatica D.O.O. – marine engineering careers in Montenegro. We're looking for naval architects, marine engineers, and technical specialists."
