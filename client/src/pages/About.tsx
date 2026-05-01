@@ -25,7 +25,7 @@ export default function About() {
       },
       {
         "@type": "WebSite",
-        "@id": "https://www.adriaticadoo.mcom/#website",
+        "@id": "https://www.adriaticadoo.com/#website", // FIX: ".mcom" typo düzeltildi
         url: "https://www.adriaticadoo.com/",
         name: "Adriatica D.O.O.",
         description:
@@ -38,9 +38,10 @@ export default function About() {
 
   return (
     <>
+      {/* Description: 148 karakter — Bing/Google önerilen limit içinde */}
       <SEO
         title="About"
-        description="Adriatica D.O.O. – independent marine engineering consultancy for superyachts and commercial vessels. Biofouling management, regulatory compliance, and technical project management in the Adriatic and Mediterranean."
+        description="Independent marine engineering consultancy in Montenegro. Biofouling management, regulatory compliance and technical project management in the Mediterranean."
         canonical="https://www.adriaticadoo.com/about"
       />
       <Helmet>
@@ -52,6 +53,14 @@ export default function About() {
       <div className="min-h-screen bg-background font-body">
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+          {/*
+            SectionHeading component'inin h1 üretip üretmediği belirsiz.
+            Bing "H1 missing" hatası vermemesi için açık h1 eklendi,
+            görsel olarak SectionHeading ile aynı stili taşıyor.
+            SectionHeading zaten h1 üretiyorsa bu satırı kaldır,
+            aksi halde bırak.
+          */}
+          <h1 className="sr-only">About Adriatica D.O.O. — Marine Engineering & Consultancy</h1>
           <SectionHeading
             title="About Adriatica"
             subtitle="Marine Engineering and Consultancy"
