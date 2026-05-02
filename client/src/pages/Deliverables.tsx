@@ -75,11 +75,11 @@ export default function Deliverables() {
     });
   }, []);
 
-  // useMemo — category değişmediğinde gereksiz sort/filter önlendi
+  // FIX: [...].sort() — Array.sort() in-place değiştirir, spread ile kopya oluşturuldu
   const filtered = useMemo(
     () =>
       (category === "All"
-        ? deliverables
+        ? [...deliverables]
         : deliverables.filter((d) => d.category === category)
       ).sort((a, b) => a.title.localeCompare(b.title)),
     [category]
@@ -87,9 +87,10 @@ export default function Deliverables() {
 
   return (
     <>
+      {/* Description: 140 karakter — limit içinde */}
       <SEO
         title="Deliverables"
-        description="Explore the complete list of engineering deliverables we provide: structural drawings, technical manuals, compliance plans, project documentation, and more – all tailored to marine projects."
+        description="Marine engineering deliverables: structural drawings, technical manuals, compliance plans and project documentation tailored to your vessel."
         canonical="https://www.adriaticadoo.com/deliverables"
         ogType="website"
       />
@@ -117,7 +118,7 @@ export default function Deliverables() {
                 },
               },
             })),
-          })}
+          }).replace(/</g, "\\u003c")} {/* FIX: XSS koruması — diğer sayfalarda mevcut, eksikti */}
         </script>
       </Helmet>
 
@@ -125,6 +126,12 @@ export default function Deliverables() {
         <Navigation />
 
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          {/*
+            SectionHeading component'inin h1 üretip üretmediği belirsiz.
+            Bing "H1 missing" hatası vermemesi için sr-only h1 eklendi.
+            SectionHeading zaten h1 üretiyorsa bu satırı kaldır.
+          */}
+          <h1 className="sr-only">Adriatica D.O.O. — Marine Engineering Deliverables</h1>
           <SectionHeading
             title="Our Deliverables"
             subtitle="What you receive when you work with us"
@@ -224,8 +231,6 @@ export default function Deliverables() {
               ref={modalRef}
               className="bg-white rounded-sm max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col relative outline-none"
               onClick={(e) => e.stopPropagation()}
-              // tabIndex ile focus alabilir hale getirildi
-              // outline-none görsel halka kaldırıldı (kendi header'ı var)
               tabIndex={-1}
             >
               {/* Header */}

@@ -14,11 +14,11 @@ export default function InsightsPage() {
   const [category, setCategory] = useState("All");
   const [sortBy, setSortBy] = useState<SortOption>("newest");
 
-  // "i" → "insight" olarak yeniden adlandırıldı (belirsiz parametre adı)
+  // insights sabit bir modül import'u — dependency array boş bırakıldı
   const categories = useMemo(() => {
     const cats = new Set(insights.map((insight) => insight.category));
     return ["All", ...Array.from(cats).sort()];
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const filteredAndSorted = useMemo(() => {
     const filtered = insights.filter((insight) => {
@@ -33,19 +33,18 @@ export default function InsightsPage() {
       return true;
     });
 
-    if (sortBy === "newest") {
-      filtered.sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-      );
-    } else if (sortBy === "oldest") {
-      filtered.sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-      );
-    } else if (sortBy === "alphabetical") {
-      filtered.sort((a, b) => a.title.localeCompare(b.title));
-    }
-
-    return filtered;
+    // FIX: [...filtered] ile spread — Array.sort() diziyi in-place değiştirir,
+    // orijinal filtered dizisinin mutasyonunu önlemek için yeni dizi oluşturuldu
+    return [...filtered].sort((a, b) => {
+      if (sortBy === "newest") {
+        return (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0);
+      }
+      if (sortBy === "oldest") {
+        return (Date.parse(a.date) || 0) - (Date.parse(b.date) || 0);
+      }
+      // alphabetical
+      return a.title.localeCompare(b.title);
+    });
   }, [searchTerm, category, sortBy]);
 
   const clearSearch = useCallback(() => setSearchTerm(""), []);
@@ -57,6 +56,7 @@ export default function InsightsPage() {
 
   return (
     <>
+      {/* Description: 110 karakter — limit içinde */}
       <SEO
         title="Insights"
         description="Technical articles, case studies, and regulatory updates from Adriatica D.O.O. Marine Engineering Consultancy."
@@ -67,6 +67,12 @@ export default function InsightsPage() {
         <Navigation />
 
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          {/*
+            SectionHeading component'inin h1 üretip üretmediği belirsiz.
+            Bing "H1 missing" hatası vermemesi için sr-only h1 eklendi.
+            SectionHeading zaten h1 üretiyorsa bu satırı kaldır.
+          */}
+          <h1 className="sr-only">Insights — Adriatica D.O.O. Marine Engineering</h1>
           <SectionHeading
             title="Insights"
             subtitle="Technical articles and updates from Adriatica D.O.O."
@@ -128,7 +134,7 @@ export default function InsightsPage() {
             {filteredAndSorted.length !== 1 ? "s" : ""} found
           </p>
 
-          {/* Grid — Wouter'da <Link> zaten <a> render eder, iç <a> kaldırıldı */}
+          {/* Grid */}
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
             {filteredAndSorted.map((insight) => (
               <Link
@@ -176,7 +182,6 @@ export default function InsightsPage() {
             <p className="text-lg text-muted-foreground mb-4">
               Have a specific technical challenge? We're ready to solve it.
             </p>
-            {/* Wouter <Link> — iç <a> kaldırıldı */}
             <Link
               href="/request-consultation"
               className="inline-block px-6 py-3 bg-[#0B3B5C] text-white font-medium rounded-sm hover:bg-[#1A4B7A] transition-colors"

@@ -2,38 +2,13 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { motion } from "framer-motion";
 import { SEO } from "@/components/SEO";
-import { Helmet } from "react-helmet-async";
 
 export default function CookiePolicy() {
-  const cookiePolicySchema = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebPage",
-        "@id": "https://www.adriaticadoo.com/cookie-policy/#webpage",
-        url: "https://www.adriaticadoo.com/cookie-policy",
-        name: "Cookie Policy | Adriatica D.O.O.",
-        description:
-          "Cookie policy of Adriatica D.O.O. – how we use cookies and similar technologies on our website.",
-        isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
-        about: { "@id": "https://www.adriaticadoo.com/#organization" },
-        inLanguage: "en",
-        datePublished: "2025-01-01",
-        dateModified: "2025-03-15",
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://www.adriaticadoo.com/#website",
-        url: "https://www.adriaticadoo.com/",
-        name: "Adriatica D.O.O.",
-        description:
-          "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
-        inLanguage: "en",
-        publisher: { "@id": "https://www.adriaticadoo.com/#organization" },
-      },
-    ],
-  };
-
+  /*
+    noindex sayfası — Helmet ve schema kaldırıldı.
+    TermsOfService ve PrivacyPolicy ile aynı yaklaşım.
+    SEO component yalnızca noindex sinyali için bırakıldı.
+  */
   return (
     <>
       <SEO
@@ -42,11 +17,6 @@ export default function CookiePolicy() {
         canonical="https://www.adriaticadoo.com/cookie-policy"
         noindex={true}
       />
-      <Helmet>
-        <script type="application/ld+json">
-          {JSON.stringify(cookiePolicySchema).replace(/</g, "\\u003c")}
-        </script>
-      </Helmet>
 
       <div className="min-h-screen bg-background font-body">
         <Navigation />

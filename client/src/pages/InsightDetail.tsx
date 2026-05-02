@@ -29,10 +29,13 @@ const RelatedContent = lazy(() =>
 // SSR-safe utilities
 // ============================================================
 const isBrowser = typeof window !== "undefined";
-const BASE_URL = import.meta.env.VITE_SITE_URL || "https://adriatica.pages.dev";
 
-let purifyInstance: any = null;
-const getPurify = () => {
+// FIX: Fallback URL production domain ile eşleştirildi
+const BASE_URL = import.meta.env.VITE_SITE_URL || "https://www.adriaticadoo.com";
+
+// typeof DOMPurify — ayrı import gerekmez, paketin kendi tipi kullanılır
+let purifyInstance: typeof DOMPurify | null = null;
+const getPurify = (): typeof DOMPurify | null => {
   if (!isBrowser) return null;
   if (!purifyInstance) {
     purifyInstance = DOMPurify(window);
@@ -40,7 +43,7 @@ const getPurify = () => {
   return purifyInstance;
 };
 
-const sanitizeHtml = (html: string) => {
+const sanitizeHtml = (html: string): string => {
   const purify = getPurify();
   if (!purify) return html;
   return purify.sanitize(html, {
@@ -70,69 +73,44 @@ const normalizeUrl = (url: string) => url.replace(/\/$/, "");
 // ============================================================
 export default function InsightDetail() {
   const [, params] = useRoute("/insights/:slug");
-  const slug = params?.slug;
-
-  if (!slug) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Navigation />
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-12 md:pt-40">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold mb-4">Invalid article</h1>
-            <Link href="/insights" className="text-primary underline">
-              ← All insights
-            </Link>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
+  const slug = params?.slug ?? "";
 
   const insight = insights.find((item) => item.slug === slug);
+
+  /*
+    React Hooks kuralı — tüm hook'lar conditional return'lerden ÖNCE çağrılmalı.
+    Tüm hook'lar aşağıda toplu olarak tanımlandı; render kararı en sonda verildi.
+  */
   const [rating, setRating] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    if (!isBrowser) return;
+    if (!isBrowser || !slug) return;
     const hasVoted = localStorage.getItem(`rated_${slug}`);
     if (hasVoted === "true") setSubmitted(true);
     const savedRating = localStorage.getItem(`rating_${slug}`);
     if (savedRating) setRating(Number(savedRating));
   }, [slug]);
 
-  if (!insight) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Navigation />
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-12 md:pt-40">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold mb-4">Article not found</h1>
-            <Link href="/insights" className="text-primary underline">
-              ← All insights
-            </Link>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
-
   const currentItem = useMemo(() => {
+    if (!insight) return undefined;
     return contentMap.get(insight.slug);
-  }, [insight.slug]);
+  }, [insight]);
 
   const safeDate = useMemo(() => {
+    if (!insight) return null;
     const ts = Date.parse(insight.date);
     return isNaN(ts) ? null : new Date(ts);
-  }, [insight.date]);
+  }, [insight]);
 
-  // Optimized: use pre-sorted insights
   const latestInsights = useMemo(() => {
     return SORTED_INSIGHTS.filter((i) => i.slug !== slug).slice(0, 3);
   }, [slug]);
 
-  const canonicalUrl = normalizeUrl(`${BASE_URL}/insights/${insight.slug}`);
+  const canonicalUrl = useMemo(
+    () => normalizeUrl(`${BASE_URL}/insights/${slug}`),
+    [slug]
+  );
 
   const shareOnLinkedIn = useCallback(() => {
     if (!isBrowser) return;
@@ -145,7 +123,7 @@ export default function InsightDetail() {
 
   const handleRating = useCallback(
     (value: number) => {
-      if (submitted) return;
+      if (submitted || !insight) return;
       setRating(value);
       setSubmitted(true);
       if (isBrowser && slug) {
@@ -164,15 +142,58 @@ export default function InsightDetail() {
         }
       }
     },
-    [submitted, slug, insight.slug]
+    [submitted, slug, insight]
   );
 
-  const impl = insight.operationalImplications;
   const tagsKeywords = useMemo(
     () => currentItem?.tags?.map((tag) => tag.name).join(", ") || "",
     [currentItem]
   );
-  const safeHtml = useMemo(() => sanitizeHtml(insight.contentHtml), [insight.contentHtml]);
+
+  const safeHtml = useMemo(
+    () => (insight ? sanitizeHtml(insight.contentHtml) : ""),
+    [insight]
+  );
+
+  // ── Geçersiz slug ──
+  if (!slug) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-12 md:pt-40">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold mb-4">Invalid article</h1>
+            <Link href="/insights" className="text-primary underline">
+              ← All insights
+            </Link>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // ── Makale bulunamadı ──
+  if (!insight) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-12 md:pt-40">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold mb-4">Article not found</h1>
+            <Link href="/insights" className="text-primary underline">
+              ← All insights
+            </Link>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // ── Normal render ──
+  const impl = insight.operationalImplications;
+  const lcpImage = `${BASE_URL}/og-image.png`;
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -185,13 +206,14 @@ export default function InsightDetail() {
     publisher: {
       "@type": "Organization",
       name: "Adriatica D.O.O.",
-      logo: { "@type": "ImageObject", url: `${BASE_URL}/logo.png` },
+      logo: {
+        "@type": "ImageObject",
+        url: `${BASE_URL}/logo.svg`, // FIX: .png → .svg
+      },
     },
     mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl },
     keywords: tagsKeywords,
   };
-
-  const lcpImage = `${BASE_URL}/og-image.png`;
 
   return (
     <>
@@ -210,8 +232,11 @@ export default function InsightDetail() {
         <meta property="article:published_time" content={insight.date} />
         <meta property="article:modified_time" content={insight.date} />
         {tagsKeywords && <meta name="keywords" content={tagsKeywords} />}
-        <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
+        <script type="application/ld+json">
+          {JSON.stringify(articleSchema).replace(/</g, "\\u003c")}
+        </script>
       </Helmet>
+
       <div className="min-h-screen bg-background font-body">
         <Navigation />
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-12 md:pt-40">
@@ -307,6 +332,7 @@ export default function InsightDetail() {
                 <FallbackLatestInsights currentSlug={insight.slug} />
               )}
             </article>
+
             <aside className="space-y-8">
               <div className="p-6 bg-neutral-50 rounded">
                 <h3 className="font-display text-lg font-bold mb-4">Was this article useful?</h3>
@@ -368,7 +394,9 @@ export default function InsightDetail() {
   );
 }
 
+// ============================================================
 // Fallback component (optimized with pre-sorted insights)
+// ============================================================
 function FallbackLatestInsights({ currentSlug }: { currentSlug: string }) {
   const fallbackInsights = useMemo(() => {
     return SORTED_INSIGHTS.filter((i) => i.slug !== currentSlug).slice(0, 3);
