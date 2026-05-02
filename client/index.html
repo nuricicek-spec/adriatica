@@ -5,32 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!--
-      Title ve meta description normalde burada YOK — react-helmet-async her sayfada
-      bunları data-rh="true" attribute'u ile inject eder. Ancak Bing, Yandex, Baidu,
-      DuckDuckGo gibi düşük JavaScript kapasiteli botlar React çıktısını göremeyebilir.
-      Bu nedenle, sadece bu botlara özel statik bir fallback ekliyoruz.
-      Normal kullanıcılar ve diğer botlar (Google, Lighthouse, vs.) bu kodu çalıştırmaz,
-      dolayısıyla React/Helmet'in dinamik etiketlerini kullanır. Duplicate tag riski yoktur.
+      KESİN ÇÖZÜM: data-rh="true" ile statik fallback title/description.
+      - Bing, Yandex gibi düşük JS kapasiteli botlar bu etiketleri doğrudan görür.
+      - React/Helmet çalıştığında aynı data-rh niteliğine sahip etiketleri
+        yeniden oluşturmak yerine İÇERİKLERİNİ GÜNCELLER.
+      - Böylece sayfada HER ZAMAN TEK bir title ve description bulunur.
+      - Duplicate etiket sorunu KÖKTEN ÇÖZÜLMÜŞ olur.
     -->
-
-    <!-- Düşük JS kapasiteli botlar için statik fallback -->
-    <script>
-      (function() {
-        // Hedeflenen botların user-agent desenleri (regex)
-        var botPattern = /bingbot|yandex|baiduspider|duckduckbot/i;
-        if (botPattern.test(navigator.userAgent)) {
-          // Title ekle
-          document.title = "Adriatica D.O.O. - Marine Engineering & Consultancy";
-          // Meta description ekle (eğer varsa üzerine yazmaz, yoksa oluşturur)
-          if (!document.querySelector('meta[name="description"]')) {
-            var meta = document.createElement('meta');
-            meta.name = "description";
-            meta.content = "Adriatica D.O.O. - Marine engineering consultancy: structural integrity, regulatory compliance and sustainable technologies. Serving Montenegro, Adriatic, Europe.";
-            document.head.appendChild(meta);
-          }
-        }
-      })();
-    </script>
+    <title data-rh="true">Adriatica D.O.O. - Marine Engineering & Consultancy</title>
+    <meta data-rh="true" name="description" content="Adriatica D.O.O. - Marine engineering consultancy: structural integrity, regulatory compliance and sustainable technologies. Serving Montenegro, Adriatic, Europe." />
 
     <meta name="author" content="Adriatica D.O.O." />
     <meta name="robots" content="index, follow" />
@@ -92,6 +75,7 @@
         font-family: "Manrope", sans-serif;
         background-color: hsl(40, 20%, 97%);
       }
+      /* Skeleton — root boşken beyaz flash önlenir */
       #root:empty {
         min-height: 100dvh;
         background-color: hsl(40, 20%, 97%);
