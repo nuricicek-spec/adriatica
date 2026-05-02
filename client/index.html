@@ -8,7 +8,26 @@
       Title ve meta description burada YOK — react-helmet-async her sayfada
       bunları data-rh="true" attribute'u ile inject eder. Statik bir fallback
       bırakmak duplicate tag sorununa yol açar (Bing ikisini de görür).
+      Ancak Bingbot JavaScript render'da zayıf olduğu için, ona özel bir fallback ekliyoruz.
+      Bu fallback sadece Bingbot tarafından görülecek, normal kullanıcılar/Google/Lighthouse
+      React/Helmet çıktısını alacak. Böylece duplicate tag riski yok.
     -->
+
+    <!-- Bingbot özel fallback (diğer kullanıcılar görmez) -->
+    <script>
+      (function() {
+        // Sadece Bingbot ise statik title/description ekle
+        if (navigator.userAgent.toLowerCase().includes('bingbot')) {
+          // Title
+          document.title = "Adriatica D.O.O. - Marine Engineering & Consultancy";
+          // Meta description
+          var meta = document.createElement('meta');
+          meta.name = "description";
+          meta.content = "Adriatica D.O.O. - Marine engineering consultancy: structural integrity, regulatory compliance and sustainable technologies. Serving Montenegro, Adriatic, Europe.";
+          document.head.appendChild(meta);
+        }
+      })();
+    </script>
 
     <meta name="author" content="Adriatica D.O.O." />
     <meta name="robots" content="index, follow" />
