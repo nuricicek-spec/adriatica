@@ -5,26 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!--
-      Title ve meta description burada YOK — react-helmet-async her sayfada
-      bunları data-rh="true" attribute'u ile inject eder. Statik bir fallback
-      bırakmak duplicate tag sorununa yol açar (Bing ikisini de görür).
-      Ancak Bingbot JavaScript render'da zayıf olduğu için, ona özel bir fallback ekliyoruz.
-      Bu fallback sadece Bingbot tarafından görülecek, normal kullanıcılar/Google/Lighthouse
-      React/Helmet çıktısını alacak. Böylece duplicate tag riski yok.
+      Title ve meta description normalde burada YOK — react-helmet-async her sayfada
+      bunları data-rh="true" attribute'u ile inject eder. Ancak Bing, Yandex, Baidu,
+      DuckDuckGo gibi düşük JavaScript kapasiteli botlar React çıktısını göremeyebilir.
+      Bu nedenle, sadece bu botlara özel statik bir fallback ekliyoruz.
+      Normal kullanıcılar ve diğer botlar (Google, Lighthouse, vs.) bu kodu çalıştırmaz,
+      dolayısıyla React/Helmet'in dinamik etiketlerini kullanır. Duplicate tag riski yoktur.
     -->
 
-    <!-- Bingbot özel fallback (diğer kullanıcılar görmez) -->
+    <!-- Düşük JS kapasiteli botlar için statik fallback -->
     <script>
       (function() {
-        // Sadece Bingbot ise statik title/description ekle
-        if (navigator.userAgent.toLowerCase().includes('bingbot')) {
-          // Title
+        // Hedeflenen botların user-agent desenleri (regex)
+        var botPattern = /bingbot|yandex|baiduspider|duckduckbot/i;
+        if (botPattern.test(navigator.userAgent)) {
+          // Title ekle
           document.title = "Adriatica D.O.O. - Marine Engineering & Consultancy";
-          // Meta description
-          var meta = document.createElement('meta');
-          meta.name = "description";
-          meta.content = "Adriatica D.O.O. - Marine engineering consultancy: structural integrity, regulatory compliance and sustainable technologies. Serving Montenegro, Adriatic, Europe.";
-          document.head.appendChild(meta);
+          // Meta description ekle (eğer varsa üzerine yazmaz, yoksa oluşturur)
+          if (!document.querySelector('meta[name="description"]')) {
+            var meta = document.createElement('meta');
+            meta.name = "description";
+            meta.content = "Adriatica D.O.O. - Marine engineering consultancy: structural integrity, regulatory compliance and sustainable technologies. Serving Montenegro, Adriatic, Europe.";
+            document.head.appendChild(meta);
+          }
         }
       })();
     </script>
@@ -42,10 +45,7 @@
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json" />
 
-    <!--
-      Font preload: @font-face ile tanımlı fontlar CSS parse edilene kadar
-      discovered edilemez. crossorigin zorunlu — woff2 CORS gerektirir.
-    -->
+    <!-- Font preload -->
     <link
       rel="preload"
       as="font"
@@ -64,10 +64,7 @@
     <!-- LCP görseli preload -->
     <link rel="preload" as="image" href="/logo.svg" fetchpriority="high" />
 
-    <!--
-      GTM defer: requestIdleCallback ile defer edilir;
-      tarayıcı boşta iken yüklenir. Fallback: 3sn timeout (Safari).
-    -->
+    <!-- GTM defer -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
@@ -88,14 +85,13 @@
       }
     </script>
 
-    <!-- Kritik stiller inline — FOUC'u engeller -->
+    <!-- Kritik stiller inline -->
     <style>
       body {
         margin: 0;
         font-family: "Manrope", sans-serif;
         background-color: hsl(40, 20%, 97%);
       }
-      /* Skeleton — root boşken beyaz flash önlenir */
       #root:empty {
         min-height: 100dvh;
         background-color: hsl(40, 20%, 97%);
