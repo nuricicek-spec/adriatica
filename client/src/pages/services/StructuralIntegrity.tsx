@@ -17,18 +17,118 @@ export default function StructuralIntegrity() {
   if (!currentItem) return <Redirect to="/404" />;
 
   const serviceSchema = {
-    /* aynı yapı, slug'a göre değişir */
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.adriaticadoo.com/#organization",
+        name: "Adriatica D.O.O.",
+        url: "https://www.adriaticadoo.com",
+        logo: {
+          "@type": "ImageObject",
+          url: "https://www.adriaticadoo.com/logo.svg",
+        },
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.adriaticadoo.com/#website",
+        url: "https://www.adriaticadoo.com/",
+        name: "Adriatica D.O.O.",
+        description:
+          "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        inLanguage: "en",
+        publisher: { "@id": "https://www.adriaticadoo.com/#organization" },
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.adriaticadoo.com/services/structural-integrity/#webpage",
+        url: "https://www.adriaticadoo.com/services/structural-integrity",
+        name: "Structural Integrity | Adriatica D.O.O.",
+        description:
+          "Hull condition assessments, life extension studies, modification consultancy and vibration diagnostics. IACS-aligned evaluations for vessel safety and longevity.",
+        isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
+        about: { "@id": "https://www.adriaticadoo.com/#organization" },
+        inLanguage: "en",
+        datePublished: "2025-01-01",
+        dateModified: "2025-03-15",
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.adriaticadoo.com/services/structural-integrity/#service",
+        name: "Structural Integrity",
+        description:
+          "Comprehensive hull condition assessments, structural life extension studies, modification consultancy, and vibration/noise diagnostics using IACS unified requirements and advanced engineering methods.",
+        url: "https://www.adriaticadoo.com/services/structural-integrity",
+        provider: { "@id": "https://www.adriaticadoo.com/#organization" },
+        isPartOf: {
+          "@id": "https://www.adriaticadoo.com/services/structural-integrity/#webpage",
+        },
+        areaServed: [
+          { "@type": "Place", name: "Montenegro" },
+          { "@type": "Place", name: "Adriatic Sea" },
+          { "@type": "Place", name: "Mediterranean Sea" },
+          { "@type": "Place", name: "Europe" },
+        ],
+        serviceType: "Marine Structural Engineering",
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "Structural Integrity Deliverables",
+          itemListElement: [
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Structural Integrity & Life Extension Studies",
+                description:
+                  "FEA-based fatigue life analysis of critical structural components with prioritised repair recommendations and class acceptance.",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Hull Condition Analysis",
+                description:
+                  "Detailed hull evaluation including thickness measurements, corrosion assessment, and structural audits using UT and visual inspection.",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Modification Consultancy",
+                description:
+                  "Feasibility studies, design calculations, and approval-ready documentation for structural alterations and new equipment installations.",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Vibration & Noise Diagnostic",
+                description:
+                  "On-board measurements using accelerometers and acoustic sensors to identify and mitigate vibration and noise sources.",
+              },
+            },
+          ],
+        },
+      },
+    ],
   };
-  // Burada schema kısaltmak için tam yazmıyorum, yukarıdaki gibi oluşturabilirsiniz.
 
   return (
     <>
+      {/* Description: 147 karakter — limit içinde */}
       <SEO
         title="Structural Integrity"
-        description="Hull condition assessments, life extension studies, modification consultancy, vibration/noise diagnostics – IACS‑aligned evaluations for vessel safety and longevity."
+        description="Hull condition assessments, life extension studies, modification consultancy and vibration diagnostics. IACS-aligned evaluations for vessel safety and longevity."
         canonical="https://www.adriaticadoo.com/services/structural-integrity"
       />
-      <Helmet>{/* schema */}</Helmet>
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(serviceSchema).replace(/</g, "\\u003c")}
+        </script>
+      </Helmet>
       <div className="min-h-screen bg-background font-body">
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">

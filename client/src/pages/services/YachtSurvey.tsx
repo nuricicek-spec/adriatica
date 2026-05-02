@@ -16,14 +16,121 @@ export default function YachtSurvey() {
   );
   if (!currentItem) return <Redirect to="/404" />;
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.adriaticadoo.com/#organization",
+        name: "Adriatica D.O.O.",
+        url: "https://www.adriaticadoo.com",
+        logo: {
+          "@type": "ImageObject",
+          url: "https://www.adriaticadoo.com/logo.svg",
+        },
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.adriaticadoo.com/#website",
+        url: "https://www.adriaticadoo.com/",
+        name: "Adriatica D.O.O.",
+        description:
+          "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        inLanguage: "en",
+        publisher: { "@id": "https://www.adriaticadoo.com/#organization" },
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.adriaticadoo.com/services/yacht-survey/#webpage",
+        url: "https://www.adriaticadoo.com/services/yacht-survey",
+        name: "Yacht Survey & Inspection | Adriatica D.O.O.",
+        description:
+          "Independent yacht surveys: pre-purchase, damage assessment, insurance valuation, charter and off-hire inspections. IACS-aligned and class-recognized.",
+        isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
+        about: { "@id": "https://www.adriaticadoo.com/#organization" },
+        inLanguage: "en",
+        datePublished: "2025-01-01",
+        dateModified: "2025-03-15",
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.adriaticadoo.com/services/yacht-survey/#service",
+        name: "Yacht Survey & Inspection",
+        description:
+          "Independent technical surveys for yachts including pre-purchase, damage assessment, insurance valuation, charter inspection, and off-hire surveys. All reports are IACS-aligned and accepted by classification societies and insurers.",
+        url: "https://www.adriaticadoo.com/services/yacht-survey",
+        provider: { "@id": "https://www.adriaticadoo.com/#organization" },
+        isPartOf: {
+          "@id": "https://www.adriaticadoo.com/services/yacht-survey/#webpage",
+        },
+        areaServed: [
+          { "@type": "Place", name: "Montenegro" },
+          { "@type": "Place", name: "Croatia" },
+          { "@type": "Place", name: "Italy" },
+          { "@type": "Place", name: "Greece" },
+          { "@type": "Place", name: "Adriatic Sea" },
+          { "@type": "Place", name: "Mediterranean Sea" },
+        ],
+        serviceType: "Yacht Survey & Inspection",
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "Yacht Survey Types",
+          itemListElement: [
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Pre-Purchase Survey",
+                description:
+                  "Full condition assessment before buying a used yacht covering structural, machinery, electrical, and documentation.",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Damage Survey",
+                description:
+                  "Detailed damage mapping, repair cost estimation, and insurance report after grounding, collision, or fire incidents.",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Insurance Valuation Survey",
+                description:
+                  "Market value assessment for insurance coverage including equipment and refit history.",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Charter (On-hire / Off-hire) Survey",
+                description:
+                  "Condition inspection before and after a charter period to determine responsibility for damages.",
+              },
+            },
+          ],
+        },
+      },
+    ],
+  };
+
   return (
     <>
+      {/* Description: 149 karakter — limit içinde */}
       <SEO
         title="Yacht Survey & Inspection"
-        description="Independent technical surveys for yachts: pre-purchase, damage assessment, insurance valuation, charter inspection, and off-hire surveys. IACS‑aligned, class‑recognized reports."
+        description="Independent yacht surveys: pre-purchase, damage assessment, insurance valuation, charter and off-hire inspections. IACS-aligned and class-recognized."
         canonical="https://www.adriaticadoo.com/services/yacht-survey"
       />
-      <Helmet>{/* schema */}</Helmet>
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(serviceSchema).replace(/</g, "\\u003c")}
+        </script>
+      </Helmet>
       <div className="min-h-screen bg-background font-body">
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
