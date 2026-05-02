@@ -16,14 +16,119 @@ export default function ProjectManagement() {
   );
   if (!currentItem) return <Redirect to="/404" />;
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.adriaticadoo.com/#organization",
+        name: "Adriatica D.O.O.",
+        url: "https://www.adriaticadoo.com",
+        logo: {
+          "@type": "ImageObject",
+          url: "https://www.adriaticadoo.com/logo.svg",
+        },
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.adriaticadoo.com/#website",
+        url: "https://www.adriaticadoo.com/",
+        name: "Adriatica D.O.O.",
+        description:
+          "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        inLanguage: "en",
+        publisher: { "@id": "https://www.adriaticadoo.com/#organization" },
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.adriaticadoo.com/services/project-management/#webpage",
+        url: "https://www.adriaticadoo.com/services/project-management",
+        name: "Project Management & Owner's Representation | Adriatica D.O.O.",
+        description:
+          "Technical management of dry-dockings and refits as Owner's Technical Representative. Yard supervision, quality control and on-schedule delivery.",
+        isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
+        about: { "@id": "https://www.adriaticadoo.com/#organization" },
+        inLanguage: "en",
+        datePublished: "2025-01-01",
+        dateModified: "2025-03-15",
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.adriaticadoo.com/services/project-management/#service",
+        name: "Project Management & Owner's Representation",
+        description:
+          "Full technical management of dry-dockings, refits, and complex modifications. Acting as Owner's Technical Representative to coordinate shipyards, supervise works, and deliver on schedule with complete engineering documentation.",
+        url: "https://www.adriaticadoo.com/services/project-management",
+        provider: { "@id": "https://www.adriaticadoo.com/#organization" },
+        isPartOf: {
+          "@id": "https://www.adriaticadoo.com/services/project-management/#webpage",
+        },
+        areaServed: [
+          { "@type": "Place", name: "Montenegro" },
+          { "@type": "Place", name: "Adriatic Sea" },
+          { "@type": "Place", name: "Mediterranean Sea" },
+          { "@type": "Place", name: "Europe" },
+        ],
+        serviceType: "Marine Project Management",
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "Project Management Deliverables",
+          itemListElement: [
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Owner's Rep & Refit Supervision",
+                description:
+                  "On-site technical representation overseeing all refit phases, attending progress meetings, and ensuring specifications are met.",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Dry-Docking Specification & Management",
+                description:
+                  "Detailed dry-docking specifications, shipyard coordination, tender management, and critical path oversight.",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "On-site Technical Troubleshooting",
+                description:
+                  "Engineering analysis and management of unexpected structural, machinery, or installation issues during yard periods.",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Cost & Schedule Control",
+                description:
+                  "Budget and timeline monitoring against baseline plan, change order management, and detailed progress reporting.",
+              },
+            },
+          ],
+        },
+      },
+    ],
+  };
+
   return (
     <>
+      {/* Description: 144 karakter — limit içinde */}
       <SEO
-        title="Project Management & Owner’s Representation"
-        description="Full technical management of dry‑dockings, refits, and modifications. Acting as Owner’s Technical Representative to supervise yard works, ensure quality, and deliver on schedule."
+        title="Project Management & Owner's Representation"
+        description="Technical management of dry-dockings and refits as Owner's Technical Representative. Yard supervision, quality control and on-schedule delivery."
         canonical="https://www.adriaticadoo.com/services/project-management"
       />
-      <Helmet>{/* schema */}</Helmet>
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(serviceSchema).replace(/</g, "\\u003c")}
+        </script>
+      </Helmet>
       <div className="min-h-screen bg-background font-body">
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">

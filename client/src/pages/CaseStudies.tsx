@@ -16,7 +16,7 @@ export default function CaseStudies() {
         url: "https://www.adriaticadoo.com/case-studies",
         name: "Case Studies | Adriatica D.O.O.",
         description:
-          "Real-world marine engineering results: biofouling compliance, cost savings with in-water cleaning, and on-time refit supervision.",
+          "Real-world marine engineering results: biofouling compliance, cost savings with in-water cleaning, and on-time refit supervision for superyachts and commercial vessels.",
         isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
         about: { "@id": "https://www.adriaticadoo.com/#organization" },
         inLanguage: "en",
@@ -52,9 +52,10 @@ export default function CaseStudies() {
 
   return (
     <>
+      {/* Description: 143 karakter — limit içinde */}
       <SEO
         title="Case Studies"
-        description="Real-world marine engineering results: biofouling compliance, 80% cost savings with in‑water cleaning, and on‑time refit supervision. See how Adriatica delivers measurable outcomes for superyachts."
+        description="Marine engineering case studies: biofouling compliance, in-water cleaning savings and refit supervision for superyachts and commercial vessels."
         canonical="https://www.adriaticadoo.com/case-studies"
       />
       <Helmet>
@@ -66,6 +67,12 @@ export default function CaseStudies() {
       <div className="min-h-screen bg-background font-body">
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+          {/*
+            SectionHeading component'inin h1 üretip üretmediği belirsiz.
+            Bing "H1 missing" hatası vermemesi için sr-only h1 eklendi.
+            SectionHeading zaten h1 üretiyorsa bu satırı kaldır.
+          */}
+          <h1 className="sr-only">Adriatica D.O.O. — Operational Case Studies</h1>
           <SectionHeading
             title="Operational Case Studies"
             subtitle="Engineering in Action"

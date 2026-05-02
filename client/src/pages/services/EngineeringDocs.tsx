@@ -26,7 +26,7 @@ export default function EngineeringDocs() {
         url: "https://www.adriaticadoo.com",
         logo: {
           "@type": "ImageObject",
-          url: "https://www.adriaticadoo.com/logo.png",
+          url: "https://www.adriaticadoo.com/logo.svg", // FIX: .png → .svg
         },
       },
       {
@@ -46,7 +46,7 @@ export default function EngineeringDocs() {
         url: "https://www.adriaticadoo.com/services/engineering-documentation",
         name: "Engineering Documentation | Adriatica D.O.O.",
         description:
-          "Vessel‑specific technical manuals and analyses: as‑built P&IDs, electrical load analysis, fuel management booklets, IHM – ensuring crew training and port state control readiness.",
+          "Vessel-specific technical manuals: as-built P&IDs, electrical load analysis, fuel management booklets and IHM for crew training and port state control readiness.",
         isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
         about: { "@id": "https://www.adriaticadoo.com/#organization" },
         inLanguage: "en",
@@ -59,7 +59,7 @@ export default function EngineeringDocs() {
           "https://www.adriaticadoo.com/services/engineering-documentation/#service",
         name: "Engineering Documentation",
         description:
-          "Preparation of class‑compliant engineering documentation including P&ID system manuals, electrical load analysis (EAB), fuel management booklets per MARPOL Annex VI, and IHM according to Hong Kong Convention and EU Ship Recycling Regulation.",
+          "Preparation of class-compliant engineering documentation including P&ID system manuals, electrical load analysis (EAB), fuel management booklets per MARPOL Annex VI, and IHM according to Hong Kong Convention and EU Ship Recycling Regulation.",
         url: "https://www.adriaticadoo.com/services/engineering-documentation",
         provider: { "@id": "https://www.adriaticadoo.com/#organization" },
         isPartOf: {
@@ -81,7 +81,7 @@ export default function EngineeringDocs() {
               "@type": "Offer",
               itemOffered: {
                 "@type": "Service",
-                name: "As‑Built P&ID / System Manuals",
+                name: "As-Built P&ID / System Manuals",
                 description:
                   "Complete piping and instrumentation diagrams reflecting final installed systems, compiled into operational system manuals.",
               },
@@ -121,9 +121,10 @@ export default function EngineeringDocs() {
 
   return (
     <>
+      {/* Description: 151 karakter — limit içinde */}
       <SEO
         title="Engineering Documentation"
-        description="Vessel‑specific technical manuals and analyses: as‑built P&IDs, electrical load analysis, fuel management booklets, IHM – ensuring crew training and port state control readiness."
+        description="Vessel-specific manuals: as-built P&IDs, electrical load analysis, fuel management booklets and IHM for crew training and port state control readiness."
         canonical="https://www.adriaticadoo.com/services/engineering-documentation"
       />
       <Helmet>

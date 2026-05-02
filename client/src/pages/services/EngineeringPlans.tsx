@@ -26,7 +26,7 @@ export default function EngineeringPlans() {
         url: "https://www.adriaticadoo.com",
         logo: {
           "@type": "ImageObject",
-          url: "https://www.adriaticadoo.com/logo.png",
+          url: "https://www.adriaticadoo.com/logo.svg", // FIX: .png → .svg
         },
       },
       {
@@ -41,12 +41,11 @@ export default function EngineeringPlans() {
       },
       {
         "@type": "WebPage",
-        "@id":
-          "https://www.adriaticadoo.com/services/engineering-plans/#webpage",
+        "@id": "https://www.adriaticadoo.com/services/engineering-plans/#webpage",
         url: "https://www.adriaticadoo.com/services/engineering-plans",
         name: "Engineering Plans | Adriatica D.O.O.",
         description:
-          "Detailed engineering drawings and plan sets for new constructions, conversions, and refits – structural drawings, as‑built sets, arrangement plans, fire & safety plans.",
+          "Engineering drawings for new constructions, conversions and refits: structural drawings, as-built sets, arrangement plans and fire safety plans.",
         isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
         about: { "@id": "https://www.adriaticadoo.com/#organization" },
         inLanguage: "en",
@@ -55,16 +54,14 @@ export default function EngineeringPlans() {
       },
       {
         "@type": "Service",
-        "@id":
-          "https://www.adriaticadoo.com/services/engineering-plans/#service",
+        "@id": "https://www.adriaticadoo.com/services/engineering-plans/#service",
         name: "Engineering Plans",
         description:
           "Production of classification-ready engineering drawings including structural plans per class rules, as-built verification, arrangement layouts (GA, machinery, piping), and SOLAS-compliant fire & safety plans for new builds, conversions, and refits.",
         url: "https://www.adriaticadoo.com/services/engineering-plans",
         provider: { "@id": "https://www.adriaticadoo.com/#organization" },
         isPartOf: {
-          "@id":
-            "https://www.adriaticadoo.com/services/engineering-plans/#webpage",
+          "@id": "https://www.adriaticadoo.com/services/engineering-plans/#webpage",
         },
         areaServed: [
           { "@type": "Place", name: "Montenegro" },
@@ -90,9 +87,9 @@ export default function EngineeringPlans() {
               "@type": "Offer",
               itemOffered: {
                 "@type": "Service",
-                name: "As‑Built Drawing Sets",
+                name: "As-Built Drawing Sets",
                 description:
-                  "Updated drawings reflecting the actual condition of the vessel after construction or major modifications, verified on‑site.",
+                  "Updated drawings reflecting the actual condition of the vessel after construction or major modifications, verified on-site.",
               },
             },
             {
@@ -121,9 +118,10 @@ export default function EngineeringPlans() {
 
   return (
     <>
+      {/* Description: 144 karakter — limit içinde */}
       <SEO
         title="Engineering Plans"
-        description="Detailed engineering drawings and plan sets for new constructions, conversions, and refits – structural drawings, as‑built sets, arrangement plans, fire & safety plans."
+        description="Engineering drawings for new constructions, conversions and refits: structural drawings, as-built sets, arrangement plans and fire safety plans."
         canonical="https://www.adriaticadoo.com/services/engineering-plans"
       />
       <Helmet>
