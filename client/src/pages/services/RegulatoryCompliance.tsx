@@ -16,14 +16,137 @@ export default function RegulatoryCompliance() {
   );
   if (!currentItem) return <Redirect to="/404" />;
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.adriaticadoo.com/#organization",
+        name: "Adriatica D.O.O.",
+        url: "https://www.adriaticadoo.com",
+        logo: {
+          "@type": "ImageObject",
+          url: "https://www.adriaticadoo.com/logo.svg",
+        },
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.adriaticadoo.com/#website",
+        url: "https://www.adriaticadoo.com/",
+        name: "Adriatica D.O.O.",
+        description:
+          "Marine engineering consultancy for yachts, commercial vessels, and fishing boats.",
+        inLanguage: "en",
+        publisher: { "@id": "https://www.adriaticadoo.com/#organization" },
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.adriaticadoo.com/services/regulatory-compliance/#webpage",
+        url: "https://www.adriaticadoo.com/services/regulatory-compliance",
+        name: "Regulatory Compliance | Adriatica D.O.O.",
+        description:
+          "Mandatory shipboard plans for your vessel: BWMP, SoPEP, SEEMP, Garbage Management Plan, Emergency Response Manuals and Polar Water Operational Manual.",
+        isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
+        about: { "@id": "https://www.adriaticadoo.com/#organization" },
+        inLanguage: "en",
+        datePublished: "2025-01-01",
+        dateModified: "2025-03-15",
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.adriaticadoo.com/services/regulatory-compliance/#service",
+        name: "Regulatory Compliance",
+        description:
+          "Preparation and periodic updating of mandatory shipboard plans tailored to your vessel's configuration: BWMP, SoPEP, SEEMP, Garbage Management Plan, Emergency Response Manuals, and Polar Water Operational Manual.",
+        url: "https://www.adriaticadoo.com/services/regulatory-compliance",
+        provider: { "@id": "https://www.adriaticadoo.com/#organization" },
+        isPartOf: {
+          "@id": "https://www.adriaticadoo.com/services/regulatory-compliance/#webpage",
+        },
+        areaServed: [
+          { "@type": "Place", name: "Montenegro" },
+          { "@type": "Place", name: "Adriatic Sea" },
+          { "@type": "Place", name: "Mediterranean Sea" },
+          { "@type": "Place", name: "Europe" },
+        ],
+        serviceType: "Marine Regulatory Compliance",
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "Regulatory Compliance Deliverables",
+          itemListElement: [
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Ballast Water Management Plan (BWMP)",
+                description:
+                  "Vessel-specific plan covering ballast water management system, operational procedures, and record-keeping per BWM Convention.",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Shipboard Oil Pollution Emergency Plan (SoPEP)",
+                description:
+                  "IMO-compliant emergency plan for oil spill response with contact lists, reporting procedures, and spill response strategies.",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Ship Energy Efficiency Management Plan (SEEMP)",
+                description:
+                  "Structured plan for energy efficiency improvement covering IMO DCS and EU MRV data collection, reporting, and CII management.",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Garbage Management Plan",
+                description:
+                  "MARPOL Annex V compliant garbage handling, segregation, storage, and disposal procedures including Garbage Record Book template.",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Emergency Response Manuals",
+                description:
+                  "Customised manuals for fire, flooding, man overboard, and cargo spill scenarios with checklists and communication protocols.",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Polar Water Operational Manual (PWOM)",
+                description:
+                  "IMO Polar Code MSC.385(94) compliant manual for polar navigation, class-approved and flag state endorsed.",
+              },
+            },
+          ],
+        },
+      },
+    ],
+  };
+
   return (
     <>
+      {/* Description: 150 karakter — limit içinde */}
       <SEO
         title="Regulatory Compliance"
-        description="Preparation and updating of mandatory shipboard plans and manuals: BWMP, SoPEP, SEEMP, Garbage Management Plan, Emergency Response Manuals, Polar Water Operational Manual – tailored to your vessel's configuration."
+        description="Mandatory shipboard plans for your vessel: BWMP, SoPEP, SEEMP, Garbage Management Plan, Emergency Response Manuals and Polar Water Operational Manual."
         canonical="https://www.adriaticadoo.com/services/regulatory-compliance"
       />
-      <Helmet>{/* schema */}</Helmet>
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(serviceSchema).replace(/</g, "\\u003c")}
+        </script>
+      </Helmet>
       <div className="min-h-screen bg-background font-body">
         <Navigation />
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
