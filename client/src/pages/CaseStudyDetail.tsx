@@ -17,7 +17,9 @@ const RelatedContent = lazy(() =>
 // ============================================================
 // SSR-safe utilities
 // ============================================================
-const BASE_URL = import.meta.env.VITE_SITE_URL || "https://adriatica.pages.dev";
+
+// FIX: Fallback URL production domain ile eşleştirildi
+const BASE_URL = import.meta.env.VITE_SITE_URL || "https://www.adriaticadoo.com";
 
 const normalizeUrl = (url: string) => url.replace(/\/$/, "");
 
@@ -30,8 +32,35 @@ const contentMap = new Map<string, (typeof allContent)[number]>(
 // ============================================================
 export default function CaseStudyDetail() {
   const [, params] = useRoute("/case-studies/:slug");
-  const slug = params?.slug;
+  const slug = params?.slug ?? "";
 
+  const caseStudy = caseStudies.find((c) => c.slug === slug);
+
+  /*
+    FIX: React Hooks kuralı — tüm hook'lar conditional return'lerden ÖNCE çağrılmalı.
+    Önceki versiyonda useMemo, if (!slug) ve if (!caseStudy) return'lerinden
+    SONRA çağrılıyordu — bu hooks sırası ihlaliydi.
+    InsightDetail.tsx ile aynı düzeltme uygulandı.
+  */
+  const currentItem = useMemo(() => {
+    if (!caseStudy) return undefined;
+    return contentMap.get(caseStudy.slug);
+  }, [caseStudy]);
+
+  const canonicalUrl = useMemo(
+    () => normalizeUrl(`${BASE_URL}/case-studies/${slug}`),
+    [slug]
+  );
+
+  // FIX: (caseStudy as any).date → optional chaining ile güvenli erişim
+  const publishedDate: string | undefined = (caseStudy as { date?: string } | undefined)?.date;
+
+  // FIX: null safety — challenge undefined olabilir
+  const description = caseStudy?.challenge?.substring(0, 149) ?? "";
+
+  const tagsKeywords = currentItem?.tags?.map((tag) => tag.name).join(", ") ?? "";
+
+  // ── Geçersiz slug ──
   if (!slug) {
     return (
       <div className="min-h-screen bg-background">
@@ -49,8 +78,7 @@ export default function CaseStudyDetail() {
     );
   }
 
-  const caseStudy = caseStudies.find((c) => c.slug === slug);
-
+  // ── Case study bulunamadı ──
   if (!caseStudy) {
     return (
       <div className="min-h-screen bg-background">
@@ -70,47 +98,29 @@ export default function CaseStudyDetail() {
     );
   }
 
-  const currentItem = useMemo(() => {
-    return contentMap.get(caseStudy.slug);
-  }, [caseStudy.slug]);
+  // ── İlgili içerik yüklenemedi — currentItem olmadan da devam et ──
+  // Not: Önceki versiyonda currentItem yoksa ayrı bir error state gösteriliyordu.
+  // RelatedContent zaten currentItem kontrolü yapıyor; burada sadece Suspense
+  // fallback'i yeterli — hata sayfası göstermeye gerek yok.
 
-  if (!currentItem) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Navigation />
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-12 md:pt-40">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold mb-4">
-              Unable to load related content
-            </h1>
-            <Link href="/case-studies" className="text-primary underline">
-              ← All case studies
-            </Link>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
-
-  const canonicalUrl = normalizeUrl(`${BASE_URL}/case-studies/${caseStudy.slug}`);
-  const description = caseStudy.challenge?.substring(0, 160) || "";
-  const tagsKeywords = currentItem.tags?.map((tag) => tag.name).join(", ") || "";
-  const publishedDate = (caseStudy as any).date;
+  // ── Normal render ──
   const lcpImage = `${BASE_URL}/og-image.png`;
 
   const caseStudySchema = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: caseStudy.title,
-    description: description,
+    description,
     datePublished: publishedDate,
     dateModified: publishedDate,
     author: { "@type": "Organization", name: "Adriatica D.O.O." },
     publisher: {
       "@type": "Organization",
       name: "Adriatica D.O.O.",
-      logo: { "@type": "ImageObject", url: `${BASE_URL}/logo.png` },
+      logo: {
+        "@type": "ImageObject",
+        url: `${BASE_URL}/logo.svg`, // FIX: .png → .svg
+      },
     },
     mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl },
     keywords: tagsKeywords,
@@ -123,7 +133,6 @@ export default function CaseStudyDetail() {
         <meta name="description" content={description} />
         <link rel="canonical" href={canonicalUrl} />
         <link rel="preload" as="image" href={lcpImage} fetchPriority="high" />
-
         <meta property="og:title" content={caseStudy.title} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={canonicalUrl} />
@@ -131,16 +140,17 @@ export default function CaseStudyDetail() {
         <meta property="og:site_name" content="Adriatica D.O.O." />
         <meta property="og:image" content={lcpImage} />
         <meta name="twitter:card" content="summary_large_image" />
-
         {publishedDate && (
           <>
             <meta property="article:published_time" content={publishedDate} />
             <meta property="article:modified_time" content={publishedDate} />
           </>
         )}
-
         {tagsKeywords && <meta name="keywords" content={tagsKeywords} />}
-        <script type="application/ld+json">{JSON.stringify(caseStudySchema)}</script>
+        {/* FIX: .replace(/</g, "\\u003c") eklendi — diğer sayfalarda mevcut, eksikti */}
+        <script type="application/ld+json">
+          {JSON.stringify(caseStudySchema).replace(/</g, "\\u003c")}
+        </script>
       </Helmet>
 
       <div className="min-h-screen bg-background font-body">
@@ -179,11 +189,13 @@ export default function CaseStudyDetail() {
                   <p>{caseStudy.result}</p>
                 </div>
               </div>
-              <Suspense fallback={<div className="h-32 animate-pulse bg-gray-100 rounded mt-12" />}>
-                <RelatedContent currentItem={currentItem} />
-              </Suspense>
+              {currentItem && (
+                <Suspense fallback={<div className="h-32 animate-pulse bg-gray-100 rounded mt-12" />}>
+                  <RelatedContent currentItem={currentItem} />
+                </Suspense>
+              )}
             </article>
-            <aside className="lg:col-span-1" />
+            {/* FIX: boş aside kaldırıldı — gereksiz DOM node */}
           </div>
         </main>
         <Footer />
