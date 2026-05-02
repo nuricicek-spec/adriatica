@@ -5,15 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!--
-      KESİN ÇÖZÜM: data-rh="true" ile statik fallback title/description.
-      - Bing, Yandex gibi düşük JS kapasiteli botlar bu etiketleri doğrudan görür.
-      - React/Helmet çalıştığında aynı data-rh niteliğine sahip etiketleri
-        yeniden oluşturmak yerine İÇERİKLERİNİ GÜNCELLER.
-      - Böylece sayfada HER ZAMAN TEK bir title ve description bulunur.
-      - Duplicate etiket sorunu KÖKTEN ÇÖZÜLMÜŞ olur.
+      ÖNEMLI: <title> ve <meta name="description"> burada YOK.
+      react-helmet-async her sayfada bu tag'leri data-rh="true" ile inject eder.
+      Burada statik fallback bırakmak duplicate tag sorununa yol açar —
+      Bing her iki tag'i de görür ve "More than one meta description" hatası verir.
     -->
-    <title data-rh="true">Adriatica D.O.O. - Marine Engineering & Consultancy</title>
-    <meta data-rh="true" name="description" content="Adriatica D.O.O. - Marine engineering consultancy: structural integrity, regulatory compliance and sustainable technologies. Serving Montenegro, Adriatic, Europe." />
 
     <meta name="author" content="Adriatica D.O.O." />
     <meta name="robots" content="index, follow" />
@@ -28,7 +24,10 @@
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json" />
 
-    <!-- Font preload -->
+    <!--
+      Font preload: @font-face ile tanımlı fontlar CSS parse edilene kadar
+      discovered edilemez. crossorigin zorunlu — woff2 CORS gerektirir.
+    -->
     <link
       rel="preload"
       as="font"
@@ -47,7 +46,10 @@
     <!-- LCP görseli preload -->
     <link rel="preload" as="image" href="/logo.svg" fetchpriority="high" />
 
-    <!-- GTM defer -->
+    <!--
+      GTM defer: requestIdleCallback ile defer edilir;
+      tarayıcı boşta iken yüklenir. Fallback: 3sn timeout (Safari).
+    -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
@@ -68,7 +70,7 @@
       }
     </script>
 
-    <!-- Kritik stiller inline -->
+    <!-- Kritik stiller inline — FOUC'u engeller -->
     <style>
       body {
         margin: 0;
