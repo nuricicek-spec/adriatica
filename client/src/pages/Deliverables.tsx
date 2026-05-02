@@ -118,7 +118,7 @@ export default function Deliverables() {
                 },
               },
             })),
-          }).replace(/</g, "\\u003c")} {/* FIX: XSS koruması — diğer sayfalarda mevcut, eksikti */}
+          })}
         </script>
       </Helmet>
 
