@@ -8,14 +8,18 @@ import { CiiCalculator } from "@/components/tools/CiiCalculator";
 import { BwtsCalculator } from "@/components/tools/BwtsCalculator";
 import { EtsCalculator } from "@/components/tools/EtsCalculator";
 import { FueleuCalculator } from "@/components/tools/FueleuCalculator";
+import { ShapoliCalculator } from "@/components/tools/ShapoliCalculator";
+import { ScenarioEngine } from "@/components/tools/ScenarioEngine";
 import { Helmet } from "react-helmet-async";
 
 const TABS = [
-  { id: "eexi",   label: "EEXI Calculator",  shortLabel: "EEXI",   component: EexiCalculator   },
-  { id: "cii",    label: "CII Predictor",     shortLabel: "CII",    component: CiiCalculator    },
-  { id: "bwts",   label: "BWTS Sizing",       shortLabel: "BWTS",   component: BwtsCalculator   },
-  { id: "ets",    label: "EU ETS Cost",       shortLabel: "EU ETS", component: EtsCalculator    },
-  { id: "fueleu", label: "FuelEU Penalty",    shortLabel: "FuelEU", component: FueleuCalculator },
+  { id: "eexi",   label: "EEXI Calculator",     shortLabel: "EEXI",    component: EexiCalculator   },
+  { id: "cii",    label: "CII Predictor",      shortLabel: "CII",     component: CiiCalculator    },
+  { id: "bwts",   label: "BWTS Sizing",        shortLabel: "BWTS",    component: BwtsCalculator   },
+  { id: "ets",    label: "EU ETS Cost",        shortLabel: "EU ETS",  component: EtsCalculator    },
+  { id: "fueleu", label: "FuelEU Penalty",     shortLabel: "FuelEU",  component: FueleuCalculator },
+  { id: "shapoli",label: "ShaPoLi Assessment", shortLabel: "ShaPoLi", component: ShapoliCalculator},
+  { id: "scenario",label:"Scenario Engine",    shortLabel: "Scenario",component: ScenarioEngine   },
 ] as const;
 
 type TabId = (typeof TABS)[number]["id"];

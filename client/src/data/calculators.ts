@@ -113,3 +113,54 @@ export function getCiiReference(dwt: number, vesselType: string): number {
   if (!data) return 0;
   return data.a * Math.pow(dwt, -data.c);
 }
+
+// ============================================
+// SHAPOLI (Shaft Power Limitation) — MEPC.350(78)
+// ============================================
+
+export interface ShaPoLiResult {
+  isCompliant: boolean;
+  measuredShaftPower: number;      // kW
+  limitValue: number;              // kW
+  overridable: boolean;
+  maxOverridePower: number;        // kW (110% of limit)
+  requiredLogAccuracy: string;     // % tolerance
+}
+
+export const SHAPOLI_GUIDANCE = {
+  overridable: {
+    title: "Overridable ShaPoLi",
+    description: "Master can override limit in safety situations. Requires power reserve documentation and alarm system.",
+    requirements: ["Alarm at 100% limit", "Override log entry", "Power reserve justification"],
+  },
+  nonOverridable: {
+    title: "Non-Overridable ShaPoLi",
+    description: "Fixed limit, no override possible. Stricter but simpler compliance.",
+    requirements: ["Fixed power cap", "No override mechanism", "Annual verification"],
+  },
+} as const;
+
+export function calculateShaPoLi(
+  vesselType: string,
+  dwt: number,
+  meMcr: number,
+  shaftPower: number,
+  isOverridable: boolean
+): ShaPoLiResult {
+  // Size factor: larger vessels get lower limit percentage
+  const sizeFactor = dwt > 50000 ? 0.75 : dwt > 10000 ? 0.80 : 0.85;
+  
+  const limitValue = meMcr * sizeFactor;
+  const maxOverride = isOverridable ? limitValue * 1.10 : limitValue;
+  
+  const isCompliant = shaftPower <= maxOverride;
+  
+  return {
+    isCompliant,
+    measuredShaftPower: shaftPower,
+    limitValue,
+    overridable: isOverridable,
+    maxOverridePower: maxOverride,
+    requiredLogAccuracy: isOverridable ? "±2%" : "±1%",
+  };
+}
