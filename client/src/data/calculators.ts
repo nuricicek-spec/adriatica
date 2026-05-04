@@ -1,5 +1,7 @@
 // C:\Adriatica\client\src\data\calculators.ts
-import { VesselProfile } from "./vesselProfile";
+
+import { VesselProfile } from "./vesselProfile"; // ← EKLENMESİ GEREKEN SATIR
+
 // --- GEMİ TİPLERİ VE KATSAYILARI ---
 export const VESSEL_TYPES = [
   { value: "bulkCarrier",  label: "Bulk Carrier",             fi: 1.0, fc: 1.0 },
@@ -13,10 +15,6 @@ export const VESSEL_TYPES = [
 ] as const;
 
 // --- YAKIT TÜRLERİ VE KARBON EMİSYON FAKTÖRLERİ (MEPC.344(78)) ---
-// FIX: VLSFO eklendi — 2020 IMO Sulphur Cap sonrası filoların %90'ı
-// VLSFO kullanıyor. CF = 3.106 (IMO MEPC.344(78) Table 1).
-// HFO seçmek zorunda kalan kullanıcılar gerçek değerden ~%3–4 yüksek
-// sonuç alıyordu; bu ekleme doğruluğu artırır.
 export const FUEL_TYPES = [
   { value: "VLSFO",    label: "VLSFO (0.5% Sulphur) — IMO 2020",    cf: 3.106 },
   { value: "HFO",      label: "Heavy Fuel Oil (HFO/LFO)",            cf: 3.206 },
@@ -165,47 +163,111 @@ export function calculateShaPoLi(
   };
 }
 
-// calculators.ts'in SONUNA ekleyin:
-
 // ============================================
-// SCENARIO ENGINE HESAPLAMALARI
+// SCENARIO ENGINE HESAPLAMALARI (GERÇEK FORMÜLLER)
 // ============================================
 
 export function calculateEEXI(profile: VesselProfile) {
-  // Mevcut EEXI hesaplama mantığınızı buraya taşıyın
-  // Veya mevcut EexiCalculator'daki handleCalculate fonksiyonunu dışa aktarın
-  const { vesselType, dwt, meMcr, meFuel, meSfc, vref, hasPto, ptoPower, ptoEff, auxPower, auxSfc } = profile;
-  
-  // ... mevcut EEXI formülünüz ...
-  
+  const {
+    vesselType,
+    dwt,
+    targetYear,
+    meMcr,
+    meFuel,
+    meSfc,
+    vref,
+    hasPto,
+    ptoPower,
+    ptoEff,
+    auxPower,
+    auxSfc,
+  } = profile;
+
+  const typeData = VESSEL_TYPES.find(v => v.value === vesselType);
+  const fuelData = FUEL_TYPES.find(f => f.value === meFuel);
+  if (!typeData || !fuelData) {
+    return { attained: 0, required: 0, compliant: false };
+  }
+
+  const ptoReduction = hasPto ? (ptoEff * ptoPower * meSfc * fuelData.cf) : 0;
+  const meEmissions  = meSfc * fuelData.cf * meMcr;
+  const auxEmissions = auxSfc * fuelData.cf * auxPower;
+  const totalEmissions = Math.max(0, meEmissions - ptoReduction + auxEmissions);
+
+  const attained = totalEmissions / (typeData.fi * typeData.fc * dwt * vref);
+  const baseline = getEediBaseline(dwt, vesselType);
+  const reductionFactor = EEXI_REDUCTION_FACTORS[targetYear] || 0.08;
+  const required = baseline * (1 - reductionFactor);
+
   return {
-    attained: 5.24,  // Örnek
-    required: 5.10,  // Örnek
-    compliant: true, // Örnek
+    attained: parseFloat(attained.toFixed(4)),
+    required: parseFloat(required.toFixed(4)),
+    compliant: attained <= required,
   };
 }
 
 export function calculateCII(profile: VesselProfile) {
-  // Mevcut CII hesaplama mantığınız
+  const { vesselType, dwt, targetYear, annualFuel, meFuel, annualDistance } = profile;
+  const fuelData = FUEL_TYPES.find(f => f.value === meFuel);
+  if (!fuelData || annualDistance <= 0) {
+    return { rating: "E", attained: 0, required: 0 };
+  }
+
+  const attained = (annualFuel * fuelData.cf * 1e6) / (dwt * annualDistance);
+  const reference = getCiiReference(dwt, vesselType);
+  const reductionFactor = CII_REDUCTION_FACTORS[targetYear] || 0.11;
+  const required = reference * (1 - reductionFactor);
+
+  let rating = "E";
+  if (attained <= required * 0.80) rating = "A";
+  else if (attained <= required * 0.90) rating = "B";
+  else if (attained <= required) rating = "C";
+  else if (attained <= required * 1.10) rating = "D";
+
   return {
-    rating: "B",
-    attained: 4.5,
-    required: 5.0,
+    rating,
+    attained: parseFloat(attained.toFixed(2)),
+    required: parseFloat(required.toFixed(2)),
   };
 }
 
-export function calculateETS(profile: VesselProfile) {
-  // Mevcut ETS hesaplama mantığınız
+export function calculateETS(profile: VesselProfile, euaPrice: number = 65) {
+  const { targetYear, annualFuel, meFuel } = profile;
+  const fuelData = FUEL_TYPES.find(f => f.value === meFuel);
+  if (!fuelData) return { cost: 0, co2: 0 };
+
+  const phaseInRate = ETS_PHASE_IN_RATES[targetYear] || 1.0;
+  const totalCo2 = annualFuel * fuelData.cf;
+  const requiredEua = totalCo2 * phaseInRate;
+  const cost = requiredEua * euaPrice;
+
   return {
-    cost: 325000,
-    co2: 5000,
+    cost: Math.round(cost),
+    co2: Math.round(totalCo2),
   };
 }
 
 export function calculateFuelEU(profile: VesselProfile) {
-  // Mevcut FuelEU hesaplama mantığınız
+  const { targetYear, annualFuel, meFuel } = profile;
+  const wtw = FUELEU_WTW_FACTORS[meFuel];
+  const ncv = FUELEU_NCV_FACTORS[meFuel];
+  if (!wtw || !ncv) return { penalty: 0, compliant: true };
+
+  const reductionFactor = FUELEU_REDUCTION_FACTORS[targetYear] || 0.02;
+  const totalEnergyMj = annualFuel * ncv;
+  const attainedGhg = wtw;
+  const requiredGhg = FUELEU_BASELINE * (1 - reductionFactor);
+
+  let penalty = 0;
+  let compliant = true;
+  if (attainedGhg > requiredGhg) {
+    compliant = false;
+    const excessCO2_t = ((attainedGhg - requiredGhg) * totalEnergyMj) / 1_000_000;
+    penalty = excessCO2_t * FUELEU_PENALTY_PER_TON_CO2;
+  }
+
   return {
-    penalty: 0,
-    compliant: true,
+    penalty: Math.round(penalty),
+    compliant,
   };
 }
