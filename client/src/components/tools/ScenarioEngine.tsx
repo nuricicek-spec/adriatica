@@ -3,15 +3,23 @@ import { useVesselProfile } from "@/hooks/useVesselProfile";
 import { SCENARIOS } from "@/data/scenarios";
 import { VESSEL_TYPES, FUEL_TYPES } from "@/data/calculators";
 import { trackToolUsage } from "@/lib/analytics";
-import { 
-  calculateEEXI,    // calculators.ts'ten import
-  calculateCII,     // calculators.ts'ten import  
-  calculateETS,     // calculators.ts'ten import
-  calculateFuelEU   // calculators.ts'ten import
+import {
+  calculateEEXI,
+  calculateCII,
+  calculateETS,
+  calculateFuelEU,
 } from "@/data/calculators";
-import { ArrowRight, ArrowLeft, Zap, Fuel, Gauge, Anchor, RotateCcw, BarChart3 } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowLeft,
+  Zap,
+  Fuel,
+  Gauge,
+  Anchor,
+  BarChart3,
+} from "lucide-react";
 
-type Step = "mode" | "quick" | "profile" | "scenarios" | "results";
+type Step = "profile" | "scenarios" | "results";
 type ComplianceStatus = "idle" | "compliant" | "non-compliant";
 
 interface ScenarioResult {
@@ -25,7 +33,7 @@ interface ScenarioResult {
 
 export function ScenarioEngine() {
   const { profile, setField, setProfile } = useVesselProfile();
-  const [step, setStep] = useState<Step>("mode");
+  const [step, setStep] = useState<Step>("profile");
   const [selectedScenarios, setSelectedScenarios] = useState<string[]>(["current"]);
   const [results, setResults] = useState<ScenarioResult[]>([]);
   const [complianceStatus, setComplianceStatus] = useState<ComplianceStatus>("idle");
@@ -39,10 +47,9 @@ export function ScenarioEngine() {
 
   // HESAPLAMA MOTORU
   const runCalculations = () => {
-    const newResults: ScenarioResult[] = selectedScenarios.map(scenarioId => {
-      const scenario = SCENARIOS.find(s => s.id === scenarioId)!;
-      
-      // Senaryoya göre profili modifiye et
+    const newResults: ScenarioResult[] = selectedScenarios.map((scenarioId) => {
+      const scenario = SCENARIOS.find((s) => s.id === scenarioId)!;
+
       let scenarioProfile = { ...profile };
       if (scenario.compute) {
         const computed = scenario.compute(scenarioProfile);
@@ -52,11 +59,10 @@ export function ScenarioEngine() {
         scenarioProfile = { ...scenarioProfile, ...scenario.changes };
       }
 
-      // GERÇEK HESAPLAMALAR
-      const eexiResult = calculateEEXI(scenarioProfile);  // Formül çağrısı
-      const ciiResult = calculateCII(scenarioProfile);    // Formül çağrısı
-      const etsResult = calculateETS(scenarioProfile);    // Formül çağrısı
-      const fueleuResult = calculateFuelEU(scenarioProfile); // Formül çağrısı
+      const eexiResult = calculateEEXI(scenarioProfile);
+      const ciiResult = calculateCII(scenarioProfile);
+      const etsResult = calculateETS(scenarioProfile);
+      const fueleuResult = calculateFuelEU(scenarioProfile);
 
       return {
         scenarioId,
@@ -69,113 +75,257 @@ export function ScenarioEngine() {
     });
 
     setResults(newResults);
-    
-    // Compliance check
-    const hasNonCompliant = newResults.some(r => 
-      !r.eexi.compliant || r.cii.rating === "D" || r.cii.rating === "E" || !r.fueleu.compliant
+
+    const hasNonCompliant = newResults.some(
+      (r) =>
+        !r.eexi.compliant ||
+        r.cii.rating === "D" ||
+        r.cii.rating === "E" ||
+        !r.fueleu.compliant
     );
     const status = hasNonCompliant ? "non-compliant" : "compliant";
     setComplianceStatus(status);
-    
-    window.dispatchEvent(new CustomEvent("tool_compliance_update", {
-      detail: { status }
-    }));
+
+    window.dispatchEvent(
+      new CustomEvent("tool_compliance_update", {
+        detail: { status },
+      })
+    );
   };
 
-  // QUICK ESTIMATE - Sadece 3 soru
-  if (step === "quick") {
+  // FULL PROFILE FORM
+  if (step === "profile") {
     return (
       <div className="bg-white border border-border/40 rounded-sm p-6 md:p-8 shadow-sm">
-        <div className="flex items-center gap-2 mb-6">
-          <button onClick={() => setStep("mode")} className="text-muted-foreground hover:text-primary">
-            <ArrowLeft size={18} />
-          </button>
-          <h2 className="font-display text-xl font-bold text-[#0B3B5C]">Quick Estimate</h2>
-        </div>
+        <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mb-1">
+          Vessel Profile
+        </h2>
+        <p className="text-xs text-muted-foreground mb-6">
+          Enter all technical parameters for accurate scenario comparison.
+        </p>
 
-        <div className="space-y-6">
+        <div className="max-h-[70vh] overflow-y-auto space-y-6 pr-2">
+          {/* Vessel Parameters */}
           <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
             <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">
-              Basic Info
+              Vessel Parameters
             </h3>
-            
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Vessel Type
                 </label>
-                <select 
-                  value={profile.vesselType} 
-                  onChange={e => setField("vesselType", e.target.value)}
+                <select
+                  value={profile.vesselType}
+                  onChange={(e) => setField("vesselType", e.target.value)}
                   className="w-full p-2 border rounded-sm bg-white text-sm focus:border-primary outline-none"
                 >
-                  {VESSEL_TYPES.map(v => (
-                    <option key={v.value} value={v.value}>{v.label}</option>
+                  {VESSEL_TYPES.map((v) => (
+                    <option key={v.value} value={v.value}>
+                      {v.label}
+                    </option>
                   ))}
                 </select>
               </div>
-
               <div>
                 <label className="block text-xs font-medium text-muted-foreground mb-1">
-                  Approximate Length (m)
+                  Deadweight (DWT)
                 </label>
-                <input 
-                  type="number" 
-                  placeholder="50"
-                  onChange={e => {
-                    const length = parseFloat(e.target.value) || 0;
-                    // Boya göre otomatik tahminler
-                    const estimatedDwt = length * 10;  // Basit tahmin
-                    const estimatedMcr = length * 40;    // Basit tahmin
-                    const estimatedVref = length * 0.28; // Basit tahmin
-                    
-                    setProfile({
-                      dwt: estimatedDwt,
-                      meMcr: estimatedMcr,
-                      vref: estimatedVref,
-                      // Gerisi default kalır
-                    });
-                  }}
+                <input
+                  type="number"
+                  value={profile.dwt || ""}
+                  onChange={(e) => setField("dwt", parseFloat(e.target.value) || 0)}
+                  placeholder="50000"
                   className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none"
                 />
-                <p className="text-[10px] text-muted-foreground mt-1">
-                  * DWT, MCR, and Vref will be auto-estimated based on industry averages
-                </p>
               </div>
+              <div className="md:col-span-2">
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                  Target Year
+                </label>
+                <input
+                  type="number"
+                  value={profile.targetYear || ""}
+                  onChange={(e) => setField("targetYear", parseInt(e.target.value) || 2026)}
+                  placeholder="2026"
+                  className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none"
+                />
+              </div>
+            </div>
+          </div>
 
+          {/* Main Engine */}
+          <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
+            <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">
+              Main Engine (ME)
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-medium text-muted-foreground mb-1">
-                  Engine Type
+                  MCR (kW)
                 </label>
-                <select 
-                  onChange={e => {
-                    const isSlowSpeed = e.target.value === "slow";
-                    setField("meSfc", isSlowSpeed ? 175 : 195);
-                  }}
+                <input
+                  type="number"
+                  value={profile.meMcr || ""}
+                  onChange={(e) => setField("meMcr", parseFloat(e.target.value) || 0)}
+                  placeholder="8000"
+                  className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                  Fuel Type
+                </label>
+                <select
+                  value={profile.meFuel}
+                  onChange={(e) => setField("meFuel", e.target.value)}
                   className="w-full p-2 border rounded-sm bg-white text-sm focus:border-primary outline-none"
                 >
-                  <option value="slow">Slow-Speed 2-Stroke (SFC ~175 g/kWh)</option>
-                  <option value="medium">Medium-Speed 4-Stroke (SFC ~195 g/kWh)</option>
+                  {FUEL_TYPES.map((f) => (
+                    <option key={f.value} value={f.value}>
+                      {f.label}
+                    </option>
+                  ))}
                 </select>
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                  SFC (g/kWh)
+                </label>
+                <input
+                  type="number"
+                  value={profile.meSfc || ""}
+                  onChange={(e) => setField("meSfc", parseFloat(e.target.value) || 0)}
+                  placeholder="190"
+                  className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                  Vref (Knots)
+                </label>
+                <input
+                  type="number"
+                  step="0.1"
+                  value={profile.vref || ""}
+                  onChange={(e) => setField("vref", parseFloat(e.target.value) || 0)}
+                  placeholder="14.5"
+                  className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none"
+                />
               </div>
             </div>
           </div>
 
-          <div className="p-4 bg-blue-50 border border-blue-200 rounded-sm">
-            <h4 className="text-sm font-bold text-blue-800 mb-2">Auto-Filled Values</h4>
-            <div className="grid grid-cols-2 gap-2 text-xs text-blue-700">
-              <div>DWT: {profile.dwt || "—"}</div>
-              <div>MCR: {profile.meMcr || "—"} kW</div>
-              <div>Vref: {profile.vref || "—"} kn</div>
-              <div>SFC: {profile.meSfc || "—"} g/kWh</div>
+          {/* Auxiliary & PTO */}
+          <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
+            <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">
+              Auxiliary & PTO
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                  Aux Power (kW)
+                </label>
+                <input
+                  type="number"
+                  value={profile.auxPower || ""}
+                  onChange={(e) => setField("auxPower", parseFloat(e.target.value) || 0)}
+                  placeholder="500"
+                  className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                  Aux SFC (g/kWh)
+                </label>
+                <input
+                  type="number"
+                  value={profile.auxSfc || ""}
+                  onChange={(e) => setField("auxSfc", parseFloat(e.target.value) || 0)}
+                  placeholder="215"
+                  className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none"
+                />
+              </div>
+              <div className="flex items-center gap-2 mt-2">
+                <input
+                  type="checkbox"
+                  id="ptoCheck"
+                  checked={profile.hasPto}
+                  onChange={(e) => setField("hasPto", e.target.checked)}
+                  className="rounded border-border text-primary"
+                />
+                <label htmlFor="ptoCheck" className="text-sm font-medium text-[#0B3B5C]">
+                  Shaft Generator / PTO
+                </label>
+              </div>
+              {profile.hasPto && (
+                <>
+                  <div>
+                    <label className="block text-xs font-medium text-muted-foreground mb-1">
+                      PTO Power (kW)
+                    </label>
+                    <input
+                      type="number"
+                      value={profile.ptoPower || ""}
+                      onChange={(e) => setField("ptoPower", parseFloat(e.target.value) || 0)}
+                      placeholder="1000"
+                      className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-muted-foreground mb-1">
+                      PTO Efficiency
+                    </label>
+                    <input
+                      type="number"
+                      step="0.1"
+                      value={profile.ptoEff || ""}
+                      onChange={(e) => setField("ptoEff", parseFloat(e.target.value) || 0)}
+                      placeholder="1.0"
+                      className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none"
+                    />
+                  </div>
+                </>
+              )}
             </div>
-            <p className="text-[10px] text-blue-600 mt-2">
-              * Override any value in Full Profile mode if needed
-            </p>
+          </div>
+
+          {/* Operational Data */}
+          <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
+            <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">
+              Operational Data (Annual)
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                  Annual Fuel (MT)
+                </label>
+                <input
+                  type="number"
+                  step="0.1"
+                  value={profile.annualFuel || ""}
+                  onChange={(e) => setField("annualFuel", parseFloat(e.target.value) || 0)}
+                  placeholder="5000"
+                  className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                  Annual Distance (NM)
+                </label>
+                <input
+                  type="number"
+                  value={profile.annualDistance || ""}
+                  onChange={(e) => setField("annualDistance", parseFloat(e.target.value) || 0)}
+                  placeholder="15000"
+                  className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none"
+                />
+              </div>
+            </div>
           </div>
         </div>
 
-        <button 
+        <button
           onClick={() => setStep("scenarios")}
           className="w-full py-3 bg-primary text-white font-medium rounded-sm hover:bg-primary/90 transition mt-6 flex items-center justify-center gap-2"
         >
@@ -185,38 +335,14 @@ export function ScenarioEngine() {
     );
   }
 
-  // FULL PROFILE - Tüm inputlar (mevcut hali)
-  if (step === "profile") {
-    return (
-      <div className="bg-white border border-border/40 rounded-sm p-6 md:p-8 shadow-sm">
-        <div className="flex items-center gap-2 mb-6">
-          <button onClick={() => setStep("mode")} className="text-muted-foreground hover:text-primary">
-            <ArrowLeft size={18} />
-          </button>
-          <h2 className="font-display text-xl font-bold text-[#0B3B5C]">Full Profile</h2>
-        </div>
-
-        {/* Mevcut profile formu aynı kalır */}
-        {/* ... (önceki kodun profile kısmı) ... */}
-        
-        <button 
-          onClick={() => setStep("scenarios")}
-          className="w-full py-3 bg-primary text-white font-medium rounded-sm hover:bg-primary/90 transition mt-6 flex items-center justify-center gap-2"
-        >
-          Continue to Scenarios <ArrowRight size={16} />
-        </button>
-      </div>
-    );
-  }
-
-  // SENARYO SEÇİMİ - Max 3 limiti
+  // SENARYO SEÇİMİ
   if (step === "scenarios") {
-    const canAddMore = selectedScenarios.length < 4; // Current + 3 ek
-    
+    const canAddMore = selectedScenarios.length < 4;
+
     return (
       <div className="bg-white border border-border/40 rounded-sm p-6 md:p-8 shadow-sm">
         <div className="flex items-center gap-2 mb-6">
-          <button onClick={() => setStep("mode")} className="text-muted-foreground hover:text-primary">
+          <button onClick={() => setStep("profile")} className="text-muted-foreground hover:text-primary">
             <ArrowLeft size={18} />
           </button>
           <h2 className="font-display text-xl font-bold text-[#0B3B5C]">Select Scenarios</h2>
@@ -230,21 +356,27 @@ export function ScenarioEngine() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
-          {SCENARIOS.map(scenario => {
+          {SCENARIOS.map((scenario) => {
             const isSelected = selectedScenarios.includes(scenario.id);
             const isCurrent = scenario.id === "current";
-            const Icon = scenario.icon === "fuel" ? Fuel : scenario.icon === "speed" ? Gauge : scenario.icon === "power" ? Zap : Anchor;
-            
+            const Icon =
+              scenario.icon === "fuel"
+                ? Fuel
+                : scenario.icon === "speed"
+                ? Gauge
+                : scenario.icon === "power"
+                ? Zap
+                : Anchor;
+
             return (
               <button
                 key={scenario.id}
                 onClick={() => {
                   if (isCurrent) return;
-                  
                   if (isSelected) {
-                    setSelectedScenarios(prev => prev.filter(id => id !== scenario.id));
+                    setSelectedScenarios((prev) => prev.filter((id) => id !== scenario.id));
                   } else if (canAddMore) {
-                    setSelectedScenarios(prev => [...prev, scenario.id]);
+                    setSelectedScenarios((prev) => [...prev, scenario.id]);
                   }
                 }}
                 disabled={isCurrent}
@@ -256,14 +388,24 @@ export function ScenarioEngine() {
                   !isSelected && !canAddMore && !isCurrent ? "opacity-50 cursor-not-allowed" : ""
                 }`}
               >
-                <Icon className={`h-5 w-5 shrink-0 mt-0.5 ${isSelected ? "text-primary" : "text-muted-foreground"}`} />
+                <Icon
+                  className={`h-5 w-5 shrink-0 mt-0.5 ${
+                    isSelected ? "text-primary" : "text-muted-foreground"
+                  }`}
+                />
                 <div className="flex-1">
                   <div className="flex justify-between items-start">
-                    <h4 className={`text-sm font-bold ${isSelected ? "text-[#0B3B5C]" : "text-muted-foreground"}`}>
+                    <h4
+                      className={`text-sm font-bold ${
+                        isSelected ? "text-[#0B3B5C]" : "text-muted-foreground"
+                      }`}
+                    >
                       {scenario.label}
                     </h4>
                     {isSelected && !isCurrent && (
-                      <span className="text-[10px] bg-primary text-white px-1.5 py-0.5 rounded-sm">Selected</span>
+                      <span className="text-[10px] bg-primary text-white px-1.5 py-0.5 rounded-sm">
+                        Selected
+                      </span>
                     )}
                   </div>
                   <p className="text-xs text-muted-foreground">{scenario.description}</p>
@@ -288,7 +430,7 @@ export function ScenarioEngine() {
     );
   }
 
-  // RESULTS - Gerçek karşılaştırma tablosu
+  // RESULTS
   if (step === "results") {
     return (
       <div className="bg-white border border-border/40 rounded-sm p-6 md:p-8 shadow-sm">
@@ -299,29 +441,33 @@ export function ScenarioEngine() {
           <h2 className="font-display text-xl font-bold text-[#0B3B5C]">Scenario Comparison</h2>
         </div>
 
-        {/* KARŞILAŞTIRMA TABLOSU */}
         <div className="overflow-x-auto">
           <table className="w-full text-sm border-collapse">
             <thead>
               <tr className="bg-neutral-50 border-b-2 border-border">
                 <th className="text-left p-3 font-bold text-[#0B3B5C]">Metric</th>
-                {results.map(r => (
-                  <th key={r.scenarioId} className={`p-3 text-center font-bold ${
-                    r.scenarioId === "current" ? "text-[#0B3B5C]" : "text-primary"
-                  }`}>
+                {results.map((r) => (
+                  <th
+                    key={r.scenarioId}
+                    className={`p-3 text-center font-bold ${
+                      r.scenarioId === "current" ? "text-[#0B3B5C]" : "text-primary"
+                    }`}
+                  >
                     {r.label}
                   </th>
                 ))}
               </tr>
             </thead>
             <tbody className="divide-y divide-border/20">
-              {/* EEXI */}
               <tr>
                 <td className="p-3 font-medium text-muted-foreground">EEXI Attained</td>
-                {results.map(r => (
-                  <td key={r.scenarioId} className={`p-3 text-center ${
-                    r.eexi.compliant ? "text-green-600" : "text-red-600"
-                  }`}>
+                {results.map((r) => (
+                  <td
+                    key={r.scenarioId}
+                    className={`p-3 text-center ${
+                      r.eexi.compliant ? "text-green-600" : "text-red-600"
+                    }`}
+                  >
                     {r.eexi.attained.toFixed(2)}
                     {!r.eexi.compliant && " ⚠️"}
                   </td>
@@ -329,45 +475,49 @@ export function ScenarioEngine() {
               </tr>
               <tr className="bg-neutral-50/50">
                 <td className="p-3 font-medium text-muted-foreground">EEXI Required</td>
-                {results.map(r => (
+                {results.map((r) => (
                   <td key={r.scenarioId} className="p-3 text-center text-muted-foreground">
                     {r.eexi.required.toFixed(2)}
                   </td>
                 ))}
               </tr>
-
-              {/* CII */}
               <tr>
                 <td className="p-3 font-medium text-muted-foreground">CII Rating</td>
-                {results.map(r => (
-                  <td key={r.scenarioId} className={`p-3 text-center font-bold ${
-                    r.cii.rating === "A" || r.cii.rating === "B" ? "text-green-600" :
-                    r.cii.rating === "C" ? "text-yellow-600" :
-                    "text-red-600"
-                  }`}>
+                {results.map((r) => (
+                  <td
+                    key={r.scenarioId}
+                    className={`p-3 text-center font-bold ${
+                      r.cii.rating === "A" || r.cii.rating === "B"
+                        ? "text-green-600"
+                        : r.cii.rating === "C"
+                        ? "text-yellow-600"
+                        : "text-red-600"
+                    }`}
+                  >
                     {r.cii.rating}
                   </td>
                 ))}
               </tr>
-
-              {/* ETS */}
               <tr className="bg-neutral-50/50">
                 <td className="p-3 font-medium text-muted-foreground">ETS Cost (€)</td>
-                {results.map(r => (
+                {results.map((r) => (
                   <td key={r.scenarioId} className="p-3 text-center">
                     €{r.ets.cost.toLocaleString()}
                   </td>
                 ))}
               </tr>
-
-              {/* FuelEU */}
               <tr>
                 <td className="p-3 font-medium text-muted-foreground">FuelEU Penalty (€)</td>
-                {results.map(r => (
-                  <td key={r.scenarioId} className={`p-3 text-center ${
-                    r.fueleu.penalty > 0 ? "text-red-600 font-bold" : "text-green-600"
-                  }`}>
-                    {r.fueleu.penalty > 0 ? `€${r.fueleu.penalty.toLocaleString()}` : "✓ Compliant"}
+                {results.map((r) => (
+                  <td
+                    key={r.scenarioId}
+                    className={`p-3 text-center ${
+                      r.fueleu.penalty > 0 ? "text-red-600 font-bold" : "text-green-600"
+                    }`}
+                  >
+                    {r.fueleu.penalty > 0
+                      ? `€${r.fueleu.penalty.toLocaleString()}`
+                      : "✓ Compliant"}
                   </td>
                 ))}
               </tr>
@@ -375,27 +525,25 @@ export function ScenarioEngine() {
           </table>
         </div>
 
-        {/* ÖZET KART */}
         <div className="mt-6 p-4 bg-primary/5 border border-primary/20 rounded-sm">
           <h3 className="font-bold text-[#0B3B5C] mb-2">Executive Summary</h3>
           <p className="text-sm text-muted-foreground">
             Comparing {results.length} scenarios for {profile.vesselType} ({profile.dwt} DWT).
-            {complianceStatus === "non-compliant" 
+            {complianceStatus === "non-compliant"
               ? " Non-compliant scenarios detected. See red indicators above."
-              : " All scenarios meet current regulatory thresholds."
-            }
+              : " All scenarios meet current regulatory thresholds."}
           </p>
         </div>
 
         <div className="mt-6 flex gap-3">
-          <button 
-            onClick={() => setStep("mode")} 
+          <button
+            onClick={() => setStep("profile")}
             className="flex-1 py-2.5 border border-primary text-primary font-medium rounded-sm hover:bg-primary/5 transition text-sm"
           >
-            Start New Comparison
+            New Profile
           </button>
-          <button 
-            onClick={() => setStep("scenarios")} 
+          <button
+            onClick={() => setStep("scenarios")}
             className="flex-1 py-2.5 bg-primary text-white font-medium rounded-sm hover:bg-primary/90 transition text-sm"
           >
             Modify Scenarios
@@ -405,51 +553,5 @@ export function ScenarioEngine() {
     );
   }
 
-  // MODE SELECTION - Quick vs Full
-  return (
-    <div className="bg-white border border-border/40 rounded-sm p-6 md:p-8 shadow-sm">
-      <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mb-1">Scenario Engine</h2>
-      <p className="text-xs text-muted-foreground mb-6">
-        Compare regulatory outcomes across multiple configurations
-      </p>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <button 
-          onClick={() => setStep("quick")}  // ← ARTIK "quick" gidiyor!
-          className="p-6 border-2 border-primary/20 rounded-sm hover:border-primary hover:bg-primary/5 transition text-left group"
-        >
-          <Zap className="h-8 w-8 text-primary mb-3 group-hover:scale-110 transition" />
-          <h3 className="font-display font-bold text-[#0B3B5C] mb-1">Quick Estimate</h3>
-          <p className="text-xs text-muted-foreground">
-            3 questions → auto-filled values → instant comparison
-          </p>
-        </button>
-        
-        <button 
-          onClick={() => setStep("profile")}  // ← "profile" gidiyor
-          className="p-6 border-2 border-primary/20 rounded-sm hover:border-primary hover:bg-primary/5 transition text-left group"
-        >
-          <Gauge className="h-8 w-8 text-primary mb-3 group-hover:scale-110 transition" />
-          <h3 className="font-display font-bold text-[#0B3B5C] mb-1">Full Profile</h3>
-          <p className="text-xs text-muted-foreground">
-            All technical parameters → precise vessel-specific results
-          </p>
-        </button>
-      </div>
-
-      {profile.vesselType && profile.dwt > 0 && (
-        <div className="mt-6 p-4 bg-neutral-50 rounded-sm border border-border/20">
-          <p className="text-xs text-muted-foreground mb-2">
-            Saved vessel data detected from previous calculations.
-          </p>
-          <button 
-            onClick={() => setStep("scenarios")} 
-            className="text-sm text-primary font-medium hover:underline flex items-center gap-1"
-          >
-            Skip to Scenario Selection <ArrowRight size={14} />
-          </button>
-        </div>
-      )}
-    </div>
-  );
+  return null;
 }

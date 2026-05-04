@@ -78,16 +78,14 @@ export default function Tools() {
 
   const ActiveComponent = TABS.find((t) => t.id === activeTab)?.component;
 
-  // Tools.tsx, useEffect'lerin yanına:
   useEffect(() => {
-  const handleSwitchTab = (e: CustomEvent<{ tab: TabId }>) => {
-    setActiveTab(e.detail.tab);
-  };
-  window.addEventListener("switch_tab", handleSwitchTab as EventListener);
-  return () => window.removeEventListener("switch_tab", handleSwitchTab as EventListener);
-}, []);
+    const handleSwitchTab = (e: CustomEvent<{ tab: TabId }>) => {
+      setActiveTab(e.detail.tab);
+    };
+    window.addEventListener("switch_tab", handleSwitchTab as EventListener);
+    return () => window.removeEventListener("switch_tab", handleSwitchTab as EventListener);
+  }, []);
 
-  // URL param ile doğrudan tab açma (?tool=cii gibi)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const tool = params.get("tool");
@@ -96,7 +94,6 @@ export default function Tools() {
     }
   }, []);
 
-  // CustomEvent tiplemesi — `any` kaldırıldı
   useEffect(() => {
     const handleStatusUpdate = (e: CustomEvent<{ status: ComplianceStatus }>) => {
       setComplianceStatus(e.detail.status);
@@ -111,7 +108,6 @@ export default function Tools() {
 
   return (
     <>
-      {/* Description: 146 karakter — limit içinde */}
       <SEO
         title="Marine Engineering Calculators"
         description="Free EEXI, CII, BWTS, EU ETS and FuelEU calculators for preliminary vessel compliance. Identify regulatory gaps before dry-dock or PSC inspection."
@@ -221,11 +217,12 @@ export default function Tools() {
                   ))}
                 </div>
 
-                {/* Active calculator */}
+                {/* Active calculator – SCROLL CONTAINER */}
                 <div
                   id={`tabpanel-${activeTab}`}
                   role="tabpanel"
                   aria-label={TABS.find((t) => t.id === activeTab)?.label}
+                  className="max-h-[calc(100vh-14rem)] overflow-y-auto"
                 >
                   {ActiveComponent && <ActiveComponent />}
                 </div>

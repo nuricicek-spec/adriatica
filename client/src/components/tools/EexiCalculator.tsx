@@ -10,7 +10,6 @@ import {
   getEediBaseline,
 } from "@/data/calculators";
 import { trackToolUsage, trackPdfGenerated, trackComplianceFail } from "@/lib/analytics";
-import { ArrowRight } from "lucide-react";
 
 export function EexiCalculator() {
   const { setProfile } = useVesselProfile();
@@ -139,28 +138,6 @@ export function EexiCalculator() {
     } finally {
       setIsGenerating(false);
     }
-  };
-
-  // ← YENİ: Veriyi profile kaydet ve senaryo sekmesine geç
-  const handleRunScenario = () => {
-    setProfile({
-      vesselType,
-      dwt: parseFloat(dwt) || 0,
-      targetYear: parseInt(targetYear) || 2026,
-      meMcr: parseFloat(meMcr) || 0,
-      meFuel,
-      meSfc: parseFloat(meSfc) || DEFAULT_SFC_ME,
-      vref: parseFloat(vref) || 0,
-      hasPto,
-      ptoPower: parseFloat(ptoPower) || 0,
-      ptoEff: parseFloat(ptoEff) || 1.0,
-      auxPower: parseFloat(auxPower) || 0,
-      auxSfc: parseFloat(auxSfc) || DEFAULT_SFC_AUX,
-    });
-
-    window.dispatchEvent(new CustomEvent("switch_tab", {
-      detail: { tab: "scenario" }
-    }));
   };
 
   return (
@@ -404,24 +381,13 @@ export function EexiCalculator() {
       )}
 
       {result !== null && (
-        <div className="mt-4 space-y-3">
-          <button
-            onClick={handleDownloadPdf}
-            disabled={isGenerating}
-            className="w-full py-2.5 border border-primary text-primary font-medium rounded-sm hover:bg-primary/5 transition flex items-center justify-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isGenerating ? "Generating PDF..." : "Download Preliminary Report (PDF)"}
-          </button>
-
-          {/* ← YENİ: Run Full Scenario butonu */}
-          <button
-            onClick={handleRunScenario}
-            className="w-full py-2.5 bg-[#D4AF37] text-black font-medium rounded-sm hover:bg-[#B8952A] transition flex items-center justify-center gap-2 text-sm"
-          >
-            <ArrowRight size={16} />
-            Run Full Scenario with This Vessel
-          </button>
-        </div>
+        <button
+          onClick={handleDownloadPdf}
+          disabled={isGenerating}
+          className="w-full mt-4 py-2.5 border border-primary text-primary font-medium rounded-sm hover:bg-primary/5 transition flex items-center justify-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isGenerating ? "Generating PDF..." : "Download Preliminary Report (PDF)"}
+        </button>
       )}
     </div>
   );
