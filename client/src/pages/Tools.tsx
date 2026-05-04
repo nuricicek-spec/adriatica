@@ -78,7 +78,7 @@ export default function Tools() {
 
   const ActiveComponent = TABS.find((t) => t.id === activeTab)?.component;
 
-  // Dış event – EexiCalculator'dan artık gelmeyecek ama yine de temiz kalsın
+  // Dış event (EEXI artık bu event'i tetiklemez, ancak tutuyoruz)
   useEffect(() => {
     const handleSwitchTab = (e: CustomEvent<{ tab: TabId }>) => {
       setActiveTab(e.detail.tab);
@@ -87,7 +87,7 @@ export default function Tools() {
     return () => window.removeEventListener("switch_tab", handleSwitchTab as EventListener);
   }, []);
 
-  // URL parametresi ile doğrudan sekme (?tool=cii)
+  // URL parametresi ile sekme
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const tool = params.get("tool");
@@ -105,7 +105,7 @@ export default function Tools() {
     return () => window.removeEventListener("tool_compliance_update", handleStatusUpdate as EventListener);
   }, []);
 
-  // Sekme değişince status'i sıfırla
+  // Sekme değişince durumu sıfırla
   useEffect(() => {
     setComplianceStatus("idle");
   }, [activeTab]);
@@ -141,7 +141,7 @@ export default function Tools() {
               </p>
             </div>
 
-            {/* Info cards – aynen korundu */}
+            {/* Info cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-5xl mx-auto">
               <div className="bg-neutral-50 border-l-2 border-primary p-5 rounded-sm">
                 <div className="flex items-center gap-3 mb-2">
@@ -172,13 +172,13 @@ export default function Tools() {
               </div>
             </div>
 
-            {/* Main grid – overflow kontrolü */}
+            {/* Main grid – taşma kontrolü */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 overflow-x-hidden">
 
-              {/* Sol: Hesap makinesi */}
+              {/* Left: Calculator */}
               <div className="lg:col-span-7 min-w-0">
 
-                {/* Mobil dropdown */}
+                {/* Mobile dropdown */}
                 <div className="block md:hidden mb-6">
                   <label htmlFor="tool-select" className="block text-xs font-medium text-muted-foreground mb-1">
                     Select Tool
@@ -197,7 +197,7 @@ export default function Tools() {
                   </select>
                 </div>
 
-                {/* Desktop tab satırı – aynen korundu */}
+                {/* Desktop tab row */}
                 <div
                   className="hidden md:flex gap-2 mb-6 border-b border-border/20 pb-4 flex-wrap"
                   role="tablist"
@@ -221,7 +221,7 @@ export default function Tools() {
                   ))}
                 </div>
 
-                {/* Aktif bileşenin render edildiği alan – scroll kutusu olmadan */}
+                {/* Active calculator – DOĞAL AKIŞ, scroll kutusu yok */}
                 <div
                   id={`tabpanel-${activeTab}`}
                   role="tabpanel"
@@ -231,7 +231,7 @@ export default function Tools() {
                 </div>
               </div>
 
-              {/* Sağ: Sidebar (sticky) – aynen korundu */}
+              {/* Right: Sticky sidebar */}
               <div className="lg:col-span-5">
                 <div className="bg-neutral-50 border border-border/20 rounded-sm p-6 md:p-8 shadow-sm sticky top-24">
 
