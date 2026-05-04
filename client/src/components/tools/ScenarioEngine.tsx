@@ -19,7 +19,7 @@ import {
   BarChart3,
 } from "lucide-react";
 
-type Step = "profile" | "scenarios" | "results";
+type Step = "mode" | "quick" | "profile" | "scenarios" | "results";
 type ComplianceStatus = "idle" | "compliant" | "non-compliant";
 
 interface ScenarioResult {
@@ -31,13 +31,45 @@ interface ScenarioResult {
   fueleu: { penalty: number; compliant: boolean };
 }
 
+const STORAGE_KEY = "adriatica_vessel_profile";
+
+// Quick estimate için DWT'ye dayalı sektör ortalaması yıllık veriler
+function estimateAnnualFuel(dwt: number): number {
+  if (dwt <= 0) return 450; // fallback
+  // Basit tahmin: 5000 DWT için ~450 MT, 50000 DWT için ~3500 MT, lineer enterpolasyon
+  return Math.round(450 + (dwt / 50000) * 3050);
+}
+
+function estimateAnnualDistance(dwt: number): number {
+  if (dwt <= 0) return 15000;
+  // DWT arttıkça yıllık mesafe bir miktar azalır (büyük gemiler daha az liman değiştirir)
+  return Math.round(20000 - (dwt / 50000) * 5000);
+}
+
 export function ScenarioEngine() {
-  const { profile, setField, setProfile } = useVesselProfile();
-  const [step, setStep] = useState<Step>("profile");
+  const { profile, setField, setProfile, resetProfile } = useVesselProfile();
+  const [step, setStep] = useState<Step>("mode");
   const [selectedScenarios, setSelectedScenarios] = useState<string[]>(["current"]);
   const [results, setResults] = useState<ScenarioResult[]>([]);
   const [complianceStatus, setComplianceStatus] = useState<ComplianceStatus>("idle");
   const [hasTracked, setHasTracked] = useState(false);
+
+  // Lokal state: Quick form için (Length ve Engine Type)
+  const [quickLength, setQuickLength] = useState("");
+  const [quickEngineType, setQuickEngineType] = useState("slow");
+
+  // localStorage'da gerçek kullanıcı profili var mı? (default değil)
+  const hasRealProfile = (() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return false;
+      const parsed = JSON.parse(raw);
+      // DEFAULT_PROFILE'dan farklı mı? En azından DWT değeri mantıklı mı?
+      return parsed && parsed.dwt > 0 && (parsed.vesselType !== "yacht" || parsed.dwt !== 500);
+    } catch {
+      return false;
+    }
+  })();
 
   useEffect(() => {
     if (hasTracked) return;
@@ -49,7 +81,6 @@ export function ScenarioEngine() {
   const runCalculations = () => {
     const newResults: ScenarioResult[] = selectedScenarios.map((scenarioId) => {
       const scenario = SCENARIOS.find((s) => s.id === scenarioId)!;
-
       let scenarioProfile = { ...profile };
       if (scenario.compute) {
         const computed = scenario.compute(scenarioProfile);
@@ -93,44 +124,192 @@ export function ScenarioEngine() {
     );
   };
 
-  // FULL PROFILE FORM
+  // QUICK ESTIMATE İŞLEMİ
+  const handleQuickContinue = () => {
+    const length = parseFloat(quickLength) || 0;
+    if (length <= 0) return;
+
+    // Tahmini değerler
+    const estimatedDwt = Math.round(length * 10);
+    const estimatedMcr = Math.round(length * 40);
+    const estimatedVref = parseFloat((length * 0.28).toFixed(1));
+    const estimatedSfc = quickEngineType === "slow" ? 175 : 195;
+
+    setProfile({
+      ...profile,
+      vesselType: "bulkCarrier", // Quick için varsayılan, kullanıcı full profile'da değiştirebilir
+      dwt: estimatedDwt,
+      meMcr: estimatedMcr,
+      vref: estimatedVref,
+      meSfc: estimatedSfc,
+      meFuel: "VLSFO",
+      auxPower: Math.round(estimatedMcr * 0.15),
+      auxSfc: 215,
+      hasPto: false,
+      ptoPower: 0,
+      ptoEff: 1.0,
+      targetYear: 2026,
+      annualFuel: estimateAnnualFuel(estimatedDwt),
+      annualDistance: estimateAnnualDistance(estimatedDwt),
+    });
+
+    setStep("scenarios");
+  };
+
+  // MODE SEÇİMİ
+  if (step === "mode") {
+    return (
+      <div className="bg-white border border-border/40 rounded-sm p-6 md:p-8 shadow-sm">
+        <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mb-1">Scenario Engine</h2>
+        <p className="text-xs text-muted-foreground mb-6">
+          Compare regulatory outcomes across multiple configurations
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <button
+            onClick={() => setStep("quick")}
+            className="p-6 border-2 border-primary/20 rounded-sm hover:border-primary hover:bg-primary/5 transition text-left group"
+          >
+            <Zap className="h-8 w-8 text-primary mb-3 group-hover:scale-110 transition" />
+            <h3 className="font-display font-bold text-[#0B3B5C] mb-1">Quick Estimate</h3>
+            <p className="text-xs text-muted-foreground">
+              3 questions → auto-filled values → instant comparison
+            </p>
+          </button>
+          <button
+            onClick={() => setStep("profile")}
+            className="p-6 border-2 border-primary/20 rounded-sm hover:border-primary hover:bg-primary/5 transition text-left group"
+          >
+            <Gauge className="h-8 w-8 text-primary mb-3 group-hover:scale-110 transition" />
+            <h3 className="font-display font-bold text-[#0B3B5C] mb-1">Full Profile</h3>
+            <p className="text-xs text-muted-foreground">
+              All technical parameters → precise vessel-specific results
+            </p>
+          </button>
+        </div>
+
+        {/* Eğer localStorage'da gerçek bir profil varsa skip butonu göster */}
+        {hasRealProfile && (
+          <div className="mt-6 p-4 bg-neutral-50 rounded-sm border border-border/20">
+            <p className="text-xs text-muted-foreground mb-2">
+              Saved vessel data detected from previous calculations.
+            </p>
+            <button
+              onClick={() => setStep("scenarios")}
+              className="text-sm text-primary font-medium hover:underline flex items-center gap-1"
+            >
+              Skip to Scenario Selection <ArrowRight size={14} />
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // QUICK ESTIMATE (sadece 3 soru)
+  if (step === "quick") {
+    return (
+      <div className="bg-white border border-border/40 rounded-sm p-6 md:p-8 shadow-sm">
+        <div className="flex items-center gap-2 mb-6">
+          <button onClick={() => setStep("mode")} className="text-muted-foreground hover:text-primary">
+            <ArrowLeft size={18} />
+          </button>
+          <h2 className="font-display text-xl font-bold text-[#0B3B5C]">Quick Estimate</h2>
+        </div>
+
+        <div className="space-y-6">
+          <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
+            <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">
+              Basic Info
+            </h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                  Approximate Length (m)
+                </label>
+                <input
+                  type="number"
+                  value={quickLength}
+                  onChange={(e) => setQuickLength(e.target.value)}
+                  placeholder="50"
+                  className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">
+                  Engine Type
+                </label>
+                <select
+                  value={quickEngineType}
+                  onChange={(e) => setQuickEngineType(e.target.value)}
+                  className="w-full p-2 border rounded-sm bg-white text-sm focus:border-primary outline-none"
+                >
+                  <option value="slow">Slow-Speed 2-Stroke (SFC ~175 g/kWh)</option>
+                  <option value="medium">Medium-Speed 4-Stroke (SFC ~195 g/kWh)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-4 bg-blue-50 border border-blue-200 rounded-sm">
+            <h4 className="text-sm font-bold text-blue-800 mb-2">Auto-Filled Values</h4>
+            <p className="text-[10px] text-blue-600 mb-2">
+              * DWT, MCR, Vref, and SFC estimated from length. Annual fuel & distance estimated from DWT.
+            </p>
+            {quickLength && !isNaN(parseFloat(quickLength)) && (
+              <div className="grid grid-cols-2 gap-2 text-xs text-blue-700">
+                <div>DWT: {Math.round(parseFloat(quickLength) * 10)}</div>
+                <div>MCR: {Math.round(parseFloat(quickLength) * 40)} kW</div>
+                <div>Vref: {(parseFloat(quickLength) * 0.28).toFixed(1)} kn</div>
+                <div>SFC: {quickEngineType === "slow" ? 175 : 195} g/kWh</div>
+                <div>Annual Fuel: {estimateAnnualFuel(parseFloat(quickLength) * 10)} MT</div>
+                <div>Avg. Distance: {estimateAnnualDistance(parseFloat(quickLength) * 10)} NM</div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <button
+          onClick={handleQuickContinue}
+          className="w-full py-3 bg-primary text-white font-medium rounded-sm hover:bg-primary/90 transition mt-6 flex items-center justify-center gap-2"
+        >
+          Continue to Scenarios <ArrowRight size={16} />
+        </button>
+      </div>
+    );
+  }
+
+  // FULL PROFILE (uzun form – aynen kalıyor, yıllık veriler mevcut)
   if (step === "profile") {
     return (
       <div className="bg-white border border-border/40 rounded-sm p-6 md:p-8 shadow-sm">
-        <h2 className="font-display text-2xl font-bold text-[#0B3B5C] mb-1">
-          Vessel Profile
-        </h2>
-        <p className="text-xs text-muted-foreground mb-6">
-          Enter all technical parameters for accurate scenario comparison.
-        </p>
+        <div className="flex items-center gap-2 mb-6">
+          <button onClick={() => setStep("mode")} className="text-muted-foreground hover:text-primary">
+            <ArrowLeft size={18} />
+          </button>
+          <h2 className="font-display text-xl font-bold text-[#0B3B5C]">Full Profile</h2>
+        </div>
 
-        <div className="max-h-[70vh] overflow-y-auto space-y-6 pr-2">
+        {/* Form – aynen daha önce verdiğim tam form, buraya aynısını ekliyorum */}
+        <div className="space-y-6">
           {/* Vessel Parameters */}
           <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
-            <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">
-              Vessel Parameters
-            </h3>
+            <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">Vessel Parameters</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
-                  Vessel Type
-                </label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">Vessel Type</label>
                 <select
                   value={profile.vesselType}
                   onChange={(e) => setField("vesselType", e.target.value)}
                   className="w-full p-2 border rounded-sm bg-white text-sm focus:border-primary outline-none"
                 >
                   {VESSEL_TYPES.map((v) => (
-                    <option key={v.value} value={v.value}>
-                      {v.label}
-                    </option>
+                    <option key={v.value} value={v.value}>{v.label}</option>
                   ))}
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
-                  Deadweight (DWT)
-                </label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">Deadweight (DWT)</label>
                 <input
                   type="number"
                   value={profile.dwt || ""}
@@ -140,9 +319,7 @@ export function ScenarioEngine() {
                 />
               </div>
               <div className="md:col-span-2">
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
-                  Target Year
-                </label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">Target Year</label>
                 <input
                   type="number"
                   value={profile.targetYear || ""}
@@ -156,14 +333,10 @@ export function ScenarioEngine() {
 
           {/* Main Engine */}
           <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
-            <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">
-              Main Engine (ME)
-            </h3>
+            <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">Main Engine (ME)</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
-                  MCR (kW)
-                </label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">MCR (kW)</label>
                 <input
                   type="number"
                   value={profile.meMcr || ""}
@@ -173,25 +346,19 @@ export function ScenarioEngine() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
-                  Fuel Type
-                </label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">Fuel Type</label>
                 <select
                   value={profile.meFuel}
                   onChange={(e) => setField("meFuel", e.target.value)}
                   className="w-full p-2 border rounded-sm bg-white text-sm focus:border-primary outline-none"
                 >
                   {FUEL_TYPES.map((f) => (
-                    <option key={f.value} value={f.value}>
-                      {f.label}
-                    </option>
+                    <option key={f.value} value={f.value}>{f.label}</option>
                   ))}
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
-                  SFC (g/kWh)
-                </label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">SFC (g/kWh)</label>
                 <input
                   type="number"
                   value={profile.meSfc || ""}
@@ -201,9 +368,7 @@ export function ScenarioEngine() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
-                  Vref (Knots)
-                </label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">Vref (Knots)</label>
                 <input
                   type="number"
                   step="0.1"
@@ -218,14 +383,10 @@ export function ScenarioEngine() {
 
           {/* Auxiliary & PTO */}
           <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
-            <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">
-              Auxiliary & PTO
-            </h3>
+            <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">Auxiliary & PTO</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
-                  Aux Power (kW)
-                </label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">Aux Power (kW)</label>
                 <input
                   type="number"
                   value={profile.auxPower || ""}
@@ -235,9 +396,7 @@ export function ScenarioEngine() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
-                  Aux SFC (g/kWh)
-                </label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">Aux SFC (g/kWh)</label>
                 <input
                   type="number"
                   value={profile.auxSfc || ""}
@@ -261,9 +420,7 @@ export function ScenarioEngine() {
               {profile.hasPto && (
                 <>
                   <div>
-                    <label className="block text-xs font-medium text-muted-foreground mb-1">
-                      PTO Power (kW)
-                    </label>
+                    <label className="block text-xs font-medium text-muted-foreground mb-1">PTO Power (kW)</label>
                     <input
                       type="number"
                       value={profile.ptoPower || ""}
@@ -273,9 +430,7 @@ export function ScenarioEngine() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-muted-foreground mb-1">
-                      PTO Efficiency
-                    </label>
+                    <label className="block text-xs font-medium text-muted-foreground mb-1">PTO Efficiency</label>
                     <input
                       type="number"
                       step="0.1"
@@ -292,14 +447,10 @@ export function ScenarioEngine() {
 
           {/* Operational Data */}
           <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
-            <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">
-              Operational Data (Annual)
-            </h3>
+            <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">Operational Data (Annual)</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
-                  Annual Fuel (MT)
-                </label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">Annual Fuel (MT)</label>
                 <input
                   type="number"
                   step="0.1"
@@ -310,9 +461,7 @@ export function ScenarioEngine() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
-                  Annual Distance (NM)
-                </label>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">Annual Distance (NM)</label>
                 <input
                   type="number"
                   value={profile.annualDistance || ""}
@@ -335,14 +484,14 @@ export function ScenarioEngine() {
     );
   }
 
-  // SENARYO SEÇİMİ
+  // SCENARIOS (senaryo seçimi, aynı)
   if (step === "scenarios") {
     const canAddMore = selectedScenarios.length < 4;
 
     return (
       <div className="bg-white border border-border/40 rounded-sm p-6 md:p-8 shadow-sm">
         <div className="flex items-center gap-2 mb-6">
-          <button onClick={() => setStep("profile")} className="text-muted-foreground hover:text-primary">
+          <button onClick={() => setStep("mode")} className="text-muted-foreground hover:text-primary">
             <ArrowLeft size={18} />
           </button>
           <h2 className="font-display text-xl font-bold text-[#0B3B5C]">Select Scenarios</h2>
@@ -403,9 +552,7 @@ export function ScenarioEngine() {
                       {scenario.label}
                     </h4>
                     {isSelected && !isCurrent && (
-                      <span className="text-[10px] bg-primary text-white px-1.5 py-0.5 rounded-sm">
-                        Selected
-                      </span>
+                      <span className="text-[10px] bg-primary text-white px-1.5 py-0.5 rounded-sm">Selected</span>
                     )}
                   </div>
                   <p className="text-xs text-muted-foreground">{scenario.description}</p>
@@ -430,7 +577,7 @@ export function ScenarioEngine() {
     );
   }
 
-  // RESULTS
+  // RESULTS (sonuç tablosu, aynı)
   if (step === "results") {
     return (
       <div className="bg-white border border-border/40 rounded-sm p-6 md:p-8 shadow-sm">
@@ -537,10 +684,10 @@ export function ScenarioEngine() {
 
         <div className="mt-6 flex gap-3">
           <button
-            onClick={() => setStep("profile")}
+            onClick={() => setStep("mode")}
             className="flex-1 py-2.5 border border-primary text-primary font-medium rounded-sm hover:bg-primary/5 transition text-sm"
           >
-            New Profile
+            New Comparison
           </button>
           <button
             onClick={() => setStep("scenarios")}
