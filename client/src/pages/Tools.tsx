@@ -124,7 +124,7 @@ export default function Tools() {
         </script>
       </Helmet>
 
-      <div className="min-h-screen bg-background font-body selection:bg-primary/20">
+      <div className="min-h-[100dvh] bg-background font-body selection:bg-primary/20">
         <Navigation />
 
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
@@ -172,7 +172,7 @@ export default function Tools() {
               </div>
             </div>
 
-            {/* Main grid – taşma kontrolü */}
+            {/* Main grid – overflow-x-hidden taşmayı gizler */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 overflow-x-hidden">
 
               {/* Left: Calculator */}
@@ -221,7 +221,7 @@ export default function Tools() {
                   ))}
                 </div>
 
-                {/* Active calculator – DOĞAL AKIŞ, scroll kutusu yok */}
+                {/* Active calculator */}
                 <div
                   id={`tabpanel-${activeTab}`}
                   role="tabpanel"

@@ -100,20 +100,25 @@ export function ScenarioEngine() {
   // EUA Price local state
   const [euaPrice, setEuaPrice] = useState("65");
 
+  // Analytics
   useEffect(() => {
     if (hasTracked) return;
     setHasTracked(true);
     trackToolUsage("scenario");
   }, [hasTracked]);
 
+  // Scroll’u her step değişiminde başa çek
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [step]);
+
   // HESAPLAMA MOTORU
   const runCalculations = () => {
     const price = parseFloat(euaPrice) || 65;
-    const currentProfile = { ...profile, euaPrice: price };
 
     const newResults: ScenarioResult[] = selectedScenarios.map((scenarioId) => {
       const scenario = SCENARIOS.find((s) => s.id === scenarioId)!;
-      let scenarioProfile = { ...currentProfile };
+      let scenarioProfile = { ...profile };
       if (scenario.compute) {
         const computed = scenario.compute(scenarioProfile);
         scenarioProfile = { ...scenarioProfile, ...computed };
@@ -167,19 +172,18 @@ export function ScenarioEngine() {
     const estimatedSfc = quickEngineType === "slow" ? 175 : 195;
 
     setProfile({
-      ...profile,
       vesselType: quickVesselType,
       dwt: estimatedDwt,
+      targetYear: 2026,
       meMcr: estimatedMcr,
-      vref: estimatedVref,
-      meSfc: estimatedSfc,
       meFuel: "VLSFO",
-      auxPower: Math.round(estimatedMcr * 0.15),
-      auxSfc: 215,
+      meSfc: estimatedSfc,
+      vref: estimatedVref,
       hasPto: false,
       ptoPower: 0,
       ptoEff: 1.0,
-      targetYear: 2026,
+      auxPower: Math.round(estimatedMcr * 0.15),
+      auxSfc: 215,
       annualFuel: estimateAnnualFuel(estimatedDwt),
       annualDistance: estimateAnnualDistance(estimatedDwt),
     });
@@ -527,7 +531,7 @@ export function ScenarioEngine() {
     );
   }
 
-  // SCENARIOS (seçim, aynı)
+  // SCENARIOS (seçim)
   if (step === "scenarios") {
     const canAddMore = selectedScenarios.length < 4;
 
@@ -620,7 +624,7 @@ export function ScenarioEngine() {
     );
   }
 
-  // RESULTS (sonuç bölümü her zaman DOM'da)
+  // RESULTS (sonuç bölümü her zaman görünür, aksi halde invisible)
   if (step === "results") {
     return (
       <div className="bg-white border border-border/40 rounded-sm p-6 md:p-8 shadow-sm">
@@ -631,7 +635,6 @@ export function ScenarioEngine() {
           <h2 className="font-display text-xl font-bold text-[#0B3B5C]">Scenario Comparison</h2>
         </div>
 
-        {/* Sonuçlar her zaman burada, sadece görünürlük değişebilir */}
         <div className={results.length === 0 ? "invisible" : ""}>
           <div className="overflow-x-auto">
             <table className="w-full text-sm border-collapse">
@@ -726,7 +729,10 @@ export function ScenarioEngine() {
 
         <div className="mt-6 flex gap-3">
           <button
-            onClick={() => setStep("mode")}
+            onClick={() => {
+              setSelectedScenarios(["current"]);
+              setStep("mode");
+            }}
             className="flex-1 py-2.5 border border-primary text-primary font-medium rounded-sm hover:bg-primary/5 transition text-sm"
           >
             New Comparison
