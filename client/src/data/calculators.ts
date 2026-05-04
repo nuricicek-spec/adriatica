@@ -1,5 +1,5 @@
 // C:\Adriatica\client\src\data\calculators.ts
-
+import { VesselProfile } from "./vesselProfile";
 // --- GEMİ TİPLERİ VE KATSAYILARI ---
 export const VESSEL_TYPES = [
   { value: "bulkCarrier",  label: "Bulk Carrier",             fi: 1.0, fc: 1.0 },
@@ -162,5 +162,50 @@ export function calculateShaPoLi(
     overridable: isOverridable,
     maxOverridePower: maxOverride,
     requiredLogAccuracy: isOverridable ? "±2%" : "±1%",
+  };
+}
+
+// calculators.ts'in SONUNA ekleyin:
+
+// ============================================
+// SCENARIO ENGINE HESAPLAMALARI
+// ============================================
+
+export function calculateEEXI(profile: VesselProfile) {
+  // Mevcut EEXI hesaplama mantığınızı buraya taşıyın
+  // Veya mevcut EexiCalculator'daki handleCalculate fonksiyonunu dışa aktarın
+  const { vesselType, dwt, meMcr, meFuel, meSfc, vref, hasPto, ptoPower, ptoEff, auxPower, auxSfc } = profile;
+  
+  // ... mevcut EEXI formülünüz ...
+  
+  return {
+    attained: 5.24,  // Örnek
+    required: 5.10,  // Örnek
+    compliant: true, // Örnek
+  };
+}
+
+export function calculateCII(profile: VesselProfile) {
+  // Mevcut CII hesaplama mantığınız
+  return {
+    rating: "B",
+    attained: 4.5,
+    required: 5.0,
+  };
+}
+
+export function calculateETS(profile: VesselProfile) {
+  // Mevcut ETS hesaplama mantığınız
+  return {
+    cost: 325000,
+    co2: 5000,
+  };
+}
+
+export function calculateFuelEU(profile: VesselProfile) {
+  // Mevcut FuelEU hesaplama mantığınız
+  return {
+    penalty: 0,
+    compliant: true,
   };
 }

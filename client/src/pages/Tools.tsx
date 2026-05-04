@@ -78,6 +78,15 @@ export default function Tools() {
 
   const ActiveComponent = TABS.find((t) => t.id === activeTab)?.component;
 
+  // Tools.tsx, useEffect'lerin yanına:
+  useEffect(() => {
+  const handleSwitchTab = (e: CustomEvent<{ tab: TabId }>) => {
+    setActiveTab(e.detail.tab);
+  };
+  window.addEventListener("switch_tab", handleSwitchTab as EventListener);
+  return () => window.removeEventListener("switch_tab", handleSwitchTab as EventListener);
+}, []);
+
   // URL param ile doğrudan tab açma (?tool=cii gibi)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);

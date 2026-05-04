@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { generateReportPdf, PdfError } from "@/lib/generateReportPdf";
+import { useVesselProfile } from "@/hooks/useVesselProfile";
 import {
   VESSEL_TYPES,
   FUEL_TYPES,
@@ -9,8 +10,11 @@ import {
   getEediBaseline,
 } from "@/data/calculators";
 import { trackToolUsage, trackPdfGenerated, trackComplianceFail } from "@/lib/analytics";
+import { ArrowRight } from "lucide-react";
 
 export function EexiCalculator() {
+  const { setProfile } = useVesselProfile();
+
   const [vesselType, setVesselType] = useState("bulkCarrier");
   const [dwt, setDwt] = useState("");
   const [targetYear, setTargetYear] = useState("2026");
@@ -57,34 +61,6 @@ export function EexiCalculator() {
     const fuelData = FUEL_TYPES.find(f => f.value === meFuel);
     if (!typeData || !fuelData) return;
 
-    // ─────────────────────────────────────────────────────────────────
-    // EEXI FORMÜLÜ — MEPC.338(76)
-    //
-    // FIX #2: /1e6 + *1e6 çiftlemesi temizlendi.
-    //
-    // SFC birimi:  g/kWh
-    // MCR birimi:  kW
-    // CF birimi:   tCO2/t_fuel
-    //
-    // meEmissions  = SFC[g/kWh] × MCR[kW] × CF[tCO2/t]
-    //              = g/kWh × kW × tCO2/t
-    //
-    // Birimleri sadeleştirmek için CF'yi gCO2/g_fuel'e çevirmek gerekir:
-    //   CF[tCO2/t] = CF (sayısal olarak aynı, birim oranı 1:1)
-    //   çünkü 1 tCO2 / 1 t_fuel = 1 gCO2 / 1 g_fuel
-    //
-    // meEmissions  = SFC × MCR × CF   → birim: gCO2/h
-    // ptoReduction = feff × P_PTO × SFC × CF  → birim: gCO2/h
-    // auxEmissions = SFC_aux × PAE × CF  → birim: gCO2/h
-    //
-    // Attained EEXI = totalEmissions[gCO2/h]
-    //                 ─────────────────────────────────────────
-    //                 fi × fc × DWT[t] × Vref[knots]
-    //
-    // Bölümün payı gCO2/h, paydası t·knots → EEXI birimi: gCO2/(t·NM)
-    // Bu MEPC.308(73) ve MEPC.338(76) ile tutarlıdır.
-    // ─────────────────────────────────────────────────────────────────
-
     const meEmissions   = sfcMe  * fuelData.cf * mcrNum;
     const ptoReduction  = hasPto ? (ptoEffNum * ptoNum * sfcMe * fuelData.cf) : 0;
     const auxEmissions  = sfcAux * fuelData.cf * auxNum;
@@ -98,26 +74,13 @@ export function EexiCalculator() {
     const reductionFactor = EEXI_REDUCTION_FACTORS[yearNum] || 0.08;
     const requiredEexi    = baselineEedi * (1 - reductionFactor);
 
-    // ─────────────────────────────────────────────────────────────────
-    // EPL HESABI — MEPC.338(76)
-    //
-    // FIX #1: Üs 1/3.5 → 1/3 olarak düzeltildi.
-    //
-    // EEXI ∝ MCR^(1/3) ilişkisine göre:
-    //   EPL = MCR × (requiredEEXI / attainedEEXI)^3
-    //       = MCR × (R/A)^3
-    //
-    // Math.pow(x, 1/3) = küp kök = IMO MEPC.338(76) resmi formülü.
-    // 1/3.5 kullanmak EPL'yi gerçekten daha yüksek (daha az kesim)
-    // gösteriyordu — Class onayında reddedilir.
-    // ─────────────────────────────────────────────────────────────────
     let eplLimit: string | null = null;
     if (attainedEexi > requiredEexi) {
       eplLimit = (mcrNum * Math.pow(requiredEexi / attainedEexi, 1 / 3)).toFixed(0);
     }
 
     const finalResult = {
-      attained:     attainedEexi.toFixed(4), // 4 ondalık — EEXI küçük sayılar
+      attained:     attainedEexi.toFixed(4),
       required:     requiredEexi.toFixed(4),
       isCompliant:  attainedEexi <= requiredEexi,
       eplLimit,
@@ -176,6 +139,28 @@ export function EexiCalculator() {
     } finally {
       setIsGenerating(false);
     }
+  };
+
+  // ← YENİ: Veriyi profile kaydet ve senaryo sekmesine geç
+  const handleRunScenario = () => {
+    setProfile({
+      vesselType,
+      dwt: parseFloat(dwt) || 0,
+      targetYear: parseInt(targetYear) || 2026,
+      meMcr: parseFloat(meMcr) || 0,
+      meFuel,
+      meSfc: parseFloat(meSfc) || DEFAULT_SFC_ME,
+      vref: parseFloat(vref) || 0,
+      hasPto,
+      ptoPower: parseFloat(ptoPower) || 0,
+      ptoEff: parseFloat(ptoEff) || 1.0,
+      auxPower: parseFloat(auxPower) || 0,
+      auxSfc: parseFloat(auxSfc) || DEFAULT_SFC_AUX,
+    });
+
+    window.dispatchEvent(new CustomEvent("switch_tab", {
+      detail: { tab: "scenario" }
+    }));
   };
 
   return (
@@ -419,13 +404,24 @@ export function EexiCalculator() {
       )}
 
       {result !== null && (
-        <button
-          onClick={handleDownloadPdf}
-          disabled={isGenerating}
-          className="w-full mt-4 py-2.5 border border-primary text-primary font-medium rounded-sm hover:bg-primary/5 transition flex items-center justify-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isGenerating ? "Generating PDF..." : "Download Preliminary Report (PDF)"}
-        </button>
+        <div className="mt-4 space-y-3">
+          <button
+            onClick={handleDownloadPdf}
+            disabled={isGenerating}
+            className="w-full py-2.5 border border-primary text-primary font-medium rounded-sm hover:bg-primary/5 transition flex items-center justify-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isGenerating ? "Generating PDF..." : "Download Preliminary Report (PDF)"}
+          </button>
+
+          {/* ← YENİ: Run Full Scenario butonu */}
+          <button
+            onClick={handleRunScenario}
+            className="w-full py-2.5 bg-[#D4AF37] text-black font-medium rounded-sm hover:bg-[#B8952A] transition flex items-center justify-center gap-2 text-sm"
+          >
+            <ArrowRight size={16} />
+            Run Full Scenario with This Vessel
+          </button>
+        </div>
       )}
     </div>
   );
