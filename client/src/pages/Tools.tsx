@@ -13,13 +13,13 @@ import { ScenarioEngine } from "@/components/tools/ScenarioEngine";
 import { Helmet } from "react-helmet-async";
 
 const TABS = [
-  { id: "eexi",   label: "EEXI Calculator",     shortLabel: "EEXI",    component: EexiCalculator   },
-  { id: "cii",    label: "CII Predictor",      shortLabel: "CII",     component: CiiCalculator    },
-  { id: "bwts",   label: "BWTS Sizing",        shortLabel: "BWTS",    component: BwtsCalculator   },
-  { id: "ets",    label: "EU ETS Cost",        shortLabel: "EU ETS",  component: EtsCalculator    },
-  { id: "fueleu", label: "FuelEU Penalty",     shortLabel: "FuelEU",  component: FueleuCalculator },
-  { id: "shapoli",label: "ShaPoLi Assessment", shortLabel: "ShaPoLi", component: ShapoliCalculator},
-  { id: "scenario",label:"Scenario Engine",    shortLabel: "Scenario",component: ScenarioEngine   },
+  { id: "eexi",    label: "EEXI Calculator",      shortLabel: "EEXI",     component: EexiCalculator    },
+  { id: "cii",     label: "CII Predictor",        shortLabel: "CII",      component: CiiCalculator     },
+  { id: "bwts",    label: "BWTS Sizing",          shortLabel: "BWTS",     component: BwtsCalculator    },
+  { id: "ets",     label: "EU ETS Cost",          shortLabel: "EU ETS",   component: EtsCalculator     },
+  { id: "fueleu",  label: "FuelEU Penalty",       shortLabel: "FuelEU",   component: FueleuCalculator  },
+  { id: "shapoli", label: "ShaPoLi Assessment",   shortLabel: "ShaPoLi",  component: ShapoliCalculator },
+  { id: "scenario",label: "Scenario Engine",      shortLabel: "Scenario", component: ScenarioEngine    },
 ] as const;
 
 type TabId = (typeof TABS)[number]["id"];
@@ -78,16 +78,6 @@ export default function Tools() {
 
   const ActiveComponent = TABS.find((t) => t.id === activeTab)?.component;
 
-  // Dış olay – artık EexiCalculator'dan tetiklenmeyecek, yine de bırakıyoruz
-  useEffect(() => {
-    const handleSwitchTab = (e: CustomEvent<{ tab: TabId }>) => {
-      setActiveTab(e.detail.tab);
-    };
-    window.addEventListener("switch_tab", handleSwitchTab as EventListener);
-    return () => window.removeEventListener("switch_tab", handleSwitchTab as EventListener);
-  }, []);
-
-  // URL parametresi (?tool=cii gibi)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const tool = params.get("tool");
@@ -96,7 +86,6 @@ export default function Tools() {
     }
   }, []);
 
-  // Araçlardan gelen uyumluluk durumu güncellemeleri
   useEffect(() => {
     const handleStatusUpdate = (e: CustomEvent<{ status: ComplianceStatus }>) => {
       setComplianceStatus(e.detail.status);
@@ -105,7 +94,6 @@ export default function Tools() {
     return () => window.removeEventListener("tool_compliance_update", handleStatusUpdate as EventListener);
   }, []);
 
-  // Sekme değişince 'idle' durumuna dön
   useEffect(() => {
     setComplianceStatus("idle");
   }, [activeTab]);
@@ -124,14 +112,11 @@ export default function Tools() {
         </script>
       </Helmet>
 
-      {/* min-h-screen yerine dinamik viewport birimi (100dvh) – mobil klavye kaynaklı taşmayı önler */}
       <div className="min-h-[100dvh] bg-background font-body selection:bg-primary/20">
         <Navigation />
 
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto fade-in">
-
-            {/* Header */}
             <div className="text-center mb-8">
               <h1 className="font-display text-4xl md:text-5xl font-bold text-[#0B3B5C] mb-4">
                 Marine Engineering Calculators
@@ -142,7 +127,6 @@ export default function Tools() {
               </p>
             </div>
 
-            {/* Info cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-5xl mx-auto">
               <div className="bg-neutral-50 border-l-2 border-primary p-5 rounded-sm">
                 <div className="flex items-center gap-3 mb-2">
@@ -173,13 +157,8 @@ export default function Tools() {
               </div>
             </div>
 
-            {/* Ana grid – hiçbir yapay yükseklik kısıtı yok */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
-
-              {/* Sol: Hesap makinesi */}
               <div className="lg:col-span-7">
-
-                {/* Mobil dropdown */}
                 <div className="block md:hidden mb-6">
                   <label htmlFor="tool-select" className="block text-xs font-medium text-muted-foreground mb-1">
                     Select Tool
@@ -198,7 +177,6 @@ export default function Tools() {
                   </select>
                 </div>
 
-                {/* Masaüstü sekme satırı */}
                 <div
                   className="hidden md:flex gap-2 mb-6 border-b border-border/20 pb-4 flex-wrap"
                   role="tablist"
@@ -222,7 +200,6 @@ export default function Tools() {
                   ))}
                 </div>
 
-                {/* Aktif hesap makinesi – tamamen doğal akış */}
                 <div
                   id={`tabpanel-${activeTab}`}
                   role="tabpanel"
@@ -232,10 +209,8 @@ export default function Tools() {
                 </div>
               </div>
 
-              {/* Sağ: Sidebar */}
               <div className="lg:col-span-5">
                 <div className="bg-neutral-50 border border-border/20 rounded-sm p-6 md:p-8 shadow-sm sticky top-24">
-
                   {complianceStatus === "non-compliant" && (
                     <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-sm animate-in fade-in duration-300">
                       <div className="flex items-start gap-3">
@@ -250,8 +225,7 @@ export default function Tools() {
                             href="/request-consultation"
                             className="w-full inline-flex items-center justify-center gap-2 bg-red-600 text-white font-medium px-4 py-2.5 rounded-sm shadow-lg hover:bg-red-700 transition-all uppercase tracking-wide text-xs text-center"
                           >
-                            Get Technical Solution{" "}
-                            <ArrowRight className="h-3 w-3" aria-hidden="true" />
+                            Get Technical Solution <ArrowRight className="h-3 w-3" aria-hidden="true" />
                           </a>
                         </div>
                       </div>
@@ -260,8 +234,7 @@ export default function Tools() {
 
                   {complianceStatus !== "non-compliant" && (
                     <p className="text-sm text-muted-foreground mb-4 pb-2 border-b border-border/20">
-                      These tools provide preliminary estimations — not a substitute for official
-                      class approval.
+                      These tools provide preliminary estimations — not a substitute for official class approval.
                     </p>
                   )}
 
@@ -272,9 +245,7 @@ export default function Tools() {
                     Facing a PSC inspection or preparing for dry-dock?
                   </p>
                   <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-                    Whether you're a superyacht captain, a commercial fleet technical manager, or
-                    an owner — use these calculators to quickly understand your vessel's regulatory
-                    standing before investing in official engineering studies.
+                    Whether you're a superyacht captain, a commercial fleet technical manager, or an owner — use these calculators to quickly understand your vessel's regulatory standing before investing in official engineering studies.
                   </p>
 
                   <h3 className="font-display font-bold text-[#0B3B5C] mb-3 mt-6">
@@ -296,9 +267,7 @@ export default function Tools() {
                           Disclaimer: Preliminary Data Only
                         </h4>
                         <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                          Results are based on user-provided estimations, not as-built or sea trial
-                          data. They do not replace official EEXI verification, EPL calculation, or
-                          Class Society approval packages.
+                          Results are based on user-provided estimations, not as-built or sea trial data. They do not replace official EEXI verification, EPL calculation, or Class Society approval packages.
                         </p>
                       </div>
                     </div>
@@ -314,7 +283,6 @@ export default function Tools() {
                   )}
                 </div>
               </div>
-
             </div>
           </div>
         </main>
