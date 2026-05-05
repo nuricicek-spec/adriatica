@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
@@ -77,16 +77,8 @@ export default function Tools() {
   const [complianceStatus, setComplianceStatus] = useState<ComplianceStatus>("idle");
 
   const ActiveComponent = TABS.find((t) => t.id === activeTab)?.component;
-  const tabPanelRef = useRef<HTMLDivElement>(null);
 
-  // Sekme değiştiğinde sayfanın başına dön
-  useEffect(() => {
-    if (tabPanelRef.current) {
-      tabPanelRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, [activeTab]);
-
-  // Dış event – EexiCalculator'dan gelmez oldu, yine de koruyoruz
+  // Dış olay – artık EexiCalculator'dan tetiklenmeyecek, yine de bırakıyoruz
   useEffect(() => {
     const handleSwitchTab = (e: CustomEvent<{ tab: TabId }>) => {
       setActiveTab(e.detail.tab);
@@ -95,7 +87,7 @@ export default function Tools() {
     return () => window.removeEventListener("switch_tab", handleSwitchTab as EventListener);
   }, []);
 
-  // URL parametresi (?tool=cii)
+  // URL parametresi (?tool=cii gibi)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const tool = params.get("tool");
@@ -104,7 +96,7 @@ export default function Tools() {
     }
   }, []);
 
-  // Compliance güncellemeleri
+  // Araçlardan gelen uyumluluk durumu güncellemeleri
   useEffect(() => {
     const handleStatusUpdate = (e: CustomEvent<{ status: ComplianceStatus }>) => {
       setComplianceStatus(e.detail.status);
@@ -113,6 +105,7 @@ export default function Tools() {
     return () => window.removeEventListener("tool_compliance_update", handleStatusUpdate as EventListener);
   }, []);
 
+  // Sekme değişince 'idle' durumuna dön
   useEffect(() => {
     setComplianceStatus("idle");
   }, [activeTab]);
@@ -131,7 +124,8 @@ export default function Tools() {
         </script>
       </Helmet>
 
-      <div className="min-h-screen bg-background font-body selection:bg-primary/20">
+      {/* min-h-screen yerine dinamik viewport birimi (100dvh) – mobil klavye kaynaklı taşmayı önler */}
+      <div className="min-h-[100dvh] bg-background font-body selection:bg-primary/20">
         <Navigation />
 
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
@@ -179,10 +173,10 @@ export default function Tools() {
               </div>
             </div>
 
-            {/* Main grid */}
+            {/* Ana grid – hiçbir yapay yükseklik kısıtı yok */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
 
-              {/* Left: Calculator */}
+              {/* Sol: Hesap makinesi */}
               <div className="lg:col-span-7">
 
                 {/* Mobil dropdown */}
@@ -204,7 +198,7 @@ export default function Tools() {
                   </select>
                 </div>
 
-                {/* Desktop tab row */}
+                {/* Masaüstü sekme satırı */}
                 <div
                   className="hidden md:flex gap-2 mb-6 border-b border-border/20 pb-4 flex-wrap"
                   role="tablist"
@@ -228,9 +222,8 @@ export default function Tools() {
                   ))}
                 </div>
 
-                {/* Active calculator – doğal scroll, sadece üste kaydırma */}
+                {/* Aktif hesap makinesi – tamamen doğal akış */}
                 <div
-                  ref={tabPanelRef}
                   id={`tabpanel-${activeTab}`}
                   role="tabpanel"
                   aria-label={TABS.find((t) => t.id === activeTab)?.label}
@@ -239,7 +232,7 @@ export default function Tools() {
                 </div>
               </div>
 
-              {/* Right: Sticky sidebar */}
+              {/* Sağ: Sidebar */}
               <div className="lg:col-span-5">
                 <div className="bg-neutral-50 border border-border/20 rounded-sm p-6 md:p-8 shadow-sm sticky top-24">
 
