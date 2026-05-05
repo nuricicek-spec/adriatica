@@ -1,20 +1,22 @@
 // C:\Adriatica\client\src\data\calculators.ts
 
-import { VesselProfile } from "./vesselProfile"; // ← EKLENMESİ GEREKEN SATIR
+import { VesselProfile } from "./vesselProfile";
 
-// --- GEMİ TİPLERİ VE KATSAYILARI ---
+// ─── GEMİ TİPLERİ VE KATSAYILARI ───────────────────────────────────────────
+
 export const VESSEL_TYPES = [
-  { value: "bulkCarrier",  label: "Bulk Carrier",             fi: 1.0, fc: 1.0 },
-  { value: "tanker",       label: "Oil/Gas Tanker",           fi: 1.0, fc: 1.0 },
-  { value: "containerShip",label: "Container Ship",           fi: 1.0, fc: 1.0 },
-  { value: "roRoCargo",    label: "Ro-Ro Cargo/Vehicle",      fi: 1.2, fc: 1.0 },
-  { value: "roRoPax",      label: "Ro-Ro Passenger",          fi: 1.2, fc: 1.0 },
-  { value: "generalCargo", label: "General Cargo Ship",       fi: 1.0, fc: 1.0 },
-  { value: "yacht",        label: "Yacht (>400 GT)",          fi: 1.2, fc: 0.7 },
-  { value: "fishing",      label: "Fishing Vessel",           fi: 1.0, fc: 0.7 },
+  { value: "bulkCarrier",   label: "Bulk Carrier",             fi: 1.0, fc: 1.0 },
+  { value: "tanker",        label: "Oil/Gas Tanker",           fi: 1.0, fc: 1.0 },
+  { value: "containerShip", label: "Container Ship",           fi: 1.0, fc: 1.0 },
+  { value: "roRoCargo",     label: "Ro-Ro Cargo/Vehicle",      fi: 1.2, fc: 1.0 },
+  { value: "roRoPax",       label: "Ro-Ro Passenger",          fi: 1.2, fc: 1.0 },
+  { value: "generalCargo",  label: "General Cargo Ship",       fi: 1.0, fc: 1.0 },
+  { value: "yacht",         label: "Yacht (>400 GT)",          fi: 1.2, fc: 0.7 },
+  { value: "fishing",       label: "Fishing Vessel",           fi: 1.0, fc: 0.7 },
 ] as const;
 
-// --- YAKIT TÜRLERİ VE KARBON EMİSYON FAKTÖRLERİ (MEPC.344(78)) ---
+// ─── YAKIT TÜRLERİ VE KARBON EMİSYON FAKTÖRLERİ (MEPC.344(78)) ───────────────
+
 export const FUEL_TYPES = [
   { value: "VLSFO",    label: "VLSFO (0.5% Sulphur) — IMO 2020",    cf: 3.106 },
   { value: "HFO",      label: "Heavy Fuel Oil (HFO/LFO)",            cf: 3.206 },
@@ -23,12 +25,25 @@ export const FUEL_TYPES = [
   { value: "Ethanol",  label: "Ethanol",                             cf: 1.521 },
 ] as const;
 
-// --- EEXI İÇİN GEREKLİ VERİLER ---
-export const DEFAULT_SFC_ME  = 190; // g/kWh (Ana Makine için varsayılan)
-export const DEFAULT_SFC_AUX = 215; // g/kWh (Yardımcı makine — değişken yük nedeniyle daha yüksek)
-export const FW_FACTOR = 1.0;       // Deniz durumu katsayısı
+// ─── YAKIT ENERJİ YOĞUNLUKLARI (NCV — Net Calorific Value, MJ/ton) ───────────
+
+export const FUEL_NCV: Record<string, number> = {
+  VLSFO: 40200,
+  HFO: 40200,
+  LNG: 48000,
+  MGO: 42700,
+  Methanol: 19800,
+  Ethanol: 26800,
+};
+
+// ─── EEXI İÇİN GEREKLİ VERİLER ──────────────────────────────────────────────
+
+export const DEFAULT_SFC_ME = 190;
+export const DEFAULT_SFC_AUX = 215;
+export const FW_FACTOR = 1.0;
 
 // EEDI Baseline Formülü için 'a' ve 'c' katsayıları (MEPC.308(73) Tablo 2)
+
 const EEDI_BASELINE = [
   { type: "bulkCarrier",   a: 961.79,  c: 0.477 },
   { type: "tanker",        a: 1124.29, c: 0.488 },
@@ -36,11 +51,12 @@ const EEDI_BASELINE = [
   { type: "roRoCargo",     a: 1371.87, c: 0.493 },
   { type: "roRoPax",       a: 5520.34, c: 0.437 },
   { type: "generalCargo",  a: 1071.18, c: 0.484 },
-  { type: "yacht",         a: 1071.18, c: 0.484 }, // Genel kargo formülü baz alınır
+  { type: "yacht",         a: 1071.18, c: 0.484 },
   { type: "fishing",       a: 891.34,  c: 0.491 },
 ] as const;
 
 // EEXI Azaltma Faktörleri (Yıllara Göre)
+
 export const EEXI_REDUCTION_FACTORS: Record<number, number> = {
   2023: 0.02,
   2024: 0.04,
@@ -52,8 +68,8 @@ export const EEXI_REDUCTION_FACTORS: Record<number, number> = {
   2030: 0.16,
 };
 
-// --- CII İÇİN GEREKLİ VERİLER (MEPC.364(79) Tablo 1) ---
-// CII Reference Formülü: CII_ref = a × DWT^(-c)
+// ─── CII İÇİN GEREKLİ VERİLER (MEPC.364(79) Tablo 1) ─────────────────────────
+
 export const CII_COEFFICIENTS = [
   { type: "bulkCarrier",   a: 1079.2, c: 0.616 },
   { type: "tanker",        a: 1579.9, c: 0.619 },
@@ -65,7 +81,6 @@ export const CII_COEFFICIENTS = [
   { type: "fishing",       a: 1220.5, c: 0.614 },
 ] as const;
 
-// CII Azaltma Faktörleri (Z)
 export const CII_REDUCTION_FACTORS: Record<number, number> = {
   2023: 0.05,
   2024: 0.07,
@@ -74,13 +89,15 @@ export const CII_REDUCTION_FACTORS: Record<number, number> = {
   2027: 0.13,
 };
 
-// --- EU ETS IÇİN GEREKLİ VERİLER ---
+// ─── EU ETS İÇİN GEREKLİ VERİLER ─────────────────────────────────────────────
+
 export const ETS_PHASE_IN_RATES: Record<number, number> = {
   2024: 0.40, 2025: 0.70, 2026: 1.00,
   2027: 1.00, 2028: 1.00, 2029: 1.00, 2030: 1.00,
 };
 
-// --- FUELEU MARITIME IÇİN GEREKLİ VERİLER ---
+// ─── FUELEU MARITIME İÇİN GEREKLİ VERİLER ──────────────────────────────────
+
 export const FUELEU_WTW_FACTORS: Record<string, number> = {
   HFO: 94.5, VLSFO: 94.5, LNG: 93.2, MGO: 94.8, Methanol: 66.3,
 };
@@ -96,33 +113,33 @@ export const FUELEU_REDUCTION_FACTORS: Record<number, number> = {
 };
 
 // DÜZELTİLMİŞ FUELEU CEZA KATSAYISI
-const VLSFO_CO2_PER_TON = (FUELEU_NCV_FACTORS.VLSFO * FUELEU_WTW_FACTORS.VLSFO) / 1_000_000;
-export const FUELEU_PENALTY_PER_TON_CO2 = 2400 / VLSFO_CO2_PER_TON; // ≈ 631.8
 
-// Yardımcı Fonksiyonlar
+const VLSFO_CO2_PER_TON = (FUELEU_NCV_FACTORS.VLSFO * FUELEU_WTW_FACTORS.VLSFO) / 1_000_000;
+export const FUELEU_PENALTY_PER_TON_CO2 = 2400 / VLSFO_CO2_PER_TON;
+
+// ─── YARDIMCI FONKSİYONLAR ─────────────────────────────────────────────────
+
 export function getEediBaseline(dwt: number, vesselType: string): number {
-  const data = EEDI_BASELINE.find(b => b.type === vesselType);
+  const data = EEDI_BASELINE.find((b) => b.type === vesselType);
   if (!data) return 0;
   return data.a * Math.pow(dwt, -data.c);
 }
 
 export function getCiiReference(dwt: number, vesselType: string): number {
-  const data = CII_COEFFICIENTS.find(b => b.type === vesselType);
+  const data = CII_COEFFICIENTS.find((b) => b.type === vesselType);
   if (!data) return 0;
   return data.a * Math.pow(dwt, -data.c);
 }
 
-// ============================================
-// SHAPOLI (Shaft Power Limitation) — MEPC.350(78)
-// ============================================
+// ─── SHAPOLI (Shaft Power Limitation) — MEPC.350(78) ────────────────────────
 
 export interface ShaPoLiResult {
   isCompliant: boolean;
-  measuredShaftPower: number;      // kW
-  limitValue: number;              // kW
+  measuredShaftPower: number;
+  limitValue: number;
   overridable: boolean;
-  maxOverridePower: number;        // kW (110% of limit)
-  requiredLogAccuracy: string;     // % tolerance
+  maxOverridePower: number;
+  requiredLogAccuracy: string;
 }
 
 export const SHAPOLI_GUIDANCE = {
@@ -145,14 +162,11 @@ export function calculateShaPoLi(
   shaftPower: number,
   isOverridable: boolean
 ): ShaPoLiResult {
-  // Size factor: larger vessels get lower limit percentage
   const sizeFactor = dwt > 50000 ? 0.75 : dwt > 10000 ? 0.80 : 0.85;
-  
   const limitValue = meMcr * sizeFactor;
   const maxOverride = isOverridable ? limitValue * 1.10 : limitValue;
-  
   const isCompliant = shaftPower <= maxOverride;
-  
+
   return {
     isCompliant,
     measuredShaftPower: shaftPower,
@@ -163,11 +177,31 @@ export function calculateShaPoLi(
   };
 }
 
-// ============================================
-// SCENARIO ENGINE HESAPLAMALARI (GERÇEK FORMÜLLER)
-// ============================================
+// ─── SCENARIO ENGINE HESAPLAMALARI ───────────────────────────────────────────
 
-export function calculateEEXI(profile: VesselProfile) {
+export interface EEXIResult {
+  attained: number;
+  required: number;
+  compliant: boolean;
+}
+
+export interface CIIResult {
+  rating: string;
+  attained: number;
+  required: number;
+}
+
+export interface ETSResult {
+  cost: number;
+  co2: number;
+}
+
+export interface FuelEUResult {
+  penalty: number;
+  compliant: boolean;
+}
+
+export function calculateEEXI(profile: VesselProfile): EEXIResult {
   const {
     vesselType,
     dwt,
@@ -183,14 +217,14 @@ export function calculateEEXI(profile: VesselProfile) {
     auxSfc,
   } = profile;
 
-  const typeData = VESSEL_TYPES.find(v => v.value === vesselType);
-  const fuelData = FUEL_TYPES.find(f => f.value === meFuel);
+  const typeData = VESSEL_TYPES.find((v) => v.value === vesselType);
+  const fuelData = FUEL_TYPES.find((f) => f.value === meFuel);
   if (!typeData || !fuelData) {
     return { attained: 0, required: 0, compliant: false };
   }
 
-  const ptoReduction = hasPto ? (ptoEff * ptoPower * meSfc * fuelData.cf) : 0;
-  const meEmissions  = meSfc * fuelData.cf * meMcr;
+  const ptoReduction = hasPto ? ptoEff * ptoPower * meSfc * fuelData.cf : 0;
+  const meEmissions = meSfc * fuelData.cf * meMcr;
   const auxEmissions = auxSfc * fuelData.cf * auxPower;
   const totalEmissions = Math.max(0, meEmissions - ptoReduction + auxEmissions);
 
@@ -206,9 +240,9 @@ export function calculateEEXI(profile: VesselProfile) {
   };
 }
 
-export function calculateCII(profile: VesselProfile) {
+export function calculateCII(profile: VesselProfile): CIIResult {
   const { vesselType, dwt, targetYear, annualFuel, meFuel, annualDistance } = profile;
-  const fuelData = FUEL_TYPES.find(f => f.value === meFuel);
+  const fuelData = FUEL_TYPES.find((f) => f.value === meFuel);
   if (!fuelData || annualDistance <= 0) {
     return { rating: "E", attained: 0, required: 0 };
   }
@@ -231,9 +265,9 @@ export function calculateCII(profile: VesselProfile) {
   };
 }
 
-export function calculateETS(profile: VesselProfile, euaPrice: number = 65) {
+export function calculateETS(profile: VesselProfile, euaPrice: number = 65): ETSResult {
   const { targetYear, annualFuel, meFuel } = profile;
-  const fuelData = FUEL_TYPES.find(f => f.value === meFuel);
+  const fuelData = FUEL_TYPES.find((f) => f.value === meFuel);
   if (!fuelData) return { cost: 0, co2: 0 };
 
   const phaseInRate = ETS_PHASE_IN_RATES[targetYear] || 1.0;
@@ -247,7 +281,7 @@ export function calculateETS(profile: VesselProfile, euaPrice: number = 65) {
   };
 }
 
-export function calculateFuelEU(profile: VesselProfile) {
+export function calculateFuelEU(profile: VesselProfile): FuelEUResult {
   const { targetYear, annualFuel, meFuel } = profile;
   const wtw = FUELEU_WTW_FACTORS[meFuel];
   const ncv = FUELEU_NCV_FACTORS[meFuel];
