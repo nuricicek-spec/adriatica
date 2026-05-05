@@ -31,49 +31,7 @@ interface ScenarioResult {
   fueleu: { penalty: number; compliant: boolean };
 }
 
-// Quick Estimate tahmin fonksiyonları – gemi tipine duyarlı
-function estimateDwtByType(length: number, vesselType: string): number {
-  const factors: Record<string, number> = {
-    bulkCarrier: 10,
-    tanker: 12,
-    containerShip: 9,
-    roRoCargo: 8,
-    roRoPax: 7,
-    generalCargo: 9,
-    yacht: 2.5,
-    fishing: 3,
-  };
-  return Math.round(length * (factors[vesselType] || 10));
-}
-
-function estimateMcrByType(length: number, vesselType: string): number {
-  const factors: Record<string, number> = {
-    bulkCarrier: 40,
-    tanker: 45,
-    containerShip: 50,
-    roRoCargo: 35,
-    roRoPax: 30,
-    generalCargo: 38,
-    yacht: 20,
-    fishing: 15,
-  };
-  return Math.round(length * (factors[vesselType] || 40));
-}
-
-function estimateVrefByType(length: number, vesselType: string): number {
-  const factors: Record<string, number> = {
-    bulkCarrier: 0.28,
-    tanker: 0.29,
-    containerShip: 0.32,
-    roRoCargo: 0.33,
-    roRoPax: 0.34,
-    generalCargo: 0.27,
-    yacht: 0.35,
-    fishing: 0.22,
-  };
-  return parseFloat((length * (factors[vesselType] || 0.28)).toFixed(1));
-}
-
+// Quick estimate yardımcı fonksiyonları
 function estimateAnnualFuel(dwt: number): number {
   if (dwt <= 0) return 450;
   return Math.round(450 + (dwt / 50000) * 3050);
@@ -92,32 +50,24 @@ export function ScenarioEngine() {
   const [complianceStatus, setComplianceStatus] = useState<ComplianceStatus>("idle");
   const [hasTracked, setHasTracked] = useState(false);
 
-  // Quick form local state
+  // Quick form state'leri
   const [quickLength, setQuickLength] = useState("");
   const [quickEngineType, setQuickEngineType] = useState("slow");
-  const [quickVesselType, setQuickVesselType] = useState("bulkCarrier");
 
-  // EUA Price local state
-  const [euaPrice, setEuaPrice] = useState("65");
+  // EUA Price state (Full Profile ve sonuçlarda kullanılacak)
+  const [euaPrice, setEuaPrice] = useState(65);
 
-  // Analytics
   useEffect(() => {
     if (hasTracked) return;
     setHasTracked(true);
     trackToolUsage("scenario");
   }, [hasTracked]);
 
-  // Scroll’u her step değişiminde başa çek
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [step]);
-
   // HESAPLAMA MOTORU
   const runCalculations = () => {
-    const price = parseFloat(euaPrice) || 65;
-
     const newResults: ScenarioResult[] = selectedScenarios.map((scenarioId) => {
       const scenario = SCENARIOS.find((s) => s.id === scenarioId)!;
+
       let scenarioProfile = { ...profile };
       if (scenario.compute) {
         const computed = scenario.compute(scenarioProfile);
@@ -129,7 +79,7 @@ export function ScenarioEngine() {
 
       const eexiResult = calculateEEXI(scenarioProfile);
       const ciiResult = calculateCII(scenarioProfile);
-      const etsResult = calculateETS(scenarioProfile, price);
+      const etsResult = calculateETS(scenarioProfile, euaPrice);
       const fueleuResult = calculateFuelEU(scenarioProfile);
 
       return {
@@ -161,29 +111,30 @@ export function ScenarioEngine() {
     );
   };
 
-  // QUICK ESTIMATE İŞLEMİ
+  // QUICK ESTIMATE
   const handleQuickContinue = () => {
     const length = parseFloat(quickLength) || 0;
     if (length <= 0) return;
 
-    const estimatedDwt = estimateDwtByType(length, quickVesselType);
-    const estimatedMcr = estimateMcrByType(length, quickVesselType);
-    const estimatedVref = estimateVrefByType(length, quickVesselType);
+    const estimatedDwt = Math.round(length * 10);
+    const estimatedMcr = Math.round(length * 40);
+    const estimatedVref = parseFloat((length * 0.28).toFixed(1));
     const estimatedSfc = quickEngineType === "slow" ? 175 : 195;
 
     setProfile({
-      vesselType: quickVesselType,
+      ...profile,
+      vesselType: "bulkCarrier",
       dwt: estimatedDwt,
-      targetYear: 2026,
       meMcr: estimatedMcr,
-      meFuel: "VLSFO",
-      meSfc: estimatedSfc,
       vref: estimatedVref,
+      meSfc: estimatedSfc,
+      meFuel: "VLSFO",
+      auxPower: Math.round(estimatedMcr * 0.15),
+      auxSfc: 215,
       hasPto: false,
       ptoPower: 0,
       ptoEff: 1.0,
-      auxPower: Math.round(estimatedMcr * 0.15),
-      auxSfc: 215,
+      targetYear: 2026,
       annualFuel: estimateAnnualFuel(estimatedDwt),
       annualDistance: estimateAnnualDistance(estimatedDwt),
     });
@@ -191,7 +142,7 @@ export function ScenarioEngine() {
     setStep("scenarios");
   };
 
-  // MODE SEÇİMİ (Skip to Scenario tamamen kaldırıldı)
+  // MODE SELECTION (Quick / Full)
   if (step === "mode") {
     return (
       <div className="bg-white border border-border/40 rounded-sm p-6 md:p-8 shadow-sm">
@@ -208,7 +159,7 @@ export function ScenarioEngine() {
             <Zap className="h-8 w-8 text-primary mb-3 group-hover:scale-110 transition" />
             <h3 className="font-display font-bold text-[#0B3B5C] mb-1">Quick Estimate</h3>
             <p className="text-xs text-muted-foreground">
-              3 questions → auto‑filled values → instant comparison
+              3 questions → auto-filled values → instant comparison
             </p>
           </button>
           <button
@@ -218,7 +169,7 @@ export function ScenarioEngine() {
             <Gauge className="h-8 w-8 text-primary mb-3 group-hover:scale-110 transition" />
             <h3 className="font-display font-bold text-[#0B3B5C] mb-1">Full Profile</h3>
             <p className="text-xs text-muted-foreground">
-              All technical parameters → precise vessel‑specific results
+              All technical parameters → precise vessel-specific results
             </p>
           </button>
         </div>
@@ -226,7 +177,7 @@ export function ScenarioEngine() {
     );
   }
 
-  // QUICK ESTIMATE (3 soru: tip, boy, motor)
+  // QUICK ESTIMATE (sadece 3 soru)
   if (step === "quick") {
     return (
       <div className="bg-white border border-border/40 rounded-sm p-6 md:p-8 shadow-sm">
@@ -243,20 +194,6 @@ export function ScenarioEngine() {
               Basic Info
             </h3>
             <div className="space-y-4">
-              <div>
-                <label className="block text-xs font-medium text-muted-foreground mb-1">
-                  Vessel Type
-                </label>
-                <select
-                  value={quickVesselType}
-                  onChange={(e) => setQuickVesselType(e.target.value)}
-                  className="w-full p-2 border rounded-sm bg-white text-sm focus:border-primary outline-none"
-                >
-                  {VESSEL_TYPES.map((v) => (
-                    <option key={v.value} value={v.value}>{v.label}</option>
-                  ))}
-                </select>
-              </div>
               <div>
                 <label className="block text-xs font-medium text-muted-foreground mb-1">
                   Approximate Length (m)
@@ -278,30 +215,29 @@ export function ScenarioEngine() {
                   onChange={(e) => setQuickEngineType(e.target.value)}
                   className="w-full p-2 border rounded-sm bg-white text-sm focus:border-primary outline-none"
                 >
-                  <option value="slow">Slow‑Speed 2‑Stroke (SFC ~175 g/kWh)</option>
-                  <option value="medium">Medium‑Speed 4‑Stroke (SFC ~195 g/kWh)</option>
+                  <option value="slow">Slow-Speed 2-Stroke (SFC ~175 g/kWh)</option>
+                  <option value="medium">Medium-Speed 4-Stroke (SFC ~195 g/kWh)</option>
                 </select>
               </div>
             </div>
           </div>
 
-          {/* Tahmin edilen değerlerin önizlemesi */}
-          {quickLength && !isNaN(parseFloat(quickLength)) && (
-            <div className="p-4 bg-blue-50 border border-blue-200 rounded-sm">
-              <h4 className="text-sm font-bold text-blue-800 mb-2">Auto‑Filled Values</h4>
-              <p className="text-[10px] text-blue-600 mb-2">
-                * DWT, MCR, Vref, SFC estimated from length & type. Annual fuel & distance estimated from DWT.
-              </p>
+          <div className="p-4 bg-blue-50 border border-blue-200 rounded-sm">
+            <h4 className="text-sm font-bold text-blue-800 mb-2">Auto-Filled Values</h4>
+            <p className="text-[10px] text-blue-600 mb-2">
+              * DWT, MCR, Vref, and SFC estimated from length. Annual fuel & distance estimated from DWT.
+            </p>
+            {quickLength && !isNaN(parseFloat(quickLength)) && (
               <div className="grid grid-cols-2 gap-2 text-xs text-blue-700">
-                <div>DWT: {estimateDwtByType(parseFloat(quickLength), quickVesselType)}</div>
-                <div>MCR: {estimateMcrByType(parseFloat(quickLength), quickVesselType)} kW</div>
-                <div>Vref: {estimateVrefByType(parseFloat(quickLength), quickVesselType)} kn</div>
+                <div>DWT: {Math.round(parseFloat(quickLength) * 10)}</div>
+                <div>MCR: {Math.round(parseFloat(quickLength) * 40)} kW</div>
+                <div>Vref: {(parseFloat(quickLength) * 0.28).toFixed(1)} kn</div>
                 <div>SFC: {quickEngineType === "slow" ? 175 : 195} g/kWh</div>
-                <div>Annual Fuel: {estimateAnnualFuel(estimateDwtByType(parseFloat(quickLength), quickVesselType))} MT</div>
-                <div>Avg. Distance: {estimateAnnualDistance(estimateDwtByType(parseFloat(quickLength), quickVesselType))} NM</div>
+                <div>Annual Fuel: {estimateAnnualFuel(parseFloat(quickLength) * 10)} MT</div>
+                <div>Avg. Distance: {estimateAnnualDistance(parseFloat(quickLength) * 10)} NM</div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         <button
@@ -314,7 +250,7 @@ export function ScenarioEngine() {
     );
   }
 
-  // FULL PROFILE (tam form)
+  // FULL PROFILE (tüm teknik + operasyonel + EUA fiyatı)
   if (step === "profile") {
     return (
       <div className="bg-white border border-border/40 rounded-sm p-6 md:p-8 shadow-sm">
@@ -479,9 +415,11 @@ export function ScenarioEngine() {
             </div>
           </div>
 
-          {/* Operational Data */}
+          {/* Operational Data + EUA Price */}
           <div className="p-4 bg-neutral-50 rounded-sm border border-border/20">
-            <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">Operational Data</h3>
+            <h3 className="text-sm font-bold text-[#0B3B5C] mb-3 uppercase tracking-wider">
+              Operational Data & EU ETS
+            </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-medium text-muted-foreground mb-1">Annual Fuel (MT)</label>
@@ -504,18 +442,21 @@ export function ScenarioEngine() {
                   className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none"
                 />
               </div>
-              <div className="md:col-span-2">
+              <div>
                 <label className="block text-xs font-medium text-muted-foreground mb-1">
-                  EUA Price (€/ton) — <span className="text-muted-foreground/50">default 65</span>
+                  EUA Price (€/ton CO₂)
                 </label>
                 <input
                   type="number"
                   step="0.1"
                   value={euaPrice}
-                  onChange={(e) => setEuaPrice(e.target.value)}
+                  onChange={(e) => setEuaPrice(parseFloat(e.target.value) || 65)}
                   placeholder="65"
                   className="w-full p-2 border rounded-sm text-sm focus:border-primary outline-none"
                 />
+                <p className="text-[10px] text-muted-foreground mt-1">
+                  * Default is 65 €. Update for current market price.
+                </p>
               </div>
             </div>
           </div>
@@ -531,7 +472,7 @@ export function ScenarioEngine() {
     );
   }
 
-  // SCENARIOS (seçim)
+  // SCENARIOS (senaryo seçimi)
   if (step === "scenarios") {
     const canAddMore = selectedScenarios.length < 4;
 
@@ -624,7 +565,7 @@ export function ScenarioEngine() {
     );
   }
 
-  // RESULTS (sonuç bölümü her zaman görünür, aksi halde invisible)
+  // RESULTS (sonuç tablosu)
   if (step === "results") {
     return (
       <div className="bg-white border border-border/40 rounded-sm p-6 md:p-8 shadow-sm">
@@ -635,104 +576,103 @@ export function ScenarioEngine() {
           <h2 className="font-display text-xl font-bold text-[#0B3B5C]">Scenario Comparison</h2>
         </div>
 
-        <div className={results.length === 0 ? "invisible" : ""}>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm border-collapse">
-              <thead>
-                <tr className="bg-neutral-50 border-b-2 border-border">
-                  <th className="text-left p-3 font-bold text-[#0B3B5C]">Metric</th>
-                  {results.map((r) => (
-                    <th
-                      key={r.scenarioId}
-                      className={`p-3 text-center font-bold ${
-                        r.scenarioId === "current" ? "text-[#0B3B5C]" : "text-primary"
-                      }`}
-                    >
-                      {r.label}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border/20">
-                <tr>
-                  <td className="p-3 font-medium text-muted-foreground">EEXI Attained</td>
-                  {results.map((r) => (
-                    <td
-                      key={r.scenarioId}
-                      className={`p-3 text-center ${r.eexi.compliant ? "text-green-600" : "text-red-600"}`}
-                    >
-                      {r.eexi.attained.toFixed(2)}
-                      {!r.eexi.compliant && " ⚠️"}
-                    </td>
-                  ))}
-                </tr>
-                <tr className="bg-neutral-50/50">
-                  <td className="p-3 font-medium text-muted-foreground">EEXI Required</td>
-                  {results.map((r) => (
-                    <td key={r.scenarioId} className="p-3 text-center text-muted-foreground">
-                      {r.eexi.required.toFixed(2)}
-                    </td>
-                  ))}
-                </tr>
-                <tr>
-                  <td className="p-3 font-medium text-muted-foreground">CII Rating</td>
-                  {results.map((r) => (
-                    <td
-                      key={r.scenarioId}
-                      className={`p-3 text-center font-bold ${
-                        r.cii.rating === "A" || r.cii.rating === "B"
-                          ? "text-green-600"
-                          : r.cii.rating === "C"
-                          ? "text-yellow-600"
-                          : "text-red-600"
-                      }`}
-                    >
-                      {r.cii.rating}
-                    </td>
-                  ))}
-                </tr>
-                <tr className="bg-neutral-50/50">
-                  <td className="p-3 font-medium text-muted-foreground">ETS Cost (€)</td>
-                  {results.map((r) => (
-                    <td key={r.scenarioId} className="p-3 text-center">
-                      €{r.ets.cost.toLocaleString()}
-                    </td>
-                  ))}
-                </tr>
-                <tr>
-                  <td className="p-3 font-medium text-muted-foreground">FuelEU Penalty (€)</td>
-                  {results.map((r) => (
-                    <td
-                      key={r.scenarioId}
-                      className={`p-3 text-center ${
-                        r.fueleu.penalty > 0 ? "text-red-600 font-bold" : "text-green-600"
-                      }`}
-                    >
-                      {r.fueleu.penalty > 0 ? `€${r.fueleu.penalty.toLocaleString()}` : "✓ Compliant"}
-                    </td>
-                  ))}
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="bg-neutral-50 border-b-2 border-border">
+                <th className="text-left p-3 font-bold text-[#0B3B5C]">Metric</th>
+                {results.map((r) => (
+                  <th
+                    key={r.scenarioId}
+                    className={`p-3 text-center font-bold ${
+                      r.scenarioId === "current" ? "text-[#0B3B5C]" : "text-primary"
+                    }`}
+                  >
+                    {r.label}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border/20">
+              <tr>
+                <td className="p-3 font-medium text-muted-foreground">EEXI Attained</td>
+                {results.map((r) => (
+                  <td
+                    key={r.scenarioId}
+                    className={`p-3 text-center ${
+                      r.eexi.compliant ? "text-green-600" : "text-red-600"
+                    }`}
+                  >
+                    {r.eexi.attained.toFixed(2)}
+                    {!r.eexi.compliant && " ⚠️"}
+                  </td>
+                ))}
+              </tr>
+              <tr className="bg-neutral-50/50">
+                <td className="p-3 font-medium text-muted-foreground">EEXI Required</td>
+                {results.map((r) => (
+                  <td key={r.scenarioId} className="p-3 text-center text-muted-foreground">
+                    {r.eexi.required.toFixed(2)}
+                  </td>
+                ))}
+              </tr>
+              <tr>
+                <td className="p-3 font-medium text-muted-foreground">CII Rating</td>
+                {results.map((r) => (
+                  <td
+                    key={r.scenarioId}
+                    className={`p-3 text-center font-bold ${
+                      r.cii.rating === "A" || r.cii.rating === "B"
+                        ? "text-green-600"
+                        : r.cii.rating === "C"
+                        ? "text-yellow-600"
+                        : "text-red-600"
+                    }`}
+                  >
+                    {r.cii.rating}
+                  </td>
+                ))}
+              </tr>
+              <tr className="bg-neutral-50/50">
+                <td className="p-3 font-medium text-muted-foreground">ETS Cost (€)</td>
+                {results.map((r) => (
+                  <td key={r.scenarioId} className="p-3 text-center">
+                    €{r.ets.cost.toLocaleString()}
+                  </td>
+                ))}
+              </tr>
+              <tr>
+                <td className="p-3 font-medium text-muted-foreground">FuelEU Penalty (€)</td>
+                {results.map((r) => (
+                  <td
+                    key={r.scenarioId}
+                    className={`p-3 text-center ${
+                      r.fueleu.penalty > 0 ? "text-red-600 font-bold" : "text-green-600"
+                    }`}
+                  >
+                    {r.fueleu.penalty > 0
+                      ? `€${r.fueleu.penalty.toLocaleString()}`
+                      : "✓ Compliant"}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-          <div className="mt-6 p-4 bg-primary/5 border border-primary/20 rounded-sm">
-            <h3 className="font-bold text-[#0B3B5C] mb-2">Executive Summary</h3>
-            <p className="text-sm text-muted-foreground">
-              Comparing {results.length} scenarios for {profile.vesselType} ({profile.dwt} DWT).
-              {complianceStatus === "non-compliant"
-                ? " Non-compliant scenarios detected. See red indicators above."
-                : " All scenarios meet current regulatory thresholds."}
-            </p>
-          </div>
+        <div className="mt-6 p-4 bg-primary/5 border border-primary/20 rounded-sm">
+          <h3 className="font-bold text-[#0B3B5C] mb-2">Executive Summary</h3>
+          <p className="text-sm text-muted-foreground">
+            Comparing {results.length} scenarios for {profile.vesselType} ({profile.dwt} DWT).
+            {complianceStatus === "non-compliant"
+              ? " Non-compliant scenarios detected. See red indicators above."
+              : " All scenarios meet current regulatory thresholds."}
+          </p>
         </div>
 
         <div className="mt-6 flex gap-3">
           <button
-            onClick={() => {
-              setSelectedScenarios(["current"]);
-              setStep("mode");
-            }}
+            onClick={() => setStep("mode")}
             className="flex-1 py-2.5 border border-primary text-primary font-medium rounded-sm hover:bg-primary/5 transition text-sm"
           >
             New Comparison

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
@@ -77,8 +77,16 @@ export default function Tools() {
   const [complianceStatus, setComplianceStatus] = useState<ComplianceStatus>("idle");
 
   const ActiveComponent = TABS.find((t) => t.id === activeTab)?.component;
+  const tabPanelRef = useRef<HTMLDivElement>(null);
 
-  // Dış event (EEXI artık bu event'i tetiklemez, ancak tutuyoruz)
+  // Sekme değiştiğinde sayfanın başına dön
+  useEffect(() => {
+    if (tabPanelRef.current) {
+      tabPanelRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [activeTab]);
+
+  // Dış event – EexiCalculator'dan gelmez oldu, yine de koruyoruz
   useEffect(() => {
     const handleSwitchTab = (e: CustomEvent<{ tab: TabId }>) => {
       setActiveTab(e.detail.tab);
@@ -87,7 +95,7 @@ export default function Tools() {
     return () => window.removeEventListener("switch_tab", handleSwitchTab as EventListener);
   }, []);
 
-  // URL parametresi ile sekme
+  // URL parametresi (?tool=cii)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const tool = params.get("tool");
@@ -96,7 +104,7 @@ export default function Tools() {
     }
   }, []);
 
-  // Compliance durumu güncellemeleri
+  // Compliance güncellemeleri
   useEffect(() => {
     const handleStatusUpdate = (e: CustomEvent<{ status: ComplianceStatus }>) => {
       setComplianceStatus(e.detail.status);
@@ -105,7 +113,6 @@ export default function Tools() {
     return () => window.removeEventListener("tool_compliance_update", handleStatusUpdate as EventListener);
   }, []);
 
-  // Sekme değişince durumu sıfırla
   useEffect(() => {
     setComplianceStatus("idle");
   }, [activeTab]);
@@ -124,7 +131,7 @@ export default function Tools() {
         </script>
       </Helmet>
 
-      <div className="min-h-[100dvh] bg-background font-body selection:bg-primary/20">
+      <div className="min-h-screen bg-background font-body selection:bg-primary/20">
         <Navigation />
 
         <main className="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
@@ -172,13 +179,13 @@ export default function Tools() {
               </div>
             </div>
 
-            {/* Main grid – overflow-x-hidden taşmayı gizler */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 overflow-x-hidden">
+            {/* Main grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
 
               {/* Left: Calculator */}
-              <div className="lg:col-span-7 min-w-0">
+              <div className="lg:col-span-7">
 
-                {/* Mobile dropdown */}
+                {/* Mobil dropdown */}
                 <div className="block md:hidden mb-6">
                   <label htmlFor="tool-select" className="block text-xs font-medium text-muted-foreground mb-1">
                     Select Tool
@@ -221,8 +228,9 @@ export default function Tools() {
                   ))}
                 </div>
 
-                {/* Active calculator */}
+                {/* Active calculator – doğal scroll, sadece üste kaydırma */}
                 <div
+                  ref={tabPanelRef}
                   id={`tabpanel-${activeTab}`}
                   role="tabpanel"
                   aria-label={TABS.find((t) => t.id === activeTab)?.label}
