@@ -207,6 +207,7 @@ export default function About() {
                 </p>
                 <p>Tax Office: Podgorica, Montenegro</p>
                 <p>Tax ID (PIB): 03612807</p>
+                <p>Official Address: Bulevar Svetog Petra Cetinjskog 7, Podgorica, 81000, Montenegro</p>
                 <p>
                   Email:{" "}
                   <a
