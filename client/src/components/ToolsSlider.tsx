@@ -28,6 +28,16 @@ const TOOLS_DATA = [
     title: "FuelEU Penalty",
     desc: "Assess potential penalties under FuelEU Maritime regulation.",
   },
+  {
+    href: "/tools?tool=shapoli",
+    title: "ShaPoLi Assessment",
+    desc: "Evaluate shaft power limitation compliance per MEPC.350(78).",
+  },
+  {
+    href: "/tools?tool=scenario",
+    title: "Scenario Engine",
+    desc: "Compare multiple regulatory scenarios side-by-side for strategic planning.",
+  },
 ] as const;
 
 const AUTOPLAY_INTERVAL = 5000;
@@ -95,7 +105,6 @@ export default function ToolsSlider() {
   return (
     <section className="py-20 bg-neutral-50 border-b border-border/10 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
         <div className="text-center mb-12">
           <p className="text-xs uppercase tracking-[0.25em] text-primary/70 mb-3">
             Free Compliance Tools
@@ -164,11 +173,10 @@ export default function ToolsSlider() {
 
           {/*
             WCAG 2.5.5 — Minimum Touch Target Size (24×24px).
-            Görsel dot 10×10px olarak korundu (tasarım bozulmuyor).
+            Görsel dot 10×10px olarak korundu.
             Her button'a p-2 (8px padding) eklendi → toplam tıklanabilir alan
             26×26px oldu, WCAG AA minimumunu (24×24px) karşılıyor.
             role="tablist" + aria-selected ile ekran okuyucu desteği eklendi.
-          -->
           */}
           <div
             className="flex justify-center gap-1 mt-8"
