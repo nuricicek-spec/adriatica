@@ -1,18 +1,38 @@
 // lib/analytics.ts
 
-type EventParams = Record<string, any>;
+type EventParams = Record<string, string | number | boolean>;
 const GA_ID = "G-WPWD3K7JHR";
 
-// gtag güvenlik wrapper'ı
-const gtag = (...args: any[]) => {
+// ─── Desteklenen Tool ID'leri ───────────────────────────────────────────────
+// Yeni araç eklendiğinde buraya ekle. Type safety sağlar.
+
+export type ToolId =
+  // Quick Check
+  | "eexi"
+  | "cii"
+  | "bwts"
+  | "ets"
+  | "fueleu"
+  | "shapoli"
+  | "changeover"
+  // Deep Analysis
+  | "fueleu-pro"
+  | "ets-fleet"
+  | "cii-optimize"
+  | "biofouling"
+  // Strategic Planning
+  | "scenario"
+  | "drydock"
+  | "health-score";
+
+// ─── gtag Güvenlik Wrapper'ı ────────────────────────────────────────────────
+const gtag = (...args: unknown[]) => {
   if (typeof window === "undefined") return;
   if (!window.gtag) return;
-  window.gtag(...args);
+  (window as any).gtag(...args);
 };
 
-// ==========================
-// GENERIC EVENT TRACKER
-// ==========================
+// ─── Generic Event Tracker ──────────────────────────────────────────────────
 export const trackEvent = (eventName: string, params?: EventParams) => {
   gtag("event", eventName, {
     ...params,
@@ -20,36 +40,34 @@ export const trackEvent = (eventName: string, params?: EventParams) => {
   });
 };
 
-// ==========================
-// STANDARDIZED EVENTS
-// ==========================
+// ─── Standardized Events ────────────────────────────────────────────────────
 
-// 1. Email kaydı (Ana sayfa "Begin Your Voyage")
+/** Email kaydı (Ana sayfa "Begin Your Voyage") */
 export const trackEmailSignup = (source: string = "homepage") => {
   trackEvent("email_signup", { source });
 };
 
-// 2. Danışmanlık talebi (Request Consultation)
+/** Danışmanlık talebi (Request Consultation) */
 export const trackConsultationRequest = (source: string = "request_consultation") => {
   trackEvent("consultation_request", { source });
 };
 
-// 3. Tool kullanımı (sayfa açıldığında)
-export const trackToolUsage = (tool: string) => {
+/** Tool kullanımı — sayfa/araç açıldığında */
+export const trackToolUsage = (tool: ToolId) => {
   trackEvent("tool_used", { tool });
 };
 
-// 4. PDF başarıyla oluşturulduğunda
-export const trackPdfGenerated = (tool: string) => {
+/** PDF başarıyla oluşturulduğunda */
+export const trackPdfGenerated = (tool: ToolId) => {
   trackEvent("generate_pdf", { tool });
 };
 
-// 5. Uyumsuzluk (compliance fail) durumunda
-export const trackComplianceFail = (tool: string) => {
+/** Uyumsuzluk (compliance fail) durumunda */
+export const trackComplianceFail = (tool: ToolId) => {
   trackEvent("compliance_fail", { tool });
 };
 
-// 6. Genel CTA tıklamaları (isteğe bağlı)
+/** Genel CTA tıklamaları */
 export const trackCTA = (label: string) => {
   trackEvent("cta_click", { label });
 };

@@ -3,41 +3,14 @@ import { Link } from "wouter";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const TOOLS_DATA = [
-  {
-    href: "/tools?tool=eexi",
-    title: "EEXI Calculator",
-    desc: "Evaluate vessel's Energy Efficiency Existing Ship Index compliance.",
-  },
-  {
-    href: "/tools?tool=cii",
-    title: "CII Rating Tool",
-    desc: "Estimate Carbon Intensity Indicator rating and operational impact.",
-  },
-  {
-    href: "/tools?tool=bwts",
-    title: "BWTS Compliance",
-    desc: "Check ballast water treatment system compliance and retrofit needs.",
-  },
-  {
-    href: "/tools?tool=ets",
-    title: "EU ETS Cost",
-    desc: "Forecast vessel's carbon allowance costs under EU ETS.",
-  },
-  {
-    href: "/tools?tool=fueleu",
-    title: "FuelEU Penalty",
-    desc: "Assess potential penalties under FuelEU Maritime regulation.",
-  },
-  {
-    href: "/tools?tool=shapoli",
-    title: "ShaPoLi Assessment",
-    desc: "Evaluate shaft power limitation compliance per MEPC.350(78).",
-  },
-  {
-    href: "/tools?tool=scenario",
-    title: "Scenario Engine",
-    desc: "Compare multiple regulatory scenarios side-by-side for strategic planning.",
-  },
+  { href: "/tools?tool=eexi", title: "EEXI Calculator", desc: "Evaluate vessel's Energy Efficiency Existing Ship Index compliance." },
+  { href: "/tools?tool=cii", title: "CII Rating Tool", desc: "Estimate Carbon Intensity Indicator rating and operational impact." },
+  { href: "/tools?tool=bwts", title: "BWTS Compliance", desc: "Check ballast water treatment system compliance and retrofit needs." },
+  { href: "/tools?tool=ets", title: "EU ETS Cost", desc: "Forecast vessel's carbon allowance costs under EU ETS." },
+  { href: "/tools?tool=fueleu", title: "FuelEU Penalty", desc: "Assess potential penalties under FuelEU Maritime regulation." },
+  { href: "/tools?tool=shapoli", title: "ShaPoLi Assessment", desc: "Evaluate shaft power limitation compliance per MEPC.350(78)." },
+  { href: "/tools?tool=changeover", title: "Fuel Changeover", desc: "Plan ECA entry fuel switching with time and distance estimates." },
+  { href: "/tools?tool=scenario", title: "Scenario Engine", desc: "Compare multiple regulatory scenarios side-by-side for strategic planning." },
 ] as const;
 
 const AUTOPLAY_INTERVAL = 5000;
@@ -92,11 +65,8 @@ export default function ToolsSlider() {
   const handleTouchEnd = () => {
     const distance = touchStartX.current - touchEndX.current;
     if (Math.abs(distance) > SWIPE_THRESHOLD) {
-      if (distance > 0) {
-        next();
-      } else {
-        prev();
-      }
+      if (distance > 0) next();
+      else prev();
     }
     touchStartX.current = 0;
     touchEndX.current = 0;
@@ -106,62 +76,26 @@ export default function ToolsSlider() {
     <section className="py-20 bg-neutral-50 border-b border-border/10 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <p className="text-xs uppercase tracking-[0.25em] text-primary/70 mb-3">
-            Free Compliance Tools
-          </p>
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-4">
-            Identify Compliance Risks Before Inspection
-          </h2>
-          <p className="text-foreground/75 max-w-2xl mx-auto">
-            Most risks are silent — find them before the inspector does.
-          </p>
+          <p className="text-xs uppercase tracking-[0.25em] text-primary/70 mb-3">Free Compliance Tools</p>
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-4">Identify Compliance Risks Before Inspection</h2>
+          <p className="text-foreground/75 max-w-2xl mx-auto">Most risks are silent — find them before the inspector does.</p>
         </div>
 
-        <div
-          className="relative"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          <button
-            onClick={prev}
-            className="hidden md:flex absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white border border-border rounded-full shadow-lg items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-all duration-200"
-            aria-label="Previous tool"
-          >
+        <div className="relative" onMouseEnter={() => setIsPaused(true)} onMouseLeave={() => setIsPaused(false)}>
+          <button onClick={prev} className="hidden md:flex absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white border border-border rounded-full shadow-lg items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-all duration-200" aria-label="Previous tool">
             <ChevronLeft className="w-5 h-5" />
           </button>
-          <button
-            onClick={next}
-            className="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white border border-border rounded-full shadow-lg items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-all duration-200"
-            aria-label="Next tool"
-          >
+          <button onClick={next} className="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white border border-border rounded-full shadow-lg items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-all duration-200" aria-label="Next tool">
             <ChevronRight className="w-5 h-5" />
           </button>
 
-          <div
-            className="overflow-hidden touch-pan-y"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
-            <div
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${slidePercentage}%)` }}
-            >
+          <div className="overflow-hidden touch-pan-y" onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
+            <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${slidePercentage}%)` }}>
               {TOOLS_DATA.map((tool) => (
-                <div
-                  key={tool.href}
-                  className={`flex-shrink-0 ${isMobile ? "w-full" : "w-1/3"}`}
-                >
-                  <Link
-                    href={tool.href}
-                    className="group flex flex-col h-full p-6 md:p-8 mx-1 md:mx-2 border border-border hover:border-primary transition-all duration-300 bg-white rounded-sm"
-                  >
-                    <h3 className="text-lg font-bold text-primary mb-2 group-hover:underline decoration-2 underline-offset-4">
-                      {tool.title}
-                    </h3>
-                    <p className="text-sm text-foreground/70 leading-relaxed flex-1">
-                      {tool.desc}
-                    </p>
+                <div key={tool.href} className={`flex-shrink-0 ${isMobile ? "w-full" : "w-1/3"}`}>
+                  <Link href={tool.href} className="group flex flex-col h-full p-6 md:p-8 mx-1 md:mx-2 border border-border hover:border-primary transition-all duration-300 bg-white rounded-sm">
+                    <h3 className="text-lg font-bold text-primary mb-2 group-hover:underline decoration-2 underline-offset-4">{tool.title}</h3>
+                    <p className="text-sm text-foreground/70 leading-relaxed flex-1">{tool.desc}</p>
                     <span className="inline-flex items-center self-start px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wide bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-200 mt-6">
                       Run Assessment →
                     </span>
@@ -171,34 +105,10 @@ export default function ToolsSlider() {
             </div>
           </div>
 
-          {/*
-            WCAG 2.5.5 — Minimum Touch Target Size (24×24px).
-            Görsel dot 10×10px olarak korundu.
-            Her button'a p-2 (8px padding) eklendi → toplam tıklanabilir alan
-            26×26px oldu, WCAG AA minimumunu (24×24px) karşılıyor.
-            role="tablist" + aria-selected ile ekran okuyucu desteği eklendi.
-          */}
-          <div
-            className="flex justify-center gap-1 mt-8"
-            role="tablist"
-            aria-label="Slider navigation"
-          >
+          <div className="flex justify-center gap-1 mt-8" role="tablist" aria-label="Slider navigation">
             {Array.from({ length: maxIndex + 1 }).map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrentIndex(i)}
-                role="tab"
-                aria-selected={currentIndex === i}
-                aria-label={`Go to slide ${i + 1}`}
-                className="p-2 flex items-center justify-center"
-              >
-                <span
-                  className={`block h-2.5 rounded-full transition-all duration-300 ${
-                    currentIndex === i
-                      ? "bg-primary w-6"
-                      : "bg-neutral-300 hover:bg-neutral-400 w-2.5"
-                  }`}
-                />
+              <button key={i} onClick={() => setCurrentIndex(i)} role="tab" aria-selected={currentIndex === i} aria-label={`Go to slide ${i + 1}`} className="p-2 flex items-center justify-center">
+                <span className={`block h-2.5 rounded-full transition-all duration-300 ${currentIndex === i ? "bg-primary w-6" : "bg-neutral-300 hover:bg-neutral-400 w-2.5"}`} />
               </button>
             ))}
           </div>

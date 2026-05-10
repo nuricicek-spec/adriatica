@@ -3,27 +3,80 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { Shield, AlertTriangle, ArrowRight } from "lucide-react";
-import { EexiCalculator } from "@/components/tools/EexiCalculator";
-import { CiiCalculator } from "@/components/tools/CiiCalculator";
-import { BwtsCalculator } from "@/components/tools/BwtsCalculator";
-import { EtsCalculator } from "@/components/tools/EtsCalculator";
-import { FueleuCalculator } from "@/components/tools/FueleuCalculator";
-import { ShapoliCalculator } from "@/components/tools/ShapoliCalculator";
-import { ScenarioEngine } from "@/components/tools/ScenarioEngine";
+import { EexiCalculator } from "@/components/tools/quick/EexiCalculator";
+import { CiiCalculator } from "@/components/tools/quick/CiiCalculator";
+import { BwtsCalculator } from "@/components/tools/quick/BwtsCalculator";
+import { EtsCalculator } from "@/components/tools/quick/EtsCalculator";
+import { FueleuCalculator } from "@/components/tools/quick/FueleuCalculator";
+import { ShapoliCalculator } from "@/components/tools/quick/ShapoliCalculator";
+import { FuelChangeoverCalculator } from "@/components/tools/quick/FuelChangeoverCalculator";
+import { FuelEuProCalculator } from "@/components/tools/deep/FuelEuProCalculator";
+import { EtsFleetCalculator } from "@/components/tools/deep/EtsFleetCalculator";
+import { CiiOptimizeCalculator } from "@/components/tools/deep/CiiOptimizeCalculator";
+import { Biofouling2026Calculator } from "@/components/tools/deep/Biofouling2026Calculator";
+import { ScenarioEngine } from "@/components/tools/strategic/ScenarioEngine";
+import { DryDockPlanner } from "@/components/tools/strategic/DryDockPlanner";
+import { VesselHealthScore } from "@/components/tools/strategic/VesselHealthScore";
 import { Helmet } from "react-helmet-async";
 
-const TABS = [
-  { id: "eexi",    label: "EEXI Calculator",      shortLabel: "EEXI",     component: EexiCalculator    },
-  { id: "cii",     label: "CII Predictor",        shortLabel: "CII",      component: CiiCalculator     },
-  { id: "bwts",    label: "BWTS Sizing",          shortLabel: "BWTS",     component: BwtsCalculator    },
-  { id: "ets",     label: "EU ETS Cost",          shortLabel: "EU ETS",   component: EtsCalculator     },
-  { id: "fueleu",  label: "FuelEU Penalty",       shortLabel: "FuelEU",   component: FueleuCalculator  },
-  { id: "shapoli", label: "ShaPoLi Assessment",   shortLabel: "ShaPoLi",  component: ShapoliCalculator },
-  { id: "scenario",label: "Scenario Engine",      shortLabel: "Scenario", component: ScenarioEngine    },
-] as const;
-
-type TabId = (typeof TABS)[number]["id"];
+type CategoryId = "quick" | "deep" | "strategic";
+type TabId = string;
 type ComplianceStatus = "idle" | "compliant" | "non-compliant";
+
+interface ToolTab {
+  id: TabId;
+  label: string;
+  shortLabel: string;
+  component: React.ComponentType;
+}
+
+interface ToolCategory {
+  id: CategoryId;
+  label: string;
+  description: string;
+  tabs: ToolTab[];
+}
+
+const CATEGORIES: ToolCategory[] = [
+  {
+    id: "quick",
+    label: "Quick Check",
+    description: "Rapid compliance screening — key parameters only",
+    tabs: [
+      { id: "eexi",       label: "EEXI Calculator",      shortLabel: "EEXI",       component: EexiCalculator },
+      { id: "cii",        label: "CII Predictor",        shortLabel: "CII",        component: CiiCalculator },
+      { id: "bwts",       label: "BWTS Sizing",          shortLabel: "BWTS",       component: BwtsCalculator },
+      { id: "ets",        label: "EU ETS Cost",          shortLabel: "EU ETS",     component: EtsCalculator },
+      { id: "fueleu",     label: "FuelEU Penalty",       shortLabel: "FuelEU",     component: FueleuCalculator },
+      { id: "shapoli",    label: "ShaPoLi Assessment",   shortLabel: "ShaPoLi",    component: ShapoliCalculator },
+      { id: "changeover", label: "Fuel Changeover",      shortLabel: "Changeover", component: FuelChangeoverCalculator },
+    ],
+  },
+  {
+    id: "deep",
+    label: "Deep Analysis",
+    description: "Strategic optimization — multi-parameter, what-if scenarios",
+    tabs: [
+      { id: "fueleu-pro", label: "FuelEU Pro Multi-Fuel", shortLabel: "FuelEU Pro",   component: FuelEuProCalculator },
+      { id: "ets-fleet",  label: "ETS Fleet Exposure",    shortLabel: "ETS Fleet",    component: EtsFleetCalculator },
+      { id: "cii-opt",    label: "CII Optimize",          shortLabel: "CII Optimize", component: CiiOptimizeCalculator },
+      { id: "biofouling", label: "Biofouling 2026",       shortLabel: "Biofouling",   component: Biofouling2026Calculator },
+    ],
+  },
+  {
+    id: "strategic",
+    label: "Strategic Planning",
+    description: "Fleet-level decision support and project planning",
+    tabs: [
+      { id: "scenario", label: "Scenario Engine",     shortLabel: "Scenario",     component: ScenarioEngine },
+      { id: "drydock",  label: "Dry-Dock Planner",    shortLabel: "Dry-Dock",     component: DryDockPlanner },
+      { id: "health",   label: "Vessel Health Score", shortLabel: "Health Score", component: VesselHealthScore },
+    ],
+  },
+];
+
+const ALL_TABS = CATEGORIES.flatMap((c) => c.tabs);
+const ALL_TAB_IDS = ALL_TABS.map((t) => t.id);
 
 const toolsPageSchema = {
   "@context": "https://schema.org",
@@ -43,12 +96,12 @@ const toolsPageSchema = {
       url: "https://www.adriaticadoo.com/tools",
       name: "Marine Engineering Compliance Calculators",
       description:
-        "Interactive tools for preliminary EEXI calculation, CII rating prediction, BWTS capacity sizing, EU ETS cost forecasting, and FuelEU penalty assessment.",
+        "Interactive tools for preliminary EEXI, CII, BWTS, EU ETS, FuelEU, and strategic fleet planning.",
       isPartOf: { "@id": "https://www.adriaticadoo.com/#website" },
       about: {
         "@type": "ItemList",
         name: "Engineering Compliance Tools",
-        itemListElement: TABS.map((tab, i) => ({
+        itemListElement: ALL_TABS.map((tab, i) => ({
           "@type": "ListItem",
           position: i + 1,
           item: {
@@ -73,16 +126,24 @@ const toolsPageSchema = {
 };
 
 export default function Tools() {
+  const [activeCategory, setActiveCategory] = useState<CategoryId>("quick");
   const [activeTab, setActiveTab] = useState<TabId>("eexi");
   const [complianceStatus, setComplianceStatus] = useState<ComplianceStatus>("idle");
 
-  const ActiveComponent = TABS.find((t) => t.id === activeTab)?.component;
+  const currentCategory = CATEGORIES.find((c) => c.id === activeCategory)!;
+  const ActiveComponent = currentCategory.tabs.find((t) => t.id === activeTab)?.component;
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const tool = params.get("tool");
-    if (tool && TABS.some((t) => t.id === tool)) {
-      setActiveTab(tool as TabId);
+    if (tool && ALL_TAB_IDS.includes(tool)) {
+      for (const cat of CATEGORIES) {
+        if (cat.tabs.some((t) => t.id === tool)) {
+          setActiveCategory(cat.id);
+          setActiveTab(tool);
+          break;
+        }
+      }
     }
   }, []);
 
@@ -97,6 +158,12 @@ export default function Tools() {
   useEffect(() => {
     setComplianceStatus("idle");
   }, [activeTab]);
+
+  const handleCategoryChange = (catId: CategoryId) => {
+    setActiveCategory(catId);
+    const cat = CATEGORIES.find((c) => c.id === catId)!;
+    setActiveTab(cat.tabs[0].id);
+  };
 
   return (
     <>
@@ -159,6 +226,24 @@ export default function Tools() {
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
               <div className="lg:col-span-7">
+                {/* Category Selector */}
+                <div className="flex gap-2 mb-4 border-b border-border/20 pb-4">
+                  {CATEGORIES.map((cat) => (
+                    <button
+                      key={cat.id}
+                      onClick={() => handleCategoryChange(cat.id)}
+                      className={`px-4 py-2 text-sm font-medium rounded-sm transition-colors ${
+                        activeCategory === cat.id
+                          ? "bg-[#0B3B5C] text-white"
+                          : "bg-neutral-100 text-muted-foreground hover:bg-neutral-200"
+                      }`}
+                    >
+                      {cat.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Tab Selector — Mobile */}
                 <div className="block md:hidden mb-6">
                   <label htmlFor="tool-select" className="block text-xs font-medium text-muted-foreground mb-1">
                     Select Tool
@@ -166,10 +251,10 @@ export default function Tools() {
                   <select
                     id="tool-select"
                     value={activeTab}
-                    onChange={(e) => setActiveTab(e.target.value as TabId)}
+                    onChange={(e) => setActiveTab(e.target.value)}
                     className="w-full px-4 py-3 border border-border rounded-sm bg-white text-sm font-medium text-[#0B3B5C] focus:border-primary focus:ring-1 focus:ring-primary outline-none"
                   >
-                    {TABS.map((tab) => (
+                    {currentCategory.tabs.map((tab) => (
                       <option key={tab.id} value={tab.id}>
                         {tab.label}
                       </option>
@@ -177,12 +262,13 @@ export default function Tools() {
                   </select>
                 </div>
 
+                {/* Tab Selector — Desktop */}
                 <div
                   className="hidden md:flex gap-2 mb-6 border-b border-border/20 pb-4 flex-wrap"
                   role="tablist"
-                  aria-label="Calculator tools"
+                  aria-label={`${currentCategory.label} tools`}
                 >
-                  {TABS.map((tab) => (
+                  {currentCategory.tabs.map((tab) => (
                     <button
                       key={tab.id}
                       role="tab"
@@ -200,15 +286,17 @@ export default function Tools() {
                   ))}
                 </div>
 
+                {/* Active Tool */}
                 <div
                   id={`tabpanel-${activeTab}`}
                   role="tabpanel"
-                  aria-label={TABS.find((t) => t.id === activeTab)?.label}
+                  aria-label={currentCategory.tabs.find((t) => t.id === activeTab)?.label}
                 >
                   {ActiveComponent && <ActiveComponent />}
                 </div>
               </div>
 
+              {/* Sidebar */}
               <div className="lg:col-span-5">
                 <div className="bg-neutral-50 border border-border/20 rounded-sm p-6 md:p-8 shadow-sm sticky top-24">
                   {complianceStatus === "non-compliant" && (
